@@ -9,6 +9,9 @@
     fullIncident: null,
     scenarios: [],
     activeTab: 'logs',
+    // For incremental activity-log rendering — never re-paint old lines
+    activityRenderedFor: null,    // incident id currently rendered
+    activityRenderedCount: 0,     // how many events we've already painted
   };
 
   // ─────────────────────────── boot ───────────────────────────
@@ -102,39 +105,73 @@
 
   // ─────────────────────────── incident list ───────────────────────────
 
+  // Render the incident list. We reuse existing <li> nodes when possible so
+  // continuously-animating elements (e.g. the pulsing 'investigating' dot)
+  // don't restart their animation every 1s poll.
   function renderIncidentList() {
     const ul = $('#incident-list');
+
     if (!STATE.incidents.length) {
-      ul.innerHTML = '<li class="empty">No incidents yet.<br/>Click <b>Fire alert</b> to start a demo.</li>';
+      if (ul.dataset.state !== 'empty') {
+        ul.innerHTML = '<li class="empty">No incidents yet.<br/>Click <b>Fire alert</b> to start a demo.</li>';
+        ul.dataset.state = 'empty';
+      }
       return;
     }
+    if (ul.dataset.state !== 'list') {
+      ul.innerHTML = '';
+      ul.dataset.state = 'list';
+    }
 
-    ul.innerHTML = STATE.incidents.map(inc => {
+    const existing = new Map(
+      $$('.incident-item', ul).map(el => [el.dataset.id, el])
+    );
+    const seen = new Set();
+
+    STATE.incidents.forEach((inc, idx) => {
+      seen.add(inc.id);
+      let el = existing.get(inc.id);
+      if (!el) {
+        el = document.createElement('li');
+        el.className = 'incident-item';
+        el.dataset.id = inc.id;
+        el.addEventListener('click', () => {
+          STATE.selectedId = el.dataset.id;
+          refresh();
+        });
+      }
+
       const sevN = (inc.alert.severity || '').match(/\d+/)?.[0] || '3';
-      const isActive = inc.id === STATE.selectedId ? 'active' : '';
+      const isActive = inc.id === STATE.selectedId;
+      el.classList.toggle('active', isActive);
+
       const phaseLabel = inc.phase.replace('_', ' ');
       const phaseCls = `phase-${inc.phase}`;
       const elapsed = inc.diagnosis_ms
         ? `${(inc.diagnosis_ms / 1000).toFixed(1)}s`
         : relTime(inc.started_at);
-      return `
-        <li class="incident-item ${isActive}" data-id="${inc.id}">
+
+      // Only touch the inner HTML if something changed — avoids restarting
+      // the pulse animation on the investigating phase pill.
+      const signature = `${inc.alert.service}|${sevN}|${inc.phase}|${elapsed}`;
+      if (el.dataset.signature !== signature) {
+        el.dataset.signature = signature;
+        el.innerHTML = `
           <div class="incident-svc">${escapeHtml(inc.alert.service)}</div>
           <div class="incident-meta">
             <span class="sev-pill sev-${sevN}">SEV-${sevN}</span>
             <span class="phase-pill ${phaseCls}">${phaseLabel}</span>
             <span>${elapsed}</span>
           </div>
-        </li>
-      `;
-    }).join('');
+        `;
+      }
 
-    $$('.incident-item', ul).forEach(el => {
-      el.addEventListener('click', () => {
-        STATE.selectedId = el.dataset.id;
-        refresh();
-      });
+      // Ensure ordering matches the desired index (most-recent first).
+      if (ul.children[idx] !== el) ul.insertBefore(el, ul.children[idx] || null);
     });
+
+    // Remove items that no longer exist.
+    existing.forEach((el, id) => { if (!seen.has(id)) el.remove(); });
   }
 
   function relTime(ts) {
@@ -350,28 +387,52 @@
   }
 
   // ─────────────────────────── activity log ───────────────────────────
+  //
+  // Incremental rendering. We NEVER re-paint old lines — that's what made
+  // the panel flash on every 1s poll. We only append new lines as they
+  // arrive. Switching incidents wipes and starts fresh.
 
   function renderActivity() {
     const ul = $('#activity-log');
     const inc = STATE.fullIncident;
+
     if (!inc || !inc.events?.length) {
-      ul.innerHTML = '<li class="empty">— idle —</li>';
+      if (STATE.activityRenderedFor !== null) {
+        ul.innerHTML = '<li class="empty">— idle —</li>';
+        STATE.activityRenderedFor = null;
+        STATE.activityRenderedCount = 0;
+      }
       return;
     }
 
-    const atBottom = ul.scrollHeight - ul.scrollTop - ul.clientHeight < 12;
+    // Switched incident? Wipe and restart.
+    if (STATE.activityRenderedFor !== inc.id) {
+      ul.innerHTML = '';
+      STATE.activityRenderedFor = inc.id;
+      STATE.activityRenderedCount = 0;
+    }
 
-    ul.innerHTML = inc.events.map(e => {
+    const newEvents = inc.events.slice(STATE.activityRenderedCount);
+    if (!newEvents.length) return;
+
+    const atBottom = ul.scrollHeight - ul.scrollTop - ul.clientHeight < 16;
+    const frag = document.createDocumentFragment();
+
+    for (const e of newEvents) {
+      const li = document.createElement('li');
+      li.className = 'activity-line';
       const t = new Date(e.ts);
       const time = `${pad(t.getHours())}:${pad(t.getMinutes())}:${pad(t.getSeconds())}`;
-      return `
-        <li class="activity-line">
-          <span class="time">${time}</span>
-          <span class="agent agent-${e.agent}">${e.agent}</span>
-          <span class="detail">${escapeHtml(e.detail || '')}</span>
-        </li>
+      li.innerHTML = `
+        <span class="time">${time}</span>
+        <span class="agent agent-${e.agent}">${escapeHtml(e.agent)}</span>
+        <span class="detail">${escapeHtml(e.detail || '')}</span>
       `;
-    }).join('');
+      frag.appendChild(li);
+    }
+
+    ul.appendChild(frag);
+    STATE.activityRenderedCount = inc.events.length;
 
     if (atBottom) ul.scrollTop = ul.scrollHeight;
   }

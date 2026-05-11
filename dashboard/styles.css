@@ -861,11 +861,12 @@ button { cursor: pointer; }
   gap: 8px;
   color: var(--fg-3);
   border-bottom: 1px solid transparent;
-  animation: lineIn 240ms ease both;
+  /* Subtle, single-shot fade — only fires when an element is FIRST inserted */
+  animation: lineIn 320ms ease-out both;
 }
 @keyframes lineIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from { opacity: 0; transform: translateY(2px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .activity-line .time { color: var(--fg-5); }
 .activity-line .agent {
