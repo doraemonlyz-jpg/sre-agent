@@ -1,67 +1,67 @@
 """
 SRE Command Center — Flask dashboard for the multi-agent incident-response system.
 
-v0 endpoints:
-  GET  /                                serves the UI (index.html)
-  GET  /api/scenarios                   list available demo scenarios
-  POST /api/incidents/fire              fire a (mock) alert -> spawns Incident PM
-  GET  /api/incidents                   list all incidents (active + resolved)
-  GET  /api/incidents/<id>              get full incident state + findings
-  POST /api/incidents/<id>/post-slack   (stub) posts the summary to Slack
-  POST /api/sre/datadog/logs            mock Datadog logs API (read by Log Detective)
-  POST /api/sre/datadog/metrics         mock Datadog metrics API
-  POST /api/sre/datadog/traces          mock Datadog APM API
-  POST /api/sre/deploys                 mock deploy / git history API
+v1 (this file): the dashboard spawns **real LangGraph runs** in a background
+thread. Each run produces a typed `IncidentReport`. We expose:
 
-In v0 we DO NOT actually spawn openclaw agents — we run a deterministic
-in-process pipeline using the scenario data. That makes the demo bullet-proof
-and lets users test the UX without a working Ollama install.
-v0.5 will add `--spawn-real-agents` to call openclaw for real.
+  GET  /                                 serves the UI (index.html)
+  GET  /api/scenarios                    list available scenarios
+  POST /api/incidents/fire               fire a (mock) alert -> spawns LangGraph
+  GET  /api/incidents                    list all incidents
+  GET  /api/incidents/<id>               full incident state (legacy-compatible)
+  GET  /api/incidents/<id>/report        the typed Pydantic IncidentReport
+  POST /api/incidents/<id>/post-slack    (stub) Slack preview
+  GET  /api/health                       health probe
+  POST /api/sre/datadog/*                mock Datadog endpoints (kept for back-compat)
+  POST /api/sre/deploys                  mock deploys endpoint
+
+The frontend treats the dashboard as a thin shell — it polls `/api/incidents/<id>`.
+The polling response shape is unchanged from v0 (`findings.{logs,metrics,...}`,
+`hypothesis`, `remediation`) so the existing `app.js` keeps working.
 """
 
 from __future__ import annotations
 
 import json
+import logging
 import os
+import threading
 import time
 import uuid
-import threading
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 from flask import Flask, jsonify, request, send_from_directory
 
+from sre_agent.graph import build_graph
+from sre_agent.logging import setup_logging
+from sre_agent.providers.mock import MockProvider
+from sre_agent.schemas import AlertIn, GraphState, IncidentReport, Severity
+
 # ---------------------------------------------------------------------------
-# Constants & paths
+# Setup
 # ---------------------------------------------------------------------------
 
-PORT = int(os.environ.get("SRE_PORT", "5060"))
+setup_logging()
+logger = logging.getLogger("sre_agent.dashboard")
+
+PORT = int(os.environ.get("SRE_DASHBOARD_PORT") or os.environ.get("SRE_PORT", "5060"))
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
-MOCK_PATH = ROOT / "mocks" / "scenarios.json"
-INCIDENTS_DIR = Path.home() / ".openclaw" / "sre" / "incidents"
+INCIDENTS_DIR = Path.home() / ".sre-agent" / "incidents"
 INCIDENTS_DIR.mkdir(parents=True, exist_ok=True)
 
-# ---------------------------------------------------------------------------
-# Mock data loading
-# ---------------------------------------------------------------------------
-
-with MOCK_PATH.open("r", encoding="utf-8") as f:
-    SCENARIOS: dict[str, dict[str, Any]] = {s["id"]: s for s in json.load(f)["scenarios"]}
-
-
-def _scenario_for_service(service: str) -> dict[str, Any] | None:
-    for s in SCENARIOS.values():
-        if s["alert"]["service"] == service:
-            return s
-    return None
-
+# Single graph instance — checkpointer keeps state across runs.
+_GRAPH = build_graph()
+_MOCK_PROVIDER = MockProvider()
 
 # ---------------------------------------------------------------------------
-# In-memory incident store + simulated pipeline
+# In-memory incident store. State lives in two places:
+# 1. LangGraph's checkpointer (durable, source of truth)
+# 2. This in-memory dict (UI-friendly, fast to read, legacy shape)
 # ---------------------------------------------------------------------------
 
-# incident_id -> dict
 INCIDENTS: dict[str, dict[str, Any]] = {}
 INCIDENTS_LOCK = threading.Lock()
 
@@ -70,120 +70,179 @@ def _now_ms() -> int:
     return int(time.time() * 1000)
 
 
-def _agent_event(incident_id: str, agent: str, action: str, detail: str = "") -> None:
-    """Append a live-activity event the UI streams."""
-    with INCIDENTS_LOCK:
-        inc = INCIDENTS.get(incident_id)
-        if not inc:
-            return
-        inc["events"].append({
-            "ts": _now_ms(),
-            "agent": agent,
-            "action": action,
-            "detail": detail,
-        })
-
-
 def _persist(incident_id: str) -> None:
-    """Persist full incident state to disk (so we survive restarts)."""
     inc = INCIDENTS.get(incident_id)
     if not inc:
         return
     folder = INCIDENTS_DIR / incident_id
     folder.mkdir(parents=True, exist_ok=True)
-    (folder / "INCIDENT.json").write_text(json.dumps(inc, indent=2))
+    (folder / "INCIDENT.json").write_text(json.dumps(inc, indent=2, default=str))
 
 
-def _simulate_pipeline(incident_id: str, scenario_id: str) -> None:
+def _push_event(incident_id: str, ev: dict[str, Any]) -> None:
+    """Append a typed event from the graph to the UI's feed."""
+    with INCIDENTS_LOCK:
+        inc = INCIDENTS.get(incident_id)
+        if inc is None:
+            return
+        inc["events"].append(
+            {
+                "ts": _ts_to_ms(ev.get("ts")),
+                "agent": ev.get("agent", "?"),
+                "action": ev.get("kind", "?"),
+                "detail": ev.get("message", ""),
+            }
+        )
+
+
+def _ts_to_ms(ts: str | None) -> int:
+    """Convert an ISO timestamp string to ms-since-epoch (for the UI)."""
+    if not ts:
+        return _now_ms()
+    try:
+        return int(datetime.fromisoformat(ts.replace("Z", "+00:00")).timestamp() * 1000)
+    except Exception:
+        return _now_ms()
+
+
+# ---------------------------------------------------------------------------
+# Legacy-shape adapters (so frontend doesn't need to change)
+# ---------------------------------------------------------------------------
+
+
+def _evidence_to_legacy(report: IncidentReport) -> dict[str, Any]:
+    """Map the typed report back to the v0 'findings' shape the UI knows."""
+    findings: dict[str, Any] = {}
+
+    if report.logs:
+        findings["logs"] = {
+            "hits": report.logs.hits,
+            "first_at": str(report.logs.first_at) if report.logs.first_at else None,
+            "peak_at": str(report.logs.peak_at) if report.logs.peak_at else None,
+            "top_messages": report.logs.top_messages,
+            "samples": [],
+            "interpretation": report.logs.interpretation,
+        }
+
+    if report.metrics:
+        findings["metrics"] = {
+            m.name: {
+                "baseline": m.baseline,
+                "peak": m.peak,
+                "peak_at": str(m.peak_at) if m.peak_at else None,
+                "verdict": m.verdict,
+            }
+            for m in report.metrics.metrics
+        }
+
+    if report.traces:
+        findings["traces"] = {
+            "traces_inspected": report.traces.traces_inspected,
+            "error_rate": report.traces.error_rate,
+            "hot_span": report.traces.hot_span.model_dump() if report.traces.hot_span else None,
+            "downstream_suspect": report.traces.downstream_suspect,
+        }
+
+    if report.deploys:
+        findings["deploys"] = {
+            "deploys": [d.model_dump(mode="json") for d in report.deploys.deploys],
+            "config_changes": report.deploys.config_changes,
+        }
+
+    return findings
+
+
+def _hypothesis_to_legacy(report: IncidentReport) -> dict[str, Any] | None:
+    if not report.hypotheses or not report.hypotheses.hypotheses:
+        return None
+    top = report.hypotheses.top
+    return {
+        "top": f"{top.title} — {top.detail}",
+        "confidence": top.confidence,
+        "supporting_evidence": top.supporting_evidence,
+        "alternative": (
+            f"{report.hypotheses.hypotheses[1].title}"
+            if len(report.hypotheses.hypotheses) > 1
+            else "(no alternative)"
+        ),
+        "why_not_alternative": top.why_not_alternative,
+    }
+
+
+def _remediation_to_legacy(report: IncidentReport) -> list[dict[str, Any]]:
+    if not report.remediation:
+        return []
+    return [
+        {
+            "step": i,
+            "title": a.title,
+            "command": a.command,
+            "why": a.why,
+            "expected_effect": a.expected_effect,
+            "reversal": a.reversal,
+            "risk": a.risk.value,
+        }
+        for i, a in enumerate(report.remediation.actions, 1)
+    ]
+
+
+# ---------------------------------------------------------------------------
+# The actual pipeline runner — replaces v0's `_simulate_pipeline`.
+# ---------------------------------------------------------------------------
+
+
+def _run_pipeline(incident_id: str, alert: AlertIn) -> None:
     """
-    Deterministic v0 pipeline. Simulates the multi-agent flow using mock data.
-    Each step adds a delay so the live-activity log feels real.
+    Stream the LangGraph run. Each chunk's `events` go to the UI feed; the
+    final state is persisted. Exceptions are caught so a broken LLM doesn't
+    crash the Flask app.
     """
-    scen = SCENARIOS[scenario_id]
     started_at = _now_ms()
+    config = {"configurable": {"thread_id": incident_id}}
+    initial: GraphState = {"alert": alert, "events": []}
 
-    def step(seconds: float):
-        time.sleep(seconds)
+    try:
+        for chunk in _GRAPH.stream(initial, config=config):
+            for _node_name, partial in chunk.items():
+                for ev in partial.get("events", []) or []:
+                    _push_event(incident_id, ev)
 
-    # Step 1: PM receives alert
-    _agent_event(incident_id, "incident-pm", "received", f"alert for {scen['alert']['service']}")
-    step(0.6)
-    _agent_event(incident_id, "incident-pm", "dispatch",
-                 "fan-out to log-detective / metrics-analyst / trace-reader / deploy-historian (parallel)")
-    step(0.4)
+        # Pull final state from checkpointer
+        state = _GRAPH.get_state(config).values
+        report: IncidentReport | None = state.get("report")
+        if report is None:
+            raise RuntimeError("graph completed without producing a report")
 
-    # Step 2: 4 parallel workers (we simulate them as quasi-parallel)
-    _agent_event(incident_id, "log-detective", "querying", "POST /api/sre/datadog/logs")
-    step(0.8)
-    logs = scen["logs"]
-    _agent_event(incident_id, "log-detective", "evidence",
-                 f"{logs['hits']} hits — top: \"{logs['top_messages'][0]['message'][:60]}\"")
-    with INCIDENTS_LOCK:
-        INCIDENTS[incident_id]["findings"]["logs"] = scen["logs"]
+        finished_at = _now_ms()
+        with INCIDENTS_LOCK:
+            inc = INCIDENTS[incident_id]
+            inc["phase"] = report.phase
+            inc["diagnosed_at"] = finished_at
+            inc["diagnosis_ms"] = finished_at - started_at
+            inc["findings"] = _evidence_to_legacy(report)
+            inc["hypothesis"] = _hypothesis_to_legacy(report)
+            inc["remediation"] = _remediation_to_legacy(report)
+            inc["report_json"] = report.model_dump(mode="json", exclude_none=True)
+        _persist(incident_id)
 
-    _agent_event(incident_id, "metrics-analyst", "querying", "5 metrics in parallel")
-    step(0.7)
-    m = scen["metrics"]
-    spikes = [n for n, v in m.items() if "SPIKE" in v["verdict"]]
-    _agent_event(incident_id, "metrics-analyst", "evidence",
-                 f"spike on {', '.join(spikes) or 'nothing — all normal'}")
-    with INCIDENTS_LOCK:
-        INCIDENTS[incident_id]["findings"]["metrics"] = scen["metrics"]
-
-    _agent_event(incident_id, "trace-reader", "querying", "POST /api/sre/datadog/traces")
-    step(0.9)
-    t = scen["traces"]
-    if t["hot_span"]:
-        _agent_event(incident_id, "trace-reader", "evidence",
-                     f"hot span {t['hot_span']['name']} ({t['hot_span']['ratio']} baseline)")
-    else:
-        _agent_event(incident_id, "trace-reader", "evidence", "no anomalous traces")
-    with INCIDENTS_LOCK:
-        INCIDENTS[incident_id]["findings"]["traces"] = scen["traces"]
-
-    _agent_event(incident_id, "deploy-historian", "querying", "GET /api/sre/deploys")
-    step(0.5)
-    d = scen["deploys"]
-    if d["deploys"]:
-        first = d["deploys"][0]
-        _agent_event(incident_id, "deploy-historian", "evidence",
-                     f"PR #{first['pr_url'].rsplit('/',1)[-1]} by @{first['author']}, "
-                     f"{first['minutes_before']}min before — suspect {first['suspect']}")
-    else:
-        _agent_event(incident_id, "deploy-historian", "evidence", "no deploys in window")
-    with INCIDENTS_LOCK:
-        INCIDENTS[incident_id]["findings"]["deploys"] = scen["deploys"]
-
-    # Step 3: Hypothesis Generator
-    step(0.5)
-    _agent_event(incident_id, "hypothesis-gen", "thinking", "combining 4 evidence blocks")
-    step(1.2)
-    hyp = scen["expected_hypothesis"]
-    _agent_event(incident_id, "hypothesis-gen", "evidence",
-                 f"top hypothesis (conf {int(hyp['confidence']*100)}%): {hyp['top'][:80]}…")
-    with INCIDENTS_LOCK:
-        INCIDENTS[incident_id]["hypothesis"] = hyp
-
-    # Step 4: Remediation Suggester
-    step(0.4)
-    _agent_event(incident_id, "remediation-sug", "writing", "REMEDIATION.md (NEVER executes)")
-    step(1.0)
-    rem = scen["expected_remediation"]
-    _agent_event(incident_id, "remediation-sug", "evidence",
-                 f"{len(rem)} actions ranked by reversibility")
-    with INCIDENTS_LOCK:
-        INCIDENTS[incident_id]["remediation"] = rem
-
-    # Step 5: PM stamps INCIDENT.json
-    step(0.3)
-    finished_at = _now_ms()
-    with INCIDENTS_LOCK:
-        INCIDENTS[incident_id]["phase"] = "diagnosed"
-        INCIDENTS[incident_id]["diagnosed_at"] = finished_at
-        INCIDENTS[incident_id]["diagnosis_ms"] = finished_at - started_at
-    _agent_event(incident_id, "incident-pm", "done",
-                 f"INCIDENT.json stamped — diagnosed in {(finished_at - started_at)/1000:.1f}s")
-    _persist(incident_id)
+    except Exception as e:
+        logger.exception("pipeline failed for incident %s", incident_id)
+        finished_at = _now_ms()
+        with INCIDENTS_LOCK:
+            inc = INCIDENTS.get(incident_id) or {}
+            inc["phase"] = "failed"
+            inc["diagnosed_at"] = finished_at
+            inc["diagnosis_ms"] = finished_at - started_at
+            inc["error"] = str(e)
+            inc["events"].append(
+                {
+                    "ts": finished_at,
+                    "agent": "system",
+                    "action": "error",
+                    "detail": f"pipeline crashed: {e}",
+                }
+            )
+        _persist(incident_id)
 
 
 # ---------------------------------------------------------------------------
@@ -192,8 +251,6 @@ def _simulate_pipeline(incident_id: str, scenario_id: str) -> None:
 
 app = Flask(__name__, static_folder=None)
 
-
-# ---- static files ---------------------------------------------------------
 
 @app.route("/")
 def root():
@@ -212,31 +269,61 @@ def static_files(fname: str):
 
 # ---- scenarios / incidents -----------------------------------------------
 
+
 @app.route("/api/scenarios", methods=["GET"])
 def api_scenarios():
-    return jsonify({
-        "scenarios": [
-            {"id": s["id"], "label": s["label"], "service": s["alert"]["service"], "severity": s["alert"]["severity"]}
-            for s in SCENARIOS.values()
-        ]
-    })
+    items = []
+    for s in _MOCK_PROVIDER.list_scenarios():
+        seed = _MOCK_PROVIDER.get_scenario_alert(s["id"])
+        items.append(
+            {
+                "id": s["id"],
+                "label": s["label"],
+                "service": s["service"],
+                "severity": seed["severity"],
+            }
+        )
+    return jsonify({"scenarios": items})
 
 
 @app.route("/api/incidents/fire", methods=["POST"])
 def api_fire():
     payload = request.get_json(force=True, silent=True) or {}
-    scenario_id = payload.get("scenario_id") or next(iter(SCENARIOS))
-    if scenario_id not in SCENARIOS:
-        return jsonify({"error": f"unknown scenario_id: {scenario_id}"}), 400
+    scenario_id = payload.get("scenario_id")
 
-    scen = SCENARIOS[scenario_id]
+    if scenario_id:
+        try:
+            seed = _MOCK_PROVIDER.get_scenario_alert(scenario_id)
+        except KeyError:
+            return jsonify({"error": f"unknown scenario_id: {scenario_id}"}), 400
+        alert = AlertIn(
+            service=seed["service"],
+            severity=Severity(seed["severity"]),
+            description=seed["description"],
+            started_at=seed.get("started_at") or datetime.now(timezone.utc),
+            tags=seed.get("tags", []),
+            scenario_id=scenario_id,
+        )
+    else:
+        # custom alert from request body
+        try:
+            alert = AlertIn(
+                service=payload["service"],
+                severity=Severity(payload.get("severity", "SEV-2")),
+                description=payload["description"],
+                started_at=datetime.now(timezone.utc),
+                tags=payload.get("tags", []),
+            )
+        except (KeyError, ValueError) as e:
+            return jsonify({"error": f"bad alert payload: {e}"}), 400
+
     incident_id = uuid.uuid4().hex[:10]
 
     with INCIDENTS_LOCK:
         INCIDENTS[incident_id] = {
             "id": incident_id,
             "scenario_id": scenario_id,
-            "alert": scen["alert"],
+            "alert": alert.model_dump(mode="json"),
             "phase": "investigating",
             "started_at": _now_ms(),
             "events": [],
@@ -246,8 +333,9 @@ def api_fire():
         }
     _persist(incident_id)
 
-    # spawn pipeline in background
-    threading.Thread(target=_simulate_pipeline, args=(incident_id, scenario_id), daemon=True).start()
+    threading.Thread(
+        target=_run_pipeline, args=(incident_id, alert), daemon=True
+    ).start()
 
     return jsonify({"id": incident_id, "phase": "investigating"})
 
@@ -256,9 +344,17 @@ def api_fire():
 def api_list_incidents():
     with INCIDENTS_LOCK:
         items = sorted(
-            ({"id": i["id"], "alert": i["alert"], "phase": i["phase"], "started_at": i["started_at"],
-              "diagnosed_at": i.get("diagnosed_at"), "diagnosis_ms": i.get("diagnosis_ms")}
-             for i in INCIDENTS.values()),
+            (
+                {
+                    "id": i["id"],
+                    "alert": i["alert"],
+                    "phase": i["phase"],
+                    "started_at": i["started_at"],
+                    "diagnosed_at": i.get("diagnosed_at"),
+                    "diagnosis_ms": i.get("diagnosis_ms"),
+                }
+                for i in INCIDENTS.values()
+            ),
             key=lambda x: -x["started_at"],
         )
     return jsonify({"incidents": items})
@@ -273,17 +369,32 @@ def api_get_incident(incident_id: str):
         return jsonify(inc)
 
 
+@app.route("/api/incidents/<incident_id>/report", methods=["GET"])
+def api_get_incident_report(incident_id: str):
+    """Returns the strict, typed Pydantic IncidentReport — for tooling/API consumers."""
+    with INCIDENTS_LOCK:
+        inc = INCIDENTS.get(incident_id)
+        if not inc:
+            return jsonify({"error": "not found"}), 404
+        report = inc.get("report_json")
+        if not report:
+            return jsonify({"error": "still investigating"}), 409
+        return jsonify(report)
+
+
 @app.route("/api/incidents/<incident_id>/post-slack", methods=["POST"])
 def api_post_slack(incident_id: str):
     with INCIDENTS_LOCK:
         inc = INCIDENTS.get(incident_id)
         if not inc or not inc.get("hypothesis"):
             return jsonify({"error": "not diagnosed yet"}), 400
-    return jsonify({
-        "ok": True,
-        "note": "v0 stub — in v1 this will POST to a real Slack webhook",
-        "preview": _slack_preview(inc),
-    })
+    return jsonify(
+        {
+            "ok": True,
+            "note": "v1 stub — set SLACK_WEBHOOK_URL to enable real posting",
+            "preview": _slack_preview(inc),
+        }
+    )
 
 
 def _slack_preview(inc: dict[str, Any]) -> str:
@@ -298,26 +409,32 @@ def _slack_preview(inc: dict[str, Any]) -> str:
     )
 
 
-# ---- mock Datadog APIs (read by workers in v0.5+) ------------------------
+# ---- mock data APIs (kept for back-compat / debugging) -------------------
+
+
+def _scenario_for_service(service: str) -> dict[str, Any] | None:
+    """Legacy lookup used by the mock endpoints below."""
+    for sid in _MOCK_PROVIDER._scenarios:
+        s = _MOCK_PROVIDER._scenarios[sid]
+        if s["alert"]["service"] == service:
+            return s
+    return None
+
 
 @app.route("/api/sre/datadog/logs", methods=["POST"])
 def api_dd_logs():
     body = request.get_json(force=True, silent=True) or {}
-    service = body.get("service", "")
-    scen = _scenario_for_service(service)
-    if not scen:
-        return jsonify({"hits": 0, "samples": []}), 200
-    return jsonify(scen["logs"])
+    scen = _scenario_for_service(body.get("service", ""))
+    return jsonify(scen["logs"] if scen else {"hits": 0, "samples": []})
 
 
 @app.route("/api/sre/datadog/metrics", methods=["POST"])
 def api_dd_metrics():
     body = request.get_json(force=True, silent=True) or {}
-    service = body.get("service", "")
-    metric = body.get("metric")
-    scen = _scenario_for_service(service)
+    scen = _scenario_for_service(body.get("service", ""))
     if not scen:
-        return jsonify({}), 200
+        return jsonify({})
+    metric = body.get("metric")
     if metric:
         return jsonify(scen["metrics"].get(metric, {}))
     return jsonify(scen["metrics"])
@@ -326,46 +443,42 @@ def api_dd_metrics():
 @app.route("/api/sre/datadog/traces", methods=["POST"])
 def api_dd_traces():
     body = request.get_json(force=True, silent=True) or {}
-    service = body.get("service", "")
-    scen = _scenario_for_service(service)
-    if not scen:
-        return jsonify({"traces_inspected": 0, "sample_trace_ids": []}), 200
-    return jsonify(scen["traces"])
+    scen = _scenario_for_service(body.get("service", ""))
+    return jsonify(scen["traces"] if scen else {"traces_inspected": 0, "sample_trace_ids": []})
 
 
 @app.route("/api/sre/deploys", methods=["POST"])
 def api_deploys():
     body = request.get_json(force=True, silent=True) or {}
-    services = body.get("services") or []
-    if not services:
-        return jsonify({"deploys": [], "config_changes": []})
-    # In v0 we just use the first matching service.
-    for svc in services:
+    for svc in body.get("services") or []:
         scen = _scenario_for_service(svc)
         if scen:
             return jsonify(scen["deploys"])
     return jsonify({"deploys": [], "config_changes": []})
 
 
-# ---------------------------------------------------------------------------
-# Health
-# ---------------------------------------------------------------------------
+# ---- health --------------------------------------------------------------
+
 
 @app.route("/api/health", methods=["GET"])
 def api_health():
-    return jsonify({
-        "ok": True,
-        "scenarios": len(SCENARIOS),
-        "active_incidents": sum(1 for i in INCIDENTS.values() if i["phase"] == "investigating"),
-        "total_incidents": len(INCIDENTS),
-    })
+    return jsonify(
+        {
+            "ok": True,
+            "scenarios": len(_MOCK_PROVIDER.list_scenarios()),
+            "active_incidents": sum(
+                1 for i in INCIDENTS.values() if i["phase"] == "investigating"
+            ),
+            "total_incidents": len(INCIDENTS),
+            "checkpointer": os.environ.get("SRE_CHECKPOINTER", "sqlite"),
+            "llm_provider": os.environ.get("SRE_LLM_PROVIDER") or "auto",
+        }
+    )
 
 
-# ---------------------------------------------------------------------------
-# Entry point
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
     print(f"SRE Command Center on http://127.0.0.1:{PORT}")
-    print(f"   {len(SCENARIOS)} demo scenarios loaded from {MOCK_PATH}")
+    print(f"   {len(_MOCK_PROVIDER.list_scenarios())} demo scenarios loaded")
     app.run(host="127.0.0.1", port=PORT, debug=False, threaded=True)

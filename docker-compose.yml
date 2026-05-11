@@ -1,0 +1,81 @@
+# Production-shaped stack:
+# - dashboard:  the Flask + LangGraph service
+# - postgres:   the durable checkpointer (survives restarts)
+# - ollama:     optional — local LLM, no API keys needed (uncomment)
+#
+# Quick start:
+#   cp .env.example .env       # fill in API keys
+#   docker compose up --build  # dashboard at http://localhost:5060
+#
+# Switch to a cloud LLM by setting OPENAI_API_KEY or ANTHROPIC_API_KEY in .env.
+
+services:
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: sre-agent:latest
+    container_name: sre-agent-dashboard
+    restart: unless-stopped
+    ports:
+      - "5060:5060"
+    environment:
+      SRE_CHECKPOINTER: postgres
+      DATABASE_URL: postgresql://sre:sre@postgres:5432/sre_agent
+      SRE_DATA_PROVIDER: ${SRE_DATA_PROVIDER:-mock}
+      SRE_LLM_PROVIDER: ${SRE_LLM_PROVIDER:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://ollama:11434}
+      SRE_LOG_LEVEL: ${SRE_LOG_LEVEL:-INFO}
+      SRE_LOG_JSON: "true"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://127.0.0.1:5060/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: sre-agent-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: sre
+      POSTGRES_PASSWORD: sre
+      POSTGRES_DB: sre_agent
+    volumes:
+      - sre_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sre -d sre_agent"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # Uncomment to run Ollama locally inside docker-compose.
+  # (Note: on Apple Silicon, hosts can usually reach `host.docker.internal`
+  # if you already have Ollama installed locally — no need for this container.)
+  #
+  # ollama:
+  #   image: ollama/ollama:latest
+  #   container_name: sre-agent-ollama
+  #   restart: unless-stopped
+  #   ports:
+  #     - "11434:11434"
+  #   volumes:
+  #     - sre_ollama:/root/.ollama
+  #   # Pre-pull models on startup; comment out if doing it manually.
+  #   command: >
+  #     sh -c "ollama serve &
+  #            sleep 5 &&
+  #            ollama pull qwen2.5-coder:7b &&
+  #            ollama pull gpt-oss:20b &&
+  #            wait"
+
+volumes:
+  sre_pgdata: {}
+  # sre_ollama: {}

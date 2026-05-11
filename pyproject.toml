@@ -1,0 +1,103 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sre-agent"
+version = "0.1.0"
+description = "Multi-agent AI on-call assistant. Alert → 7 agents → ranked remediation. Human-in-the-loop."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "doraemonlyz-jpg" },
+]
+keywords = ["sre", "incident-response", "multi-agent", "langgraph", "llm", "on-call"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development",
+    "Topic :: System :: Monitoring",
+]
+dependencies = [
+    # Core graph orchestration
+    "langgraph>=0.2.50",
+    "langgraph-checkpoint-sqlite>=2.0.1",
+    "langchain-core>=0.3.20",
+
+    # Model providers (all optional at runtime, factory picks one)
+    "langchain-openai>=0.2.10",
+    "langchain-anthropic>=0.3.1",
+    "langchain-ollama>=0.2.1",
+
+    # I/O validation
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+
+    # CLI + UI
+    "typer>=0.15.1",
+    "rich>=13.9.4",
+
+    # Dashboard
+    "flask>=3.0.3",
+    "gunicorn>=23.0.0",
+
+    # Observability
+    "structlog>=24.4.0",
+
+    # Persistence for prod
+    "psycopg[binary]>=3.2.3",
+    "langgraph-checkpoint-postgres>=2.0.6",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.4",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.8.4",
+    "mypy>=1.13.0",
+    "httpx>=0.28.1",  # for testing Flask
+]
+
+[project.scripts]
+sre-agent = "sre_agent.cli:app"
+
+[project.urls]
+"Homepage"   = "https://github.com/doraemonlyz-jpg/sre-agent"
+"Repository" = "https://github.com/doraemonlyz-jpg/sre-agent"
+"Tutorial"   = "https://github.com/doraemonlyz-jpg/openclaw-setup-guide"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"sre_agent" = ["py.typed"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["E501"]  # handled by formatter
+
+[tool.mypy]
+python_version = "3.10"
+strict = false
+warn_return_any = true
+disallow_untyped_defs = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra -q --strict-markers"
+asyncio_mode = "auto"

@@ -1,4 +1,10 @@
-# SRE Agent System — v0 Design
+# SRE Agent System — v1 Design (production)
+
+> **v1 update** — this design is now production-shaped. The orchestration is
+> implemented in [LangGraph](https://langchain-ai.github.io/langgraph/), agents
+> use real LLMs via a model-agnostic factory, state is checkpointed to Postgres
+> for restart-safety, and every node has a rule-based fallback for when the LLM
+> is unavailable. See § 11 (Implementation) for the production stack.
 
 > A multi-agent on-call assistant. When an alert fires, the system automatically
 > investigates across logs, metrics, traces, and recent deploys, then proposes
@@ -289,3 +295,135 @@ oncall already saves time because they don't have to start from zero.
 4. **Eval data**: any past real Datadog incidents I can replay for the eval suite? (v1.5)
 
 For v0 tonight, we don't need answers to any of these. We use mock alerts + canned Datadog responses.
+
+---
+
+## 11. Implementation (v1, this branch)
+
+The design above is the contract. This section describes how it's actually built.
+
+### 11.1 Orchestration: LangGraph
+
+We picked LangGraph over hand-rolled threading or a chat framework (LangChain agents, CrewAI, AutoGen) because:
+
+- **First-class parallel fan-out** — we can declare "PM has 4 children" and the
+  framework runs them concurrently and merges their outputs with a reducer.
+- **Stateful checkpointing** — every node transition writes to SQLite/Postgres,
+  so an incident survives a pod restart mid-investigation.
+- **Conditional edges** — `if hypothesis.confidence < 0.4 → no_signal_path`
+  is a one-liner.
+- **Mature ecosystem** — `with_structured_output(SomePydanticModel)` is
+  built-in and handles the JSON-schema dance.
+
+The graph is defined in `src/sre_agent/graph.py`. It compiles to the same
+topology as the diagram in § 3.
+
+### 11.2 Typed I/O: Pydantic
+
+Every agent's input and output is a Pydantic model. Critical examples:
+
+```python
+class LogsEvidence(_EvidenceBase):
+    source: Literal["datadog-logs"] = "datadog-logs"
+    result: EvidenceResult                # enum: FOUND | NO_SIGNAL | ERROR
+    hits: int = Field(..., ge=0)          # can't be negative
+    citations: list[str] = []             # log IDs the PM can re-verify
+    interpretation: str = Field(..., max_length=400)
+
+class RemediationAction(BaseModel):
+    title: str
+    command: str                          # exact copy-paste shell command
+    why: str
+    expected_effect: str
+    reversal: str                         # REQUIRED — no actions without an undo path
+    risk: Literal["LOW", "MEDIUM", "HIGH", "NONE"]
+```
+
+The schemas are the structural EVIDENCE-block gate from v0 — but now enforced
+by Python's type system instead of regex parsing. `LangChain`'s
+`.with_structured_output(Schema)` ensures the LLM returns JSON that fits the
+schema; if it doesn't, we retry.
+
+### 11.3 Model factory
+
+```python
+get_chat_model(role="orchestrator")  # PM, Hypothesis, Remediation
+get_chat_model(role="worker")        # 4 parallel investigators
+```
+
+The factory picks a provider in this order:
+1. `SRE_LLM_PROVIDER` env var (explicit)
+2. `OPENAI_API_KEY` set → OpenAI
+3. `ANTHROPIC_API_KEY` set → Anthropic
+4. Else → Ollama (local)
+
+Per-role models are tunable independently (`SRE_LLM_ORCHESTRATOR=gpt-4o`,
+`SRE_LLM_WORKER=gpt-4o-mini`) so you can spend smart cents per incident.
+
+### 11.4 Graceful degradation
+
+Every node wraps its LLM call in a try/except and falls back to either:
+
+- A rule-based interpretation generated from raw data (for workers)
+- A minimal "LLM unavailable, escalating to human" plan (for synthesizers)
+
+The fallback always produces a valid `IncidentReport` with `confidence ≤ 0.30`
+so the on-call sees something. The test suite pins LLM at an unreachable URL
+and asserts the pipeline still produces a useful report — this is the
+**regression gate** for production reliability.
+
+### 11.5 Persistence
+
+| Mode | Backing store | When |
+|---|---|---|
+| `SRE_CHECKPOINTER=sqlite` (default) | `./.state/checkpoints.db` | local dev, CI |
+| `SRE_CHECKPOINTER=postgres` | `$DATABASE_URL` | production |
+
+LangGraph checkpoints after every node. If the dashboard pod crashes between
+"Log Detective FOUND" and "Hypothesis Generator", the next pod resumes from
+the saved state instead of re-investigating from scratch.
+
+### 11.6 Deployment topology
+
+```
+                ┌──────────────────────────┐
+                │     ingress / nginx       │
+                └──────┬───────────────┬───┘
+                       │               │
+                       ▼               ▼
+                ┌──────────────┐  ┌──────────────┐
+                │  gunicorn 1  │  │  gunicorn 2  │   (4 workers × 2 threads)
+                │  Flask + LG  │  │  Flask + LG  │
+                └──────┬───────┘  └──────┬───────┘
+                       │                 │
+                       └────────┬────────┘
+                                ▼
+                       ┌────────────────┐
+                       │   Postgres     │   (LangGraph checkpoints + history)
+                       └────────────────┘
+                                ▲
+                                │
+                       ┌────────┴────────┐
+                       │   OpenAI /      │
+                       │   Anthropic /   │
+                       │   Ollama        │
+                       └─────────────────┘
+```
+
+`docker compose up --build` brings this up locally. For real prod, drop the
+`Dockerfile` into your container platform of choice (ECS, k8s, Cloud Run) and
+point `DATABASE_URL` at a managed Postgres.
+
+### 11.7 What's still v1.1+
+
+The pipeline is production-shaped, but a few seams still point at mocks:
+
+- **DatadogProvider** is a stub — needs real Logs/Metrics/APM API calls
+- **PagerDuty webhook** — `/api/incidents/fire` is open today; needs HMAC verification
+- **Slack posting** — preview exists; needs the actual `chat.postMessage` call
+- **OpenTelemetry** — `structlog` is wired but no spans yet
+- **Auth** — none today; v1.1 adds bearer tokens
+
+These are all "swap one provider/integration in" jobs; the agent design and
+LangGraph are stable.
+

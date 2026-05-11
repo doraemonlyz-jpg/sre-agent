@@ -1,151 +1,234 @@
-# SRE Agent — Multi-Agent Incident Response (v0)
+# SRE Agent — Multi-Agent Incident Response
 
-[![status](https://img.shields.io/badge/status-v0%20demo-cyan)]()
+[![status](https://img.shields.io/badge/status-v1%20production-success)]()
 [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![python](https://img.shields.io/badge/python-3.10%2B-blue)]()
+[![langgraph](https://img.shields.io/badge/orchestration-LangGraph-purple)]()
+[![tests](https://img.shields.io/badge/tests-30%20passing-brightgreen)]()
 
-> A small AI on-call team. PagerDuty / Datadog fires an alert,
-> 7 specialized agents fan out across logs / metrics / traces / deploys,
-> a hypothesis generator ranks root causes,
-> a remediation suggester writes the fix — **never executes it**.
-> Diagnosis target: **< 90 seconds**.
-
-![SRE Command Center](https://img.shields.io/badge/UI-cyberpunk%20command%20center-purple)
-
-This project reuses every safety pattern from the OpenClaw boss-company tutorial
-([openclaw-setup-guide](https://github.com/doraemonlyz-jpg/openclaw-setup-guide)):
-
-- **Hub-and-spoke** orchestration (Incident PM = router, never a worker)
-- **Lane discipline** — each worker has explicit ALLOWED / FORBIDDEN writes
-- **Structural EVIDENCE gates** — machine-readable blocks, not freeform prose
-- **Trust-but-verify** — PM re-reads every claimed artifact
-- **Human-in-the-loop remediation** — agents never mutate prod in v0
+> An AI on-call team. A monitoring alert fires → 7 specialized agents fan out
+> across logs / metrics / traces / deploys → a hypothesis generator ranks root
+> causes with citations → a remediation suggester writes the fix.
+> **The agents never execute remediation.** Diagnosis target: **< 90 seconds**.
 
 ---
 
-## Quick start (60 seconds)
+## What changed in v1 (this branch)
+
+v0 was a deterministic demo: agents were "simulated" by a Python script that
+pretended to be a multi-agent system. v1 is a real production system:
+
+| Layer | v0 | v1 |
+|---|---|---|
+| Orchestration | hand-rolled `threading.Thread` | **LangGraph** (parallel fan-out, conditional edges, checkpointing) |
+| State | in-memory dict | **SQLite (dev) / Postgres (prod)** checkpointer — survives restarts |
+| Model | none (text simulation) | **Ollama / OpenAI / Anthropic** via factory |
+| Output | text strings | **Pydantic structured output** — LLM forced to return typed JSON |
+| Failure mode | crash | **Graceful degradation** — every node has a rule-based fallback |
+| Deploy | python script | **Docker + docker-compose + Postgres** |
+| Tests | none | **30 pytest cases** covering schemas, mock provider, full graph, dashboard |
+
+---
+
+## Quick start
+
+### Option A — local dev (no Docker)
 
 ```bash
+git clone https://github.com/doraemonlyz-jpg/sre-agent.git
 cd sre-agent
-./setup.sh
-open http://127.0.0.1:5060
+python -m venv .venv && source .venv/bin/activate
+pip install -e ".[dev]"
+
+# Try the CLI
+sre-agent scenarios
+sre-agent investigate --scenario redis-pool-exhaustion
+
+# Or boot the dashboard
+python dashboard/app.py     # http://127.0.0.1:5060
 ```
 
-Click **+ FIRE ALERT** and pick one of the 3 demo scenarios:
+### Option B — Docker (production-shaped, with Postgres)
 
-| Scenario | What you'll see |
-|---|---|
-| **Redis pool exhaustion after deploy** | Classic: deploy 28 min before, error rate 192×, slow `redis.get` span, rollback suggested |
-| **False positive** | 1-min p99 blip from a single user — system correctly says "no signal" |
-| **Downstream cascade** | The alerted service is healthy; the broken service is its upstream `auth-service`. The agent finds the real culprit. |
+```bash
+cp .env.example .env       # add OPENAI_API_KEY or leave blank for Ollama
+docker compose up --build  # dashboard at http://localhost:5060
+```
 
-Each scenario takes ~7 seconds end-to-end. The live agent log on the right shows you the multi-agent dispatch.
+### Option C — local LLM (Ollama)
+
+```bash
+# Pre-pull the models
+ollama pull qwen2.5-coder:7b
+ollama pull gpt-oss:20b
+
+# Tell the agent to use Ollama
+export SRE_LLM_PROVIDER=ollama
+sre-agent investigate --scenario redis-pool-exhaustion
+```
 
 ---
 
-## What's in the box
+## Architecture
+
+```
+                ┌──────────────┐
+                │ incident_pm  │   open incident
+                └──────┬───────┘
+                       │
+            ┌──────────┼──────────┐──────────────┐
+            ▼          ▼          ▼              ▼
+       log_detec  metrics_an  trace_rdr    deploy_hist     (parallel)
+            │          │          │              │
+            └──────────┴──────────┴──────────────┘
+                       │
+                       ▼
+              ┌──────────────────┐
+              │ hypothesis_gen   │   rank root causes
+              └─────────┬────────┘
+                        ▼
+              ┌──────────────────┐
+              │ remediation_sug  │   suggest fix (never executes)
+              └─────────┬────────┘
+                        ▼
+              ┌──────────────────┐
+              │     finalize     │   write IncidentReport
+              └──────────────────┘
+                        ▼
+                       END
+```
+
+Each node is a small Python function that:
+
+1. Reads typed state from `GraphState` (TypedDict)
+2. Optionally calls a `DataProvider` (mock / Datadog)
+3. Optionally calls an LLM via `.with_structured_output(SomePydanticModel)`
+4. Returns a partial dict; LangGraph merges via reducer
+
+The whole pipeline is **checkpointed** — if the dashboard pod crashes mid-incident,
+the graph resumes from the last completed node on restart.
+
+See [DESIGN.md](DESIGN.md) for the full architecture.
+
+---
+
+## Layout
 
 ```
 sre-agent/
-├── DESIGN.md                 # full architecture + flow + roadmap
-├── README.md                 # this file
-├── setup.sh                  # one-shot setup
-├── personas/                 # 7 agent personas (markdown)
-│   ├── incident-pm.md
-│   ├── log-detective.md
-│   ├── metrics-analyst.md
-│   ├── trace-reader.md
-│   ├── deploy-historian.md
-│   ├── hypothesis-gen.md
-│   └── remediation-sug.md
-├── dashboard/                # Flask web UI
-│   ├── app.py                # backend (mock Datadog APIs + pipeline simulator)
-│   ├── index.html
-│   ├── styles.css            # cyberpunk theme, reused from boss-dashboard
-│   ├── app.js
-│   └── requirements.txt
-└── mocks/
-    └── scenarios.json        # 3 hand-built demo incidents with realistic data
+├── src/sre_agent/           # the Python package
+│   ├── schemas.py            # Pydantic: AlertIn, EvidenceBlock, Hypothesis, …
+│   ├── graph.py              # LangGraph wiring
+│   ├── state.py              # (see schemas.py — GraphState lives there)
+│   ├── nodes/                # one file per agent
+│   │   ├── incident_pm.py
+│   │   ├── log_detective.py
+│   │   ├── metrics_analyst.py
+│   │   ├── trace_reader.py
+│   │   ├── deploy_historian.py
+│   │   ├── hypothesis_gen.py
+│   │   └── remediation_sug.py
+│   ├── providers/
+│   │   ├── base.py           # DataProvider ABC
+│   │   ├── mock.py           # uses mocks/scenarios.json
+│   │   └── datadog.py        # stub for real Datadog (v1.1)
+│   ├── models/factory.py     # Ollama / OpenAI / Anthropic factory
+│   ├── personas.py           # loads personas/*.md as system prompts
+│   ├── logging.py            # structlog setup
+│   └── cli.py                # `sre-agent ...` Typer CLI
+├── personas/                 # 7 agent personas (markdown, used as system prompts)
+├── mocks/scenarios.json      # 3 demo incidents
+├── dashboard/                # Flask UI; backend just spawns LangGraph runs
+├── tests/                    # pytest, 30 cases, fully offline
+├── pyproject.toml
+├── Dockerfile
+├── docker-compose.yml
+└── .env.example
 ```
 
 ---
 
-## How v0 works (vs v0.5 and beyond)
+## Configuration
 
-**v0 (this version)** — *deterministic, agents are simulated.*
-- The dashboard runs a Python pipeline that mimics the 7-agent flow with realistic timings (~0.5-1.5s per agent step).
-- All "EVIDENCE" comes from `mocks/scenarios.json`.
-- Lets you test the **UX, the persona shape, and the dashboard wiring** without depending on Ollama.
+Every knob is an environment variable. See `.env.example` for the full list.
 
-**v0.5** — *real local agents.*
-- Same dashboard. Same 7 personas. Same EVIDENCE block contract.
-- The dashboard's `/api/incidents/fire` endpoint spawns a real `openclaw agent --agent incident-pm`.
-- Workers still query the mock Datadog endpoints — but now via real `curl` from real agents.
-- This is when you'd evaluate whether the personas hold up against `gpt-oss:20b`.
-
-**v1** — *real Datadog + Slack.*
-- Mock endpoints get swapped for the real Datadog MCP server (already available in this workspace).
-- A real PagerDuty webhook routes into `/api/incidents/fire`.
-- Slack integration posts the diagnosis to a channel.
-
-The dashboard surface, the EVIDENCE contract, and the personas **do not change** between v0 → v1. Only the data plumbing.
-
----
-
-## Why this beats a single GPT-4o call
-
-| Concern | Single Agent | Multi-Agent (this) |
+| Var | Default | Purpose |
 |---|---|---|
-| Latency | ~30s sequential | ~10s parallel (4 workers concurrent) |
-| Trust boundaries | One agent reads logs+metrics+executes | Remediation Suggester literally cannot mutate prod |
-| Specialization | One big prompt for everything | Each persona is 1-2k tokens of role-specific guidance |
-| Hallucination | "I checked the logs" with no proof | EVIDENCE block with `log_id` citations the PM re-verifies |
-| Cost | $0.10-$0.50 per incident | ~$0.02 per incident (local model + parallelism) |
+| `SRE_LLM_PROVIDER` | auto | `openai` / `anthropic` / `ollama` |
+| `SRE_LLM_ORCHESTRATOR` | per-provider | model used by PM, Hypothesis, Remediation |
+| `SRE_LLM_WORKER` | per-provider | model used by the 4 parallel workers |
+| `SRE_DATA_PROVIDER` | `mock` | `mock` reads scenarios.json; `datadog` (v1.1) hits the real API |
+| `SRE_CHECKPOINTER` | `sqlite` | `sqlite` (local file) or `postgres` (prod) |
+| `DATABASE_URL` | – | Postgres DSN, used when `SRE_CHECKPOINTER=postgres` |
+| `SRE_DASHBOARD_PORT` | `5060` | the Flask UI port |
 
 ---
 
-## Comparing to the market
+## Safety properties
+
+These are enforced by the type system, not by prompts:
+
+| Property | How |
+|---|---|
+| **Agents never execute remediation** | `RemediationPlan.actions` is a list of `(title, command, reversal)` triples — only shown in UI |
+| **Every remediation has a reversal** | Pydantic field required, validated at parse time |
+| **Workers cannot hallucinate evidence** | Each `EvidenceResult` is `FOUND` / `NO_SIGNAL` / `ERROR` — typed enum, can't be prose |
+| **Citations are typed** | `LogsEvidence.citations: list[str]` of log IDs; PM can re-query |
+| **Graph survives restarts** | `SqliteSaver` / `PostgresSaver` checkpoints after every node |
+| **LLM failure is graceful** | Every node has a rule-based fallback; tests pin LLM to unreachable host |
+
+---
+
+## Comparison
 
 | Tool | Their angle | Ours |
 |---|---|---|
-| Resolve.ai ($35M Series A) | SaaS, k8s-native, auto-remediation | Self-hosted, local-first, human-in-the-loop |
+| Resolve.ai ($35M Series A) | SaaS, auto-remediation | Self-hosted, local-first, human-in-the-loop |
 | Cleric AI | SRE chat copilot | Webhook-driven pipeline, not chat |
-| Datadog Bits AI | Inline summaries on Datadog dashboards | Outside Datadog, cross-tool correlation |
-| Honeycomb / Coralogix | "ask your logs" | "diagnose this alert end-to-end" |
+| Datadog Bits AI | inline summaries | cross-tool correlation, structural citations |
+| Honeycomb | "ask your logs" | "diagnose this alert end-to-end" |
 
-The unique angle: **the structural EVIDENCE-block contract** is what makes it
-ship-able into a real on-call rotation. Most LLM ops tools fail because they
-hallucinate citations. Ours can't — the PM rejects replies without verifiable
-log/trace IDs.
-
----
-
-## Roadmap
-
-See `DESIGN.md` § 7. TL;DR:
-
-- v0 (today): mock pipeline + dashboard
-- v0.5 (+1 day): real Ollama agents driving the same dashboard
-- v1 (+1 week): real Datadog MCP + PagerDuty webhook + Slack
-- v1.5 (+2 weeks): eval pipeline against 10 real historical incidents
-- v2 (+1 month): GitHub deploy correlation, k8s read-only context
-- v3 (+3 months): optional auto-remediation with kill-switch
+Unique selling point: **the typed `EvidenceBlock` contract**. Most LLM ops
+tools fail because they hallucinate citations. Pydantic schemas + structured
+output mean ours physically cannot return a hypothesis without verifiable
+log/trace/PR IDs the PM re-checks.
 
 ---
 
-## Stopping the dashboard
+## Tests
 
 ```bash
-kill $(cat /tmp/sre-dashboard.pid)
+pytest                       # 30 cases, no network, runs in ~20s
+pytest --cov=sre_agent       # coverage report
 ```
+
+The test suite **does not call any real LLM**. Every test pins the LLM factory
+to an unreachable Ollama URL and asserts that the graph still produces a valid
+`IncidentReport`. This is the regression gate for our "graceful degradation"
+property.
 
 ---
 
-## What this isn't (yet)
+## What's still TODO (v1.1+)
 
-- ❌ Not production-grade auth (anyone on your loopback can fire alerts)
-- ❌ Not connected to real PagerDuty / Datadog (v1)
-- ❌ Real agents not wired in (v0.5)
-- ❌ No persistent metrics across restarts (incidents stay in memory + disk JSON)
+- [ ] Real Datadog provider (Logs API v2, Metrics v1, APM v2)
+- [ ] PagerDuty webhook receiver (`POST /api/webhooks/pagerduty`)
+- [ ] Slack posting with action buttons
+- [ ] OpenTelemetry tracing on every node
+- [ ] Auth: bearer token + per-team isolation
+- [ ] Eval suite: 10 hand-labeled historical incidents, accuracy ≥ 80%
 
-Those are explicit v0 cuts. The point of v0 is to validate the **UX and the agent shape** before plumbing real systems in.
+---
+
+## Related projects
+
+The architecture patterns (lane discipline, typed evidence, hub-and-spoke,
+trust-but-verify) come from the tutorial
+[**openclaw-setup-guide**](https://github.com/doraemonlyz-jpg/openclaw-setup-guide) —
+which walks through building a multi-agent system from first principles.
+
+---
+
+## License
+
+MIT
