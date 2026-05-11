@@ -268,6 +268,37 @@ button { cursor: pointer; }
 .dot-mag  { background: var(--grn);    box-shadow: 0 0 0 3px var(--grn-bg); }
 .dot-grn  { background: var(--cyan);   box-shadow: 0 0 0 3px var(--cyan-bg); }
 
+/* Language toggle — sleek dual-segment pill */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  margin: 0 4px 0 6px;
+}
+.lang-toggle button {
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: var(--t-2xs);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--fg-4);
+  cursor: pointer;
+  transition: color 100ms ease, background 100ms ease;
+}
+.lang-toggle button:hover { color: var(--fg-2); }
+.lang-toggle button.active {
+  color: var(--fg);
+  background: var(--bg-tint-2);
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+}
+
 /* Primary action button — gradient violet→rose */
 .btn-fire {
   position: relative;
