@@ -67,6 +67,32 @@ export SRE_LLM_PROVIDER=ollama
 sre-agent investigate --scenario redis-pool-exhaustion
 ```
 
+### Option D — full open-source demo (Prometheus + Loki + buggy app)
+
+A self-contained world where the agent runs against **real** observability
+infrastructure instrumenting a deliberately buggy service. See
+[`demo-stack/`](demo-stack/README.md) for the full 60-second recipe.
+
+```bash
+# Bring up Prometheus + Loki + Grafana + chaos-app
+docker compose -f demo-stack/docker-compose.yml up -d --build
+
+# Point the SRE Agent at it
+export SRE_DATA_PROVIDER=oss
+export PROMETHEUS_URL=http://localhost:9090
+export LOKI_URL=http://localhost:3100
+python dashboard/app.py
+
+# In another terminal: generate load until /redis-leak exhausts the
+# "pool", then fire a webhook alert
+./demo-stack/scripts/generate-load.sh 80
+./demo-stack/scripts/fire-alert.sh
+```
+
+The dashboard now shows 7 agents fanning out across real Prometheus +
+Loki APIs, producing a ranked root-cause hypothesis with confidence and
+supporting evidence. **This is the demo to record for an interview.**
+
 ---
 
 ## Architecture
@@ -197,9 +223,17 @@ log/trace/PR IDs the PM re-checks.
 
 ## Connecting to your stack
 
-The Provider abstraction is **fully implemented for Datadog** and the webhook
-ingestion accepts **Datadog Monitor / PagerDuty / generic JSON** payloads
-out of the box.
+The Provider abstraction supports **Datadog** and a **Prometheus + Loki**
+composite out of the box. Webhook ingestion accepts **Datadog Monitor /
+PagerDuty / generic JSON** payloads.
+
+| `SRE_DATA_PROVIDER` | logs | metrics | traces | deploys |
+|---------------------|:----:|:-------:|:------:|:-------:|
+| `mock` (default)    |  ✓   |    ✓    |   ✓    |    ✓    |
+| `datadog`           |  ✓   |    ✓    |   ✓    |    ✓    |
+| `prometheus`        |  —   |    ✓    |   —    |    —    |
+| `loki`              |  ✓   |    —    |   —    |    —    |
+| `oss` (prom+loki)   |  ✓   |    ✓    |   —    |    —    |
 
 ### Real-data Datadog provider
 
@@ -264,7 +298,7 @@ a dry-run preview the user can paste manually.
 ## Tests
 
 ```bash
-pytest                       # 67 cases, no network, runs in ~25s
+pytest                       # 87 cases, no network, runs in ~25s
 pytest --cov=sre_agent       # coverage report
 ```
 
@@ -280,7 +314,8 @@ production code.
 - [x] Real Datadog provider (Logs API v2, Metrics v1, APM v2)
 - [x] Webhook receiver (Datadog Monitor / PagerDuty / generic)
 - [x] Real Slack notifier (Block Kit + dry-run mode)
-- [ ] Prometheus / Loki provider (open-source observability stack)
+- [x] Prometheus / Loki providers + open-source demo stack
+- [ ] Tempo / Jaeger provider for traces (open-source stack)
 - [ ] Slack message buttons that POST back into `/api/incidents/<id>/action`
 - [ ] OpenTelemetry tracing on every node
 - [ ] Auth: bearer token + per-team isolation

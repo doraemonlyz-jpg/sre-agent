@@ -25,8 +25,8 @@ from sre_agent.schemas import (
     EvidenceResult,
     HotSpan,
     LogsEvidence,
-    MetricSnapshot,
     MetricsEvidence,
+    MetricSnapshot,
     TracesEvidence,
 )
 

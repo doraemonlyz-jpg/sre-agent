@@ -1,0 +1,76 @@
+# Demo stack for the SRE Agent — open-source observability + a deliberately
+# buggy app. Bring it up and you get a self-contained world where you can
+# trigger a fake outage and watch the multi-agent investigation run against
+# real Prometheus + real Loki.
+#
+#   docker compose -f demo-stack/docker-compose.yml up -d
+#
+# Endpoints (host):
+#   chaos-app    http://localhost:8000      bug surface (see app.py)
+#   prometheus   http://localhost:9090      query UI
+#   loki         http://localhost:3100      LogQL API (no UI)
+#   grafana      http://localhost:3000      visualize the above (admin/admin)
+#
+# Then point the SRE Agent at this stack:
+#   export SRE_DATA_PROVIDER=oss
+#   export PROMETHEUS_URL=http://localhost:9090
+#   export LOKI_URL=http://localhost:3100
+#   python dashboard/app.py
+
+services:
+  chaos-app:
+    build: ./chaos-app
+    environment:
+      SERVICE_NAME: chaos-app
+      LOKI_URL: http://loki:3100
+      REDIS_LEAK_LIMIT: "50"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - loki
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.retention.time=2h'
+      - '--storage.tsdb.path=/prometheus'
+    ports:
+      - "9090:9090"
+    depends_on:
+      - chaos-app
+    restart: unless-stopped
+
+  loki:
+    image: grafana/loki:3.2.1
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml:ro
+      - loki-data:/loki
+    ports:
+      - "3100:3100"
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:11.3.0
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"
+      GF_FEATURE_TOGGLES_ENABLE: "publicDashboards"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+      - loki
+    restart: unless-stopped
+
+volumes:
+  loki-data: {}
+  grafana-data: {}
