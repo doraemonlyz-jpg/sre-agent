@@ -195,25 +195,93 @@ log/trace/PR IDs the PM re-checks.
 
 ---
 
+## Connecting to your stack
+
+The Provider abstraction is **fully implemented for Datadog** and the webhook
+ingestion accepts **Datadog Monitor / PagerDuty / generic JSON** payloads
+out of the box.
+
+### Real-data Datadog provider
+
+```bash
+export SRE_DATA_PROVIDER=datadog
+export DD_API_KEY=...
+export DD_APP_KEY=...
+export DD_SITE=datadoghq.com       # or datadoghq.eu, us3, ap1, ...
+```
+
+Mappings:
+
+| Method            | Datadog endpoint                        |
+|-------------------|-----------------------------------------|
+| `fetch_logs`      | `POST /api/v2/logs/events/search`       |
+| `fetch_metrics`   | `GET  /api/v1/query`   (5 std queries)  |
+| `fetch_traces`    | `POST /api/v2/spans/events/search`      |
+| `fetch_deploys`   | `GET  /api/v1/events?sources=deploy`    |
+
+Network failures **never** raise — every API error becomes evidence with
+`result=ERROR` so the graph keeps running with whatever partial signal it has.
+
+### Inbound alert webhook
+
+`POST /api/alerts/webhook` accepts three payload shapes, auto-detected:
+
+```bash
+# Datadog Monitor → Webhooks integration
+curl -X POST http://localhost:5080/api/alerts/webhook \
+  -H "Content-Type: application/json" \
+  -d '{"alert_id":"99","alert_title":"err_rate","priority":"P1",
+       "service":"checkout","tags":"env:prod","date":"2026-05-11T14:30:00Z"}'
+
+# PagerDuty Webhook v3
+curl -X POST http://localhost:5080/api/alerts/webhook \
+  -d '{"event":{"event_type":"incident.triggered","data":{
+       "title":"latency spike","service":{"summary":"checkout"},
+       "urgency":"high","created_at":"2026-05-11T14:30:00Z"}}}'
+
+# Generic — minimum contract
+curl -X POST http://localhost:5080/api/alerts/webhook \
+  -d '{"service":"checkout","description":"errors","severity":"high"}'
+```
+
+Force a specific adapter with `?source=datadog|pagerduty|generic` or
+`X-SRE-Source` header. Set `SRE_WEBHOOK_SECRET` and have the sender include
+`X-SRE-Token` to enable shared-secret auth.
+
+### Slack notifications
+
+```bash
+export SLACK_WEBHOOK_URL=https://hooks.slack.com/services/...
+# or force preview-only:
+export SRE_SLACK_DRY_RUN=true
+```
+
+`POST /api/incidents/<id>/post-slack` either POSTs Block Kit JSON or returns
+a dry-run preview the user can paste manually.
+
+---
+
 ## Tests
 
 ```bash
-pytest                       # 30 cases, no network, runs in ~20s
+pytest                       # 67 cases, no network, runs in ~25s
 pytest --cov=sre_agent       # coverage report
 ```
 
-The test suite **does not call any real LLM**. Every test pins the LLM factory
-to an unreachable Ollama URL and asserts that the graph still produces a valid
-`IncidentReport`. This is the regression gate for our "graceful degradation"
-property.
+The test suite **does not call any real LLM and never opens a socket**. The
+Datadog provider and Slack notifier are exercised against their real response
+shapes via `respx` — only the HTTP layer is faked, the parsers are the real
+production code.
 
 ---
 
 ## What's still TODO (v1.1+)
 
-- [ ] Real Datadog provider (Logs API v2, Metrics v1, APM v2)
-- [ ] PagerDuty webhook receiver (`POST /api/webhooks/pagerduty`)
-- [ ] Slack posting with action buttons
+- [x] Real Datadog provider (Logs API v2, Metrics v1, APM v2)
+- [x] Webhook receiver (Datadog Monitor / PagerDuty / generic)
+- [x] Real Slack notifier (Block Kit + dry-run mode)
+- [ ] Prometheus / Loki provider (open-source observability stack)
+- [ ] Slack message buttons that POST back into `/api/incidents/<id>/action`
 - [ ] OpenTelemetry tracing on every node
 - [ ] Auth: bearer token + per-team isolation
 - [ ] Eval suite: 10 hand-labeled historical incidents, accuracy ≥ 80%

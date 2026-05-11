@@ -36,8 +36,10 @@ from flask import Flask, jsonify, request, send_from_directory
 
 from sre_agent.graph import build_graph
 from sre_agent.logging import setup_logging
+from sre_agent.notifications import SlackNotifier
 from sre_agent.providers.mock import MockProvider
 from sre_agent.schemas import AlertIn, GraphState, IncidentReport, Severity
+from sre_agent.webhooks import UnknownPayloadError, parse_alert
 
 # ---------------------------------------------------------------------------
 # Setup
@@ -288,6 +290,28 @@ def api_scenarios():
     return jsonify({"scenarios": items})
 
 
+def _spawn_incident(alert: AlertIn, *, scenario_id: str | None = None) -> str:
+    """Register an incident, persist, and kick off the LangGraph run."""
+    incident_id = uuid.uuid4().hex[:10]
+    with INCIDENTS_LOCK:
+        INCIDENTS[incident_id] = {
+            "id": incident_id,
+            "scenario_id": scenario_id,
+            "alert": alert.model_dump(mode="json"),
+            "phase": "investigating",
+            "started_at": _now_ms(),
+            "events": [],
+            "findings": {},
+            "hypothesis": None,
+            "remediation": None,
+        }
+    _persist(incident_id)
+    threading.Thread(
+        target=_run_pipeline, args=(incident_id, alert), daemon=True
+    ).start()
+    return incident_id
+
+
 @app.route("/api/incidents/fire", methods=["POST"])
 def api_fire():
     payload = request.get_json(force=True, silent=True) or {}
@@ -307,7 +331,6 @@ def api_fire():
             scenario_id=scenario_id,
         )
     else:
-        # custom alert from request body
         try:
             alert = AlertIn(
                 service=payload["service"],
@@ -319,27 +342,43 @@ def api_fire():
         except (KeyError, ValueError) as e:
             return jsonify({"error": f"bad alert payload: {e}"}), 400
 
-    incident_id = uuid.uuid4().hex[:10]
-
-    with INCIDENTS_LOCK:
-        INCIDENTS[incident_id] = {
-            "id": incident_id,
-            "scenario_id": scenario_id,
-            "alert": alert.model_dump(mode="json"),
-            "phase": "investigating",
-            "started_at": _now_ms(),
-            "events": [],
-            "findings": {},
-            "hypothesis": None,
-            "remediation": None,
-        }
-    _persist(incident_id)
-
-    threading.Thread(
-        target=_run_pipeline, args=(incident_id, alert), daemon=True
-    ).start()
-
+    incident_id = _spawn_incident(alert, scenario_id=scenario_id)
     return jsonify({"id": incident_id, "phase": "investigating"})
+
+
+@app.route("/api/alerts/webhook", methods=["POST"])
+def api_alerts_webhook():
+    """
+    Real-world ingestion endpoint. Accepts payloads from:
+
+      * Datadog Monitor → Webhook (auto-detected)
+      * PagerDuty Webhook v3       (auto-detected)
+      * Generic JSON               ({service, description, ...})
+
+    Override with ?source=datadog|pagerduty|generic or `X-SRE-Source`
+    header. Optional shared-secret auth: set SRE_WEBHOOK_SECRET in env
+    and have the sender include it in `X-SRE-Token`.
+    """
+    expected_secret = os.environ.get("SRE_WEBHOOK_SECRET")
+    if expected_secret:
+        provided = request.headers.get("X-SRE-Token", "")
+        if provided != expected_secret:
+            return jsonify({"error": "invalid or missing X-SRE-Token"}), 401
+
+    payload = request.get_json(force=True, silent=True) or {}
+    source = (
+        request.args.get("source")
+        or request.headers.get("X-SRE-Source")
+    )
+    try:
+        alert = parse_alert(payload, source=source)
+    except UnknownPayloadError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:  # pragma: no cover — schema validation
+        return jsonify({"error": f"bad alert payload: {e}"}), 400
+
+    incident_id = _spawn_incident(alert)
+    return jsonify({"id": incident_id, "phase": "investigating", "source": source or "auto"})
 
 
 @app.route("/api/incidents", methods=["GET"])
@@ -390,24 +429,25 @@ def api_post_slack(incident_id: str):
         inc = INCIDENTS.get(incident_id)
         if not inc or not inc.get("hypothesis"):
             return jsonify({"error": "not diagnosed yet"}), 400
+        # Copy so we don't hold the lock across the HTTP call.
+        snapshot = dict(inc)
+
+    notifier = SlackNotifier.from_env()
+    try:
+        result = notifier.post_incident(snapshot)
+    finally:
+        notifier.close()
+
     return jsonify(
         {
-            "ok": True,
-            "note": "v1 stub — set SLACK_WEBHOOK_URL to enable real posting",
-            "preview": _slack_preview(inc),
+            "ok": result.sent or result.dry_run,
+            "sent": result.sent,
+            "dry_run": result.dry_run,
+            "status": result.status,
+            "error": result.error,
+            "preview": result.preview,
+            "payload": result.payload,
         }
-    )
-
-
-def _slack_preview(inc: dict[str, Any]) -> str:
-    h = inc["hypothesis"]
-    return (
-        f"🚨 *{inc['alert']['service']}* {inc['alert']['severity']}\n"
-        f"_{inc['alert']['description']}_\n\n"
-        f"*Top hypothesis* ({int(h['confidence']*100)}%):\n"
-        f"> {h['top']}\n\n"
-        f"*Diagnosed in*: {inc.get('diagnosis_ms', 0)/1000:.1f}s\n"
-        f"*Remediation*: {len(inc.get('remediation') or [])} actions ranked — see dashboard"
     )
 
 

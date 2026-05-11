@@ -54,6 +54,9 @@ dependencies = [
     # Persistence for prod
     "psycopg[binary]>=3.2.3",
     "langgraph-checkpoint-postgres>=2.0.6",
+
+    # HTTP client — used by DatadogProvider, Slack notifier, and tests.
+    "httpx>=0.28.1",
 ]
 
 [project.optional-dependencies]
@@ -63,7 +66,9 @@ dev = [
     "pytest-cov>=6.0.0",
     "ruff>=0.8.4",
     "mypy>=1.13.0",
-    "httpx>=0.28.1",  # for testing Flask
+    # respx mocks httpx at the transport layer — lets us test DatadogProvider
+    # and SlackNotifier offline with byte-identical payloads to the real APIs.
+    "respx>=0.21.1",
 ]
 
 [project.scripts]
