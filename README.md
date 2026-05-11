@@ -375,11 +375,65 @@ production code.
 - [x] Real Slack notifier (Block Kit + dry-run mode)
 - [x] Prometheus / Loki providers + open-source demo stack
 - [x] Runbook RAG (8th agent — `runbook_consultant`, the team brain)
+- [x] **Mocked production-scale**: bounded worker pool, burst endpoint, tier classifier (see Phase E below)
 - [ ] Tempo / Jaeger provider for traces (open-source stack)
 - [ ] Slack message buttons that POST back into `/api/incidents/<id>/action`
 - [ ] OpenTelemetry tracing on every node
 - [ ] Auth: bearer token + per-team isolation
 - [ ] Eval suite: 10 hand-labeled historical incidents, accuracy ≥ 80%
+
+---
+
+## Phase E — production-scale roadmap (TikTok / hyper-scale)
+
+The system today is **interview-ready** but not yet **TikTok-ready**. The
+architectural insight remains: at hyper-scale, *raw* log/metric volume
+(tens of millions of lines per minute) never touches the agent — that's
+the telemetry backend's job (ByteLog / Datadog / ClickHouse). The agent
+calls focused queries (one service, 15-minute window, error filter) and
+reasons over the *bucketed* result, which is hundreds, not millions.
+
+The actual bottlenecks at scale, and the planned upgrades:
+
+| Bottleneck | Current state | Phase E upgrade |
+|---|---|---|
+| **Alert burst** (1000 alerts/min when a hub service dies) | Bounded `ThreadPoolExecutor`, mocked (`SRE_MAX_CONCURRENT=4`) | Webhook → Kafka / RocketMQ; Temporal workers; `_spawn_incident` becomes idempotent on `incident_id` |
+| **LLM cost** ($1.5M/yr at 100k alerts/day on GPT-4o) | Three-tier classifier (`rule` / `cheap` / `premium`), mocked routing visible in UI | Real tiered execution: local Llama-3 70B for `cheap`, GPT-4o only for `premium`; per-team budget caps |
+| **Telemetry query** (single PromQL pulls 1M points on high-cardinality services) | 5 fixed PromQL queries; no cardinality control | Force `topk` / `sum by (psm)` reducers; recording-rule precompute; adaptive window shrink (30m → 5m → 1m on timeout) |
+| **Trace volume** (Bits ingests billions of spans/min) | Datadog APM page-limit 100 | Sampling-aware API; head-based sampled errors only; never query unsampled |
+| **Checkpoint storage** (100k incidents/day = single Postgres saturates) | `SqliteSaver` / `PostgresSaver` | Partitioned by region; TiDB / CockroachDB; TTL + cold-storage archive |
+| **Runbook RAG** (10k+ docs across BUs) | In-memory store, TF-IDF / OpenAI fallback | Milvus / Faiss persistent vector store; per-PSM namespace; cross-namespace fallback only when nothing matches |
+| **Cardinality / multi-tenancy** | `service` is a free string | Require `PSM + env + cluster` tuple; namespace partitioning per BU |
+| **Provider sprawl** | Datadog + Prometheus + Loki | `MegatronProvider` / `ByteLogProvider` / `BitsProvider` — same `DataProvider` ABC, ~300 lines each |
+| **Self-observability** | Just `structlog` | Prometheus metrics on every node (latency, error rate, tier-distribution); the agent gets paged when it can't page |
+| **Multi-region** | Single deployment | One agent cluster per region; runbook library replicated; checkpointer reads from local replica |
+
+### What's mocked TODAY so you can demo / interview against it
+
+We didn't ship Kafka — but we shipped *the shape of the system you'd
+build if you had Kafka*. Specifically:
+
+* **`POST /api/incidents/burst?n=50`** — fires 50 synthetic alerts at
+  the dashboard. Watch them queue up against the bounded worker pool
+  (`SRE_MAX_CONCURRENT=4` by default) — exactly what would happen
+  when a hub service dies in prod and 50 dependent services all alert
+  within seconds.
+* **`GET /api/scale/stats`** — exposes `queued / active / completed`
+  counters + LLM-calls-per-minute. The dashboard's "Scale" strip
+  surfaces this live, so you can *see* the queue absorb the burst.
+* **Tier classifier** — every incident gets tagged `rule` / `cheap` /
+  `premium` based on severity, signal quality, and runbook match.
+  Visible as a badge on each incident card. Today the routing is
+  cosmetic; tomorrow it points to different model endpoints.
+* **Per-tier counters** — `/api/scale/stats` breaks calls down by
+  tier so you can answer "what % of incidents would have hit GPT-4o
+  in the last hour?" in interviews.
+
+```bash
+# Try it
+curl -X POST http://localhost:5080/api/incidents/burst?n=50
+watch -n1 'curl -s http://localhost:5080/api/scale/stats'
+```
 
 ---
 

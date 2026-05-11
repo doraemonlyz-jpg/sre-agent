@@ -63,6 +63,17 @@
       'no.runbooks':         'no matching runbook chunks…',
       'field.library_size':  'library',
       'field.backend':       'backend',
+      'action.burst':        'Burst ×50',
+      'scale.label':         'SCALE',
+      'scale.sub':           'production-scale mock',
+      'scale.queued':        'queued',
+      'scale.active':        'active',
+      'scale.completed':     'done',
+      'scale.llm_rate':      'llm/min',
+      'scale.cost_saved':    'saved vs all-premium',
+      'tier.rule':           'rule',
+      'tier.cheap':          'cheap',
+      'tier.premium':        'premium',
       'time.sec':            '{n}s ago',
       'time.min':            '{n}m ago',
       'time.hour':           '{n}h ago',
@@ -123,6 +134,17 @@
       'no.runbooks':         '没有匹配到相关运维手册…',
       'field.library_size':  '知识库',
       'field.backend':       '向量后端',
+      'action.burst':        '突发 ×50',
+      'scale.label':         '规模化',
+      'scale.sub':           '生产规模模拟',
+      'scale.queued':        '排队中',
+      'scale.active':        '处理中',
+      'scale.completed':     '已完成',
+      'scale.llm_rate':      'LLM 调用/分',
+      'scale.cost_saved':    '相比全 premium 节省',
+      'tier.rule':           '规则',
+      'tier.cheap':          '小模型',
+      'tier.premium':        '大模型',
       'time.sec':            '{n} 秒前',
       'time.min':            '{n} 分钟前',
       'time.hour':           '{n} 小时前',
@@ -185,7 +207,11 @@
     bindUi();
     await loadScenarios();
     await refresh();
+    await refreshScale();
     setInterval(refresh, 1000);
+    // Scale stats can refresh on a slightly faster cadence so the burst
+    // demo "feels live" (queue depth drains visibly).
+    setInterval(refreshScale, 750);
   });
 
   function bindUi() {
@@ -194,6 +220,8 @@
     $('#fire-modal').addEventListener('click', (e) => {
       if (e.target.id === 'fire-modal') closeFireModal();
     });
+    const burstBtn = $('#btn-burst');
+    if (burstBtn) burstBtn.addEventListener('click', fireBurst);
     $$('.lang-toggle button').forEach(b => {
       b.addEventListener('click', () => setLang(b.dataset.lang));
     });
@@ -204,6 +232,51 @@
         openFireModal();
       }
     });
+  }
+
+  async function fireBurst() {
+    const btn = $('#btn-burst');
+    if (!btn || btn.disabled) return;
+    btn.disabled = true;
+    const original = btn.textContent;
+    btn.textContent = '…';
+    try {
+      const r = await fetch('/api/incidents/burst?n=50', { method: 'POST' });
+      const j = await r.json();
+      if (!r.ok || j.error) {
+        console.warn('burst failed:', j);
+      }
+    } catch (e) {
+      console.warn('burst failed:', e);
+    } finally {
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.textContent = original;
+      }, 1200);
+    }
+    await refresh();
+    await refreshScale();
+  }
+
+  async function refreshScale() {
+    let stats;
+    try {
+      const r = await fetch('/api/scale/stats');
+      if (!r.ok) return;
+      stats = await r.json();
+    } catch { return; }
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    set('scale-queued',    stats.queued ?? 0);
+    set('scale-active',    stats.active ?? 0);
+    set('scale-max',       stats.max_concurrent ?? 4);
+    set('scale-completed', stats.completed_total ?? 0);
+    const byTier = stats.by_tier_completed || {};
+    set('scale-tier-rule',    byTier.rule    ?? 0);
+    set('scale-tier-cheap',   byTier.cheap   ?? 0);
+    set('scale-tier-premium', byTier.premium ?? 0);
+    set('scale-llm',          stats.llm_calls_per_min ?? 0);
+    const saved = stats.cost_saved_usd ?? 0;
+    set('scale-cost-saved', '$' + (saved < 1 ? saved.toFixed(4) : saved.toFixed(2)));
   }
 
   async function loadScenarios() {
@@ -338,9 +411,12 @@
         ? `${(inc.diagnosis_ms / 1000).toFixed(1)}s`
         : relTime(inc.started_at);
 
+      const tier = inc.model_tier || 'cheap';
+      const tierLabel = t(`tier.${tier}`);
+
       // Only touch the inner HTML if something changed — avoids restarting
       // the pulse animation on the investigating phase pill.
-      const signature = `${STATE.lang}|${inc.alert.service}|${sevN}|${inc.phase}|${elapsed}`;
+      const signature = `${STATE.lang}|${inc.alert.service}|${sevN}|${inc.phase}|${elapsed}|${tier}`;
       if (el.dataset.signature !== signature) {
         el.dataset.signature = signature;
         el.innerHTML = `
@@ -348,6 +424,7 @@
           <div class="incident-meta">
             <span class="sev-pill sev-${sevN}">SEV-${sevN}</span>
             <span class="phase-pill ${phaseCls}">${phaseLabel}</span>
+            <span class="tier-badge tier-${tier}" title="Phase E: model tier routing">${tierLabel}</span>
             <span>${elapsed}</span>
           </div>
         `;

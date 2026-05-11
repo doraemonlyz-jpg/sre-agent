@@ -38,6 +38,7 @@ from sre_agent.graph import build_graph
 from sre_agent.logging import setup_logging
 from sre_agent.notifications import SlackNotifier
 from sre_agent.providers.mock import MockProvider
+from sre_agent.scale import COUNTERS, classify_tier, submit_job
 from sre_agent.schemas import AlertIn, GraphState, IncidentReport, Severity
 from sre_agent.webhooks import UnknownPayloadError, parse_alert
 
@@ -302,6 +303,16 @@ def api_scenarios():
 def _spawn_incident(alert: AlertIn, *, scenario_id: str | None = None) -> str:
     """Register an incident, persist, and kick off the LangGraph run."""
     incident_id = uuid.uuid4().hex[:10]
+    # Tier classification is cheap and deterministic — happens at submit
+    # time so the dashboard can show "premium" / "cheap" / "rule" instantly.
+    # The actual model still runs whatever SRE_LLM_* points at — the tier
+    # is the *production-scale routing decision* we'd make if we had the
+    # tiered model fleet wired up.
+    tier = classify_tier(
+        severity=alert.severity.value,
+        description=alert.description,
+        scenario_id=scenario_id,
+    )
     with INCIDENTS_LOCK:
         INCIDENTS[incident_id] = {
             "id": incident_id,
@@ -313,11 +324,13 @@ def _spawn_incident(alert: AlertIn, *, scenario_id: str | None = None) -> str:
             "findings": {},
             "hypothesis": None,
             "remediation": None,
+            "model_tier": tier,
         }
     _persist(incident_id)
-    threading.Thread(
-        target=_run_pipeline, args=(incident_id, alert), daemon=True
-    ).start()
+    # Submit to the bounded worker pool. Beyond SRE_MAX_CONCURRENT
+    # in-flight investigations, subsequent submissions queue up — this is
+    # the in-process mock of "Kafka + Temporal worker pool" in production.
+    submit_job(_run_pipeline, incident_id, alert, tier=tier)
     return incident_id
 
 
@@ -402,6 +415,7 @@ def api_list_incidents():
                     "started_at": i["started_at"],
                     "diagnosed_at": i.get("diagnosed_at"),
                     "diagnosis_ms": i.get("diagnosis_ms"),
+                    "model_tier": i.get("model_tier", "cheap"),
                 }
                 for i in INCIDENTS.values()
             ),
@@ -506,6 +520,98 @@ def api_deploys():
         if scen:
             return jsonify(scen["deploys"])
     return jsonify({"deploys": [], "config_changes": []})
+
+
+# ---- Phase E: production-scale mock --------------------------------------
+
+
+@app.route("/api/scale/stats", methods=["GET"])
+def api_scale_stats():
+    """
+    Live snapshot of the bounded worker pool + tier breakdown +
+    rolling LLM call rate. Surfaced as the "Scale" strip in the UI;
+    `watch -n1 curl localhost:5080/api/scale/stats` for the CLI version.
+    """
+    snap = COUNTERS.snapshot()
+    snap["max_concurrent"] = int(
+        os.environ.get(
+            "SRE_MAX_CONCURRENT_INVESTIGATIONS",
+            os.environ.get("SRE_MAX_CONCURRENT", "4"),
+        )
+    )
+    # Derived: cost saved by tier routing (vs. naively running every
+    # incident through premium). Numbers are illustrative; in prod you'd
+    # plug real per-tier $/call.
+    tier_costs = {"rule": 0.0, "cheap": 0.0008, "premium": 0.05}
+    by_tier = snap["by_tier_completed"]
+    actual = sum(tier_costs[t] * by_tier.get(t, 0) for t in tier_costs)
+    if_all_premium = tier_costs["premium"] * snap["completed_total"]
+    snap["cost_estimate_usd"] = round(actual, 4)
+    snap["cost_if_all_premium_usd"] = round(if_all_premium, 4)
+    snap["cost_saved_usd"] = round(max(0.0, if_all_premium - actual), 4)
+    return jsonify(snap)
+
+
+@app.route("/api/incidents/burst", methods=["POST"])
+def api_burst():
+    """
+    Fire N synthetic alerts at once to demonstrate burst handling. This
+    is the in-process mock of "1000 alerts hit Kafka when a hub service
+    dies" — beyond `SRE_MAX_CONCURRENT_INVESTIGATIONS`, the rest queue
+    up and process in batches.
+
+    Query / body params:
+      n             how many alerts to fire (default 50, max 500)
+      scenario_id   which scenario to clone (default 'redis-pool-exhaustion')
+      service       override the service name (default: scenario's service)
+      severity      override the severity (default: scenario's severity)
+    """
+    payload = request.get_json(force=True, silent=True) or {}
+    n = int(payload.get("n") or request.args.get("n", 50))
+    n = max(1, min(500, n))
+    scenario_id = (
+        payload.get("scenario_id")
+        or request.args.get("scenario_id")
+        or "redis-pool-exhaustion"
+    )
+    try:
+        seed = _MOCK_PROVIDER.get_scenario_alert(scenario_id)
+    except KeyError:
+        return jsonify({"error": f"unknown scenario_id: {scenario_id}"}), 400
+
+    service = payload.get("service") or request.args.get("service") or seed["service"]
+    severity = payload.get("severity") or request.args.get("severity") or seed["severity"]
+
+    ids: list[str] = []
+    base_desc = seed["description"]
+    for i in range(n):
+        alert = AlertIn(
+            service=service,
+            severity=Severity(severity),
+            description=f"{base_desc} (burst #{i+1}/{n})",
+            started_at=datetime.now(timezone.utc),
+            tags=list(seed.get("tags", [])),
+            scenario_id=scenario_id,
+        )
+        ids.append(_spawn_incident(alert, scenario_id=scenario_id))
+
+    return jsonify(
+        {
+            "burst": True,
+            "queued": n,
+            "incident_ids": ids,
+            "max_concurrent": int(
+                os.environ.get(
+                    "SRE_MAX_CONCURRENT_INVESTIGATIONS",
+                    os.environ.get("SRE_MAX_CONCURRENT", "4"),
+                )
+            ),
+            "note": (
+                "All alerts submitted to the bounded worker pool. "
+                "Poll /api/scale/stats to watch queue depth drain."
+            ),
+        }
+    )
 
 
 # ---- health --------------------------------------------------------------

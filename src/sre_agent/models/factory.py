@@ -25,9 +25,30 @@ from enum import Enum
 from functools import lru_cache
 from typing import Literal
 
+from langchain_core.callbacks import BaseCallbackHandler
 from langchain_core.language_models.chat_models import BaseChatModel
 
 Provider = Literal["openai", "anthropic", "ollama"]
+
+
+class _LlmCallCounter(BaseCallbackHandler):
+    """
+    Increment the Phase-E LLM call counter every time a chat model is invoked.
+
+    `on_chat_model_start` fires once per `.invoke()` even when the model is
+    wrapped by `.with_structured_output(...)` — callbacks propagate through
+    the structured-output runnable. We count *attempts* (start), not
+    *successes*, because the production-scale concern is "how many calls
+    did we make to a paid endpoint?", not "how many returned 200".
+    """
+
+    def on_chat_model_start(self, *args, **kwargs):
+        from sre_agent.scale import COUNTERS
+
+        COUNTERS.record_llm_call()
+
+
+_COUNTER_CALLBACK = _LlmCallCounter()
 
 
 class ModelRole(str, Enum):
@@ -35,7 +56,7 @@ class ModelRole(str, Enum):
     WORKER = "worker"
 
 
-# Sensible defaults per provider × role.
+# Sensible defaults per (provider, role).
 _DEFAULTS: dict[Provider, dict[ModelRole, str]] = {
     "openai":    {ModelRole.ORCHESTRATOR: "gpt-4o",           ModelRole.WORKER: "gpt-4o-mini"},
     "anthropic": {ModelRole.ORCHESTRATOR: "claude-opus-4-1",  ModelRole.WORKER: "claude-haiku-4-5"},
@@ -82,15 +103,19 @@ def get_chat_model(role: ModelRole | str, temperature: float = 0.0) -> BaseChatM
     provider = get_default_provider()
     model_id = _resolve_model_id(role, provider)
 
+    callbacks = [_COUNTER_CALLBACK]
+
     if provider == "openai":
         from langchain_openai import ChatOpenAI
-        return ChatOpenAI(model=model_id, temperature=temperature)
+        return ChatOpenAI(model=model_id, temperature=temperature, callbacks=callbacks)
 
     if provider == "anthropic":
         from langchain_anthropic import ChatAnthropic
-        return ChatAnthropic(model=model_id, temperature=temperature)
+        return ChatAnthropic(model=model_id, temperature=temperature, callbacks=callbacks)
 
     # Ollama (local)
     from langchain_ollama import ChatOllama
     base_url = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
-    return ChatOllama(model=model_id, temperature=temperature, base_url=base_url)
+    return ChatOllama(
+        model=model_id, temperature=temperature, base_url=base_url, callbacks=callbacks
+    )

@@ -299,6 +299,131 @@ button { cursor: pointer; }
   box-shadow: inset 0 0 0 1px var(--border-strong);
 }
 
+/* Burst action — ghost variant of fire, blue-leaning */
+.btn-burst {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 11px;
+  background: transparent;
+  color: var(--fg-2);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: var(--t-xs);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+}
+.btn-burst:hover {
+  color: var(--fg);
+  border-color: rgba(96, 165, 250, 0.55);
+  background: rgba(96, 165, 250, 0.08);
+}
+
+/* ─── Phase E: scale strip ──────────────────────────────────────────── */
+.scale-strip {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 8px 22px;
+  border-bottom: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, rgba(96, 165, 250, 0.025), transparent 70%),
+    var(--bg-elev);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  color: var(--fg-3);
+  flex-wrap: wrap;
+}
+.scale-label {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding-right: 16px;
+  border-right: 1px solid var(--border);
+}
+.scale-badge {
+  font-weight: 600;
+  font-size: var(--t-2xs);
+  letter-spacing: 0.14em;
+  color: #60a5fa;
+  text-transform: uppercase;
+}
+.scale-sub { color: var(--fg-5); font-size: var(--t-2xs); }
+.scale-metrics {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+.scale-metric {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  color: var(--fg-3);
+}
+.scale-metric .k {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: var(--t-2xs);
+  color: var(--fg-5);
+}
+.scale-metric b {
+  color: var(--fg);
+  font-weight: 600;
+  font-feature-settings: "tnum" 1;
+}
+.scale-metric .sub { color: var(--fg-5); }
+.scale-tiers {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 0;
+}
+.tier-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-tint);
+  font-size: var(--t-2xs);
+  letter-spacing: 0.04em;
+}
+.tier-chip i {
+  width: 6px; height: 6px; border-radius: 50%; display: inline-block;
+}
+.tier-chip .k { color: var(--fg-4); text-transform: uppercase; }
+.tier-chip b { color: var(--fg); font-feature-settings: "tnum" 1; }
+.tier-rule i    { background: #71717a; }
+.tier-cheap i   { background: #60a5fa; }
+.tier-premium i { background: #f472b6; }
+.tier-rule    { border-color: rgba(113, 113, 122, 0.45); }
+.tier-cheap   { border-color: rgba(96, 165, 250, 0.45); }
+.tier-premium { border-color: rgba(244, 114, 182, 0.45); }
+.scale-cost b { color: #4ade80; }
+
+/* Tier badge inside an incident card. */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-tint);
+  font-family: var(--font-mono);
+  font-size: var(--t-2xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+.tier-badge.tier-rule    { border-color: rgba(113, 113, 122, 0.45); color: #a1a1aa; }
+.tier-badge.tier-cheap   { border-color: rgba(96, 165, 250, 0.45); color: #93c5fd; }
+.tier-badge.tier-premium { border-color: rgba(244, 114, 182, 0.45); color: #f9a8d4; }
+
 /* Primary action button — gradient violet→rose */
 .btn-fire {
   position: relative;

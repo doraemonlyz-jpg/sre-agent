@@ -36,9 +36,31 @@
       <button data-lang="en" type="button">EN</button>
       <button data-lang="zh" type="button">中</button>
     </div>
+    <button id="btn-burst" class="btn-burst" data-i18n="action.burst" title="Phase E: fire 50 alerts at once to demo bounded worker pool">Burst ×50</button>
     <button id="btn-fire" class="btn-fire" data-i18n="action.fire">Fire alert</button>
   </div>
 </header>
+
+<section id="scale-strip" class="scale-strip" aria-label="Phase E scale">
+  <div class="scale-label">
+    <span class="scale-badge" data-i18n="scale.label">SCALE</span>
+    <span class="scale-sub" data-i18n="scale.sub">production-scale mock</span>
+  </div>
+  <div class="scale-metrics">
+    <div class="scale-metric"><span class="k" data-i18n="scale.queued">queued</span><b id="scale-queued">0</b></div>
+    <div class="scale-metric"><span class="k" data-i18n="scale.active">active</span><b id="scale-active">0</b><span class="sub">/<span id="scale-max">4</span></span></div>
+    <div class="scale-metric"><span class="k" data-i18n="scale.completed">completed</span><b id="scale-completed">0</b></div>
+    <div class="scale-metric scale-tiers" title="tier breakdown of completed">
+      <span class="tier-chip tier-rule"><i></i><b id="scale-tier-rule">0</b><span class="k">rule</span></span>
+      <span class="tier-chip tier-cheap"><i></i><b id="scale-tier-cheap">0</b><span class="k">cheap</span></span>
+      <span class="tier-chip tier-premium"><i></i><b id="scale-tier-premium">0</b><span class="k">premium</span></span>
+    </div>
+    <div class="scale-metric"><span class="k" data-i18n="scale.llm_rate">llm calls/min</span><b id="scale-llm">0</b></div>
+    <div class="scale-metric scale-cost" title="estimated $ vs. naively running every incident through the premium model">
+      <span class="k" data-i18n="scale.cost_saved">cost saved</span><b id="scale-cost-saved">$0.00</b>
+    </div>
+  </div>
+</section>
 
 <main class="grid">
   <aside class="col col-alerts">
