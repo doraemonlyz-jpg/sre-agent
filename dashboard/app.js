@@ -25,7 +25,7 @@
       'empty.detail':        'Pick an incident from the left, or fire a new demo alert to start a multi-agent investigation.',
       'empty.activity':      '— idle —',
       'modal.title':         'Fire a demo alert',
-      'modal.sub':           'Choose a scenario. The dashboard spawns a real multi-agent investigation — 7 agents fan out across logs, metrics, traces, and deploys, then synthesize a ranked hypothesis and a remediation plan.',
+      'modal.sub':           'Choose a scenario. The dashboard spawns a real multi-agent investigation — 8 agents fan out across logs, metrics, traces, deploys, and the team\'s runbook library, then synthesize a ranked hypothesis and a remediation plan.',
       'section.alert':       'Alert',
       'section.hypothesis':  'Top hypothesis',
       'section.remediation': 'Remediation · human-in-the-loop',
@@ -50,6 +50,7 @@
       'tab.metrics':         'metrics',
       'tab.traces':          'traces',
       'tab.deploys':         'deploys',
+      'tab.runbooks':        'runbooks',
       'phase.investigating': 'investigating',
       'phase.diagnosed':     'diagnosed',
       'phase.no_signal':     'no signal',
@@ -59,6 +60,9 @@
       'no.traces':           'no traces yet…',
       'no.deploys':          'no deploy info yet…',
       'no.deploys_window':   'No deploys in the 2h window — likely not a code regression.',
+      'no.runbooks':         'no matching runbook chunks…',
+      'field.library_size':  'library',
+      'field.backend':       'backend',
       'time.sec':            '{n}s ago',
       'time.min':            '{n}m ago',
       'time.hour':           '{n}h ago',
@@ -81,7 +85,7 @@
       'empty.detail':        '从左侧选择一个故障，或触发一个新的演示告警，启动多智能体协同诊断。',
       'empty.activity':      '— 空闲 —',
       'modal.title':         '触发一个演示告警',
-      'modal.sub':           '选择一个场景。仪表盘会启动一次真实的多智能体协同调查 —— 7 个 agent 并行扫描日志、指标、链路、发布历史，然后综合排序根因假设并给出修复方案。',
+      'modal.sub':           '选择一个场景。仪表盘会启动一次真实的多智能体协同调查 —— 8 个 agent 并行扫描日志、指标、链路、发布历史以及团队运维手册库，然后综合排序根因假设并给出修复方案。',
       'section.alert':       '告警',
       'section.hypothesis':  '根因假设',
       'section.remediation': '修复建议 · 人工最终决策',
@@ -106,6 +110,7 @@
       'tab.metrics':         '指标',
       'tab.traces':          '链路',
       'tab.deploys':         '发布',
+      'tab.runbooks':        '运维手册',
       'phase.investigating': '调查中',
       'phase.diagnosed':     '已诊断',
       'phase.no_signal':     '无信号',
@@ -115,6 +120,9 @@
       'no.traces':           '暂无链路数据…',
       'no.deploys':          '暂无发布信息…',
       'no.deploys_window':   '过去 2 小时无发布 —— 大概率不是代码回归引起。',
+      'no.runbooks':         '没有匹配到相关运维手册…',
+      'field.library_size':  '知识库',
+      'field.backend':       '向量后端',
       'time.sec':            '{n} 秒前',
       'time.min':            '{n} 分钟前',
       'time.hour':           '{n} 小时前',
@@ -470,10 +478,11 @@
 
   function renderEvidenceTabs(findings) {
     const tabs = [
-      { key: 'logs',    has: !!findings.logs },
-      { key: 'metrics', has: !!findings.metrics },
-      { key: 'traces',  has: !!findings.traces },
-      { key: 'deploys', has: !!findings.deploys },
+      { key: 'logs',     has: !!findings.logs },
+      { key: 'metrics',  has: !!findings.metrics },
+      { key: 'traces',   has: !!findings.traces },
+      { key: 'deploys',  has: !!findings.deploys },
+      { key: 'runbooks', has: !!(findings.runbooks && (findings.runbooks.hits || []).length) },
     ];
     const activeKey = tabs.find(x => x.has && x.key === STATE.activeTab)?.key
                     || tabs.find(x => x.has)?.key
@@ -493,7 +502,34 @@
         <div class="tab-pane ${activeKey === 'metrics' ? 'active' : ''}" data-pane="metrics">${renderMetrics(findings.metrics)}</div>
         <div class="tab-pane ${activeKey === 'traces' ? 'active' : ''}" data-pane="traces">${renderTraces(findings.traces)}</div>
         <div class="tab-pane ${activeKey === 'deploys' ? 'active' : ''}" data-pane="deploys">${renderDeploys(findings.deploys)}</div>
+        <div class="tab-pane ${activeKey === 'runbooks' ? 'active' : ''}" data-pane="runbooks">${renderRunbooks(findings.runbooks)}</div>
       </div>
+    `;
+  }
+
+  function renderRunbooks(rb) {
+    if (!rb || !rb.hits || !rb.hits.length) {
+      return NULL_LINE('no.runbooks');
+    }
+    const hits = rb.hits.map((h, i) => `
+      <div class="evidence-line" style="flex-direction:column;align-items:flex-start;gap:6px;padding:12px 0;">
+        <div style="display:flex;align-items:center;gap:10px;width:100%;">
+          <span class="k" style="color:var(--accent);">#${i+1}</span>
+          <span class="v" style="font-weight:600;color:var(--fg-1);">${escapeHtml(h.title)}</span>
+          <span style="margin-left:auto;font-family:var(--font-mono);font-size:var(--t-2xs);color:var(--fg-4);">score ${h.score.toFixed(2)}</span>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:var(--t-2xs);color:var(--fg-4);">
+          ${escapeHtml(h.path)}${h.service ? ` · service:${escapeHtml(h.service)}` : ''}${h.tags && h.tags.length ? ` · ${h.tags.map(escapeHtml).join(', ')}` : ''}
+        </div>
+        <div style="font-size:var(--t-sm);color:var(--fg-2);line-height:1.55;white-space:pre-wrap;margin-top:4px;">${escapeHtml(h.snippet)}</div>
+      </div>
+    `).join('');
+    return `
+      <div style="font-size:var(--t-2xs);color:var(--fg-4);font-family:var(--font-mono);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;">
+        ${t('field.library_size')}: ${rb.library_size} · ${t('field.backend')}: ${escapeHtml(rb.backend)}
+      </div>
+      ${hits}
+      ${rb.interpretation ? `<div style="margin-top:12px;font-size:var(--t-sm);color:var(--fg-3);line-height:1.6;font-style:italic;">${escapeHtml(rb.interpretation)}</div>` : ''}
     `;
   }
 

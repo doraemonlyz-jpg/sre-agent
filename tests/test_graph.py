@@ -116,3 +116,57 @@ def test_remediation_actions_all_have_reversal(graph):
     report = _run(graph, "redis-pool-exhaustion")
     for a in report.remediation.actions:
         assert a.reversal, f"action '{a.title}' missing reversal"
+
+
+def test_runbook_consultant_runs_in_graph(graph):
+    """
+    Phase B regression: the runbook_consultant node must execute as the
+    5th parallel worker and populate state.runbooks. The seed library in
+    `runbooks/` is the source of truth.
+    """
+    report = _run(graph, "redis-pool-exhaustion")
+    assert report.runbooks is not None
+    # We don't assert FOUND vs NO_SIGNAL because that depends on retrieval
+    # against the seed library. But we DO assert:
+    # 1. The node ran and wrote evidence to state.
+    # 2. The library was visible to the node (size > 0 — we have seed runbooks).
+    assert report.runbooks.library_size > 0
+    assert report.runbooks.backend == "keyword"  # forced by conftest
+
+
+def test_runbook_consultant_finds_chaos_app_pattern(graph):
+    """
+    The seed library includes a `chaos-app.md` runbook documenting the
+    Redis pool exhaustion bug. An alert on `chaos-app` mentioning Redis
+    should retrieve that chunk.
+    """
+    alert = AlertIn(
+        service="chaos-app",
+        severity=Severity.SEV_2,
+        description="error_rate spike with redis ConnectionError pool exhausted",
+        started_at=datetime.now(timezone.utc),
+        tags=["redis", "connection-pool"],
+        scenario_id="redis-pool-exhaustion",  # the graph uses this to fetch mock telemetry
+    )
+    config = {"configurable": {"thread_id": "test-runbook-chaos"}}
+    for _ in graph.stream({"alert": alert, "events": []}, config=config):
+        pass
+    report = graph.get_state(config).values["report"]
+    assert report.runbooks is not None
+    # We expect at least one hit, and the top one should be from the
+    # chaos-app runbook (service-tagged match beats generic).
+    assert len(report.runbooks.hits) >= 1
+    top = report.runbooks.hits[0]
+    assert top.service == "chaos-app"
+    assert "chaos-app.md" in top.path
+
+
+def test_runbook_event_visible_in_event_stream(graph):
+    """The runbook_consultant must emit a dashboard event so the UI sees it."""
+    report = _run(graph, "redis-pool-exhaustion")
+    config = {"configurable": {"thread_id": "test-redis-pool-exhaustion"}}
+    state = graph.get_state(config).values
+    runbook_events = [e for e in state["events"] if e["agent"] == "runbook-consultant"]
+    assert len(runbook_events) == 1
+    assert runbook_events[0]["kind"] == "evidence"
+    assert report.runbooks is not None

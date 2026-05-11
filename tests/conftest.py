@@ -29,8 +29,15 @@ def _no_real_llm(monkeypatch):
     monkeypatch.setenv("SRE_LLM_PROVIDER", "ollama")
     monkeypatch.setenv("OLLAMA_BASE_URL", "http://127.0.0.1:1")
     monkeypatch.setenv("SRE_LOG_LEVEL", "ERROR")
+    # Pin retrieval to the deterministic keyword backend so we never reach
+    # for a network embedding model during tests.
+    monkeypatch.setenv("SRE_EMBEDDINGS_BACKEND", "keyword")
     # Isolate checkpoints per test run.
     monkeypatch.setenv("SRE_STATE_DIR", os.environ.get("SRE_STATE_DIR", ".state/test"))
     # Drop the lru_cache on the model factory so the env vars actually win.
     from sre_agent.models.factory import get_chat_model
     get_chat_model.cache_clear()
+    # Drop the runbook store singleton so each test sees a fresh store
+    # (especially important when a test overrides SRE_RUNBOOKS_DIR).
+    from sre_agent.runbooks.store import reset_store_cache
+    reset_store_cache()

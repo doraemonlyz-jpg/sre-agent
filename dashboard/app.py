@@ -153,6 +153,15 @@ def _evidence_to_legacy(report: IncidentReport) -> dict[str, Any]:
             "config_changes": report.deploys.config_changes,
         }
 
+    if report.runbooks:
+        findings["runbooks"] = {
+            "result": report.runbooks.result.value,
+            "library_size": report.runbooks.library_size,
+            "backend": report.runbooks.backend,
+            "interpretation": report.runbooks.interpretation,
+            "hits": [h.model_dump(mode="json") for h in report.runbooks.hits],
+        }
+
     return findings
 
 

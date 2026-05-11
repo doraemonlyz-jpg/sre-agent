@@ -1,32 +1,32 @@
 """
 The LangGraph orchestration definition.
 
-Topology:
+Topology (Phase B — runbook consultant added as the 5th parallel worker):
 
                 ┌──────────────┐
                 │ incident_pm  │  (open incident, emit event)
                 └──────┬───────┘
                        │
-            ┌──────────┼──────────┐──────────────┐
-            ▼          ▼          ▼              ▼
-       log_detec  metrics_an  trace_rdr    deploy_hist     (parallel)
-            │          │          │              │
-            └──────────┴──────────┴──────────────┘
-                       │
-                       ▼
-              ┌──────────────────┐
-              │ hypothesis_gen   │
-              └─────────┬────────┘
-                        ▼
-              ┌──────────────────┐
-              │ remediation_sug  │
-              └─────────┬────────┘
-                        ▼
-              ┌──────────────────┐
-              │     finalize     │  (write incident report, persist STATUS.json)
-              └──────────────────┘
-                        ▼
-                       END
+        ┌─────────┬────┴────┬─────────┬──────────────┐
+        ▼         ▼         ▼         ▼              ▼
+   log_detec  metrics_  trace_rdr  deploy_hist  runbook_consult   (parallel)
+        │      analyst    │           │              │
+        └─────────┴───────┴───────────┴──────────────┘
+                              │
+                              ▼
+                     ┌──────────────────┐
+                     │ hypothesis_gen   │  (sees live telemetry + runbooks)
+                     └─────────┬────────┘
+                               ▼
+                     ┌──────────────────┐
+                     │ remediation_sug  │  (cites runbook commands when matched)
+                     └─────────┬────────┘
+                               ▼
+                     ┌──────────────────┐
+                     │     finalize     │
+                     └──────────────────┘
+                               ▼
+                              END
 
 Production features baked in:
 - SqliteSaver checkpointer → if the dashboard restarts mid-incident, the
@@ -53,8 +53,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from langgraph.graph import END, START, StateGraph
 from langgraph.checkpoint.sqlite import SqliteSaver
+from langgraph.graph import END, START, StateGraph
 
 from sre_agent.logging import get_logger
 from sre_agent.nodes import (
@@ -64,6 +64,7 @@ from sre_agent.nodes import (
     log_detective,
     metrics_analyst,
     remediation_suggester,
+    runbook_consultant,
     trace_reader,
 )
 from sre_agent.nodes._helpers import make_event
@@ -100,6 +101,7 @@ def finalize(state: GraphState) -> dict[str, Any]:
         metrics=state.get("metrics"),
         traces=state.get("traces"),
         deploys=state.get("deploys"),
+        runbooks=state.get("runbooks"),
         hypotheses=hyps,
         remediation=state.get("remediation"),
     )
@@ -138,19 +140,27 @@ def build_graph(checkpointer=None):
     builder.add_node("metrics_analyst", metrics_analyst)
     builder.add_node("trace_reader", trace_reader)
     builder.add_node("deploy_historian", deploy_historian)
+    builder.add_node("runbook_consultant", runbook_consultant)
     builder.add_node("hypothesis_generator", hypothesis_generator)
     builder.add_node("remediation_suggester", remediation_suggester)
     builder.add_node("finalize", finalize)
 
     builder.add_edge(START, "incident_pm")
 
-    # parallel fan-out: PM → 4 workers
-    for worker in ("log_detective", "metrics_analyst", "trace_reader", "deploy_historian"):
+    # parallel fan-out: PM → 5 workers (4 telemetry + 1 runbook consultant)
+    parallel_workers = (
+        "log_detective",
+        "metrics_analyst",
+        "trace_reader",
+        "deploy_historian",
+        "runbook_consultant",
+    )
+    for worker in parallel_workers:
         builder.add_edge("incident_pm", worker)
 
-    # fan-in: all 4 workers → hypothesis_generator
+    # fan-in: all parallel workers → hypothesis_generator
     # LangGraph's reducer (operator.add on `events`) merges the parallel branches.
-    for worker in ("log_detective", "metrics_analyst", "trace_reader", "deploy_historian"):
+    for worker in parallel_workers:
         builder.add_edge(worker, "hypothesis_generator")
 
     builder.add_edge("hypothesis_generator", "remediation_suggester")

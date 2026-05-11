@@ -17,11 +17,13 @@ from sre_agent.models import ModelRole, get_chat_model
 from sre_agent.nodes._helpers import make_event
 from sre_agent.personas import load as load_persona
 from sre_agent.schemas import (
+    EvidenceResult,
     GraphState,
     HypothesisList,
     RemediationAction,
     RemediationPlan,
     RemediationRisk,
+    RunbookEvidence,
 )
 
 log = get_logger("remediation_sug")
@@ -34,12 +36,14 @@ def remediation_suggester(state: GraphState) -> dict[str, Any]:
 
     log.info("remediation_sug.start", top=hyps.top.title)
 
+    runbooks = state.get("runbooks")
+
     try:
         persona = load_persona("remediation-sug")
         llm = get_chat_model(ModelRole.ORCHESTRATOR).with_structured_output(
             RemediationPlan, include_raw=False
         )
-        user = _build_prompt(hyps)
+        user = _build_prompt(hyps, runbooks)
         plan: RemediationPlan = llm.invoke(
             [SystemMessage(content=persona), HumanMessage(content=user)]
         )  # type: ignore[assignment]
@@ -59,7 +63,7 @@ def remediation_suggester(state: GraphState) -> dict[str, Any]:
         return _fallback_plan(hyps, str(e))
 
 
-def _build_prompt(hyps: HypothesisList) -> str:
+def _build_prompt(hyps: HypothesisList, runbooks: RunbookEvidence | None = None) -> str:
     top = hyps.top
     others = [h for h in hyps.hypotheses if h is not top]
     lines = [
@@ -74,11 +78,23 @@ def _build_prompt(hyps: HypothesisList) -> str:
         for h in others:
             lines.append(f"- {h.title} (conf={h.confidence:.2f})")
         lines.append("")
+    if runbooks and runbooks.result == EvidenceResult.FOUND and runbooks.hits:
+        # If the team has documented this pattern, the runbook chunks
+        # often contain literal mitigation commands. Surface them so the
+        # LLM lifts them verbatim rather than inventing kubectl invocations.
+        lines.append("# Team runbooks (extract concrete commands from these if relevant)")
+        for h in runbooks.hits:
+            lines.append(f"## From `{h.path}` — '{h.title}' (score={h.score:.2f})")
+            lines.append(h.snippet)
+            lines.append("")
     lines.append(
         "# Your task\n"
         "Suggest 1–3 remediation actions a human on-call could try, ordered safest-first. "
         "Each MUST include a `reversal` command. NEVER suggest auto-execution. "
         "Add 1–3 anti-patterns the on-call should AVOID.\n"
+        "If a team runbook above contains a literal mitigation command, "
+        "USE IT VERBATIM and cite the runbook path in the `why` field "
+        "(e.g. 'see runbooks/chaos-app.md').\n"
         "Risk levels: LOW (read-only/restart), MEDIUM (config change), HIGH (data write/rollback)."
     )
     return "\n".join(lines)

@@ -16,6 +16,8 @@ from sre_agent.schemas import (
     MetricsEvidence,
     RemediationAction,
     RemediationPlan,
+    RunbookEvidence,
+    RunbookHit,
     Severity,
     TracesEvidence,
 )
@@ -32,6 +34,8 @@ __all__ = [
     "MetricsEvidence",
     "RemediationAction",
     "RemediationPlan",
+    "RunbookEvidence",
+    "RunbookHit",
     "Severity",
     "TracesEvidence",
     "__version__",

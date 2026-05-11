@@ -57,7 +57,7 @@ python dashboard/app.py
 # 5. Fire the alert webhook
 ./demo-stack/scripts/fire-alert.sh
 
-# 6. Open the dashboard. Watch 7 agents fan out, hit real Prometheus + real
+# 6. Open the dashboard. Watch 8 agents fan out, hit real Prometheus + real
 #    Loki, produce a ranked hypothesis (connection-pool exhaustion) with
 #    confidence + supporting evidence.
 open http://localhost:5080

@@ -23,7 +23,6 @@ from typing import Annotated, Any, Literal, TypedDict
 
 from pydantic import BaseModel, Field, field_validator
 
-
 # ──────────────────────────────────────────────────────────────────────────
 # Alert input
 # ──────────────────────────────────────────────────────────────────────────
@@ -143,7 +142,38 @@ class DeploysEvidence(_EvidenceBase):
     config_changes: list[str] = Field(default_factory=list)
 
 
-AnyEvidence = LogsEvidence | MetricsEvidence | TracesEvidence | DeploysEvidence
+class RunbookHit(BaseModel):
+    """A single retrieved runbook chunk — chunk text + retrieval metadata."""
+
+    path: str = Field(..., description="Source file relative to the runbooks/ root.")
+    title: str = Field(..., description="Section heading from the markdown.")
+    service: str | None = Field(
+        default=None,
+        description="Service this chunk targets, if scoped (e.g. 'checkout-api').",
+    )
+    tags: list[str] = Field(default_factory=list)
+    score: float = Field(..., ge=0.0, le=1.0, description="Retrieval similarity (0-1).")
+    snippet: str = Field(
+        ...,
+        description="The chunk body. Trimmed to ~2KB for LLM context budget.",
+        max_length=2400,
+    )
+
+
+class RunbookEvidence(_EvidenceBase):
+    """
+    What the Runbook Consultant returns: a small ranked list of relevant
+    chunks from the team's runbook library, plus retrieval metadata so the
+    LLM can cite them by file path.
+    """
+
+    source: Literal["runbooks"] = "runbooks"
+    hits: list[RunbookHit] = Field(default_factory=list, max_length=5)
+    library_size: int = Field(default=0, ge=0, description="Total chunks in the library.")
+    backend: str = Field(default="none", description="Embedder used: 'openai'|'ollama'|'keyword'|'none'.")
+
+
+AnyEvidence = LogsEvidence | MetricsEvidence | TracesEvidence | DeploysEvidence | RunbookEvidence
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -157,11 +187,14 @@ class Hypothesis(BaseModel):
     title: str = Field(..., max_length=120)
     detail: str = Field(..., max_length=1200)
     confidence: float = Field(..., ge=0.0, le=1.0)
-    supporting_evidence: list[Literal["logs", "metrics", "traces", "deploys"]] = Field(
+    supporting_evidence: list[Literal["logs", "metrics", "traces", "deploys", "runbooks"]] = Field(
         default_factory=list,
-        description="Which evidence sources back this hypothesis.",
+        description=(
+            "Which evidence sources back this hypothesis. "
+            "'runbooks' = the Runbook Consultant matched a documented failure pattern."
+        ),
     )
-    contradicting_evidence: list[Literal["logs", "metrics", "traces", "deploys"]] = Field(
+    contradicting_evidence: list[Literal["logs", "metrics", "traces", "deploys", "runbooks"]] = Field(
         default_factory=list,
     )
     why_not_alternative: str = Field(default="", max_length=400)
@@ -239,6 +272,7 @@ class IncidentReport(BaseModel):
     metrics: MetricsEvidence | None = None
     traces: TracesEvidence | None = None
     deploys: DeploysEvidence | None = None
+    runbooks: RunbookEvidence | None = None
 
     hypotheses: HypothesisList | None = None
     remediation: RemediationPlan | None = None
@@ -266,6 +300,7 @@ class GraphState(TypedDict, total=False):
     metrics: MetricsEvidence | None
     traces: TracesEvidence | None
     deploys: DeploysEvidence | None
+    runbooks: RunbookEvidence | None
 
     # Synthesized
     hypotheses: HypothesisList | None

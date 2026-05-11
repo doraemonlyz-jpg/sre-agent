@@ -89,7 +89,7 @@ python dashboard/app.py
 ./demo-stack/scripts/fire-alert.sh
 ```
 
-The dashboard now shows 7 agents fanning out across real Prometheus +
+The dashboard now shows 8 agents fanning out across real Prometheus +
 Loki APIs, producing a ranked root-cause hypothesis with confidence and
 supporting evidence. **This is the demo to record for an interview.**
 
@@ -102,32 +102,47 @@ supporting evidence. **This is the demo to record for an interview.**
                 │ incident_pm  │   open incident
                 └──────┬───────┘
                        │
-            ┌──────────┼──────────┐──────────────┐
-            ▼          ▼          ▼              ▼
-       log_detec  metrics_an  trace_rdr    deploy_hist     (parallel)
-            │          │          │              │
-            └──────────┴──────────┴──────────────┘
-                       │
-                       ▼
-              ┌──────────────────┐
-              │ hypothesis_gen   │   rank root causes
-              └─────────┬────────┘
-                        ▼
-              ┌──────────────────┐
-              │ remediation_sug  │   suggest fix (never executes)
-              └─────────┬────────┘
-                        ▼
-              ┌──────────────────┐
-              │     finalize     │   write IncidentReport
-              └──────────────────┘
-                        ▼
-                       END
+        ┌─────────┬────┴────┬─────────┬──────────────┐
+        ▼         ▼         ▼         ▼              ▼
+   log_detec  metrics_  trace_rdr  deploy_hist  runbook_consult    (parallel)
+        │      analyst    │           │              │
+        └─────────┴───────┴───────────┴──────────────┘
+                              │
+                              ▼
+                     ┌──────────────────┐
+                     │ hypothesis_gen   │   live telemetry + team's runbooks
+                     └─────────┬────────┘
+                               ▼
+                     ┌──────────────────┐
+                     │ remediation_sug  │   suggest fix, cite runbook commands
+                     └─────────┬────────┘
+                               ▼
+                     ┌──────────────────┐
+                     │     finalize     │   write IncidentReport
+                     └──────────────────┘
+                               ▼
+                              END
 ```
+
+**Eight agents in three layers:**
+
+1. **`incident_pm`** — opens the incident, emits the kickoff event.
+2. **Five parallel workers** —
+   - `log_detective` / `metrics_analyst` / `trace_reader` / `deploy_historian`
+     gather *live telemetry* from whatever provider you configure
+     (mock / Datadog / Prometheus+Loki).
+   - **`runbook_consultant`** retrieves *prior knowledge* — the team's
+     runbooks (`runbooks/*.md`) via RAG over OpenAI / Ollama / TF-IDF
+     embeddings. This is the moat: the agent doesn't reason in a vacuum,
+     it brings your team's accumulated knowledge to every incident.
+3. **`hypothesis_gen` → `remediation_sug` → `finalize`** — synthesize a
+   ranked diagnosis and a safe action plan, citing both telemetry *and*
+   the runbook chunks that match the failure mode.
 
 Each node is a small Python function that:
 
 1. Reads typed state from `GraphState` (TypedDict)
-2. Optionally calls a `DataProvider` (mock / Datadog)
+2. Optionally calls a `DataProvider` (mock / Datadog / Prometheus / Loki) or the `RunbookStore`
 3. Optionally calls an LLM via `.with_structured_output(SomePydanticModel)`
 4. Returns a partial dict; LangGraph merges via reducer
 
@@ -152,20 +167,32 @@ sre-agent/
 │   │   ├── metrics_analyst.py
 │   │   ├── trace_reader.py
 │   │   ├── deploy_historian.py
+│   │   ├── runbook_consultant.py     # ← Phase B: the team-knowledge layer
 │   │   ├── hypothesis_gen.py
 │   │   └── remediation_sug.py
+│   ├── runbooks/             # ← Phase B: RAG subsystem
+│   │   ├── chunker.py        # markdown → chunks
+│   │   ├── embedders.py      # OpenAI / Ollama / TF-IDF backends
+│   │   └── store.py          # indexed, service-filtered retrieval
 │   ├── providers/
 │   │   ├── base.py           # DataProvider ABC
 │   │   ├── mock.py           # uses mocks/scenarios.json
-│   │   └── datadog.py        # stub for real Datadog (v1.1)
+│   │   ├── datadog.py        # real Datadog API
+│   │   ├── prometheus.py     # metrics-only OSS provider
+│   │   ├── loki.py           # logs-only OSS provider
+│   │   └── composite.py      # mix-and-match providers per evidence type
 │   ├── models/factory.py     # Ollama / OpenAI / Anthropic factory
 │   ├── personas.py           # loads personas/*.md as system prompts
 │   ├── logging.py            # structlog setup
 │   └── cli.py                # `sre-agent ...` Typer CLI
-├── personas/                 # 7 agent personas (markdown, used as system prompts)
+├── personas/                 # 8 agent personas (markdown, used as system prompts)
+├── runbooks/                 # ← Phase B: the team brain
+│   ├── chaos-app.md          #     one file per service…
+│   ├── checkout-api.md       #     …each `## section` becomes one chunk
+│   └── general/              #     cross-cutting patterns (cascade, false-positive, …)
 ├── mocks/scenarios.json      # 3 demo incidents
 ├── dashboard/                # Flask UI; backend just spawns LangGraph runs
-├── tests/                    # pytest, 30 cases, fully offline
+├── tests/                    # pytest, 111 cases, fully offline
 ├── pyproject.toml
 ├── Dockerfile
 ├── docker-compose.yml
@@ -293,12 +320,44 @@ export SRE_SLACK_DRY_RUN=true
 `POST /api/incidents/<id>/post-slack` either POSTs Block Kit JSON or returns
 a dry-run preview the user can paste manually.
 
+### Runbook RAG (Phase B — the team brain)
+
+Every `*.md` file under `runbooks/` is chunked at startup, embedded, and made
+searchable. The `runbook_consultant` agent runs in parallel with the four
+telemetry workers and surfaces the top 3 most relevant chunks for each
+incident. The hypothesis generator and remediation suggester both consume
+those chunks and cite them by file path in their output.
+
+```bash
+# Backend auto-detects: OpenAI (if OPENAI_API_KEY) → Ollama → TF-IDF fallback
+export SRE_EMBEDDINGS_BACKEND=auto        # 'openai' | 'ollama' | 'keyword'
+export SRE_EMBEDDINGS_MODEL=text-embedding-3-small   # optional override
+export SRE_RUNBOOKS_DIR=/path/to/runbooks            # default: ./runbooks
+```
+
+**Authoring** a runbook is just markdown. Each `## ` heading becomes one
+retrievable chunk; optional `> service:` and `> tags:` lines on the first
+lines of the section gate it to a specific service. See
+[runbooks/README.md](runbooks/README.md) for the full format.
+
+**Why this matters**: without it, the agents are general-purpose SRE
+analysts staring at telemetry. With it, they're *your* on-call team —
+they've read your service's known failure modes, your team's playbooks,
+your incident history. Hypothesis output goes from "errors suggest a
+Redis problem" to "this matches the documented connection-pool
+exhaustion pattern in `runbooks/checkout-api.md`, mitigation is
+`kubectl rollout undo`".
+
+The TF-IDF fallback is intentional: zero dependencies, deterministic,
+runs the entire test suite offline. Real embeddings improve recall but
+aren't required to demo the system.
+
 ---
 
 ## Tests
 
 ```bash
-pytest                       # 87 cases, no network, runs in ~25s
+pytest                       # 111 cases, no network, runs in ~25s
 pytest --cov=sre_agent       # coverage report
 ```
 
@@ -315,6 +374,7 @@ production code.
 - [x] Webhook receiver (Datadog Monitor / PagerDuty / generic)
 - [x] Real Slack notifier (Block Kit + dry-run mode)
 - [x] Prometheus / Loki providers + open-source demo stack
+- [x] Runbook RAG (8th agent — `runbook_consultant`, the team brain)
 - [ ] Tempo / Jaeger provider for traces (open-source stack)
 - [ ] Slack message buttons that POST back into `/api/incidents/<id>/action`
 - [ ] OpenTelemetry tracing on every node

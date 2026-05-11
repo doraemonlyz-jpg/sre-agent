@@ -36,13 +36,16 @@ def hypothesis_generator(state: GraphState) -> dict[str, Any]:
     metrics = state.get("metrics")
     traces = state.get("traces")
     deploys = state.get("deploys")
+    runbooks = state.get("runbooks")
 
     log.info("hypothesis_gen.start", service=alert.service)
 
-    # Quick check: did anyone find anything?
+    # Quick check: did anyone find anything? Runbooks count as a signal — if
+    # we have a high-confidence match for a known failure pattern, the LLM
+    # can still produce a useful hypothesis even when live telemetry is thin.
     any_found = any(
         ev is not None and ev.result == EvidenceResult.FOUND
-        for ev in (logs, metrics, traces, deploys)
+        for ev in (logs, metrics, traces, deploys, runbooks)
     )
     if not any_found:
         return _no_signal_result()
@@ -52,7 +55,7 @@ def hypothesis_generator(state: GraphState) -> dict[str, Any]:
         llm = get_chat_model(ModelRole.ORCHESTRATOR).with_structured_output(
             HypothesisList, include_raw=False
         )
-        user = _build_synthesis_prompt(alert, logs, metrics, traces, deploys)
+        user = _build_synthesis_prompt(alert, logs, metrics, traces, deploys, runbooks)
         out: HypothesisList = llm.invoke(
             [SystemMessage(content=persona), HumanMessage(content=user)]
         )  # type: ignore[assignment]
@@ -73,7 +76,7 @@ def hypothesis_generator(state: GraphState) -> dict[str, Any]:
         return _fallback_from_evidence(state, str(e))
 
 
-def _build_synthesis_prompt(alert, logs, metrics, traces, deploys) -> str:
+def _build_synthesis_prompt(alert, logs, metrics, traces, deploys, runbooks=None) -> str:
     sections = [f"# Alert\n{alert.severity.value} on {alert.service}: {alert.description}"]
     if logs:
         sections.append(
@@ -112,10 +115,28 @@ def _build_synthesis_prompt(alert, logs, metrics, traces, deploys) -> str:
             f"{d_summary}\n"
             f"interpretation: {deploys.interpretation}"
         )
+    if runbooks and runbooks.result == EvidenceResult.FOUND and runbooks.hits:
+        # The runbook chunks are the team's prior knowledge — known failure
+        # modes, past-incident postmortems, oncall playbooks. We surface
+        # them VERBATIM so the LLM can cite them concretely rather than
+        # paraphrasing into a hallucination.
+        rb_lines: list[str] = []
+        for i, h in enumerate(runbooks.hits, start=1):
+            rb_lines.append(
+                f"## Runbook #{i}: '{h.title}' (from `{h.path}`, score={h.score:.2f})\n"
+                f"{h.snippet}"
+            )
+        sections.append(
+            "# Team runbooks (prior knowledge — cite by file path when used)\n"
+            + "\n\n".join(rb_lines)
+        )
     sections.append(
         "# Your task\n"
         "Produce 1–3 ranked hypotheses with confidence 0–1. Cite supporting "
-        "AND contradicting evidence sources by name (logs|metrics|traces|deploys). "
+        "AND contradicting evidence sources by name "
+        "(logs|metrics|traces|deploys|runbooks). "
+        "If a team runbook documents this exact pattern, MENTION THE RUNBOOK "
+        "FILE PATH in the hypothesis detail (e.g. 'see runbooks/chaos-app.md'). "
         "For the top hypothesis, briefly explain why the next-best alternative is less likely."
     )
     return "\n\n".join(sections)
@@ -161,6 +182,11 @@ def _fallback_from_evidence(state: GraphState, err: str) -> dict[str, Any]:
         bits.append(metrics.correlation)
     if (traces := state.get("traces")) and traces.result == EvidenceResult.FOUND and traces.hot_span:
         bits.append(f"a hot span in {traces.hot_span.name}")
+    # If the runbook consultant matched a known pattern, surface it in the
+    # fallback too — even without an LLM, telling oncall "this matches the
+    # documented connection-pool runbook" is high-value.
+    if (rb := state.get("runbooks")) and rb.result == EvidenceResult.FOUND and rb.hits:
+        bits.append(f"runbook match: '{rb.hits[0].title}' ({rb.hits[0].path})")
     detail = (
         "LLM unavailable — rule-based fallback. Evidence suggests: "
         + (", ".join(bits) if bits else "no clear signal")
@@ -174,7 +200,7 @@ def _fallback_from_evidence(state: GraphState, err: str) -> dict[str, Any]:
                     detail=detail,
                     confidence=0.30,
                     supporting_evidence=[
-                        k for k in ("logs", "metrics", "traces", "deploys")
+                        k for k in ("logs", "metrics", "traces", "deploys", "runbooks")
                         if (e := state.get(k)) and e.result == EvidenceResult.FOUND  # type: ignore[union-attr]
                     ],
                 )

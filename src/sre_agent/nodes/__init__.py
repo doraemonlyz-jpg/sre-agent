@@ -8,6 +8,7 @@ from sre_agent.nodes.incident_pm import incident_pm
 from sre_agent.nodes.log_detective import log_detective
 from sre_agent.nodes.metrics_analyst import metrics_analyst
 from sre_agent.nodes.remediation_sug import remediation_suggester
+from sre_agent.nodes.runbook_consultant import runbook_consultant
 from sre_agent.nodes.trace_reader import trace_reader
 
 __all__ = [
@@ -17,5 +18,6 @@ __all__ = [
     "log_detective",
     "metrics_analyst",
     "remediation_suggester",
+    "runbook_consultant",
     "trace_reader",
 ]

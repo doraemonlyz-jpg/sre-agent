@@ -72,25 +72,28 @@ flowchart TB
     MA["📈 <b>Metrics Analyst</b><br/>CPU/mem/latency/error rate<br/>(gpt-oss:20b)"]
     TR["🧬 <b>Trace Reader</b><br/>span hot path<br/>(gpt-oss:20b)"]
     DH["🔀 <b>Deploy Historian</b><br/>recent commits / config<br/>(qwen2.5-coder:7b)"]
+    RC["📚 <b>Runbook Consultant</b><br/>retrieves team knowledge<br/>(no LLM — pure RAG)"]
 
-    HG["🧠 <b>Hypothesis Generator</b><br/>aggregate evidence<br/>(gpt-oss:20b)"]
-    RS["🛠️ <b>Remediation Suggester</b><br/>NEVER executes<br/>(gpt-oss:20b)"]
+    HG["🧠 <b>Hypothesis Generator</b><br/>aggregate evidence + runbooks<br/>(gpt-oss:20b)"]
+    RS["🛠️ <b>Remediation Suggester</b><br/>NEVER executes<br/>cites runbook commands<br/>(gpt-oss:20b)"]
 
     DD[("📊 Datadog<br/>logs/metrics/APM")]
     GH[("🐙 GitHub<br/>commits/PRs")]
     K8S[("☸️ k8s API<br/>(read-only)")]
+    RB[("📚 runbooks/*.md<br/>OpenAI/Ollama/TF-IDF")]
 
     Report(["📝 <b>Incident Report</b><br/>posted to Slack +<br/>shown in dashboard"])
     Human(["🙋 Oncall<br/>clicks execute"])
 
     Alert -->|webhook| Dash --> PM
-    PM -.parallel.-> LD & MA & TR & DH
+    PM -.parallel.-> LD & MA & TR & DH & RC
     LD <-.queries.-> DD
     MA <-.queries.-> DD
     TR <-.queries.-> DD
     DH <-.queries.-> GH
     DH <-.queries.-> K8S
-    LD & MA & TR & DH -->|EVIDENCE blocks| HG
+    RC <-.retrieves.-> RB
+    LD & MA & TR & DH & RC -->|typed Evidence| HG
     HG --> RS --> Report --> Human
 
     classDef ext fill:#3d2155,stroke:#ff4dca,color:#fff
@@ -100,8 +103,8 @@ flowchart TB
     classDef safe fill:#3a1a1a,stroke:#ff4757,color:#fff
     class Alert,Human,Report ext
     class Dash,PM,HG hub
-    class LD,MA,TR,DH wkr
-    class DD,GH,K8S data
+    class LD,MA,TR,DH,RC wkr
+    class DD,GH,K8S,RB data
     class RS safe
 ```
 
@@ -110,12 +113,22 @@ flowchart TB
 | # | Agent | Model | Allowed reads | Allowed writes | Forbidden |
 |---|---|---|---|---|---|
 | 1 | **Incident PM** | `gpt-oss:20b` | INCIDENT.json | INCIDENT.json, STATUS.json | code, k8s, executing anything |
-| 2 | **Log Detective** | `qwen2.5-coder:7b` | Datadog logs API | `findings/logs.md` | metrics, traces |
-| 3 | **Metrics Analyst** | `gpt-oss:20b` | Datadog metrics API | `findings/metrics.md` | logs (could be PII) |
-| 4 | **Trace Reader** | `gpt-oss:20b` | Datadog APM API | `findings/traces.md` | code |
-| 5 | **Deploy Historian** | `qwen2.5-coder:7b` | GitHub API, kubectl get | `findings/deploys.md` | kubectl write |
-| 6 | **Hypothesis Generator** | `gpt-oss:20b` | all `findings/*` | `HYPOTHESES.md` | data source APIs (no fresh queries) |
-| 7 | **Remediation Suggester** | `gpt-oss:20b` | HYPOTHESES.md | `REMEDIATION.md` | **anything that mutates state** |
+| 2 | **Log Detective** | `qwen2.5-coder:7b` | Datadog logs API | `LogsEvidence` | metrics, traces |
+| 3 | **Metrics Analyst** | `gpt-oss:20b` | Datadog metrics API | `MetricsEvidence` | logs (could be PII) |
+| 4 | **Trace Reader** | `gpt-oss:20b` | Datadog APM API | `TracesEvidence` | code |
+| 5 | **Deploy Historian** | `qwen2.5-coder:7b` | GitHub API, kubectl get | `DeploysEvidence` | kubectl write |
+| 6 | **Runbook Consultant** | _(none — pure retrieval)_ | `runbooks/*.md`, embedding API | `RunbookEvidence` | LLM calls, writing runbooks, live telemetry |
+| 7 | **Hypothesis Generator** | `gpt-oss:20b` | all `*Evidence` blocks | `HypothesisList` | data source APIs (no fresh queries) |
+| 8 | **Remediation Suggester** | `gpt-oss:20b` | `HypothesisList` + `RunbookEvidence` | `RemediationPlan` | **anything that mutates state** |
+
+**Why the Runbook Consultant has no LLM**:
+> Retrieval is deterministic and cheap. Running an LLM here to "summarize" the
+> retrieved chunks would just cost tokens and add latency without improving
+> signal — the hypothesis generator is already the LLM step that reasons
+> over evidence, and it's better served by raw runbook excerpts (which it
+> can quote verbatim) than by another LLM's paraphrase. The Consultant
+> stays in its lane: it retrieves, it filters by service, it scores. No
+> reasoning, no hallucination surface area.
 
 **Why "Remediation Suggester" has zero write access to production**:
 > v0 is a **read-only diagnostic**. Action is human-in-the-loop. The agent
