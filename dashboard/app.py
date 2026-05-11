@@ -46,7 +46,9 @@ from sre_agent.schemas import AlertIn, GraphState, IncidentReport, Severity
 setup_logging()
 logger = logging.getLogger("sre_agent.dashboard")
 
-PORT = int(os.environ.get("SRE_DASHBOARD_PORT") or os.environ.get("SRE_PORT", "5060"))
+# NOTE: avoid port 5060 — Chrome/Firefox blacklist it (SIP/VoIP), browsers
+# return ERR_UNSAFE_PORT. 5080 is in the safe range.
+PORT = int(os.environ.get("SRE_DASHBOARD_PORT") or os.environ.get("SRE_PORT", "5080"))
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 INCIDENTS_DIR = Path.home() / ".sre-agent" / "incidents"
@@ -479,6 +481,10 @@ def api_health():
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    print(f"SRE Command Center on http://127.0.0.1:{PORT}")
+    # Bind to all interfaces so both `http://127.0.0.1:PORT` and `http://localhost:PORT`
+    # work regardless of whether the OS resolves `localhost` to 127.0.0.1 or ::1.
+    # (Some macOS setups + browsers prefer IPv6, and a 127.0.0.1-only bind fails.)
+    host = os.environ.get("SRE_DASHBOARD_HOST", "0.0.0.0")
+    print(f"SRE Command Center on http://127.0.0.1:{PORT}  (also http://localhost:{PORT})")
     print(f"   {len(_MOCK_PROVIDER.list_scenarios())} demo scenarios loaded")
-    app.run(host="127.0.0.1", port=PORT, debug=False, threaded=True)
+    app.run(host=host, port=PORT, debug=False, threaded=True)

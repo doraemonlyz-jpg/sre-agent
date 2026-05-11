@@ -45,14 +45,14 @@ sre-agent scenarios
 sre-agent investigate --scenario redis-pool-exhaustion
 
 # Or boot the dashboard
-python dashboard/app.py     # http://127.0.0.1:5060
+python dashboard/app.py     # http://127.0.0.1:5080
 ```
 
 ### Option B — Docker (production-shaped, with Postgres)
 
 ```bash
 cp .env.example .env       # add OPENAI_API_KEY or leave blank for Ollama
-docker compose up --build  # dashboard at http://localhost:5060
+docker compose up --build  # dashboard at http://localhost:5080
 ```
 
 ### Option C — local LLM (Ollama)
@@ -160,7 +160,7 @@ Every knob is an environment variable. See `.env.example` for the full list.
 | `SRE_DATA_PROVIDER` | `mock` | `mock` reads scenarios.json; `datadog` (v1.1) hits the real API |
 | `SRE_CHECKPOINTER` | `sqlite` | `sqlite` (local file) or `postgres` (prod) |
 | `DATABASE_URL` | – | Postgres DSN, used when `SRE_CHECKPOINTER=postgres` |
-| `SRE_DASHBOARD_PORT` | `5060` | the Flask UI port |
+| `SRE_DASHBOARD_PORT` | `5080` | the Flask UI port |
 
 ---
 

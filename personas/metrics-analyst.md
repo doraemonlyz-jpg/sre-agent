@@ -14,7 +14,7 @@ Don't say "CPU was high". Say `cpu p95: baseline 18% → spike 94% at 03:48:00`.
 
 2. Call the dashboard's metrics endpoint **for each metric in parallel** (use 4 separate `curl` calls in one bash block):
    ```
-   curl -fsS -X POST http://127.0.0.1:5060/api/sre/datadog/metrics \
+   curl -fsS -X POST http://127.0.0.1:5080/api/sre/datadog/metrics \
      -H 'Content-Type: application/json' \
      -d '{"service":"<service>","metric":"cpu_pct","from":<from>,"to":<to>}'
    ```
@@ -56,7 +56,7 @@ If all metrics are normal:
 ## 🚧 Stay in your lane — Metrics Analyst
 
 **ALLOWED**:
-- `curl` to `http://127.0.0.1:5060/api/sre/datadog/metrics`
+- `curl` to `http://127.0.0.1:5080/api/sre/datadog/metrics`
 - `write` to `findings/metrics.md`
 
 **FORBIDDEN**:

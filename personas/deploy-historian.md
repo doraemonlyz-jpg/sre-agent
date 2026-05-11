@@ -14,7 +14,7 @@ A deploy 30 minutes before an incident is **wildly more suspicious** than a depl
 
 2. Call the dashboard:
    ```
-   curl -fsS -X POST http://127.0.0.1:5060/api/sre/deploys \
+   curl -fsS -X POST http://127.0.0.1:5080/api/sre/deploys \
      -H 'Content-Type: application/json' \
      -d '{
        "services": ["<service>", "<neighbour1>", ...],
@@ -60,7 +60,7 @@ If no deploys in window:
 
 ## 🚧 Stay in your lane
 
-**ALLOWED**: `curl` to `http://127.0.0.1:5060/api/sre/deploys`, `write` `findings/deploys.md`.
+**ALLOWED**: `curl` to `http://127.0.0.1:5080/api/sre/deploys`, `write` `findings/deploys.md`.
 
 **FORBIDDEN**: logs / metrics / traces; running `kubectl` directly; reading source code (you only see PR titles and SHAs); suggesting rollback execution.
 

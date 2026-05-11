@@ -5,7 +5,7 @@
 #
 # Quick start:
 #   cp .env.example .env       # fill in API keys
-#   docker compose up --build  # dashboard at http://localhost:5060
+#   docker compose up --build  # dashboard at http://localhost:5080
 #
 # Switch to a cloud LLM by setting OPENAI_API_KEY or ANTHROPIC_API_KEY in .env.
 
@@ -19,7 +19,7 @@ services:
     container_name: sre-agent-dashboard
     restart: unless-stopped
     ports:
-      - "5060:5060"
+      - "5080:5080"
     environment:
       SRE_CHECKPOINTER: postgres
       DATABASE_URL: postgresql://sre:sre@postgres:5432/sre_agent
@@ -34,7 +34,7 @@ services:
       postgres:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "--fail", "http://127.0.0.1:5060/api/health"]
+      test: ["CMD", "curl", "--fail", "http://127.0.0.1:5080/api/health"]
       interval: 30s
       timeout: 5s
       retries: 3

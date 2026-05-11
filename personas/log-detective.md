@@ -14,7 +14,7 @@ Do NOT paraphrase log lines. Quote them VERBATIM, with the source `log_id`. The 
 
 2. Call the dashboard's log-search endpoint:
    ```
-   curl -fsS -X POST http://127.0.0.1:5060/api/sre/datadog/logs \
+   curl -fsS -X POST http://127.0.0.1:5080/api/sre/datadog/logs \
      -H 'Content-Type: application/json' \
      -d '{
        "service": "<service>",
@@ -76,7 +76,7 @@ If the curl fails / endpoint returns 5xx:
 ## 🚧 Stay in your lane — Log Detective
 
 **ALLOWED**:
-- `curl` to `http://127.0.0.1:5060/api/sre/datadog/logs`
+- `curl` to `http://127.0.0.1:5080/api/sre/datadog/logs`
 - `write` to `findings/logs.md` (optional cache)
 
 **FORBIDDEN**:

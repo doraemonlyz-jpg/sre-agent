@@ -5,7 +5,7 @@
 set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PORT="${SRE_DASHBOARD_PORT:-${SRE_PORT:-5060}}"
+PORT="${SRE_DASHBOARD_PORT:-${SRE_PORT:-5080}}"   # 5060 is blocked by Chrome (SIP)
 
 echo "──────────────────────────────────────────────────────────"
 echo "  SRE Command Center — v1 (LangGraph)"

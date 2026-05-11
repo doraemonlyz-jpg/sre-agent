@@ -14,7 +14,7 @@ A trace is a tree of spans. You are looking for the **deepest span that exceeds 
 
 2. Call the dashboard:
    ```
-   curl -fsS -X POST http://127.0.0.1:5060/api/sre/datadog/traces \
+   curl -fsS -X POST http://127.0.0.1:5080/api/sre/datadog/traces \
      -H 'Content-Type: application/json' \
      -d '{"service":"<service>","from":<from>,"to":<to>,"only_errored":true,"limit":20}'
    ```
@@ -58,7 +58,7 @@ If no slow / errored traces:
 
 ## 🚧 Stay in your lane
 
-**ALLOWED**: `curl` to `http://127.0.0.1:5060/api/sre/datadog/traces`, `write` `findings/traces.md`.
+**ALLOWED**: `curl` to `http://127.0.0.1:5080/api/sre/datadog/traces`, `write` `findings/traces.md`.
 
 **FORBIDDEN**: logs (log-detective), metrics (metrics-analyst), deploys (deploy-historian), code, kubectl, remediation.
 

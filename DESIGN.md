@@ -64,7 +64,7 @@ A 5-agent system fixes all 5 by **specialization + parallelism + lane discipline
 ```mermaid
 flowchart TB
     Alert(["🚨 PagerDuty / Datadog Alert<br/>(webhook)"])
-    Dash["🖥️ <b>SRE Dashboard</b><br/>Flask, port 5060"]
+    Dash["🖥️ <b>SRE Dashboard</b><br/>Flask, port 5080"]
 
     PM(("🎯 <b>Incident PM</b><br/>orchestrator<br/>(gpt-oss:20b)"))
 
