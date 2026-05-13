@@ -356,6 +356,146 @@ def autorunbook_command(
         print(md)
 
 
+@app.command("calibrate")
+def calibrate_command(
+    out_path: str = typer.Option(
+        "data/calibrator.json",
+        "--out", "-o",
+        help="Where to write the fitted calibrator JSON.",
+    ),
+    out_md: str | None = typer.Option(
+        None,
+        "--out-md",
+        help="Optional Markdown report path (for PR bodies).",
+    ),
+    min_pairs: int = typer.Option(
+        100,
+        help="Min (pred, outcome) pairs to fit. Below this we ship identity.",
+    ),
+    n_bins: int = typer.Option(
+        10,
+        help="Number of reliability bins in the report.",
+    ),
+    feedback_dir: str | None = typer.Option(
+        None,
+        "--feedback-dir",
+        help="Override the feedback dir (default: $SRE_FEEDBACK_DIR or ~/.sre-agent/feedback).",
+    ),
+    dry_run: bool = typer.Option(
+        False,
+        help="Compute + print the report but do NOT write the calibrator artifact.",
+    ),
+) -> None:
+    """
+    Fit an isotonic confidence calibrator on the feedback corpus.
+
+    Pulls every (agent_confidence, verdict) pair from the feedback dir,
+    computes ECE + Brier before, fits a Pool-Adjacent-Violators isotonic
+    regressor, computes ECE + Brier after, and writes the calibrator
+    JSON. The dashboard loads this artifact at boot and applies it
+    before surfacing any confidence number to oncall.
+
+    Safe to ship missing: a missing artifact falls back to identity
+    (the loader is intentionally tolerant of corruption and absence).
+    """
+    import os
+    from pathlib import Path
+
+    from sre_agent.calibration import (
+        IsotonicCalibrator,
+        gather_pairs_from_feedback,
+        render_markdown,
+        summarize,
+    )
+
+    fdir = feedback_dir or os.environ.get("SRE_FEEDBACK_DIR") \
+        or str(Path.home() / ".sre-agent" / "feedback")
+    console.print(f"[cyan]reading feedback from[/cyan] {fdir}")
+
+    pairs = gather_pairs_from_feedback(fdir)
+    if not pairs:
+        console.print("[yellow]no (confidence, verdict) pairs found — nothing to calibrate[/yellow]")
+        console.print("Tip: run `sre-agent seed` first, or ensure the dashboard is writing")
+        console.print("agent_confidence on its feedback records.")
+        raise typer.Exit(code=0)
+
+    console.print(f"[cyan]found[/cyan] {len(pairs)} pairs")
+
+    before = summarize(pairs, n_bins=n_bins)
+    cal = IsotonicCalibrator.fit(pairs, min_pairs=min_pairs, n_bins=n_bins)
+
+    after = None
+    if not cal.is_identity:
+        after = summarize(
+            [(cal.apply(p), y) for p, y in pairs],
+            n_bins=n_bins,
+        )
+
+    console.print(
+        f"[bold]ECE:[/bold] {before.ece:.3f}"
+        + (f" -> {cal.fit_ece_after:.3f}" if not cal.is_identity else " (identity)")
+    )
+    console.print(
+        f"[bold]Brier:[/bold] {before.brier:.3f}"
+        + (f" -> {cal.fit_brier_after:.3f}" if not cal.is_identity else " (identity)")
+    )
+    if cal.is_identity:
+        console.print(
+            f"[yellow]identity calibrator[/yellow] "
+            f"(n={len(pairs)} < min_pairs={min_pairs})"
+        )
+
+    if out_md:
+        Path(out_md).parent.mkdir(parents=True, exist_ok=True)
+        Path(out_md).write_text(
+            render_markdown(before, calibrator=cal, report_after=after, feedback_dir=fdir)
+        )
+        console.print(f"[green]wrote report[/green] {out_md}")
+
+    if dry_run:
+        console.print("[yellow]dry-run: not writing calibrator artifact[/yellow]")
+        return
+
+    cal.save(out_path)
+    console.print(f"[green]wrote calibrator[/green] {out_path}")
+
+
+@app.command("calibrate-show")
+def calibrate_show_command(
+    in_path: str = typer.Option(
+        "data/calibrator.json",
+        "--in", "-i",
+        help="Path to the calibrator JSON.",
+    ),
+) -> None:
+    """
+    Print a fitted calibrator's breakpoints + before/after metrics.
+
+    Useful for sanity-checking what the live dashboard is applying.
+    """
+    from sre_agent.calibration import IsotonicCalibrator
+
+    cal = IsotonicCalibrator.load(in_path)
+    if cal.is_identity:
+        console.print(f"[yellow]identity calibrator at {in_path}[/yellow]")
+        console.print(f"  n_train={cal.n_train}")
+        if cal.n_train:
+            console.print(f"  ECE: {cal.fit_ece_before:.3f} (no fit applied)")
+        return
+    console.print(f"[bold]Calibrator at {in_path}[/bold]")
+    console.print(f"  n_train={cal.n_train}")
+    console.print(
+        f"  ECE:   {cal.fit_ece_before:.3f} -> {cal.fit_ece_after:.3f} "
+        f"(delta {(cal.fit_ece_before - cal.fit_ece_after) * 100:+.1f}pp)"
+    )
+    console.print(
+        f"  Brier: {cal.fit_brier_before:.3f} -> {cal.fit_brier_after:.3f}"
+    )
+    console.print(f"  breakpoints ({len(cal.breakpoints)}):")
+    for x, y in cal.breakpoints:
+        console.print(f"    raw={x:.3f}  ->  calibrated={y:.3f}")
+
+
 @app.command("eval-drift")
 def eval_drift(
     baseline: str = typer.Option(

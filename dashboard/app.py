@@ -39,6 +39,7 @@ from sre_agent.auth import require_scope
 from sre_agent.cache import CACHE
 from sre_agent.cache import store as cache_store
 from sre_agent.cache import try_get as cache_try_get
+from sre_agent.calibration import IsotonicCalibrator
 from sre_agent.feedback import STORE as FEEDBACK_STORE
 from sre_agent.feedback import make_record as make_feedback_record
 from sre_agent.graph import build_graph
@@ -82,6 +83,51 @@ _MOCK_PROVIDER = MockProvider()
 
 INCIDENTS: dict[str, dict[str, Any]] = {}
 INCIDENTS_LOCK = threading.Lock()
+
+
+# ---------------------------------------------------------------------------
+# Confidence calibrator (L6.3)
+#
+# Loaded once at module import. Safe to ship missing: `IsotonicCalibrator.load`
+# returns the identity calibrator on missing/corrupt files, so the dashboard
+# boots cleanly in environments that haven't run `sre-agent calibrate` yet.
+#
+# `SRE_CALIBRATOR_PATH` env var lets ops override the artifact location
+# (e.g. mount a per-deploy calibrator into the container).
+# ---------------------------------------------------------------------------
+
+_CALIBRATOR_PATH = Path(
+    os.environ.get("SRE_CALIBRATOR_PATH")
+    or (ROOT / "data" / "calibrator.json")
+)
+CALIBRATOR = IsotonicCalibrator.load(_CALIBRATOR_PATH)
+
+
+def _apply_calibrator_to_incident(inc: dict[str, Any]) -> dict[str, Any]:
+    """Return a shallow copy of `inc` with hypothesis.confidence calibrated.
+
+    The raw value is preserved under `hypothesis.confidence_raw` so the
+    UI can show "85% raw -> 64% calibrated" for transparency. If the
+    calibrator is identity (the default before anyone runs `sre-agent
+    calibrate`), this function is a no-op.
+    """
+    if CALIBRATOR.is_identity:
+        return inc
+    hyp = inc.get("hypothesis")
+    if not hyp:
+        return inc
+    raw = hyp.get("confidence")
+    if not isinstance(raw, (int, float)):
+        return inc
+    if not (0.0 <= float(raw) <= 1.0):
+        return inc
+    out = dict(inc)
+    out_hyp = dict(hyp)
+    out_hyp["confidence_raw"] = float(raw)
+    out_hyp["confidence"] = round(CALIBRATOR.apply(float(raw)), 4)
+    out_hyp["calibrated"] = True
+    out["hypothesis"] = out_hyp
+    return out
 
 
 def _now_ms() -> int:
@@ -517,7 +563,10 @@ def api_get_incident(incident_id: str):
         inc = INCIDENTS.get(incident_id)
         if not inc:
             return jsonify({"error": "not found"}), 404
-        return jsonify(inc)
+        # Apply the fitted calibrator (L6.3) before surfacing confidence
+        # to oncall. No-op when no calibrator has been fitted yet --
+        # the dashboard ships boot-safe with the identity calibrator.
+        return jsonify(_apply_calibrator_to_incident(inc))
 
 
 @app.route("/api/incidents/<incident_id>/report", methods=["GET"])
@@ -716,6 +765,33 @@ def api_harness_summary():
             "rate_limit": LIMITER.stats(),
             "feedback": FEEDBACK_STORE.summary(),
             "observability": OBSERVABILITY_EXPORTER.stats(),
+            "calibration": {
+                "loaded_from": str(_CALIBRATOR_PATH),
+                "is_identity": CALIBRATOR.is_identity,
+                "n_train": CALIBRATOR.n_train,
+                "ece_before": round(CALIBRATOR.fit_ece_before, 4),
+                "ece_after": round(CALIBRATOR.fit_ece_after, 4),
+                "brier_before": round(CALIBRATOR.fit_brier_before, 4),
+                "brier_after": round(CALIBRATOR.fit_brier_after, 4),
+                "n_breakpoints": len(CALIBRATOR.breakpoints),
+            },
+        }
+    )
+
+
+@app.route("/api/harness/calibration", methods=["GET"])
+def api_harness_calibration():
+    """The currently loaded calibrator's breakpoints + diagnostics.
+
+    Used by ops to confirm "what is the dashboard ACTUALLY applying to
+    confidence numbers right now". Especially valuable after a deploy:
+    rolling out a stale calibrator silently is exactly the failure mode
+    a calibration system is supposed to prevent.
+    """
+    return jsonify(
+        {
+            "loaded_from": str(_CALIBRATOR_PATH),
+            "calibrator": CALIBRATOR.to_dict(),
         }
     )
 
@@ -798,6 +874,13 @@ def api_post_feedback(incident_id: str):
             or (tok.name if tok is not None else "anon")
         )
 
+        # We persist the RAW (pre-calibration) confidence so calibration
+        # remains a self-contained pre/post analysis -- otherwise the
+        # calibrator would be evaluating its own output.
+        _hyp = inc.get("hypothesis") or {}
+        _conf = _hyp.get("confidence_raw")
+        if _conf is None:
+            _conf = _hyp.get("confidence")
         rec = make_feedback_record(
             verdict=payload.get("verdict", "thumbs_up"),
             submitter=submitter,
@@ -805,7 +888,8 @@ def api_post_feedback(incident_id: str):
             correct_root_cause=payload.get("correct_root_cause"),
             correct_remediation=payload.get("correct_remediation"),
             free_text=payload.get("free_text"),
-            agent_root_cause=(inc.get("hypothesis") or {}).get("top"),
+            agent_root_cause=_hyp.get("top"),
+            agent_confidence=float(_conf) if isinstance(_conf, (int, float)) else None,
             prompt_shas_seen=prompt_shas,
             tags=payload.get("tags") or [],
         )
@@ -886,12 +970,15 @@ def api_slack_actions():
     with INCIDENTS_LOCK:
         _inc_snapshot = INCIDENTS.get(action.incident_id) or {}
         _alert_snapshot = _inc_snapshot.get("alert")
-        _agent_rc = (_inc_snapshot.get("hypothesis") or {}).get("top")
+        _hyp_snapshot = _inc_snapshot.get("hypothesis") or {}
+        _agent_rc = _hyp_snapshot.get("top")
+        _agent_conf = _hyp_snapshot.get("confidence_raw") or _hyp_snapshot.get("confidence")
     rec = make_feedback_record(
         verdict=action.verdict,
         submitter=f"slack:{action.user_name}",
         tags=action.tags,
         agent_root_cause=_agent_rc,
+        agent_confidence=float(_agent_conf) if isinstance(_agent_conf, (int, float)) else None,
         prompt_shas_seen=prompt_shas,
     )
     FEEDBACK_STORE.append(action.incident_id, rec, alert=_alert_snapshot)

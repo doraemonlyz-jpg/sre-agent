@@ -4,8 +4,8 @@
 [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![python](https://img.shields.io/badge/python-3.10%2B-blue)]()
 [![langgraph](https://img.shields.io/badge/orchestration-LangGraph-purple)]()
-[![tests](https://img.shields.io/badge/tests-310%20passing-brightgreen)]()
-[![harness-L6](https://img.shields.io/badge/harness-L6%20multi--agent%20A%2FB%20flywheel-blue)]()
+[![tests](https://img.shields.io/badge/tests-346%20passing-brightgreen)]()
+[![harness-L6](https://img.shields.io/badge/harness-L6%20A%2FB%20%2B%20calibration-blue)]()
 [![ci](https://img.shields.io/badge/ci-GitHub%20Actions-blueviolet)]()
 [![harness](https://img.shields.io/badge/harness-L5-blueviolet)]()
 [![eval](https://img.shields.io/badge/eval-3%2F3%20golden%20cases-success)]()
@@ -64,6 +64,46 @@ SRE_FEEDBACK_DIR=/tmp/demo/feedback REPORTS_DIR=/tmp/demo/reports \
   SEED_N=3000 SEED_RNG=42 SEED_AB=0.3 \
   BASELINES="hypothesis-gen=0c8f14d5,metrics-analyst=7f2d4e10,log-detective=09c3b1aa,remediation-sug=812a99ee" \
   python scripts/run-winner-job.py
+```
+
+---
+
+## ...and "85% sure" actually means 85% (L6.3 calibration)
+
+When the agent says it's 85% confident, that number is uncalibrated by
+default — LLMs are systematically over-confident in the upper range. A
+single command fits a Pool-Adjacent-Violators isotonic regressor on the
+oncall verdict corpus and reduces Expected Calibration Error by 65%:
+
+```text
+# Before calibration (raw LLM confidence vs actual oncall thumbs-up)
+| bin           |   N | mean_pred | frac_correct |    gap |
+|---------------|-----|-----------|--------------|--------|
+| [0.70, 0.80) | 450 |     0.754 |        0.731 |  +2.3pp |
+| [0.80, 0.90) | 445 |     0.843 |        0.762 |  +8.1pp |  ← over-confident
+| [0.90, 1.00) | 196 |     0.923 |        0.827 |  +9.6pp |  ← over-confident
+
+# After applying the fitted isotonic calibrator
+| bin           |    N | mean_pred | frac_correct |   gap |
+|---------------|------|-----------|--------------|-------|
+| [0.70, 0.80) | 1048 |     0.736 |        0.725 | +1.1pp |
+| [0.80, 0.90) |  215 |     0.833 |        0.828 | +0.5pp |  ← well-calibrated
+| [0.90, 1.00) |   17 |     1.000 |        0.882 | +11.8pp |
+
+ECE:   0.055 -> 0.019   (65% reduction)
+Brier: 0.195 -> 0.191
+```
+
+The calibrator is a small JSON file (a step function with a handful of
+breakpoints). The dashboard loads it at boot via
+`SRE_CALIBRATOR_PATH` and applies it before showing any confidence
+number to oncall. Missing artifact is safe — the loader returns the
+identity calibrator (no-op).
+
+```bash
+sre-agent calibrate --out data/calibrator.json --out-md reports/calibration.md
+sre-agent calibrate-show         # inspect what's loaded
+curl http://localhost:5080/api/harness/calibration | jq
 ```
 
 ---

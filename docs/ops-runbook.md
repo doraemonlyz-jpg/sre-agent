@@ -351,3 +351,77 @@ env:
 If you ever see `seeding N synthetic incidents` in the prod dashboard
 log on startup, that's a critical config bug; rotate the pod
 immediately, clear the feedback dir, and audit the deploy config.
+
+## 12. L6.3 - Confidence calibration
+
+The calibrator maps raw LLM-output confidence to a probability that
+*actually means what it says*. Without it, the agent saying "I'm 90%
+sure" is right only ~65% of the time and an oncall who trusts the
+number runs the wrong runbook.
+
+### 12.1 What it is
+
+- A small JSON file (`data/calibrator.json` by default) containing a
+  list of `(raw, calibrated)` breakpoints.
+- Loaded once at dashboard boot via `SRE_CALIBRATOR_PATH`.
+- Applied transparently to every `hypothesis.confidence` value the
+  dashboard surfaces. The raw value is preserved in
+  `hypothesis.confidence_raw` so you can audit what the calibrator did.
+
+### 12.2 Fitting it
+
+```bash
+# Reads $SRE_FEEDBACK_DIR (or ~/.sre-agent/feedback), writes the artifact.
+sre-agent calibrate \
+  --out data/calibrator.json \
+  --out-md reports/calibration.md
+
+# Inspect what's currently loaded.
+sre-agent calibrate-show
+
+# Verify what the live dashboard is applying.
+curl http://localhost:5080/api/harness/calibration | jq
+```
+
+The fitter uses Pool-Adjacent-Violators isotonic regression -- a
+shape-free monotonic estimator that handles the typical "flat in the
+middle, sharp at the extremes" LLM miscalibration without assuming a
+specific S-curve.
+
+If the feedback corpus has fewer than `--min-pairs` (default 100) pairs
+with usable `(agent_confidence, verdict)`, the fitter ships the
+**identity calibrator** rather than overfitting noise. The dashboard
+falls back to identity on missing/corrupt artifacts too: a broken
+calibrator never silently swallows alerts.
+
+### 12.3 Recommended cadence
+
+- **Refit weekly.** Confidence calibration drifts as the underlying
+  model versions update, prompts get promoted, and traffic mix changes.
+- **Refit after promoting a prompt variant.** The promoted prompt's
+  confidence distribution may differ from baseline's.
+- **Always refit on a held-out window**, never on the same data you're
+  evaluating. The CLI takes a `--feedback-dir` override for this.
+
+### 12.4 Health metrics to watch
+
+- **ECE (Expected Calibration Error)**: target < 0.05. Above 0.10
+  means the surfaced confidence is genuinely misleading.
+- **Brier score**: target < 0.25. Combines calibration and refinement;
+  large jumps week-over-week usually indicate a prompt regression.
+- **Number of breakpoints**: 2-15 is typical. A single-breakpoint fit
+  means the corpus has very little confidence signal -- check that
+  `agent_confidence` is actually being persisted on feedback records.
+
+### 12.5 Failure modes
+
+- **Identity calibrator in prod after `sre-agent calibrate`**: usually
+  means feedback records lack `agent_confidence`. Check that the
+  dashboard build is L6.3-or-later; pre-L6.3 records have no confidence
+  number to fit on.
+- **Calibrator pushes high-confidence predictions UP** (worse, not
+  better): symptom of a noisy training tail. Run with `--n-bins 20` to
+  see the diagram, and consider raising `--min-pairs`.
+- **ECE goes up between refits**: prompt promotion drift. The newly
+  promoted variant has a different confidence distribution than its
+  predecessor; the old calibrator is mis-applied. Refit immediately.

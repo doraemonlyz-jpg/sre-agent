@@ -402,6 +402,7 @@ def seed(
                 severity=severity,
                 prompt_shas=prompt_shas,
                 rng=rng,
+                agent_confidence=(hypothesis or {}).get("confidence"),
             )
             fb = make_feedback_record(
                 verdict=verdict,
@@ -419,6 +420,18 @@ def seed(
                 ),
                 free_text=None,
                 agent_root_cause=(hypothesis or {}).get("top") if hypothesis else None,
+                # Only attach `agent_confidence` for actual diagnostic
+                # predictions. The `no_signal` phase records a deliberate
+                # abstention ("we didn't find a signal") -- its
+                # nominally-low confidence number is about the NULL
+                # hypothesis, not about a real prediction, and feeding
+                # it to the calibrator just adds bimodal noise that PAV
+                # has to pool away. Same for timeouts.
+                agent_confidence=(
+                    (hypothesis or {}).get("confidence")
+                    if (hypothesis and phase == "diagnosed")
+                    else None
+                ),
                 prompt_shas_seen=prompt_shas,
                 tags=(
                     ["false-positive"]
@@ -547,11 +560,27 @@ def _decide_phase(
             "supporting_evidence": [],
         }, []
 
-    # True positives: confidence biased a bit higher when on the
-    # conservative variant (it's more rigorous).
-    base_conf = rng.uniform(0.55, 0.85)
+    # True positives: synthesise a deliberately MISCALIBRATED confidence.
+    #
+    # Empirically, raw LLM confidence on diagnostic tasks tends to be
+    # over-confident in the upper range: the model says "90% sure" and
+    # is right only ~65% of the time. We mimic that here so the L6.3
+    # calibrator (`sre_agent.calibration.IsotonicCalibrator`) has a
+    # non-trivial mapping to learn -- otherwise its training set looks
+    # already-calibrated and we can't demonstrate it actually working.
+    #
+    # Concretely:
+    #   - Baseline draws confidence in [0.65, 0.95] (over-confident).
+    #   - Conservative variant draws in [0.55, 0.85] (closer to honest).
+    # SEV-1 incidents get an extra over-confidence bump because the
+    # model has less time to reason in the prompt template.
+    base_conf = rng.uniform(0.65, 0.95)
     if on_variant:
-        base_conf = min(0.92, base_conf + rng.uniform(0.02, 0.08))
+        # Conservative variant is more rigorous about citing -- emits
+        # lower numbers on average.
+        base_conf = rng.uniform(0.55, 0.85)
+    if severity == "SEV-1":
+        base_conf = min(0.98, base_conf + rng.uniform(0.0, 0.05))
 
     hyp = {
         "top": pattern["hypothesis"],
@@ -580,12 +609,17 @@ def _draw_verdict(
     severity: str,
     prompt_shas: dict[str, str],
     rng: random.Random,
+    agent_confidence: float | None = None,
 ) -> str:
     """
     Per-incident verdict, biased so the data carries the signals L6
     features should detect:
 
       * Each agent's variant adds its own delta to the base TP rate.
+      * Higher `agent_confidence` -> modestly higher p_up. This is the
+        signal the L6.3 calibrator learns: the agent's confidence
+        number carries SOME information about accuracy, but is
+        over-stated (saying "90%" when really 70%).
       * SEV-1 is harder -> lower thumbs-up.
       * False positives flagged correctly by `no_signal` get thumbs-up
         despite "no diagnosis" (oncall appreciates restraint).
@@ -609,6 +643,22 @@ def _draw_verdict(
     # SEV-1 penalty: hard incidents
     if severity == "SEV-1":
         p_up -= 0.10
+
+    # Confidence -> outcome bias (L6.3 calibration signal).
+    #
+    # We linearly shift p_up based on how confident the agent was, with
+    # a deliberately shallow slope so the model stays OVER-confident:
+    #
+    #   raw=0.65 -> p_up shift =  0.00 (baseline)
+    #   raw=0.95 -> p_up shift = +0.18 (high conf -> moderately better)
+    #
+    # End-state: an agent saying "95%" is actually right ~80% of the
+    # time (overconfidence gap of ~15pp at the top), saying "65%" is
+    # right ~55% (gap of ~10pp at the bottom). PAV isotonic regression
+    # learns to map raw 0.95 -> ~0.80, raw 0.65 -> ~0.55, etc.
+    if agent_confidence is not None and phase == "diagnosed":
+        # Center the shift around 0.65 (the bottom of the TP confidence range).
+        p_up += (agent_confidence - 0.65) * 0.60
 
     # No-signal on true negative -> oncall happy (correct restraint).
     # The variant's evidence-quality delta doesn't apply here -- the

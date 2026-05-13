@@ -84,6 +84,12 @@ class FeedbackRecord:
     # time. Stored on the feedback record (not just derived from the
     # incident) so post-hoc analyses still work after incidents roll.
     agent_root_cause: str | None = None
+    # Snapshot of the agent's *confidence* on its top hypothesis (0..1).
+    # Together with `verdict`, this is the (predicted_prob, outcome)
+    # pair that the L6 calibrator consumes -- without persisting the
+    # number here, post-hoc calibration analyses lose the prediction
+    # side of the pair when the in-memory incident dict rolls.
+    agent_confidence: float | None = None
     prompt_shas_seen: dict[str, str] = field(default_factory=dict)
     tags: list[str] = field(default_factory=list)
 
@@ -230,6 +236,7 @@ def make_record(
     correct_remediation: str | None = None,
     free_text: str | None = None,
     agent_root_cause: str | None = None,
+    agent_confidence: float | None = None,
     prompt_shas_seen: dict[str, str] | None = None,
     tags: list[str] | None = None,
 ) -> FeedbackRecord:
@@ -239,6 +246,8 @@ def make_record(
         )
     if rating is not None and not (1 <= rating <= 5):
         raise ValueError("rating must be in 1..5")
+    if agent_confidence is not None and not (0.0 <= agent_confidence <= 1.0):
+        raise ValueError("agent_confidence must be in [0, 1]")
     return FeedbackRecord(
         id="fb-" + uuid.uuid4().hex[:10],
         ts=time.time(),
@@ -249,6 +258,7 @@ def make_record(
         correct_remediation=correct_remediation,
         free_text=free_text,
         agent_root_cause=agent_root_cause,
+        agent_confidence=agent_confidence,
         prompt_shas_seen=prompt_shas_seen or {},
         tags=tags or [],
     )
