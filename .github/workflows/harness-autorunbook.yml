@@ -111,6 +111,46 @@ jobs:
           cp "$REPORT_MD" "$dest"
           git add "$dest" reports/
 
+      # Render the PR body from PULL_REQUEST_TEMPLATE.md so bot PRs
+      # carry the same reviewer-checklist scaffolding human PRs do.
+      - name: Render PR body from template
+        if: steps.drafter.outputs.draft == 'true'
+        env:
+          REPORT_MD:  ${{ steps.drafter.outputs.report_md }}
+          DATE:       ${{ steps.drafter.outputs.date }}
+          N_CLUSTERS: ${{ steps.drafter.outputs.n_clusters }}
+        run: |
+          python - <<'PY'
+          import os, pathlib
+          tmpl = pathlib.Path(".github/PULL_REQUEST_TEMPLATE.md").read_text()
+          rpt  = pathlib.Path(os.environ["REPORT_MD"]).read_text()
+          date = os.environ["DATE"]
+          n    = os.environ["N_CLUSTERS"]
+
+          tmpl = tmpl.replace(
+              "## What & why\n\n<!-- 1–3 sentences. What does this change? Why is it needed? -->",
+              f"## What & why\n\n"
+              f"Auto-drafted {n} runbook entr{'y' if n=='1' else 'ies'} by "
+              f"`harness-autorunbook` ({date}). Each draft clusters oncall "
+              f"corrections where the agent's root-cause attribution was "
+              f"thumbs-downed and the oncall provided their own. Drafts are "
+              f"staged under `runbooks/_drafts/`; reviewers should validate "
+              f"and rename into the indexed runbook tree.",
+          )
+          tmpl = tmpl.replace(
+              "- [ ] **Auto-drafted runbook** (opened by `harness-autorunbook`)",
+              "- [x] **Auto-drafted runbook** (opened by `harness-autorunbook`)",
+          )
+          tmpl = tmpl.replace(
+              "<!-- bot-report-start -->\n<!-- bot-report-end -->",
+              f"<!-- bot-report-start -->\n\n{rpt}\n\n<!-- bot-report-end -->",
+          )
+
+          out = pathlib.Path("/tmp/pr-body.md")
+          out.write_text(tmpl)
+          print(f"::notice::Rendered PR body to {out} ({len(tmpl)} chars)")
+          PY
+
       - name: Open runbook-draft PR
         if: steps.drafter.outputs.draft == 'true'
         uses: peter-evans/create-pull-request@v6
@@ -124,7 +164,7 @@ jobs:
           branch: auto/runbook-${{ steps.drafter.outputs.date }}
           delete-branch: true
           title: "harness L6: auto-drafted runbooks (${{ steps.drafter.outputs.date }}, ${{ steps.drafter.outputs.n_clusters }} clusters)"
-          body-path: reports/runbook-draft-${{ steps.drafter.outputs.date }}.md
+          body-path: /tmp/pr-body.md
           labels: |
             automation
             harness-l6

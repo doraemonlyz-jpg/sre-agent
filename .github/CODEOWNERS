@@ -1,0 +1,54 @@
+# CODEOWNERS — who must review what.
+#
+# GitHub uses this file to auto-request reviews when a PR touches matching paths.
+# The rules are evaluated bottom-up; the LAST matching rule wins.
+#
+# This repo is the AI-SRE agent system. Different parts of the codebase have
+# very different review needs:
+#
+#   - personas/   — the agents' system prompts. A bad change can silently
+#                   change behaviour across thousands of incidents, so this
+#                   needs human SRE-lead review even when the diff is small.
+#   - runbooks/   — operational knowledge. Tech lead + on-call rotation owner.
+#   - .github/    — automation. A bad GHA workflow can leak tokens or
+#                   open thousands of PRs — needs infra review.
+#   - src/sre_agent/winner.py + autorunbook.py — the L6 self-improvement
+#                   code path. Touches model behaviour, needs ML/SRE review.
+#
+# Replace @your-org/* placeholders with your real team handles before
+# enabling branch protection.
+
+# ── Default: anyone on the core team can review ───────────────────────────
+*                                  @your-org/sre-agent-core
+
+# ── L6 self-improvement code (the model-behaviour pipeline) ───────────────
+/src/sre_agent/winner.py           @your-org/sre-agent-core @your-org/ml-platform
+/src/sre_agent/autorunbook.py      @your-org/sre-agent-core @your-org/ml-platform
+/src/sre_agent/seed.py             @your-org/sre-agent-core @your-org/ml-platform
+/tests/test_winner.py              @your-org/sre-agent-core @your-org/ml-platform
+/tests/test_autorunbook.py         @your-org/sre-agent-core @your-org/ml-platform
+/tests/test_seed.py                @your-org/sre-agent-core @your-org/ml-platform
+
+# ── Personas — auto-generated promotions need an SRE-lead approval ────────
+# (The harness-winner GHA opens PRs that ONLY touch personas/. CODEOWNERS
+# guarantees a human SRE lead must approve before the new prompt ships.)
+/personas/                         @your-org/sre-leads
+/personas/variants/                @your-org/sre-leads @your-org/sre-agent-core
+
+# ── Runbooks — knowledge artefacts; service-team owners ───────────────────
+# (The harness-autorunbook GHA stages drafts under runbooks/_drafts/. The
+# service team that owns the affected service must approve before
+# promoting a draft into the indexed runbook set.)
+/runbooks/                         @your-org/sre-oncall-rotation
+/runbooks/_drafts/                 @your-org/sre-oncall-rotation @your-org/sre-agent-core
+
+# ── Automation — workflows and CI scripts ─────────────────────────────────
+/.github/workflows/                @your-org/sre-agent-core @your-org/infra
+/scripts/                          @your-org/sre-agent-core
+
+# ── Dashboard (Flask + JS) ────────────────────────────────────────────────
+/dashboard/                        @your-org/sre-agent-core
+
+# ── Tutorial site & docs ──────────────────────────────────────────────────
+/docs/                             @your-org/sre-agent-core
+/README.md                         @your-org/sre-agent-core

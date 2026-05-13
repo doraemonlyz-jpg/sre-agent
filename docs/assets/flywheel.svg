@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" width="960" height="480" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+  <style>
+    .panel       { fill: #ffffff; stroke: #d0d7de; stroke-width: 1.5; }
+    .accent-soft { fill: #ddf4ff; stroke: #0969da; stroke-width: 1.5; }
+    .ok-soft     { fill: #dafbe1; stroke: #1a7f37; stroke-width: 1.5; }
+    .warn-soft   { fill: #fff8c5; stroke: #9a6700; stroke-width: 1.5; }
+    .heading     { font-size: 14px; font-weight: 600; fill: #1f2328; }
+    .label       { font-size: 12px; fill: #1f2328; }
+    .sublabel    { font-size: 11px; fill: #57606a; }
+    .step        { font-size: 11px; font-weight: 700; fill: #57606a; letter-spacing: 0.5px; }
+    .arrow       { stroke: #6e7781; stroke-width: 1.5; fill: none; }
+    .arrow-promote { stroke: #0969da; stroke-width: 2; fill: none; }
+    .flywheel-label { font-size: 11px; font-weight: 700; fill: #0969da; letter-spacing: 0.5px; }
+    @media (prefers-color-scheme: dark) {
+      .panel       { fill: #161b22; stroke: #30363d; }
+      .accent-soft { fill: #0c2d6b; stroke: #58a6ff; }
+      .ok-soft     { fill: #0f3220; stroke: #3fb950; }
+      .warn-soft   { fill: #3a2c00; stroke: #d29922; }
+      .heading     { fill: #f0f6fc; }
+      .label       { fill: #c9d1d9; }
+      .sublabel    { fill: #8b949e; }
+      .step        { fill: #8b949e; }
+      .arrow       { stroke: #6e7681; }
+      .arrow-promote { stroke: #58a6ff; }
+      .flywheel-label { fill: #58a6ff; }
+    }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6e7781"/>
+    </marker>
+    <marker id="arrowhead-blue" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0969da"/>
+    </marker>
+  </defs>
+
+  <text x="480" y="34" text-anchor="middle" class="heading" font-size="18">L6 self-improvement loop</text>
+  <text x="480" y="54" text-anchor="middle" class="sublabel">a daily cron turns oncall thumbs-up/down signal into auto-promoted prompts and auto-drafted runbooks</text>
+
+  <rect x="40" y="120" width="180" height="100" rx="8" class="warn-soft"/>
+  <text x="130" y="146" text-anchor="middle" class="step">STEP 1 &#8212; INCIDENT</text>
+  <text x="130" y="170" text-anchor="middle" class="heading">SEV-2 latency spike</text>
+  <text x="130" y="190" text-anchor="middle" class="sublabel">checkout-api &#183; p99 5x baseline</text>
+  <text x="130" y="208" text-anchor="middle" class="sublabel">page fires &#8594; PM agent</text>
+
+  <rect x="280" y="120" width="200" height="100" rx="8" class="panel"/>
+  <text x="380" y="146" text-anchor="middle" class="step">STEP 2 &#8212; 7-AGENT DIAGNOSIS</text>
+  <text x="380" y="170" text-anchor="middle" class="heading">log + metrics + trace</text>
+  <text x="380" y="190" text-anchor="middle" class="sublabel">&#8594; hypothesis (with runbook RAG)</text>
+  <text x="380" y="208" text-anchor="middle" class="sublabel">&#8594; remediation (low-risk first)</text>
+
+  <rect x="540" y="120" width="180" height="100" rx="8" class="accent-soft"/>
+  <text x="630" y="146" text-anchor="middle" class="step">STEP 3 &#8212; ONCALL VERDICT</text>
+  <text x="630" y="170" text-anchor="middle" class="heading">up / down / correction</text>
+  <text x="630" y="190" text-anchor="middle" class="sublabel">"agent said X, actually Y"</text>
+  <text x="630" y="208" text-anchor="middle" class="sublabel">persisted to feedback store</text>
+
+  <rect x="280" y="280" width="200" height="120" rx="8" class="ok-soft"/>
+  <text x="380" y="306" text-anchor="middle" class="step">STEP 4 &#8212; NIGHTLY HARNESS CRON</text>
+  <text x="380" y="330" text-anchor="middle" class="heading">winner.py + autorunbook.py</text>
+  <text x="380" y="350" text-anchor="middle" class="sublabel">Wilson CI &#183; two-prop z-test</text>
+  <text x="380" y="368" text-anchor="middle" class="sublabel">cluster corrections by</text>
+  <text x="380" y="384" text-anchor="middle" class="sublabel">(service, alert-shape)</text>
+
+  <rect x="540" y="280" width="180" height="120" rx="8" class="panel"/>
+  <text x="630" y="306" text-anchor="middle" class="step">STEP 5 &#8212; AUTO-PR</text>
+  <text x="630" y="330" text-anchor="middle" class="heading">prompt promotion</text>
+  <text x="630" y="350" text-anchor="middle" class="sublabel">+ runbook draft</text>
+  <text x="630" y="372" text-anchor="middle" class="label" font-weight="600">CODEOWNERS</text>
+  <text x="630" y="388" text-anchor="middle" class="sublabel">SRE lead approves</text>
+
+  <rect x="780" y="200" width="150" height="120" rx="8" class="accent-soft"/>
+  <text x="855" y="226" text-anchor="middle" class="step">STEP 6 &#8212; NEXT INCIDENT</text>
+  <text x="855" y="250" text-anchor="middle" class="heading">better prompt</text>
+  <text x="855" y="270" text-anchor="middle" class="heading">richer runbook</text>
+  <text x="855" y="294" text-anchor="middle" class="sublabel">cited by RAG</text>
+  <text x="855" y="310" text-anchor="middle" class="sublabel">&#8594; closed loop</text>
+
+  <path d="M 220 170 L 280 170" class="arrow" marker-end="url(#arrowhead)"/>
+  <path d="M 480 170 L 540 170" class="arrow" marker-end="url(#arrowhead)"/>
+  <path d="M 630 220 Q 630 250 480 280" class="arrow" marker-end="url(#arrowhead)"/>
+  <path d="M 480 340 L 540 340" class="arrow-promote" marker-end="url(#arrowhead-blue)"/>
+  <path d="M 720 320 Q 760 320 780 280" class="arrow-promote" marker-end="url(#arrowhead-blue)"/>
+  <path d="M 855 200 Q 855 80 130 80 Q 60 80 60 120" class="arrow-promote" marker-end="url(#arrowhead-blue)" stroke-dasharray="6,4"/>
+  <text x="480" y="74" text-anchor="middle" class="flywheel-label">flywheel: each cycle the agents start a little smarter</text>
+
+  <text x="480" y="450" text-anchor="middle" class="sublabel">All decisions are human-reviewed. The bot opens PRs; CODEOWNERS gates merge.</text>
+</svg>

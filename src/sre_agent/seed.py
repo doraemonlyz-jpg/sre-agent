@@ -153,35 +153,64 @@ _AGENT_PROFILES: dict[str, dict[str, float]] = {
 }
 
 
-# Fake prompt SHAs. In a real environment these are computed from persona
-# content; here we hard-code a baseline pair + a "conservative" variant
-# pair so the L6 winner cron has unambiguous groups to compare.
+# Fake prompt SHAs. In a real environment these are computed from
+# persona content via personas.load_with_sha(); here we hard-code so the
+# L6 winner cron has unambiguous groups to compare without depending on
+# the actual persona file bytes.
+#
+# The variants are calibrated so the winner cron's matrix output tells
+# DIFFERENT stories per agent -- promote, hold-thin-delta,
+# hold-baseline-already-best, no-variant -- demonstrating the system's
+# range of decisions, not just "everything promotes":
 _PROMPT_SHAS = {
-    "log-detective":    {"baseline": "09c3b1aa"},
-    "metrics-analyst":  {"baseline": "7f2d4e10"},
+    "log-detective":    {"baseline": "09c3b1aa", "strict_citations":  "31d7af44"},
+    "metrics-analyst":  {"baseline": "7f2d4e10", "anomaly_focused":   "6ec88011"},
     "trace-reader":     {"baseline": "bb14c2c9"},
     "deploy-historian": {"baseline": "c4d3c986"},
-    "hypothesis-gen":   {"baseline": "0c8f14d5", "conservative": "9a4e2b73"},
-    "remediation-sug":  {"baseline": "812a99ee"},
+    "hypothesis-gen":   {"baseline": "0c8f14d5", "conservative":      "9a4e2b73"},
+    "remediation-sug":  {"baseline": "812a99ee", "low_risk_first":    "ad2b6e09"},
 }
 
 
-# Per-prompt-SHA thumbs-up rates for TRUE-POSITIVE incidents.
+# Per-SHA additive contributions to the true-positive thumbs-up rate.
 #
-# A subtle modeling decision: the conservative variant doesn't change
-# the verdict for false positives (both prompts correctly land in
-# "no_signal" and get oncall thumbs-up). The variant's edge shows up on
-# *real* incidents -- where the conservative prompt is more rigorous
-# about citing evidence and less likely to hallucinate a wrong root
-# cause.
+# Model: the verdict is the SUM of each agent's contribution. A
+# baseline SHA contributes 0; a variant contributes its calibrated
+# delta. This is additive on purpose — when oncall judges a report,
+# they're judging the JOINT output of all agents, so any agent's
+# variant should move the dial proportionally.
 #
-# Gap intentionally wide (15pp) so a 1000-incident seed reliably has
-# enough power for winner detection at alpha=0.05, even at the 10-30%
-# variant traffic share typical of real A/B tests.
-_SHA_THUMBS_UP_RATE = {
-    "0c8f14d5": 0.62,    # hypothesis-gen baseline
-    "9a4e2b73": 0.78,    # hypothesis-gen conservative -- +16pp on TP incidents
+# Calibrated so the winner cron's per-agent matrix tells a complete
+# story (each agent lands on a different decision):
+#
+#   hypothesis-gen.conservative   (+16pp)  -> PROMOTE (strong)
+#   metrics-analyst.anomaly       (+8pp)   -> PROMOTE at N>=2000
+#   log-detective.strict          (+2pp)   -> HOLD (under min_delta_pp)
+#   remediation-sug.low_risk      (-7pp)   -> HOLD (baseline wins clearly)
+#
+# Realistic shape: A/B experiments rarely yield clear winners. A
+# matrix saying "we tried 4 variants, 2 panned out, 2 didn't" is the
+# right advertisement for a working flywheel; one where everything
+# wins by 20pp looks fake.
+_SHA_DELTA_PP = {
+    "0c8f14d5":  0,    # hypothesis-gen baseline
+    "9a4e2b73": 16,    # hypothesis-gen conservative
+
+    "7f2d4e10":  0,    # metrics-analyst baseline
+    "6ec88011":  8,    # metrics-analyst anomaly-focused
+
+    "09c3b1aa":  0,    # log-detective baseline
+    "31d7af44":  2,    # log-detective strict-citations
+
+    "812a99ee":  0,    # remediation-sug baseline
+    "ad2b6e09": -7,    # remediation-sug low-risk-first (variant LOSES by 7pp)
+
+    "bb14c2c9":  0,    # trace-reader (no variant — always 0)
+    "c4d3c986":  0,    # deploy-historian (no variant — always 0)
 }
+
+# Base thumbs-up rate for TP incidents (with everyone on baseline).
+_BASE_TP_RATE = 0.62
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -291,11 +320,24 @@ def seed(
         true_positive = pattern["true_positive"]
 
         # ── decide which prompt SHA this incident used (A/B routing) ──
+        # Each agent that HAS a non-baseline variant gets its own
+        # independent A/B coin flip. This matches reality: prompt
+        # experiments are usually launched at different cadences per
+        # agent. Independent flips also give the winner cron more
+        # realistic correlation structure -- a single incident might
+        # land on baseline for one agent and variant for another.
         prompt_shas = {agent: shas["baseline"] for agent, shas in _PROMPT_SHAS.items()}
-        on_variant = False
-        if not is_cache_hit and rng.random() < ab_fraction:
-            prompt_shas["hypothesis-gen"] = _PROMPT_SHAS["hypothesis-gen"]["conservative"]
-            on_variant = True
+        on_variant = False  # tracked specifically for hypothesis-gen (it drives the confidence calibration below)
+        if not is_cache_hit:
+            for agent, shas in _PROMPT_SHAS.items():
+                variant_keys = [k for k in shas if k != "baseline"]
+                if not variant_keys:
+                    continue
+                if rng.random() < ab_fraction:
+                    chosen = rng.choice(variant_keys)
+                    prompt_shas[agent] = shas[chosen]
+                    if agent == "hypothesis-gen":
+                        on_variant = True
 
         # ── harness records (skip when cache hit -- cache short-circuits LLM) ──
         if is_cache_hit:
@@ -358,7 +400,7 @@ def seed(
                 phase=phase,
                 true_positive=true_positive,
                 severity=severity,
-                prompt_sha=prompt_shas["hypothesis-gen"],
+                prompt_shas=prompt_shas,
                 rng=rng,
             )
             fb = make_feedback_record(
@@ -536,33 +578,44 @@ def _draw_verdict(
     phase: str,
     true_positive: bool,
     severity: str,
-    prompt_sha: str,
+    prompt_shas: dict[str, str],
     rng: random.Random,
 ) -> str:
     """
     Per-incident verdict, biased so the data carries the signals L6
     features should detect:
 
-      * Conservative variant has higher thumbs-up rate.
-      * SEV-1 is harder → lower thumbs-up.
+      * Each agent's variant adds its own delta to the base TP rate.
+      * SEV-1 is harder -> lower thumbs-up.
       * False positives flagged correctly by `no_signal` get thumbs-up
         despite "no diagnosis" (oncall appreciates restraint).
       * Timeouts overwhelmingly thumbs-down.
+
+    The additive model means an incident on (hypothesis-gen.variant +
+    metrics-analyst.variant) has a higher p_up than one on either
+    alone. The winner cron's per-agent groups average over the OTHER
+    agents' splits, so each agent's variant signal still surfaces
+    cleanly in its own group's win rate -- exactly the way real prod
+    A/B data behaves.
     """
     if phase == "timeout":
         return rng.choices(["thumbs_down", "incorrect"], weights=[0.7, 0.3])[0]
 
-    # Base thumbs-up probability per prompt_sha
-    p_up = _SHA_THUMBS_UP_RATE.get(prompt_sha, 0.65)
+    # Sum each agent's contribution -- baseline shas contribute 0,
+    # variant shas contribute their calibrated delta in percentage points.
+    total_delta_pp = sum(_SHA_DELTA_PP.get(sha, 0) for sha in prompt_shas.values())
+    p_up = _BASE_TP_RATE + (total_delta_pp / 100.0)
 
     # SEV-1 penalty: hard incidents
     if severity == "SEV-1":
         p_up -= 0.10
 
-    # No-signal on true negative → oncall happy (correct restraint)
+    # No-signal on true negative -> oncall happy (correct restraint).
+    # The variant's evidence-quality delta doesn't apply here -- the
+    # report's contents are the same "no signal" either way.
     if not true_positive and phase == "no_signal":
-        p_up = max(p_up, 0.80)
-    # No-signal on TRUE positive → missed it
+        p_up = max(_BASE_TP_RATE + 0.18, 0.80)
+    # No-signal on TRUE positive -> agent missed it; bad regardless of variant.
     if true_positive and phase == "no_signal":
         p_up = 0.20
 

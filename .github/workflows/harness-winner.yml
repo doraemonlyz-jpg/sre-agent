@@ -191,6 +191,46 @@ jobs:
           # branch + commit + push in the next step.
           git add personas/ reports/
 
+      # `peter-evans/create-pull-request` does NOT auto-apply
+      # PULL_REQUEST_TEMPLATE.md (templates are a GitHub-UI feature).
+      # We render the template ourselves so bot PRs look like
+      # human PRs: pre-ticked checkboxes and the analysis report
+      # injected inside the <!-- bot-report --> markers.
+      - name: Render PR body from template
+        if: steps.winner.outputs.promote == 'true'
+        id: render
+        env:
+          REPORT_MD: ${{ steps.winner.outputs.report_md }}
+          DATE:      ${{ steps.winner.outputs.date }}
+        run: |
+          python - <<'PY'
+          import os, pathlib, datetime
+          tmpl  = pathlib.Path(".github/PULL_REQUEST_TEMPLATE.md").read_text()
+          rpt   = pathlib.Path(os.environ["REPORT_MD"]).read_text()
+          date  = os.environ["DATE"]
+
+          tmpl = tmpl.replace(
+              "## What & why\n\n<!-- 1–3 sentences. What does this change? Why is it needed? -->",
+              f"## What & why\n\n"
+              f"Auto-promotion of one or more prompt variants by `harness-winner` "
+              f"({date}). The full statistical report is below. This PR has "
+              f"already copied each winning variant over its baseline under "
+              f"`personas/`.",
+          )
+          tmpl = tmpl.replace(
+              "- [ ] **Auto-promoted prompt variant** (opened by `harness-winner`)",
+              "- [x] **Auto-promoted prompt variant** (opened by `harness-winner`)",
+          )
+          tmpl = tmpl.replace(
+              "<!-- bot-report-start -->\n<!-- bot-report-end -->",
+              f"<!-- bot-report-start -->\n\n{rpt}\n\n<!-- bot-report-end -->",
+          )
+
+          out = pathlib.Path("/tmp/pr-body.md")
+          out.write_text(tmpl)
+          print(f"::notice::Rendered PR body to {out} ({len(tmpl)} chars)")
+          PY
+
       - name: Open promotion PR
         if: steps.winner.outputs.promote == 'true'
         uses: peter-evans/create-pull-request@v6
@@ -207,9 +247,9 @@ jobs:
           branch: auto/winner-${{ steps.winner.outputs.date }}
           delete-branch: true
           title: "harness L6: promote prompt variant (${{ steps.winner.outputs.date }})"
-          # The PR body IS the Markdown report — reviewers see the
-          # full statistical analysis without leaving GitHub.
-          body-path: reports/winner-${{ steps.winner.outputs.date }}.md
+          # PR body = our PULL_REQUEST_TEMPLATE pre-populated with the
+          # auto-promotion preamble + the report inside <!-- bot-report --> markers.
+          body-path: /tmp/pr-body.md
           labels: |
             automation
             harness-l6

@@ -5,7 +5,7 @@
 [![python](https://img.shields.io/badge/python-3.10%2B-blue)]()
 [![langgraph](https://img.shields.io/badge/orchestration-LangGraph-purple)]()
 [![tests](https://img.shields.io/badge/tests-310%20passing-brightgreen)]()
-[![harness-L6](https://img.shields.io/badge/harness-L6%20synth%20%2B%20winner%20%2B%20autorunbook-blue)]()
+[![harness-L6](https://img.shields.io/badge/harness-L6%20multi--agent%20A%2FB%20flywheel-blue)]()
 [![ci](https://img.shields.io/badge/ci-GitHub%20Actions-blueviolet)]()
 [![harness](https://img.shields.io/badge/harness-L5-blueviolet)]()
 [![eval](https://img.shields.io/badge/eval-3%2F3%20golden%20cases-success)]()
@@ -14,6 +14,57 @@
 > across logs / metrics / traces / deploys → a hypothesis generator ranks root
 > causes with citations → a remediation suggester writes the fix.
 > **The agents never execute remediation.** Diagnosis target: **< 90 seconds**.
+
+<p align="center">
+  <img src="docs/assets/flywheel.svg" alt="L6 self-improvement flywheel: incident → 7-agent diagnosis → oncall verdict → nightly cron → auto-PR → smarter agents next time" width="100%">
+</p>
+
+> **The flywheel above is what makes this a system, not a demo.** Every
+> incident's oncall verdict feeds a nightly harness cron that auto-promotes
+> winning prompt variants and drafts new runbook entries — gated by
+> `CODEOWNERS`, not auto-merged.
+
+---
+
+## What this looks like end-to-end
+
+A real auto-generated matrix from `scripts/run-winner-job.py` (3000 synthetic
+incidents, `SEED_RNG=42`, 4 prompt variants in flight, `WINNER_MIN_DELTA_PP=3.0`):
+
+```text
+### ✅ `hypothesis-gen` — promote
+> variant 9a4e2b73 beats 0c8f14d5 by +7.0pp at p=0.001 (n=607 vs 1658)
+
+### ✅ `metrics-analyst` — promote
+> variant 6ec88011 beats 7f2d4e10 by +7.2pp at p=0.001 (n=599 vs 1666)
+
+### ⏸ `log-detective` — hold
+> not significant at alpha=0.05 (p=0.056, z=+1.91) — collect more data
+
+### ⏸ `remediation-sug` — hold
+> not significant at alpha=0.05 (p=0.081, z=+1.75) — collect more data
+
+### ⏸ `deploy-historian` — hold
+> only one prompt variant has feedback — A/B not running
+
+### ⏸ `trace-reader` — hold
+> only one prompt variant has feedback — A/B not running
+```
+
+Two variants get auto-PR'd (with the report as the PR body, the
+`Auto-promoted prompt variant` checkbox pre-ticked, and `CODEOWNERS`
+routing the review to SRE leads). Two were held back honestly — the
+point-estimate looks favourable but the data isn't conclusive at
+α=0.05. **A flywheel that says "no" is the sign it's actually working.**
+
+Reproduce locally:
+
+```bash
+SRE_FEEDBACK_DIR=/tmp/demo/feedback REPORTS_DIR=/tmp/demo/reports \
+  SEED_N=3000 SEED_RNG=42 SEED_AB=0.3 \
+  BASELINES="hypothesis-gen=0c8f14d5,metrics-analyst=7f2d4e10,log-detective=09c3b1aa,remediation-sug=812a99ee" \
+  python scripts/run-winner-job.py
+```
 
 ---
 
