@@ -547,6 +547,7 @@ h2:hover .anchor, h3:hover .anchor { opacity: 1; }
     <li><a href="#rag">护城河：Runbook RAG</a></li>
     <li><a href="#defense">怎么保证不胡说</a></li>
     <li><a href="#scale">生产规模化（Phase E）</a></li>
+    <li><a href="#flywheel">自我改进闭环（L6）</a></li>
     <li><a href="#trace">一条 incident 全程</a></li>
     <li><a href="#code">代码地图</a></li>
     <li><a href="#interview">面试高频问答</a></li>
@@ -1445,9 +1446,197 @@ threshold</text>
   <p><strong>16 倍成本差</strong>。这就是为啥 tier 路由是面试必答题——它是 LLM 系统从 demo 到能上生产的核心商业决策。</p>
 </section>
 
-<!-- ─────────────────────────────────── 11. TRACE -->
+<!-- ─────────────────────────────────── 11. FLYWHEEL / L6 -->
+<section id="flywheel">
+  <h2><span class="num">11</span>自我改进闭环：L6<a class="anchor" href="#flywheel">#</a></h2>
+  <p class="lead">系统不仅能跑，还会<strong>自己变好</strong>——而且不需要 prod 的真实流量来证明这一点。</p>
+
+  <h3>问题的形态</h3>
+  <p>L5 把"反馈飞轮"的管道全部建好了：每个 incident 记录用了哪个 prompt 版本（<code>prompt_sha</code>）、oncall 给了什么评价（thumbs_up/down + 文字订正）、harness 的每一次 LLM 调用都打了标签。<strong>管道是干的</strong>——没有 prod 流量，飞轮转不起来。</p>
+
+  <p>L6 干两件事：</p>
+  <ol>
+    <li><strong>合成数据生成器</strong>——一个 calibrated 的"模拟生产"数据源，让飞轮在没有 prod 的情况下能转起来。<strong>分布是真的</strong>（业务时段、severity 分布、cache 命中率、A/B 信号强度），<strong>数据是假的</strong>。</li>
+    <li><strong>两个飞轮消费者</strong>——winner 提名 + 自动 runbook 起草——把数据变成<strong>可审查的 PR</strong>。</li>
+  </ol>
+
+  <h3>飞轮 SVG：一条闭环</h3>
+  <div class="diagram">
+    <svg viewBox="0 0 760 320" width="760" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="flyarr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#a78bfa"/>
+        </marker>
+      </defs>
+      <g font-family="Geist Mono" font-size="11">
+        <!-- 4 stages around a loop -->
+        <rect x="40"  y="120" width="140" height="80" rx="10" fill="#16161b" stroke="#a78bfa" stroke-width="1.4"/>
+        <text x="110" y="148" text-anchor="middle" fill="#e4e4e7" font-weight="600">① incident</text>
+        <text x="110" y="165" text-anchor="middle" fill="#71717a" font-size="9.5">graph 跑 7 agent</text>
+        <text x="110" y="180" text-anchor="middle" fill="#71717a" font-size="9.5">prompt_sha 记到 harness</text>
+
+        <rect x="240" y="40"  width="140" height="80" rx="10" fill="#16161b" stroke="#60a5fa" stroke-width="1.4"/>
+        <text x="310" y="68" text-anchor="middle" fill="#e4e4e7" font-weight="600">② feedback</text>
+        <text x="310" y="85" text-anchor="middle" fill="#71717a" font-size="9.5">oncall 👍/👎 + 订正</text>
+        <text x="310" y="100" text-anchor="middle" fill="#71717a" font-size="9.5">写到 SRE_FEEDBACK_DIR</text>
+
+        <rect x="440" y="120" width="140" height="80" rx="10" fill="#16161b" stroke="#4ade80" stroke-width="1.4"/>
+        <text x="510" y="148" text-anchor="middle" fill="#e4e4e7" font-weight="600">③ analyze</text>
+        <text x="510" y="165" text-anchor="middle" fill="#71717a" font-size="9.5">winner: z-test</text>
+        <text x="510" y="180" text-anchor="middle" fill="#71717a" font-size="9.5">autorunbook: 聚类</text>
+
+        <rect x="240" y="200" width="140" height="80" rx="10" fill="#16161b" stroke="#fbbf24" stroke-width="1.4"/>
+        <text x="310" y="228" text-anchor="middle" fill="#e4e4e7" font-weight="600">④ PR</text>
+        <text x="310" y="245" text-anchor="middle" fill="#71717a" font-size="9.5">GitHub Action 自动开</text>
+        <text x="310" y="260" text-anchor="middle" fill="#71717a" font-size="9.5">人审 → merge → 生效</text>
+
+        <!-- arrows clockwise -->
+        <path d="M 180 145 Q 220 100, 240 80"   fill="none" stroke="#a78bfa" stroke-width="1.4" marker-end="url(#flyarr)"/>
+        <path d="M 380 80  Q 430 90,  440 140"  fill="none" stroke="#60a5fa" stroke-width="1.4" marker-end="url(#flyarr)"/>
+        <path d="M 510 200 Q 460 230, 380 230"  fill="none" stroke="#4ade80" stroke-width="1.4" marker-end="url(#flyarr)"/>
+        <path d="M 240 230 Q 200 230, 130 200"  fill="none" stroke="#fbbf24" stroke-width="1.4" marker-end="url(#flyarr)"/>
+
+        <text x="620" y="100" fill="#52525b" font-size="10">合成数据器在</text>
+        <text x="620" y="116" fill="#52525b" font-size="10">没 prod 时也能</text>
+        <text x="620" y="132" fill="#52525b" font-size="10">让 ①②同时跑</text>
+      </g>
+    </svg>
+    <div class="diagram-caption">L6 闭环：incident → 反馈 → 分析 → PR，每一步都可审计、可重放、可测试</div>
+  </div>
+
+  <h3>① 合成数据生成器（<code>src/sre_agent/seed.py</code>）</h3>
+  <p>核心问题：飞轮的统计意义需要 N≥1000 的有标签数据。Prod 给不出来——尤其在你没工作的时候。<strong>那就自己造</strong>。</p>
+
+  <p>关键设计原则：<strong>分布要真，信号要可检测</strong>。</p>
+
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>维度</th><th>真实世界长这样</th><th>我们的合成</th></tr></thead>
+    <tbody>
+      <tr><td>severity 分布</td><td>SEV-3 是大头，SEV-1 罕见</td><td>5% SEV-1 / 25% SEV-2 / 50% SEV-3 / 20% SEV-4</td></tr>
+      <tr><td>业务时段</td><td>9-22 点告警密度大，凌晨稀</td><td>每小时权重表 + 噪声</td></tr>
+      <tr><td>故障模式</td><td>4 真阳 + 2 假阳模板</td><td>p99 spike / deploy regression / 内存泄漏 / 探针抖动 / monitor flap</td></tr>
+      <tr><td>cache 命中率</td><td>同一告警 5 分钟内 fire 多次 ≈ 10%</td><td>第 50 条之后开始 10% 概率取最近告警</td></tr>
+      <tr><td>A/B 信号</td><td>变体 prompt 在真阳 TP incident 上比 baseline 高 10-15pp</td><td>baseline 62% / variant 78% on TP（确定性，但有 sampling 噪声）</td></tr>
+      <tr><td>oncall 评价率</td><td>~75% incident 会被人 review</td><td>0.75 概率写 feedback</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>用法：</p>
+  <div class="code">
+    <div class="code-header"><span class="file">CLI 一行</span><span class="lang">SHELL</span></div>
+<pre><span class="c"># 3000 条 incident + 反馈 + harness 记录，2 秒出</span>
+sre-agent seed --n 3000 --seed 42
+
+<span class="c"># 启动 dashboard 时自动 seed（用于本地 demo / 面试演示）</span>
+SRE_SEED_ON_BOOT=3000 SRE_SEED_AB_FRACTION=0.3 \
+  python dashboard/app.py</pre>
+  </div>
+
+  <p>确定性：同样的 <code>--seed N</code> 永远产出同样的分布。这点很重要——没人想要 CI 里"今天通过明天失败"的随机测试。</p>
+
+  <h3>② Winner 提名（<code>src/sre_agent/winner.py</code>）</h3>
+  <p>读 feedback 里的每条记录，按 <code>(agent, prompt_sha)</code> 二维分组，每组算 thumbs-up 率 + Wilson 置信区间，跑 two-proportion z-test。</p>
+
+  <div class="code">
+    <div class="code-header"><span class="file">三道提名闸门</span><span class="lang">PYTHON</span></div>
+<pre><span class="c"># 1. 样本量门槛：每个 arm 至少 50 条</span>
+<span class="k">if</span> min(winner.n, runner.n) &lt; min_per_group:
+    <span class="k">return</span> hold(<span class="s">"insufficient sample size"</span>)
+
+<span class="c"># 2. 效应量门槛：至少 3pp 差</span>
+<span class="k">if</span> delta_pp &lt; min_delta_pp:
+    <span class="k">return</span> hold(<span class="s">f"point-estimate delta {delta_pp:+.1f}pp below threshold"</span>)
+
+<span class="c"># 3. 统计显著性：alpha=0.05 双尾</span>
+<span class="k">if</span> p_value &gt;= alpha:
+    <span class="k">return</span> hold(<span class="s">f"not significant at alpha={alpha} (p={p_value:.3f})"</span>)
+
+<span class="k">return</span> promote(winner.prompt_sha)</pre>
+  </div>
+
+  <p><strong>三个独立门，全过才 promote</strong>。统计学惯例 + 工程谨慎，保留对"看起来不错但样本太少"的怀疑——错误提名 prompt 的代价比延迟提名大得多。</p>
+
+  <p>跑出来的输出：</p>
+  <div class="code">
+    <div class="code-header"><span class="file">winner.md（真实生成）</span><span class="lang">MARKDOWN</span></div>
+<pre>### ✅ `hypothesis-gen` -- **promote**
+
+&gt; variant 9a4e2b73 beats 0c8f14d5 by +7.7pp at p=0.0004
+&gt; (n=612 vs 1657)
+
+| prompt_sha             | n    | positives | rate  | 95% CI         |
+| `9a4e2b73` (winner)    | 612  | 459       | 0.750 | [0.714, 0.783] |
+| `0c8f14d5` (baseline)  | 1657 | 1069      | 0.645 | [0.622, 0.668] |
+
+**Action**: copy `personas/variants/hypothesis-gen-conservative.md`
+over `personas/hypothesis-gen.md`, bump prompt_sha, redeploy.</pre>
+  </div>
+
+  <p>注意置信区间<strong>不打架</strong>：[0.714, 0.783] vs [0.622, 0.668]——这是"敢提名"的证据。p=0.0004 远低于 alpha=0.05。</p>
+
+  <h3>③ 自动 Runbook 起草（<code>src/sre_agent/autorunbook.py</code>）</h3>
+  <p>真正学到东西的不是 thumbs-up——而是 oncall <strong>给 thumbs-down + 写了订正的根因</strong>那一刻。那是"agent 错了，但人类正确"的训练对。</p>
+
+  <p>起草流程：</p>
+  <ol>
+    <li>遍历每个 <code>verdict ∈ {thumbs_down, incorrect}</code> 且 <code>correct_root_cause</code> 非空的 feedback 记录。</li>
+    <li>按 <code>(service, alert_shape)</code> 聚类——<code>alert_shape</code> 是把 alert 描述抽干数字、去掉停用词、留头 4 个有意义词的 hash key。</li>
+    <li>每个聚类如果跨过 <code>min_occurrences</code> 阈值，emit 一段 Markdown：agent 说 X / oncall 说 Y / 建议动作。</li>
+    <li>挑出每个聚类里最常见的 remediation 作为"建议条目"。</li>
+  </ol>
+
+  <p>关键设计：<strong>从不自动合并</strong>。起草器输出审稿用的 Markdown，<strong>真的 runbook 文案得人写</strong>——AI 写的 runbook 没有判断力，会把噪声当模式。</p>
+
+  <h3>④ GitHub Actions：让飞轮自己转</h3>
+  <p>L6 不靠人手动跑这些命令——靠定时任务。</p>
+
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Workflow</th><th>时间</th><th>positive 时做什么</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code>.github/workflows/<br/>harness-winner.yml</code></td>
+        <td>每天 02:00 UTC</td>
+        <td>runs <code>scripts/run-winner-job.py</code>。任意 agent 过三道闸 → 自动把 variant prompt 文件覆盖 baseline + 开 PR，PR body <strong>就是</strong>那份统计分析报告</td>
+      </tr>
+      <tr>
+        <td><code>.github/workflows/<br/>harness-autorunbook.yml</code></td>
+        <td>每周一 06:00 UTC</td>
+        <td>runs <code>scripts/run-autorunbook-job.py</code>。把 draft 放到 <code>runbooks/_drafts/</code>，开 PR，label <code>needs-review</code></td>
+      </tr>
+      <tr>
+        <td><code>.github/workflows/ci.yml</code></td>
+        <td>每次 push/PR</td>
+        <td>pytest + ruff，保证上面两个飞轮 job 本身的代码质量</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>每个 workflow 都接受 <code>workflow_dispatch</code> 手动触发——参数可以自定义（RNG 种子、A/B 流量比、显著性阈值），方便定向调查"上次 prompt 改动是不是把效果搞差了"。</p>
+
+  <h3>把它讲给面试官听</h3>
+  <p>这是面试时最 punchy 的一段：</p>
+  <div class="callout success">
+    <div class="callout-title">面试 elevator pitch</div>
+    <p>"我没有 prod 流量，所以做了个 calibrated 合成数据生成器，喂给一个完整的 A/B 提名 cron。它每天检查 prompt 变体，如果有变体在<strong>样本量、效应量、p-value 三道闸</strong>全过，自动开 PR 把 variant prompt 覆盖到 baseline，PR 描述就是那份统计报告。整套东西在 GitHub Actions 上跑——<strong>系统真的在自己改进自己</strong>。"</p>
+  </div>
+
+  <p>背后的工程信号：<strong>清楚什么是数据可以模拟、什么必须真实</strong>。Bug 报告可以模拟（结构稳定），用户偏好不能。Prompt A/B 也是数据可模拟那一类——这是为啥同样的代码路径在 dev 和 prod 上都跑得通。</p>
+
+  <h3>L6 不做的事（刻意的）</h3>
+  <ul>
+    <li><strong>不自动 merge</strong>——所有改动都过 PR + 人审 + CODEOWNERS</li>
+    <li><strong>不调模型权重</strong>——只优化 prompt 文本，weight tuning 属于 L7+，需要完全不同的基础设施</li>
+    <li><strong>不做因果推断</strong>——我们度量 thumbs-up 率，<strong>不是</strong>"建议的 remediation 实际解决了 incident"。后者需要"incident 解决"这个信号，今天还没有</li>
+  </ul>
+</section>
+
+<!-- ─────────────────────────────────── 12. TRACE -->
 <section id="trace">
-  <h2><span class="num">11</span>一条 incident 的全程<a class="anchor" href="#trace">#</a></h2>
+  <h2><span class="num">12</span>一条 incident 的全程<a class="anchor" href="#trace">#</a></h2>
   <p class="lead">用今天本地实测的 145 秒那条 incident 串起来讲。</p>
 
   <h3>时间线</h3>
@@ -1517,7 +1706,7 @@ threshold</text>
 
 <!-- ─────────────────────────────────── 12. CODE MAP -->
 <section id="code">
-  <h2><span class="num">12</span>代码地图<a class="anchor" href="#code">#</a></h2>
+  <h2><span class="num">13</span>代码地图<a class="anchor" href="#code">#</a></h2>
   <p class="lead">面试官说"打开你的项目我们看看代码"——你应该按这个路径走。</p>
 
   <div class="code">
@@ -1587,7 +1776,7 @@ threshold</text>
 
 <!-- ─────────────────────────────────── 13. INTERVIEW -->
 <section id="interview">
-  <h2><span class="num">13</span>面试高频问答<a class="anchor" href="#interview">#</a></h2>
+  <h2><span class="num">14</span>面试高频问答<a class="anchor" href="#interview">#</a></h2>
   <p class="lead">10 道一定会被问的，把答案背下来。</p>
 
   <details class="faq">
@@ -1687,7 +1876,7 @@ threshold</text>
 
 <!-- ─────────────────────────────────── 14. RUN -->
 <section id="run">
-  <h2><span class="num">14</span>动手跑一遍<a class="anchor" href="#run">#</a></h2>
+  <h2><span class="num">15</span>动手跑一遍<a class="anchor" href="#run">#</a></h2>
   <p class="lead">从 clone 到看到 burst 队列变化，5 分钟。</p>
 
   <h3>前置</h3>

@@ -4,8 +4,9 @@
 [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![python](https://img.shields.io/badge/python-3.10%2B-blue)]()
 [![langgraph](https://img.shields.io/badge/orchestration-LangGraph-purple)]()
-[![tests](https://img.shields.io/badge/tests-306%20passing-brightgreen)]()
+[![tests](https://img.shields.io/badge/tests-310%20passing-brightgreen)]()
 [![harness-L6](https://img.shields.io/badge/harness-L6%20synth%20%2B%20winner%20%2B%20autorunbook-blue)]()
+[![ci](https://img.shields.io/badge/ci-GitHub%20Actions-blueviolet)]()
 [![harness](https://img.shields.io/badge/harness-L5-blueviolet)]()
 [![eval](https://img.shields.io/badge/eval-3%2F3%20golden%20cases-success)]()
 
@@ -676,6 +677,38 @@ DEMO_KEEP=1 bash scripts/demo-l6.sh
 * **No causal inference on remediation success**. We measure thumbs-up
   rate, not "the suggested fix actually solved the incident". The
   latter requires an incident-resolution signal we don't have yet.
+
+### L6 automation — the system improves itself
+
+The two L6 jobs run on GitHub Actions on a schedule, so the flywheel
+turns even when nobody's watching:
+
+| Workflow | Schedule | What it does on a positive result |
+|---|---|---|
+| `.github/workflows/harness-winner.yml` | Daily 02:00 UTC | Runs `scripts/run-winner-job.py`. If any agent clears the three promotion gates, copies the winning variant over `personas/<agent>.md` and opens a PR. The PR body **is** the Markdown statistical report. |
+| `.github/workflows/harness-autorunbook.yml` | Weekly Monday 06:00 UTC | Runs `scripts/run-autorunbook-job.py`. Stages a clustered draft under `runbooks/_drafts/` and opens a PR. Never touches `personas/`. |
+| `.github/workflows/ci.yml` | Every push / PR | Standard pytest + ruff. The contract that proves L6 jobs themselves are tested before they ship. |
+
+Both harness workflows accept `workflow_dispatch` inputs so you can
+fire them manually with custom RNG / threshold parameters — useful
+when investigating "did the last prompt change make things worse?".
+
+The two jobs are also runnable locally — same scripts, same outputs:
+
+```bash
+# Same env contract as the Action, runs in 2-5 seconds.
+SEED_N=3000 SEED_RNG=42 SEED_AB=0.3 \
+  REPORTS_DIR=./reports \
+  python scripts/run-winner-job.py
+
+SEED_N=3000 MIN_OCCURRENCES=5 \
+  REPORTS_DIR=./reports \
+  python scripts/run-autorunbook-job.py
+```
+
+When you have prod traffic, set `SEED_N=0` and point
+`SRE_FEEDBACK_DIR` at the real on-disk feedback store. No code change
+needed.
 
 ---
 

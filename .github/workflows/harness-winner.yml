@@ -1,0 +1,216 @@
+# ───────────────────────────────────────────────────────────────────────
+# harness-winner.yml — L6.1 prompt-A/B winner promotion (scheduled)
+#
+# This workflow IS the "system improves itself" headline. Once a day it:
+#
+#   1. Restores the feedback corpus (seeded in this repo for demo, in
+#      real prod fetched from an artifact bucket — see "Production
+#      wiring" below).
+#   2. Runs `scripts/run-winner-job.py`, which writes a Markdown
+#      decision document and a JSON sidecar.
+#   3. If any agent crosses ALL three promotion gates (sample size,
+#      effect size, p-value), it opens a PR that:
+#        * Copies the winning variant prompt over the baseline.
+#        * Commits the Markdown report under `reports/`.
+#        * Uses the report body as the PR description.
+#      Otherwise the run completes with no side effects beyond the
+#      uploaded artifact.
+#
+# What this is NOT
+# ────────────────
+# This workflow does not merge anything. It opens a PR for human
+# review. The CODEOWNERS file ought to require an SRE-team sign-off on
+# anything that touches `personas/`.
+#
+# Production wiring (TODO when you have prod traffic)
+# ───────────────────────────────────────────────────
+# Today this workflow seeds synthetic data so the demo runs without
+# a real corpus. Real prod has two extra steps:
+#
+#   a. Pull the on-disk feedback dir from the prod node (rsync over
+#      ssh, or download a daily artifact from object storage).
+#   b. Drop `SEED_N=…` from the env so the analyzer reads the real
+#      corpus only.
+#
+# Switching is one env var, no code change needed.
+# ───────────────────────────────────────────────────────────────────────
+
+name: harness-winner
+
+on:
+  schedule:
+    # 02:00 UTC daily — after most teams' previous day has flushed,
+    # before US-east oncall has fired their morning round of pages.
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+    # Manual trigger for ad-hoc analysis. Useful when investigating
+    # "did the recent prompt change make things worse?".
+    inputs:
+      seed_n:
+        description: "Synthetic incidents to seed (0 = use real corpus)"
+        type: string
+        default: "3000"
+      seed_rng:
+        description: "Deterministic RNG seed"
+        type: string
+        default: "42"
+      seed_ab:
+        description: "A/B variant traffic fraction"
+        type: string
+        default: "0.3"
+      baselines:
+        description: "Current baseline prompt SHAs (comma-separated agent=sha)"
+        type: string
+        default: "hypothesis-gen=0c8f14d5"
+
+# Permissions are scoped narrowly: only what `peter-evans/create-pull-request`
+# needs. Anything more is unwarranted privilege.
+permissions:
+  contents: write
+  pull-requests: write
+
+# Cancel an in-flight run if a newer scheduled run kicks off. Two
+# winner jobs racing on the same prompt file is a recipe for an
+# unreviewable diff.
+concurrency:
+  group: harness-winner
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # We need full history because the PR commits new files under
+          # `reports/` and `personas/`; a shallow checkout would refuse
+          # to push if the base ref isn't reachable.
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          # The agent itself + dev extras (typer/pytest aren't strictly
+          # needed here, but `pip install -e .[dev]` is what new
+          # contributors run too — keep parity).
+          pip install -e ".[dev]"
+
+      - name: Run winner analyzer
+        id: winner
+        env:
+          # Seed data so this demo workflow has something to analyze.
+          # Real prod sets SEED_N=0 and provides the feedback dir.
+          SRE_FEEDBACK_DIR: ${{ github.workspace }}/.feedback-ci
+          REPORTS_DIR:      ${{ github.workspace }}/reports
+          SEED_N:           ${{ github.event.inputs.seed_n || '3000' }}
+          SEED_RNG:         ${{ github.event.inputs.seed_rng || '42' }}
+          SEED_AB:          ${{ github.event.inputs.seed_ab || '0.3' }}
+          BASELINES:        ${{ github.event.inputs.baselines || 'hypothesis-gen=0c8f14d5' }}
+          WINNER_ALPHA:     "0.05"
+          WINNER_MIN_N:     "50"
+          WINNER_MIN_DELTA_PP: "3.0"
+        run: |
+          mkdir -p "$SRE_FEEDBACK_DIR" "$REPORTS_DIR"
+          python scripts/run-winner-job.py
+
+      - name: Upload reports as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: winner-report-${{ steps.winner.outputs.date }}
+          path: reports/winner-${{ steps.winner.outputs.date }}.*
+          retention-days: 30
+
+      # ── No-op path: log + bail ────────────────────────────────────
+      - name: No promotion this run
+        if: steps.winner.outputs.promote != 'true'
+        run: |
+          echo "::notice::No prompt variants cleared the promotion gates today."
+          echo "See artifact 'winner-report-${{ steps.winner.outputs.date }}' for the full analysis."
+
+      # ── Promotion path: apply winner + open PR ────────────────────
+      #
+      # The promotion step reads the JSON sidecar to find which
+      # (agent, variant_sha) won, then copies the variant prompt over
+      # the baseline. We pattern-match the variant file by agent name
+      # — variants are stored at `personas/variants/<agent>-*.md` and
+      # we promote the first one found. If you run multiple variants
+      # per agent (real A/B/C testing), tighten the match here.
+      - name: Apply winning variant prompt
+        if: steps.winner.outputs.promote == 'true'
+        id: apply
+        env:
+          REPORT_JSON: ${{ steps.winner.outputs.report_json }}
+        run: |
+          set -euo pipefail
+          echo "Reading promotions from $REPORT_JSON"
+
+          # Extract the list of agents that won (verdict=promote) from
+          # the JSON sidecar. `while read` loop instead of `mapfile`
+          # so this also runs locally on macOS's bash 3.2.
+          agents=()
+          while IFS= read -r line; do
+            [[ -n "$line" ]] && agents+=("$line")
+          done < <(python - <<'PY'
+          import json, os
+          with open(os.environ["REPORT_JSON"]) as f:
+              report = json.load(f)
+          for d in report["decisions"]:
+              if d["verdict"] == "promote":
+                  print(d["agent"])
+          PY
+          )
+
+          if [[ ${#agents[@]} -eq 0 ]]; then
+            echo "no agents to promote (output mismatched JSON?)"; exit 0
+          fi
+
+          for agent in "${agents[@]}"; do
+            # Find a variant file. Real workflows would map agent →
+            # exact variant via the report's winner_sha; here we trust
+            # convention `personas/variants/<agent>-*.md`.
+            variant=$(ls personas/variants/${agent}-*.md 2>/dev/null | head -n1 || true)
+            if [[ -z "$variant" ]]; then
+              echo "::warning::No variant file found for ${agent} under personas/variants/"
+              continue
+            fi
+            echo "promoting ${variant} -> personas/${agent}.md"
+            cp "$variant" "personas/${agent}.md"
+          done
+
+          # Stage everything we want in the PR (the report files +
+          # promoted personas). `create-pull-request` handles the
+          # branch + commit + push in the next step.
+          git add personas/ reports/
+
+      - name: Open promotion PR
+        if: steps.winner.outputs.promote == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          # A dedicated bot token would be cleaner in real prod (so
+          # the PR comes from `sre-bot` not `github-actions`), but
+          # GITHUB_TOKEN works fine for the demo.
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: |
+            harness L6: auto-promote prompt variant (${{ steps.winner.outputs.date }})
+
+            Generated by .github/workflows/harness-winner.yml.
+            Full report: reports/winner-${{ steps.winner.outputs.date }}.md
+          branch: auto/winner-${{ steps.winner.outputs.date }}
+          delete-branch: true
+          title: "harness L6: promote prompt variant (${{ steps.winner.outputs.date }})"
+          # The PR body IS the Markdown report — reviewers see the
+          # full statistical analysis without leaving GitHub.
+          body-path: reports/winner-${{ steps.winner.outputs.date }}.md
+          labels: |
+            automation
+            harness-l6
+            needs-review

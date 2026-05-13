@@ -1,0 +1,132 @@
+# ───────────────────────────────────────────────────────────────────────
+# harness-autorunbook.yml — L6.1 oncall-correction → runbook draft (weekly)
+#
+# Counterpart to harness-winner.yml. Runs weekly, clusters every
+# (thumbs_down + correct_root_cause) feedback record by
+# (service, alert-shape), and opens a PR with a draft runbook entry
+# for each cluster that crosses the occurrence threshold.
+#
+# The PR never auto-merges. Each cluster's "owner" (= owner of the
+# service field) reviews the prose, edits it into a proper runbook,
+# and merges. Next time the same alert fires, the runbook RAG returns
+# the new entry → runbook_consultant cites it → cycle closed.
+# ───────────────────────────────────────────────────────────────────────
+
+name: harness-autorunbook
+
+on:
+  schedule:
+    # Mondays at 06:00 UTC — week-old data is settled, oncalls have
+    # weekend slack to review the draft.
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+    inputs:
+      seed_n:
+        description: "Synthetic incidents to seed (0 = use real corpus)"
+        type: string
+        default: "3000"
+      seed_rng:
+        description: "Deterministic RNG seed"
+        type: string
+        default: "42"
+      seed_ab:
+        description: "A/B variant traffic fraction"
+        type: string
+        default: "0.3"
+      min_occurrences:
+        description: "Minimum corrections per cluster to surface"
+        type: string
+        default: "5"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: harness-autorunbook
+  cancel-in-progress: true
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Run auto-runbook drafter
+        id: drafter
+        env:
+          SRE_FEEDBACK_DIR: ${{ github.workspace }}/.feedback-ci
+          REPORTS_DIR:      ${{ github.workspace }}/reports
+          SEED_N:           ${{ github.event.inputs.seed_n || '3000' }}
+          SEED_RNG:         ${{ github.event.inputs.seed_rng || '42' }}
+          SEED_AB:          ${{ github.event.inputs.seed_ab || '0.3' }}
+          MIN_OCCURRENCES:  ${{ github.event.inputs.min_occurrences || '5' }}
+        run: |
+          mkdir -p "$SRE_FEEDBACK_DIR" "$REPORTS_DIR"
+          python scripts/run-autorunbook-job.py
+
+      - name: Upload draft as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: runbook-draft-${{ steps.drafter.outputs.date }}
+          path: reports/runbook-draft-${{ steps.drafter.outputs.date }}.md
+          retention-days: 30
+
+      - name: No draft this run
+        if: steps.drafter.outputs.draft != 'true'
+        run: |
+          echo "::notice::No correction clusters crossed the occurrence threshold this week."
+
+      # ── Open PR with the draft as the body ────────────────────────
+      #
+      # Unlike the winner workflow, this one doesn't touch any
+      # production files. It just stages the draft Markdown under
+      # `runbooks/_drafts/` so reviewers have a concrete file to
+      # comment on while they decide whether to turn each cluster
+      # into a proper runbook.
+      - name: Stage draft for PR
+        if: steps.drafter.outputs.draft == 'true'
+        env:
+          REPORT_MD: ${{ steps.drafter.outputs.report_md }}
+        run: |
+          set -euo pipefail
+          mkdir -p runbooks/_drafts
+          dest="runbooks/_drafts/$(basename "$REPORT_MD")"
+          cp "$REPORT_MD" "$dest"
+          git add "$dest" reports/
+
+      - name: Open runbook-draft PR
+        if: steps.drafter.outputs.draft == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: |
+            harness L6: auto-drafted runbooks (${{ steps.drafter.outputs.date }})
+
+            ${{ steps.drafter.outputs.n_clusters }} cluster(s) of oncall
+            corrections crossed the occurrence threshold this week.
+          branch: auto/runbook-${{ steps.drafter.outputs.date }}
+          delete-branch: true
+          title: "harness L6: auto-drafted runbooks (${{ steps.drafter.outputs.date }}, ${{ steps.drafter.outputs.n_clusters }} clusters)"
+          body-path: reports/runbook-draft-${{ steps.drafter.outputs.date }}.md
+          labels: |
+            automation
+            harness-l6
+            runbooks
+            needs-review
