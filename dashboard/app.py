@@ -805,13 +805,14 @@ def api_post_feedback(incident_id: str):
             correct_root_cause=payload.get("correct_root_cause"),
             correct_remediation=payload.get("correct_remediation"),
             free_text=payload.get("free_text"),
+            agent_root_cause=(inc.get("hypothesis") or {}).get("top"),
             prompt_shas_seen=prompt_shas,
             tags=payload.get("tags") or [],
         )
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
 
-    FEEDBACK_STORE.append(incident_id, rec)
+    FEEDBACK_STORE.append(incident_id, rec, alert=inc.get("alert"))
     return jsonify({"ok": True, "feedback_id": rec.id}), 201
 
 
@@ -882,13 +883,18 @@ def api_slack_actions():
     recs = RECORDER.for_incident(action.incident_id)
     prompt_shas = {r.agent: r.prompt_sha for r in recs if r.prompt_sha}
 
+    with INCIDENTS_LOCK:
+        _inc_snapshot = INCIDENTS.get(action.incident_id) or {}
+        _alert_snapshot = _inc_snapshot.get("alert")
+        _agent_rc = (_inc_snapshot.get("hypothesis") or {}).get("top")
     rec = make_feedback_record(
         verdict=action.verdict,
         submitter=f"slack:{action.user_name}",
         tags=action.tags,
+        agent_root_cause=_agent_rc,
         prompt_shas_seen=prompt_shas,
     )
-    FEEDBACK_STORE.append(action.incident_id, rec)
+    FEEDBACK_STORE.append(action.incident_id, rec, alert=_alert_snapshot)
 
     return jsonify(
         {
@@ -1070,11 +1076,66 @@ def api_health_legacy():
 
 # ---------------------------------------------------------------------------
 
+def _maybe_seed_on_boot() -> None:
+    """
+    When `SRE_SEED_ON_BOOT=<N>` is set, generate <N> synthetic incidents
+    into the dashboard's in-memory state at startup. Use only for demos
+    and interview-prep environments — NEVER in real prod.
+
+    Env knobs:
+      * `SRE_SEED_ON_BOOT`     — number of incidents (required to fire)
+      * `SRE_SEED_RNG_SEED`    — deterministic RNG seed (default 42)
+      * `SRE_SEED_AB_FRACTION` — share of traffic routed to the variant
+                                 prompt (default 0.1; bigger = stronger
+                                 stat power)
+      * `SRE_SEED_DAYS_BACK`   — spread incidents over this many days
+                                 back (default 7)
+    """
+    raw = os.environ.get("SRE_SEED_ON_BOOT", "").strip()
+    if not raw:
+        return
+    try:
+        n = int(raw)
+    except ValueError:
+        print(f"SRE_SEED_ON_BOOT={raw!r} is not an integer; skipping seed.")
+        return
+    if n <= 0:
+        return
+
+    seed_value = int(os.environ.get("SRE_SEED_RNG_SEED", "42"))
+    ab_fraction = float(os.environ.get("SRE_SEED_AB_FRACTION", "0.1"))
+    days_back = int(os.environ.get("SRE_SEED_DAYS_BACK", "7"))
+
+    try:
+        from sre_agent.seed import seed as _seed_fn
+    except Exception as e:
+        print(f"could not import seeder: {e}")
+        return
+
+    print(
+        f"seeding {n} synthetic incidents "
+        f"(rng_seed={seed_value}, ab={ab_fraction}, days={days_back})..."
+    )
+    result = _seed_fn(
+        n=n,
+        seed_value=seed_value,
+        days_back=days_back,
+        ab_fraction=ab_fraction,
+        incidents_dict=INCIDENTS,
+    )
+    print(
+        f"  done: {result.n_incidents} incidents, {result.n_feedback} feedback, "
+        f"{result.n_llm_records} llm records, {result.n_cache_hits} cache hits "
+        f"in {result.duration_s:.1f}s"
+    )
+
+
 if __name__ == "__main__":
     # Bind to all interfaces so both `http://127.0.0.1:PORT` and `http://localhost:PORT`
     # work regardless of whether the OS resolves `localhost` to 127.0.0.1 or ::1.
     # (Some macOS setups + browsers prefer IPv6, and a 127.0.0.1-only bind fails.)
     host = os.environ.get("SRE_DASHBOARD_HOST", "0.0.0.0")
+    _maybe_seed_on_boot()
     print(f"SRE Command Center on http://127.0.0.1:{PORT}  (also http://localhost:{PORT})")
     print(f"   {len(_MOCK_PROVIDER.list_scenarios())} demo scenarios loaded")
     app.run(host=host, port=PORT, debug=False, threaded=True)

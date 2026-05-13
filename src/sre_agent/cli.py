@@ -205,6 +205,157 @@ def graph_image(output: str = "graph.png") -> None:
         console.print(build_graph().get_graph().draw_mermaid())
 
 
+@app.command("seed")
+def seed_command(
+    n: int = typer.Option(1000, help="Number of synthetic incidents to generate."),
+    seed_value: int = typer.Option(42, "--seed", help="Random seed (deterministic output)."),
+    days_back: int = typer.Option(7, help="Spread incidents across this many days back."),
+    ab_fraction: float = typer.Option(
+        0.1, help="Fraction of incidents routed to the conservative variant."
+    ),
+    json_out: bool = typer.Option(False, "--json", help="Emit JSON summary on stdout."),
+) -> None:
+    """
+    Generate synthetic incidents, feedback, and harness records.
+
+    Use this when you don't have a live production deployment but want the
+    L6 features (winner promotion, auto-runbook draft) to have data to
+    consume. The seeded distributions deliberately encode signals that
+    the L6 mechanisms should detect — e.g. the conservative prompt
+    variant gets ~6pp higher thumbs-up rate.
+
+    Note: harness records are in-process; if you run `sre-agent seed`
+    standalone they fill *this process's* ring buffer and die when it
+    exits. To populate the running dashboard, instead set
+    `SRE_SEED_ON_BOOT=N` in the dashboard's env.
+    """
+    from sre_agent.seed import seed
+
+    result = seed(
+        n=n, seed_value=seed_value, days_back=days_back, ab_fraction=ab_fraction
+    )
+    if json_out:
+        print(json.dumps(result.as_dict(), indent=2))
+    else:
+        console.print(
+            f"[green]Seeded {result.n_incidents} incidents in "
+            f"{result.duration_s:.1f}s[/green]"
+        )
+        console.print(
+            f"  feedback records  : {result.n_feedback}\n"
+            f"  llm call records  : {result.n_llm_records}\n"
+            f"  cache-hit records : {result.n_cache_hits}"
+        )
+
+
+@app.command("winner")
+def winner_command(
+    alpha: float = typer.Option(0.05, help="Significance threshold for the z-test."),
+    min_per_group: int = typer.Option(50, help="Minimum sample size per arm."),
+    min_delta_pp: float = typer.Option(
+        3.0, help="Minimum point-estimate delta in percentage points."
+    ),
+    baselines: str | None = typer.Option(
+        None,
+        help=(
+            "Optional baseline map as agent=sha pairs (comma-separated). "
+            "Example: --baselines hypothesis-gen=0c8f14d5,remediation-sug=812a99ee"
+        ),
+    ),
+    out_md: str | None = typer.Option(
+        None, "--out-md", help="Write Markdown report to this path."
+    ),
+    out_json: str | None = typer.Option(
+        None, "--out-json", help="Write JSON report to this path."
+    ),
+    promote_exit_code: int = typer.Option(
+        0,
+        help=(
+            "Process exit code when ≥1 agent qualifies for promotion. "
+            "Set to 1 in CI to let the job FAIL_LOUDLY and surface action items."
+        ),
+    ),
+) -> None:
+    """
+    Analyze the feedback corpus and recommend prompt promotions.
+
+    Reads from the on-disk feedback store, partitions records by the
+    `prompt_shas_seen` map, runs a two-proportion z-test per agent, and
+    emits a Markdown decision document that drops straight into a PR.
+
+    Typical workflow:
+
+        sre-agent winner --baselines hypothesis-gen=0c8f14d5 \\
+                         --out-md /tmp/winner.md \\
+                         --out-json /tmp/winner.json
+    """
+    from sre_agent.winner import analyze, to_json
+
+    baseline_map: dict[str, str] = {}
+    if baselines:
+        for piece in baselines.split(","):
+            piece = piece.strip()
+            if not piece or "=" not in piece:
+                continue
+            agent, sha = piece.split("=", 1)
+            baseline_map[agent.strip()] = sha.strip()
+
+    report = analyze(
+        baselines=baseline_map,
+        alpha=alpha,
+        min_per_group=min_per_group,
+        min_delta_pp=min_delta_pp,
+    )
+
+    md = report.to_markdown()
+    if out_md:
+        from pathlib import Path
+        Path(out_md).write_text(md)
+        console.print(f"[green]wrote markdown report to {out_md}[/green]")
+    else:
+        print(md)
+
+    if out_json:
+        from pathlib import Path
+        Path(out_json).write_text(to_json(report))
+        console.print(f"[green]wrote json report to {out_json}[/green]")
+
+    n_promote = sum(1 for d in report.decisions if d.verdict == "promote")
+    if n_promote and promote_exit_code:
+        raise typer.Exit(promote_exit_code)
+
+
+@app.command("autorunbook")
+def autorunbook_command(
+    min_occurrences: int = typer.Option(
+        2, help="Suppress clusters with fewer than this many corrections."
+    ),
+    out_md: str | None = typer.Option(
+        None, "--out-md", help="Write the draft Markdown to this path."
+    ),
+) -> None:
+    """
+    Draft new runbook entries from oncall corrections.
+
+    Looks at every feedback record with verdict ∈ {thumbs_down, incorrect}
+    that also has a `correct_root_cause` field, clusters them by
+    (service, alert-shape), and prints a Markdown draft for human
+    review. Output is **never** auto-merged — runbooks need eyes.
+    """
+    from sre_agent.autorunbook import draft
+
+    report = draft(min_occurrences=min_occurrences)
+    md = report.to_markdown()
+    if out_md:
+        from pathlib import Path
+        Path(out_md).write_text(md)
+        console.print(
+            f"[green]wrote {len(report.clusters)} cluster(s) to {out_md}[/green]"
+        )
+    else:
+        print(md)
+
+
 @app.command("eval-drift")
 def eval_drift(
     baseline: str = typer.Option(

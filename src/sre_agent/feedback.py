@@ -80,6 +80,10 @@ class FeedbackRecord:
     correct_root_cause: str | None = None
     correct_remediation: str | None = None
     free_text: str | None = None
+    # Snapshot of what the agent claimed as the root cause at report
+    # time. Stored on the feedback record (not just derived from the
+    # incident) so post-hoc analyses still work after incidents roll.
+    agent_root_cause: str | None = None
     prompt_shas_seen: dict[str, str] = field(default_factory=dict)
     tags: list[str] = field(default_factory=list)
 
@@ -104,7 +108,23 @@ class FeedbackStore:
 
     # ── write ────────────────────────────────────────────────────────
 
-    def append(self, incident_id: str, rec: FeedbackRecord) -> None:
+    def append(
+        self,
+        incident_id: str,
+        rec: FeedbackRecord,
+        *,
+        alert: dict[str, Any] | None = None,
+    ) -> None:
+        """
+        Append a feedback record for `incident_id`.
+
+        `alert` is an optional snapshot of the alert that produced the
+        incident, written once per blob the first time we see it. We
+        store it because the in-memory INCIDENTS dict rolls — without
+        a persisted copy, post-hoc analyses (e.g. auto-runbook drafter)
+        lose the service/description context that's needed for
+        clustering corrections.
+        """
         path = _feedback_dir() / f"{incident_id}.json"
         with self._lock:
             if path.is_file():
@@ -118,6 +138,8 @@ class FeedbackStore:
 
             blob["records"].append(rec.to_json())
             blob["updated_at"] = time.time()
+            if alert and "alert" not in blob:
+                blob["alert"] = alert
 
             tmp = path.with_suffix(path.suffix + ".tmp")
             tmp.write_text(json.dumps(blob, ensure_ascii=False, indent=2), "utf-8")
@@ -207,6 +229,7 @@ def make_record(
     correct_root_cause: str | None = None,
     correct_remediation: str | None = None,
     free_text: str | None = None,
+    agent_root_cause: str | None = None,
     prompt_shas_seen: dict[str, str] | None = None,
     tags: list[str] | None = None,
 ) -> FeedbackRecord:
@@ -225,6 +248,7 @@ def make_record(
         correct_root_cause=correct_root_cause,
         correct_remediation=correct_remediation,
         free_text=free_text,
+        agent_root_cause=agent_root_cause,
         prompt_shas_seen=prompt_shas_seen or {},
         tags=tags or [],
     )

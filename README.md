@@ -4,7 +4,8 @@
 [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![python](https://img.shields.io/badge/python-3.10%2B-blue)]()
 [![langgraph](https://img.shields.io/badge/orchestration-LangGraph-purple)]()
-[![tests](https://img.shields.io/badge/tests-267%20passing-brightgreen)]()
+[![tests](https://img.shields.io/badge/tests-306%20passing-brightgreen)]()
+[![harness-L6](https://img.shields.io/badge/harness-L6%20synth%20%2B%20winner%20%2B%20autorunbook-blue)]()
 [![harness](https://img.shields.io/badge/harness-L5-blueviolet)]()
 [![eval](https://img.shields.io/badge/eval-3%2F3%20golden%20cases-success)]()
 
@@ -597,8 +598,84 @@ sre-agent eval-drift                     # exits 0 if score didn't drop > 5%
 | Capability | Why we don't have it yet |
 |---|---|
 | **Per-team isolation** (tokens scoped to PSM namespace) | The scope system is global today. Real prod needs `oncall.checkout-api` to NOT see `oncall.payments` data. ~80 LOC if it's truly hierarchical. |
-| **Feedback → runbook auto-draft** | The thumbs-down + `correct_root_cause` field is captured; we don't yet turn it into a candidate runbook PR. ~200 LOC + a human review step. |
-| **A/B winner promotion** | Variant SHAs are in every call record; we don't yet have a cron job that compares per-SHA scores and renames the winning variant to the baseline. ~100 LOC + a sanity gate. |
+| **Cross-region failover** | Single instance today. ~600 LOC for active/active with leadership election. |
+| **Confidence calibration** | Hypothesis confidence is reported raw. Production should run an offline calibration job that maps `claimed_confidence → observed_accuracy` and rewrites the reported number through that table. ~150 LOC. |
+
+---
+
+## Harness L6 — the self-improving loop
+
+L6 is the layer on top of L5 that turns the captured feedback + prompt
+SHAs into automatic, **auditable** improvement actions. Everything in
+L6 is a consumer of L5's flywheel data; **L6 has zero new state**.
+
+| Capability | Module | What it does | CLI |
+|---|---|---|---|
+| Synthetic data seeder | `src/sre_agent/seed.py` | Generates realistic incidents + feedback + harness records with a built-in A/B signal (conservative variant beats baseline by ~15pp on TP incidents). Reproducible via `--seed N`. | `sre-agent seed --n 3000` |
+| Winner promotion | `src/sre_agent/winner.py` | Joins feedback × `prompt_shas_seen`, computes Wilson CIs + two-proportion z-test per agent, and emits a Markdown PR description recommending **promote / hold / no-data**. Three guardrails (min-n, min-delta, α=0.05) prevent thin-evidence promotion. | `sre-agent winner --baselines hypothesis-gen=…` |
+| Auto-runbook drafter | `src/sre_agent/autorunbook.py` | Clusters `thumbs_down` + `correct_root_cause` corrections by `(service, alert-shape)` and writes draft runbook entries showing **agent said X / oncall said Y / suggested action**. Never auto-merges — outputs reviewable Markdown. | `sre-agent autorunbook --min-occurrences 8` |
+| Seed-on-boot | `dashboard/app.py` | Set `SRE_SEED_ON_BOOT=N` to populate INCIDENTS + feedback + harness on dashboard startup. For demos and interview prep ONLY — never in real prod. | `SRE_SEED_ON_BOOT=2000 python dashboard/app.py` |
+
+### Why this matters for a no-prod setting
+
+The L5 surface is the **pipes**. Without traffic, the pipes are dry —
+you can't develop or demo a flywheel that has nothing flowing through
+it. L6 ships a calibrated synthetic-data generator so the whole loop
+is testable from a laptop in seconds, and **the same code paths**
+that consume real traffic in prod consume the seeded data in dev.
+
+### Trying L6 locally
+
+Single-command end-to-end demo:
+
+```bash
+# Wipes /tmp/sre-l6-demo, boots the dashboard, seeds 3000 incidents,
+# runs the L5 telemetry probes, then runs L6 winner + autorunbook.
+# Produces two PR-ready Markdown files under /tmp/sre-l6-demo/reports/.
+bash scripts/demo-l6.sh
+```
+
+Expected output (RNG seed 42, A/B 0.3):
+
+```
+== Step 3 — L6.1 winner promotion ==
+headline: promote  delta=+7.7pp  p=0.0004
+
+== Step 4 — L6.1 auto-runbook drafter ==
+14 cluster(s) ready for review
+```
+
+Manual mode:
+
+```bash
+# Seed only (CLI is enough for unit testing; doesn't touch the dashboard).
+sre-agent seed --n 3000 --seed 42
+
+# Promote analysis. Prints Markdown to stdout, or write with --out-md.
+sre-agent winner --baselines "hypothesis-gen=0c8f14d5" \
+                 --out-md /tmp/winner.md \
+                 --out-json /tmp/winner.json
+
+# Auto-runbook draft. Clusters thumbs_down + correct_root_cause by service.
+sre-agent autorunbook --min-occurrences 8 --out-md /tmp/draft.md
+```
+
+To leave the dashboard up after the demo so you can inspect it:
+
+```bash
+DEMO_KEEP=1 bash scripts/demo-l6.sh
+# then open http://localhost:5099
+```
+
+### What L6 doesn't do (deliberately)
+
+* **No auto-merge**. Winner promotion emits a PR description; a human
+  copies the variant file over the baseline.
+* **No model fine-tuning**. The system optimises PROMPTS, not weights.
+  Weight tuning is L7+ territory and needs a different infrastructure.
+* **No causal inference on remediation success**. We measure thumbs-up
+  rate, not "the suggested fix actually solved the incident". The
+  latter requires an incident-resolution signal we don't have yet.
 
 ---
 

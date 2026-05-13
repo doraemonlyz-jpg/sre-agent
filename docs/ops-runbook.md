@@ -248,3 +248,106 @@ curl -s :5080/api/harness/summary | jq '.rate_limit'
 
 If anything in this document is wrong, fix it. The whole point of this
 agent is that we keep the runbooks honest.
+
+---
+
+## 11. L6 — running the flywheel jobs
+
+L6 turns the feedback corpus into actionable improvements. Both jobs are
+**offline batch**, safe to run from a cron, and read-only against the
+on-disk feedback store. Neither auto-merges anything; both emit
+Markdown that goes through normal code review.
+
+### 11.1 Winner promotion
+
+What it does: groups feedback by `(agent, prompt_sha)`, runs a
+two-proportion z-test per agent, and recommends a variant for
+promotion when (sample size ≥ 50/arm, point delta ≥ 3pp, p < 0.05,
+candidate is NOT the current baseline).
+
+Recommended schedule: **daily at 02:00 UTC**, after the previous day's
+feedback has flushed.
+
+```bash
+sre-agent winner \
+  --baselines "hypothesis-gen=$(cat /etc/sre-agent/baselines/hypothesis-gen.sha)" \
+  --out-md /var/lib/sre-agent/reports/winner-$(date -u +%Y%m%d).md \
+  --out-json /var/lib/sre-agent/reports/winner-$(date -u +%Y%m%d).json \
+  --promote-exit-code 0
+```
+
+If you want the cron to **fail loudly** when a promotion is recommended
+(so it shows up in the on-call's PagerDuty / Slack), set
+`--promote-exit-code 1`. The job exits non-zero and your job scheduler
+notifies — that's the prompt for someone to open the Markdown and
+write a PR.
+
+How to actually promote (manual, deliberate):
+
+```bash
+# 1. Inspect the report
+cat /var/lib/sre-agent/reports/winner-2026-01-15.md
+
+# 2. Copy the variant prompt over the baseline
+cp personas/variants/hypothesis-gen-conservative.md personas/hypothesis-gen.md
+
+# 3. Commit + redeploy. The next harness record's prompt_sha will
+#    naturally roll to the new value.
+git commit personas/hypothesis-gen.md -m "promote conservative variant (+7.7pp, p=0.0004)"
+```
+
+If the prod data is bad (e.g. there was a flood of false positives on
+one day that skewed verdicts): nothing happens automatically. The cron
+keeps emitting reports; you keep ignoring them until the verdict
+stabilises. The system is **suspicious by default** — false promotion
+is much worse than slow promotion.
+
+### 11.2 Auto-runbook drafter
+
+What it does: walks every `thumbs_down` / `incorrect` feedback record
+that has a `correct_root_cause`, clusters them by `(service,
+alert-shape)`, and emits a draft runbook entry per cluster that
+crosses `--min-occurrences`.
+
+Recommended schedule: **weekly on Monday at 06:00 UTC**.
+
+```bash
+sre-agent autorunbook \
+  --min-occurrences 5 \
+  --out-md /var/lib/sre-agent/reports/autorunbook-$(date -u +%Y%W).md
+```
+
+Output is **never** auto-committed. Process:
+1. Cron writes the Markdown.
+2. A separate bot (Slack/GitHub) posts the file to the runbook-review
+   channel.
+3. Owner of each cluster (= owner of the `service` field) reviews,
+   edits the prose into a proper runbook, opens a PR adding it under
+   `runbooks/`.
+4. Next time the same alert fires, the runbook RAG retrieves it →
+   `runbook_consultant` node cites it → cycle closed.
+
+### 11.3 Synthetic data (DO NOT enable in prod)
+
+The seeder is `src/sre_agent/seed.py` and is exposed via
+`sre-agent seed --n N` and `SRE_SEED_ON_BOOT=N`.
+
+**Never** set `SRE_SEED_ON_BOOT` on the prod dashboard. It pollutes
+the feedback store with fabricated records that the winner cron will
+treat as real, and your CSAT graph will start lying to you.
+
+The seeder is for: local dev, interview demos, CI smoke tests, and
+populating staging environments that don't yet have organic traffic.
+
+A safe production guardrail (recommended in your deployment manifest):
+
+```yaml
+# k8s deployment.yaml
+env:
+  - name: SRE_SEED_ON_BOOT          # explicitly empty — refuse to seed
+    value: ""
+```
+
+If you ever see `seeding N synthetic incidents` in the prod dashboard
+log on startup, that's a critical config bug; rotate the pod
+immediately, clear the feedback dir, and audit the deploy config.
