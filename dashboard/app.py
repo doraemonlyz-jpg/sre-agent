@@ -34,14 +34,23 @@ from typing import Any
 
 from flask import Flask, jsonify, request, send_from_directory
 
+from sre_agent.auth import auth_required as _auth_required_flag
+from sre_agent.auth import require_scope
 from sre_agent.cache import CACHE
 from sre_agent.cache import store as cache_store
 from sre_agent.cache import try_get as cache_try_get
+from sre_agent.feedback import STORE as FEEDBACK_STORE
+from sre_agent.feedback import make_record as make_feedback_record
 from sre_agent.graph import build_graph
 from sre_agent.harness import RECORDER, bind_incident
 from sre_agent.logging import setup_logging
 from sre_agent.notifications import SlackNotifier
+from sre_agent.observability import (
+    EXPORTER as OBSERVABILITY_EXPORTER,
+)
 from sre_agent.providers.mock import MockProvider
+from sre_agent.ratelimit import LIMITER
+from sre_agent.ratelimit import require as require_rate_limit
 from sre_agent.scale import COUNTERS, classify_tier, submit_job
 from sre_agent.schemas import AlertIn, GraphState, IncidentReport, Severity
 from sre_agent.webhooks import UnknownPayloadError, parse_alert
@@ -408,6 +417,8 @@ def _cache_ttl() -> float:
 
 
 @app.route("/api/incidents/fire", methods=["POST"])
+@require_scope("fire")
+@require_rate_limit("fire")
 def api_fire():
     payload = request.get_json(force=True, silent=True) or {}
     scenario_id = payload.get("scenario_id")
@@ -442,6 +453,7 @@ def api_fire():
 
 
 @app.route("/api/alerts/webhook", methods=["POST"])
+@require_rate_limit("webhook")
 def api_alerts_webhook():
     """
     Real-world ingestion endpoint. Accepts payloads from:
@@ -628,6 +640,8 @@ def api_scale_stats():
 
 
 @app.route("/api/incidents/burst", methods=["POST"])
+@require_scope("burst")
+@require_rate_limit("burst")
 def api_burst():
     """
     Fire N synthetic alerts at once to demonstrate burst handling. This
@@ -699,6 +713,9 @@ def api_harness_summary():
         {
             "recorder": RECORDER.summary(),
             "cache": CACHE.stats(),
+            "rate_limit": LIMITER.stats(),
+            "feedback": FEEDBACK_STORE.summary(),
+            "observability": OBSERVABILITY_EXPORTER.stats(),
         }
     )
 
@@ -744,11 +761,299 @@ def api_incident_calls(incident_id: str):
     )
 
 
+# ---- Feedback (L5 flywheel) ----------------------------------------------
+
+
+@app.route("/api/incidents/<incident_id>/feedback", methods=["POST"])
+@require_scope("feedback")
+@require_rate_limit("feedback")
+def api_post_feedback(incident_id: str):
+    """
+    Capture oncall feedback on an incident's diagnosis. This is the
+    substrate for the L5 flywheel: every record points at a specific
+    incident + the prompt SHAs that produced it, so we can later group
+    "where did this prompt mislead the oncall?"
+    """
+    with INCIDENTS_LOCK:
+        inc = INCIDENTS.get(incident_id)
+    if not inc:
+        return jsonify({"error": f"unknown incident {incident_id}"}), 404
+
+    payload = request.get_json(force=True, silent=True) or {}
+    try:
+        # Grab the prompt SHAs that were used for this incident so the
+        # feedback record is self-contained for offline analysis.
+        recs = RECORDER.for_incident(incident_id)
+        prompt_shas: dict[str, str] = {}
+        for r in recs:
+            if r.prompt_sha and r.agent not in prompt_shas:
+                prompt_shas[r.agent] = r.prompt_sha
+
+        # Submitter — prefer auth token name, then payload override, else anon.
+        from flask import g
+
+        tok = getattr(g, "auth_token", None)
+        submitter = (
+            (payload.get("submitter") or "").strip()
+            or (tok.name if tok is not None else "anon")
+        )
+
+        rec = make_feedback_record(
+            verdict=payload.get("verdict", "thumbs_up"),
+            submitter=submitter,
+            rating=payload.get("rating"),
+            correct_root_cause=payload.get("correct_root_cause"),
+            correct_remediation=payload.get("correct_remediation"),
+            free_text=payload.get("free_text"),
+            prompt_shas_seen=prompt_shas,
+            tags=payload.get("tags") or [],
+        )
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+    FEEDBACK_STORE.append(incident_id, rec)
+    return jsonify({"ok": True, "feedback_id": rec.id}), 201
+
+
+@app.route("/api/incidents/<incident_id>/feedback", methods=["GET"])
+def api_get_feedback(incident_id: str):
+    """Return every feedback record for this incident, or 404."""
+    blob = FEEDBACK_STORE.get(incident_id)
+    if blob is None:
+        return jsonify({"records": [], "incident_id": incident_id})
+    return jsonify(blob)
+
+
+@app.route("/api/feedback/summary", methods=["GET"])
+def api_feedback_summary():
+    """Aggregate counts + CSAT for the dashboard. Returns 0s when empty."""
+    return jsonify(FEEDBACK_STORE.summary())
+
+
+@app.route("/api/feedback/recent", methods=["GET"])
+def api_feedback_recent():
+    """Last 50 incidents that received feedback. For an L5 'review queue'."""
+    try:
+        limit = max(1, min(200, int(request.args.get("limit", "50"))))
+    except ValueError:
+        limit = 50
+    return jsonify({"incidents": FEEDBACK_STORE.list_recent(limit)})
+
+
+@app.route("/api/slack/actions", methods=["POST"])
+@require_rate_limit("feedback")
+def api_slack_actions():
+    """
+    Slack interactive endpoint. The Block Kit buttons in our message
+    POST here with X-Slack-Signature; we verify the HMAC, parse the
+    action, and translate to a feedback record.
+
+    Set SLACK_SIGNING_SECRET in env. Set SRE_SLACK_VERIFY_REQUIRED=1
+    in prod to enforce verification (default off so curl-driven tests
+    work).
+    """
+    from sre_agent.slack_actions import (
+        SlackActionError,
+        parse_payload,
+        verify_required,
+        verify_signature,
+    )
+
+    # cache=True so request.form can re-parse the body after we read it.
+    body = request.get_data(cache=True) or b""
+    if verify_required():
+        ok = verify_signature(
+            body=body,
+            timestamp=request.headers.get("X-Slack-Request-Timestamp", ""),
+            signature=request.headers.get("X-Slack-Signature", ""),
+        )
+        if not ok:
+            return jsonify({"error": "slack signature verification failed"}), 401
+
+    try:
+        action = parse_payload(request.form)
+    except SlackActionError as e:
+        return jsonify({"error": str(e)}), 400
+
+    with INCIDENTS_LOCK:
+        if action.incident_id not in INCIDENTS:
+            return jsonify({"error": f"unknown incident {action.incident_id}"}), 404
+
+    recs = RECORDER.for_incident(action.incident_id)
+    prompt_shas = {r.agent: r.prompt_sha for r in recs if r.prompt_sha}
+
+    rec = make_feedback_record(
+        verdict=action.verdict,
+        submitter=f"slack:{action.user_name}",
+        tags=action.tags,
+        prompt_shas_seen=prompt_shas,
+    )
+    FEEDBACK_STORE.append(action.incident_id, rec)
+
+    return jsonify(
+        {
+            "ok": True,
+            "incident_id": action.incident_id,
+            "verdict": action.verdict,
+            "feedback_id": rec.id,
+            # Slack expects a 200 within 3s; the replacement message goes via
+            # `response_url` if you want a richer reply (we keep this simple).
+            "response_action": "clear",
+        }
+    )
+
+
+# ---- Prompt A/B (L5) -----------------------------------------------------
+
+
+@app.route("/api/prompts/variants", methods=["GET"])
+def api_prompt_variants():
+    """
+    For every known agent: which variants exist on disk and which env-driven
+    routing rules are active. Surfaces the A/B state to the dashboard so an
+    SRE can see at a glance "we're running 10% on hypothesis-gen-conservative".
+    """
+    from sre_agent.personas import list_variants
+
+    agents = [
+        "log-detective",
+        "metrics-analyst",
+        "trace-reader",
+        "deploy-historian",
+        "hypothesis-gen",
+        "remediation-sug",
+    ]
+    out = []
+    for a in agents:
+        env_a = a.upper().replace("-", "_")
+        out.append(
+            {
+                "agent": a,
+                "variants": list_variants(a),
+                "pinned": os.environ.get(f"SRE_PROMPT_VARIANT_{env_a}") or None,
+                "ab": os.environ.get(f"SRE_PROMPT_AB_{env_a}") or None,
+            }
+        )
+    return jsonify({"agents": out})
+
+
+# ---- auth / debug --------------------------------------------------------
+
+
+@app.route("/api/auth/me", methods=["GET"])
+def api_auth_me():
+    """
+    Surfaces auth state for the dashboard so the UI can decide whether
+    to show "Sign in" prompts. Never returns secrets. When auth is off
+    we return `enforced=False` and the caller can act freely.
+    """
+    from flask import g
+
+    if not _auth_required_flag():
+        return jsonify({"enforced": False})
+    tok = getattr(g, "auth_token", None)
+    if tok is None:
+        token_str = request.headers.get("Authorization", "")
+        from sre_agent.auth import REGISTRY, extract_bearer
+
+        bearer = extract_bearer(token_str)
+        if bearer:
+            tok = REGISTRY.verify(bearer, required_scope="read")
+    if tok is None:
+        return jsonify({"enforced": True, "authenticated": False}), 401
+    return jsonify(
+        {
+            "enforced": True,
+            "authenticated": True,
+            "token_name": tok.name,
+            "scopes": list(tok.scopes),
+        }
+    )
+
+
 # ---- health --------------------------------------------------------------
 
 
 @app.route("/api/health", methods=["GET"])
 def api_health():
+    """Liveness — fast, no I/O. k8s `livenessProbe`."""
+    return jsonify({"ok": True, "ts": _now_ms()})
+
+
+@app.route("/api/readiness", methods=["GET"])
+def api_readiness():
+    """
+    Deep readiness probe. Verifies every dependency the agent NEEDS to
+    serve a real incident before declaring itself ready. k8s
+    `readinessProbe` should hit this; if it returns 503 the pod gets
+    pulled out of the service mesh until it recovers.
+    """
+    checks: dict[str, dict] = {}
+    ok = True
+
+    # 1. Graph compiled (cheap, but a fundamental check that the import
+    #    chain isn't broken).
+    try:
+        _ = _GRAPH
+        checks["graph"] = {"ok": True}
+    except Exception as e:
+        checks["graph"] = {"ok": False, "error": str(e)[:120]}
+        ok = False
+
+    # 2. Checkpointer reachable (LangGraph state store).
+    try:
+        state_dir = Path(os.environ.get("SRE_STATE_DIR") or "~/.sre-agent").expanduser()
+        state_dir.mkdir(parents=True, exist_ok=True)
+        checks["checkpointer"] = {
+            "ok": True,
+            "backend": os.environ.get("SRE_CHECKPOINTER", "sqlite"),
+        }
+    except Exception as e:
+        checks["checkpointer"] = {"ok": False, "error": str(e)[:120]}
+        ok = False
+
+    # 3. Provider — for mock this is trivial; for real Datadog/Prom we'd
+    #    do a tiny `GET /healthcheck` here. Defer to provider.health() if
+    #    it exposes one.
+    try:
+        from sre_agent.providers import get_provider
+
+        prov = get_provider()
+        prov_check = {"ok": True, "name": prov.name}
+        # Best-effort: providers may expose a non-blocking health hook.
+        if hasattr(prov, "health"):
+            prov_check.update(prov.health())  # type: ignore[attr-defined]
+        checks["provider"] = prov_check
+    except Exception as e:
+        checks["provider"] = {"ok": False, "error": str(e)[:120]}
+        ok = False
+
+    # 4. Runbook store loaded.
+    try:
+        from sre_agent.runbooks.store import get_store
+
+        store = get_store()
+        # `size` is a @property on RunbookStore — accessed, not called.
+        checks["runbooks"] = {"ok": True, "library_size": store.size}
+    except Exception as e:
+        # Runbooks are optional — failures here degrade but don't fail.
+        checks["runbooks"] = {"ok": True, "degraded": True, "error": str(e)[:120]}
+
+    body = {
+        "ok": ok,
+        "ts": _now_ms(),
+        "checks": checks,
+        "active_incidents": sum(
+            1 for i in INCIDENTS.values() if i["phase"] == "investigating"
+        ),
+        "total_incidents": len(INCIDENTS),
+    }
+    return (jsonify(body), 200) if ok else (jsonify(body), 503)
+
+
+@app.route("/api/health/legacy", methods=["GET"])
+def api_health_legacy():
+    """Old shape; kept so existing scripts don't break."""
     return jsonify(
         {
             "ok": True,

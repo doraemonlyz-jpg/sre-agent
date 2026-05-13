@@ -1,0 +1,29 @@
+{
+  "_comment": "Baseline produced from an offline eval run. Run `sre-agent eval-drift --update-baseline` to refresh after intentional prompt changes. CI fails when drift exceeds --threshold (default 0.05).",
+  "ts": "2026-05-13T00:00:00+00:00",
+  "n_cases": 3,
+  "scored": 2,
+  "skipped": 1,
+  "errors": [],
+  "passed": 2,
+  "mean_score": 1.0,
+  "per_case": {
+    "false-positive": {
+      "score": 1.0,
+      "threshold": 0.8,
+      "passed": true,
+      "phase": "no_signal"
+    },
+    "redis-pool-exhaustion": {
+      "score": 1.0,
+      "threshold": 0.8,
+      "passed": true,
+      "phase": "diagnosed"
+    },
+    "downstream-cascade": {
+      "skipped": true,
+      "score": null,
+      "threshold": 0.8
+    }
+  }
+}

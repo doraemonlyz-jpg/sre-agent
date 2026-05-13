@@ -9,6 +9,24 @@ import pytest
 from dashboard.app import app as flask_app
 
 
+@pytest.fixture(autouse=True)
+def _disable_rate_limit_and_auth(monkeypatch):
+    """The pre-L5 tests assume an open API. The L5 layer adds rate
+    limits + optional auth; both default off, but other test files
+    may have flipped the LIMITER's bucket state. Reset to a clean slate
+    for every test here."""
+    monkeypatch.setenv("SRE_RATE_LIMIT", "off")
+    monkeypatch.setenv("SRE_AUTH_REQUIRED", "0")
+    from sre_agent.auth import REGISTRY
+    from sre_agent.ratelimit import LIMITER
+
+    REGISTRY.clear()
+    LIMITER.reset()
+    yield
+    LIMITER.reset()
+    REGISTRY.clear()
+
+
 @pytest.fixture
 def client():
     flask_app.config["TESTING"] = True
@@ -17,7 +35,16 @@ def client():
 
 
 def test_health(client):
+    """`/api/health` is the minimal liveness probe (k8s-style); the
+    scenarios count moved to `/api/health/legacy` to keep liveness fast."""
     r = client.get("/api/health")
+    assert r.status_code == 200
+    body = r.get_json()
+    assert body["ok"] is True
+
+
+def test_health_legacy_shape_preserved(client):
+    r = client.get("/api/health/legacy")
     assert r.status_code == 200
     body = r.get_json()
     assert body["ok"] is True

@@ -4,7 +4,8 @@
 [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![python](https://img.shields.io/badge/python-3.10%2B-blue)]()
 [![langgraph](https://img.shields.io/badge/orchestration-LangGraph-purple)]()
-[![tests](https://img.shields.io/badge/tests-169%20passing-brightgreen)]()
+[![tests](https://img.shields.io/badge/tests-267%20passing-brightgreen)]()
+[![harness](https://img.shields.io/badge/harness-L5-blueviolet)]()
 [![eval](https://img.shields.io/badge/eval-3%2F3%20golden%20cases-success)]()
 
 > An AI on-call team. A monitoring alert fires → 7 specialized agents fan out
@@ -369,7 +370,7 @@ production code.
 
 ---
 
-## What's still TODO (v1.1+)
+## What's still TODO
 
 - [x] Real Datadog provider (Logs API v2, Metrics v1, APM v2)
 - [x] Webhook receiver (Datadog Monitor / PagerDuty / generic)
@@ -377,13 +378,12 @@ production code.
 - [x] Prometheus / Loki providers + open-source demo stack
 - [x] Runbook RAG (8th agent — `runbook_consultant`, the team brain)
 - [x] **Mocked production-scale**: bounded worker pool, burst endpoint, tier classifier (see Phase E below)
-- [x] **Harness engineering** (L3/L4): observability ring buffer, prompt fingerprinting, response cache, retry policy, golden-incident eval (see Harness section below)
+- [x] **Harness L3 / L4**: observability ring buffer, prompt fingerprinting, response cache, retry policy, golden-incident eval (see Harness section below)
+- [x] **Harness L5**: auth (bearer + scopes), rate limit, feedback flywheel, prompt A/B, Slack interactive buttons, OpenTelemetry / Langfuse export, drift-detection CLI, k8s deep-readiness probe (see L5 section below)
 - [ ] Tempo / Jaeger provider for traces (open-source stack)
-- [ ] Slack message buttons that POST back into `/api/incidents/<id>/action`
-- [ ] OpenTelemetry tracing on every node (LangSmith / Langfuse export)
-- [ ] Auth: bearer token + per-team isolation
-- [ ] Prompt A/B test framework (route 10% to candidate prompt, score against golden set)
-- [ ] Feedback flywheel: oncall thumbs-up/down → new runbook draft
+- [ ] Per-team multi-tenancy on top of the scope system (today: process-global tokens)
+- [ ] Auto-promote thumbs-down + corrected diagnosis to a candidate runbook
+- [ ] Live A/B winner detection: cron job comparing per-prompt-SHA score
 
 ---
 
@@ -508,14 +508,107 @@ reasoning (e.g. our `downstream-cascade` case has to recognize
 Tagging the case lets CI skip it without losing the test signal —
 locally you set `SRE_EVAL_REQUIRES_LLM=1` and run against Ollama.
 
-### What's still missing (L5)
+---
+
+## Harness L5 — production hardening
+
+L5 closes the gap between "interview demo" and "I can put this in front of
+real traffic." Every piece below is **opt-in via env** so the demo path
+still works out of the box, but flipping the switches is what the prod
+deployment guide tells you to do.
+
+| Capability | Module / endpoint | Env switch | What it gives you |
+|---|---|---|---|
+| **Auth** (bearer + scope) | `src/sre_agent/auth.py`, `@require_scope` on `/fire`, `/burst`, `/feedback`, `/auth/me` | `SRE_AUTH_REQUIRED=1` + `SRE_AUTH_TOKENS=name:scopes:secret;...` or `SRE_AUTH_TOKENS_FILE=/path/tokens.json` | Five scopes: `read`, `fire`, `burst`, `feedback`, `admin`. `admin` is a wildcard. File-source tokens hot-reload once / minute. |
+| **Rate limit** (token bucket) | `src/sre_agent/ratelimit.py` | `SRE_RATE_LIMIT=on` (default), `SRE_RATE_FIRE=10:20` (rate/sec : burst) | Per-(token, endpoint) buckets. Returns 429 + `Retry-After: 1`. Stats in `/api/harness/summary`. |
+| **Feedback flywheel** | `src/sre_agent/feedback.py`, `POST /api/incidents/<id>/feedback`, `GET /api/feedback/summary` | `SRE_FEEDBACK_DIR=/var/lib/sre-agent/feedback` | Atomic-write JSON on disk per incident. CSAT auto-computed. Each record carries the prompt SHAs that produced the diagnosis, so you can `group by prompt_sha` later. |
+| **Prompt A/B** | `personas/variants/<agent>-<name>.md`, `GET /api/prompts/variants` | `SRE_PROMPT_VARIANT_HYPOTHESIS_GEN=conservative` (pin) or `SRE_PROMPT_AB_HYPOTHESIS_GEN=conservative:0.1` (10% to variant) | One ship-it variant included: `hypothesis-gen-conservative`. Variants get hashed → unique SHAs → traceable in harness. |
+| **Slack interactive** | `src/sre_agent/slack_actions.py`, `POST /api/slack/actions`. Block Kit buttons in our Slack message: 👍 / 👎 / "False positive" | `SRE_SLACK_VERIFY_REQUIRED=1` + `SLACK_SIGNING_SECRET=...` | HMAC-SHA256 + 5-min replay window. Off → curl tests work. On → reject anything that didn't come from Slack. |
+| **OpenTelemetry / Langfuse** | `src/sre_agent/observability.py` (background thread, queue-backed) | `LANGFUSE_PUBLIC_KEY` + `LANGFUSE_SECRET_KEY` OR `OTEL_EXPORTER_OTLP_ENDPOINT` OR `SRE_OBSERVABILITY_MODE=stdout` (debug) | Best-effort, async. Failures are counted and logged, never raised. Mode + sent/failed/dropped in `/api/harness/summary`. |
+| **Drift detection CLI** | `sre-agent eval-drift` | `--update-baseline` to set, `--threshold 0.05` to gate CI | Runs the eval suite, compares to `tests/eval/baseline.json`, exits non-zero on drift. Wire into nightly cron + PagerDuty rule. |
+| **Deep readiness probe** | `GET /api/readiness` (300+503), `GET /api/health` (fast liveness) | k8s `readinessProbe: httpGet path: /api/readiness` | Verifies graph compiled, checkpointer reachable, provider healthy, runbook store loaded. Pod gets pulled out of mesh when any hard dep fails. |
+
+### Trying L5 locally
+
+```bash
+# 1. Mint a token (one-shot; for prod use a Vault / secret manager)
+python -c "from sre_agent.auth import mint_token; t=mint_token('oncall', ['read','fire','feedback']); print(t.secret)"
+
+# 2. Boot dashboard with auth + rate limit on
+export SRE_AUTH_REQUIRED=1
+export SRE_AUTH_TOKENS="oncall:read,fire,feedback:<paste-secret-here>"
+export SRE_RATE_LIMIT=on
+export SRE_RATE_FIRE=5:10           # 5/sec sustained, burst 10
+python dashboard/app.py &
+
+# 3. Smoke (curl will be 401'd without the token; with it, end-to-end runs)
+AUTH_TOKEN=<paste-secret-here> ./scripts/smoke.sh
+
+# 4. Load test — verifies bounded queue + rate limit (no 5xx allowed)
+AUTH_TOKEN=<paste-secret-here> python scripts/loadtest.py --rps 20 --duration 30
+
+# 5. A/B route 10% of hypothesis-gen calls to the conservative variant
+export SRE_PROMPT_AB_HYPOTHESIS_GEN=conservative:0.1
+# Re-fire alerts and watch /api/harness/calls to see the variant's prompt SHA show up
+
+# 6. Drift detection: pin the current baseline, then verify
+sre-agent eval-drift --update-baseline   # writes tests/eval/baseline.json
+sre-agent eval-drift                     # exits 0 if score didn't drop > 5%
+```
+
+### Production deployment checklist
+
+```text
+# Security
+[ ] SRE_AUTH_REQUIRED=1                        # bearer enforcement on
+[ ] SRE_AUTH_TOKENS_FILE=/etc/sre-agent/tokens.json   # tokens out of env
+[ ] SLACK_SIGNING_SECRET=<from Slack app>      # if using Slack interactives
+[ ] SRE_SLACK_VERIFY_REQUIRED=1                # enforce HMAC
+
+# Rate / cost
+[ ] SRE_RATE_LIMIT=on
+[ ] SRE_RATE_FIRE=10:20                        # tune per team
+[ ] SRE_MAX_CONCURRENT=4                       # LLM concurrency cap
+[ ] SRE_CACHE_TTL_SECONDS=300                  # response cache TTL
+
+# Observability
+[ ] LANGFUSE_PUBLIC_KEY=...                    # OR OTEL_EXPORTER_OTLP_ENDPOINT
+[ ] LANGFUSE_SECRET_KEY=...
+[ ] Prometheus scrapes /api/harness/summary
+[ ] Grafana panel on cache_hit_rate, llm_calls, p99_latency, csat
+
+# State
+[ ] SRE_STATE_DIR=/var/lib/sre-agent/state     # checkpoints
+[ ] SRE_FEEDBACK_DIR=/var/lib/sre-agent/feedback
+[ ] SRE_CHECKPOINTER=postgres                  # for multi-replica
+
+# k8s probes
+[ ] livenessProbe: GET /api/health (1s)
+[ ] readinessProbe: GET /api/readiness (3s, fails after 30s unhealthy)
+
+# CI gates
+[ ] pytest                                     # unit suite must pass
+[ ] pytest -m eval                             # offline eval must pass
+[ ] sre-agent eval-drift                       # drift must be ≤ baseline + threshold
+```
+
+### What's still missing (L6 ideas)
 
 | Capability | Why we don't have it yet |
 |---|---|
-| **Trace export to Langfuse / LangSmith** | The ring buffer is in-process. For a fleet of agent workers you want a centralized backend with retention. The harness module is shaped like Langfuse — porting is a single-file change. |
-| **Prompt A/B testing** | Need real production traffic to be statistically meaningful. We have the prompt SHA in every record, so once you have traffic you can `group by prompt_sha` and compute per-version accuracy. |
-| **Feedback flywheel** | Oncall thumbs-up/down → ingest correction → generate runbook chunk → re-index. Plumbed half-way (`served_from_cache` and `cache_origin_incident_id` are in the response), no UI yet. |
-| **Drift detection** | Hourly run of the eval suite, alert on score drop > 5%. The eval harness exists; the cron + alerting is not wired. |
+| **Per-team isolation** (tokens scoped to PSM namespace) | The scope system is global today. Real prod needs `oncall.checkout-api` to NOT see `oncall.payments` data. ~80 LOC if it's truly hierarchical. |
+| **Feedback → runbook auto-draft** | The thumbs-down + `correct_root_cause` field is captured; we don't yet turn it into a candidate runbook PR. ~200 LOC + a human review step. |
+| **A/B winner promotion** | Variant SHAs are in every call record; we don't yet have a cron job that compares per-SHA scores and renames the winning variant to the baseline. ~100 LOC + a sanity gate. |
+
+---
+
+## Production deployment
+
+[**docs/ops-runbook.md**](docs/ops-runbook.md) — the oncall-facing
+operations runbook for this agent. Covers: required env, token
+rotation, k8s probe config, what to do when the dashboard says CACHE
+on every incident, prompt rollback under fire, and one-line jq queries
+for the harness endpoints.
 
 ---
 

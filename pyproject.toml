@@ -74,6 +74,17 @@ dev = [
     # respx mocks httpx at the transport layer — lets us test DatadogProvider
     # and SlackNotifier offline with byte-identical payloads to the real APIs.
     "respx>=0.21.1",
+    # typer.testing.CliRunner — used by tests/test_eval_drift_cli.py to
+    # exercise the `sre-agent eval-drift` CLI in-process.
+    "typer>=0.12",
+]
+# L5 observability: optional because most local demos don't need it.
+# `pip install "sre-agent[observability]"` brings in the centralized
+# trace backends.
+observability = [
+    "langfuse>=2.0",                                   # Langfuse SaaS / self-host
+    "opentelemetry-sdk>=1.27.0",                       # generic OTLP
+    "opentelemetry-exporter-otlp-proto-http>=1.27.0",
 ]
 
 [project.scripts]

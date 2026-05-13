@@ -13,7 +13,6 @@ from __future__ import annotations
 import json
 import sys
 from datetime import datetime, timezone
-from typing import Optional
 from uuid import uuid4
 
 import typer
@@ -55,17 +54,17 @@ def scenarios() -> None:
 
 @app.command()
 def investigate(
-    scenario: Optional[str] = typer.Option(
+    scenario: str | None = typer.Option(
         None,
         "--scenario",
         "-s",
         help="Mock scenario ID (from `sre-agent scenarios`).",
     ),
-    service: Optional[str] = typer.Option(None, "--service", help="Service name (custom alert)."),
-    severity: Optional[str] = typer.Option(
+    service: str | None = typer.Option(None, "--service", help="Service name (custom alert)."),
+    severity: str | None = typer.Option(
         "SEV-2", "--severity", help="SEV-1 | SEV-2 | SEV-3 | SEV-4."
     ),
-    description: Optional[str] = typer.Option(
+    description: str | None = typer.Option(
         None, "--description", "-d", help="Alert description."
     ),
     show_events: bool = typer.Option(True, help="Print live agent events."),
@@ -204,6 +203,170 @@ def graph_image(output: str = "graph.png") -> None:
         console.print(f"[red]graph_image failed: {e}[/red]")
         console.print("[dim]Falling back to ASCII mermaid:[/dim]\n")
         console.print(build_graph().get_graph().draw_mermaid())
+
+
+@app.command("eval-drift")
+def eval_drift(
+    baseline: str = typer.Option(
+        "tests/eval/baseline.json",
+        help="Path to baseline JSON. Created by --update-baseline if missing.",
+    ),
+    update_baseline: bool = typer.Option(
+        False,
+        "--update-baseline",
+        help="Run eval, write the result as the new baseline, exit 0.",
+    ),
+    threshold: float = typer.Option(
+        0.05,
+        help="Fail if mean score drops by more than this from baseline.",
+    ),
+    json_out: bool = typer.Option(
+        False, "--json", help="Emit JSON to stdout instead of a Rich table."
+    ),
+    require_llm: bool = typer.Option(
+        False,
+        "--require-llm",
+        help="Include cases tagged requires_llm:true (assumes a live model is reachable).",
+    ),
+) -> None:
+    """
+    Run the golden-incident eval suite and compare against a stored baseline.
+
+    Use this as a CI / cron gate. A typical setup:
+
+        # First-time baselining (do once after a known-good run):
+        sre-agent eval-drift --update-baseline
+
+        # CI / nightly check:
+        sre-agent eval-drift                # exits non-zero if score dropped > 5%
+
+    Exit codes:
+      0  — at or above baseline (within `--threshold`)
+      1  — drift detected (score dropped more than `--threshold`)
+      2  — a case errored / could not run
+    """
+    import os
+    from pathlib import Path
+
+    if require_llm:
+        os.environ["SRE_EVAL_REQUIRES_LLM"] = "1"
+
+    try:
+        from tests.eval.runner import list_cases, run_case, score
+    except Exception as e:
+        console.print(f"[red]Could not import eval harness: {e}[/red]")
+        raise typer.Exit(2) from e
+
+    cases = list_cases()
+    if not cases:
+        console.print("[yellow]No golden cases found under tests/eval/cases/[/yellow]")
+        raise typer.Exit(2)
+
+    skip_llm = not require_llm
+
+    per_case: dict[str, dict] = {}
+    errors: list[str] = []
+    for case in cases:
+        if case.requires_llm and skip_llm:
+            per_case[case.id] = {"skipped": True, "score": None, "threshold": case.threshold}
+            continue
+        try:
+            report = run_case(case)
+            result = score(case, report)
+            per_case[case.id] = {
+                "score": result.score,
+                "threshold": result.threshold,
+                "passed": result.passed,
+                "phase": report.get("phase"),
+                "checks": [(n, ok) for n, ok, _ in result.checks],
+            }
+        except Exception as e:
+            errors.append(f"{case.id}: {e}")
+            per_case[case.id] = {"error": str(e)[:200]}
+
+    scored = [v["score"] for v in per_case.values() if v.get("score") is not None]
+    mean_score = sum(scored) / len(scored) if scored else 0.0
+    passed_count = sum(1 for v in per_case.values() if v.get("passed"))
+    skipped_count = sum(1 for v in per_case.values() if v.get("skipped"))
+
+    summary = {
+        "ts": datetime.now(timezone.utc).isoformat(),
+        "n_cases": len(cases),
+        "scored": len(scored),
+        "skipped": skipped_count,
+        "errors": errors,
+        "passed": passed_count,
+        "mean_score": round(mean_score, 4),
+        "per_case": per_case,
+    }
+
+    baseline_path = Path(baseline)
+
+    if update_baseline:
+        baseline_path.parent.mkdir(parents=True, exist_ok=True)
+        baseline_path.write_text(json.dumps(summary, indent=2), "utf-8")
+        if not json_out:
+            console.print(
+                f"[green]Wrote baseline:[/green] {baseline_path} "
+                f"(mean_score={mean_score:.3f}, passed={passed_count}/{len(cases)})"
+            )
+        else:
+            print(json.dumps({"updated_baseline": True, **summary}))
+        return
+
+    drift: float | None = None
+    baseline_score: float | None = None
+    if baseline_path.is_file():
+        try:
+            base = json.loads(baseline_path.read_text("utf-8"))
+            baseline_score = float(base.get("mean_score", 0.0))
+            drift = baseline_score - mean_score
+        except Exception:
+            console.print(f"[yellow]Baseline {baseline_path} is unreadable; treating as none.[/yellow]")
+
+    summary["baseline_mean_score"] = baseline_score
+    summary["drift"] = drift
+    summary["drift_threshold"] = threshold
+
+    if json_out:
+        print(json.dumps(summary, indent=2))
+    else:
+        t = Table(title="Eval drift", box=box.ROUNDED, header_style="bold magenta")
+        t.add_column("Case")
+        t.add_column("Score", justify="right")
+        t.add_column("Thr", justify="right")
+        t.add_column("Pass")
+        for case_id, v in per_case.items():
+            if v.get("skipped"):
+                t.add_row(case_id, "—", f"{v['threshold']:.2f}", "[dim]skip[/dim]")
+            elif "error" in v:
+                t.add_row(case_id, "[red]ERR[/red]", "—", v["error"][:40])
+            else:
+                color = "green" if v["passed"] else "red"
+                t.add_row(
+                    case_id,
+                    f"[{color}]{v['score']:.2f}[/{color}]",
+                    f"{v['threshold']:.2f}",
+                    "✓" if v["passed"] else "✗",
+                )
+        console.print(t)
+        if baseline_score is not None:
+            sign = "↓" if (drift or 0) > 0 else "↑" if (drift or 0) < 0 else "·"
+            console.print(
+                f"\nmean_score = {mean_score:.3f}  baseline = {baseline_score:.3f}  "
+                f"drift = {sign}{abs(drift or 0):.3f}  "
+                f"threshold = {threshold:.3f}"
+            )
+        else:
+            console.print(
+                f"\nmean_score = {mean_score:.3f}  "
+                "[dim](no baseline; run with --update-baseline to set one)[/dim]"
+            )
+
+    if errors:
+        raise typer.Exit(2)
+    if drift is not None and drift > threshold:
+        raise typer.Exit(1)
 
 
 if __name__ == "__main__":

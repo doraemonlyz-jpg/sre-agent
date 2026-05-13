@@ -197,6 +197,41 @@ class SlackNotifier:
                 ],
             }
         )
+
+        # Interactive action buttons. The `action_id` values are matched by
+        # the /api/slack/actions handler in dashboard/app.py. The `value`
+        # carries the incident_id so the handler doesn't need to parse
+        # message text.
+        incident_id = inc.get("id") or ""
+        if incident_id:
+            blocks.append(
+                {
+                    "type": "actions",
+                    "block_id": f"sre-actions-{incident_id}",
+                    "elements": [
+                        {
+                            "type": "button",
+                            "action_id": "sre_feedback_up",
+                            "style": "primary",
+                            "text": {"type": "plain_text", "text": "👍 Diagnosis helpful"},
+                            "value": incident_id,
+                        },
+                        {
+                            "type": "button",
+                            "action_id": "sre_feedback_down",
+                            "style": "danger",
+                            "text": {"type": "plain_text", "text": "👎 Wrong diagnosis"},
+                            "value": incident_id,
+                        },
+                        {
+                            "type": "button",
+                            "action_id": "sre_mark_falsepos",
+                            "text": {"type": "plain_text", "text": "False positive"},
+                            "value": incident_id,
+                        },
+                    ],
+                }
+            )
         return {"blocks": blocks, "text": cls._build_preview(inc)}
 
     def close(self) -> None:
