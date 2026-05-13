@@ -12,10 +12,12 @@ from typing import Any
 
 from langchain_core.messages import HumanMessage, SystemMessage
 
+from sre_agent.harness import bind_agent, record_persona_load
 from sre_agent.logging import get_logger
 from sre_agent.models import ModelRole, get_chat_model
 from sre_agent.nodes._helpers import make_event
-from sre_agent.personas import load as load_persona
+from sre_agent.personas import load_with_sha
+from sre_agent.retry import with_retries
 from sre_agent.schemas import (
     EvidenceResult,
     GraphState,
@@ -39,14 +41,19 @@ def remediation_suggester(state: GraphState) -> dict[str, Any]:
     runbooks = state.get("runbooks")
 
     try:
-        persona = load_persona("remediation-sug")
+        persona, _sha = load_with_sha("remediation-sug")
+        record_persona_load("remediation-sug", _sha)
         llm = get_chat_model(ModelRole.ORCHESTRATOR).with_structured_output(
             RemediationPlan, include_raw=False
         )
         user = _build_prompt(hyps, runbooks)
-        plan: RemediationPlan = llm.invoke(
-            [SystemMessage(content=persona), HumanMessage(content=user)]
-        )  # type: ignore[assignment]
+        with bind_agent("remediation-sug", prompt_sha=_sha):
+            plan: RemediationPlan = with_retries(
+                lambda: llm.invoke(
+                    [SystemMessage(content=persona), HumanMessage(content=user)]
+                ),
+                agent="remediation-sug",
+            )  # type: ignore[assignment]
         return {
             "remediation": plan,
             "events": [
@@ -89,9 +96,9 @@ def _build_prompt(hyps: HypothesisList, runbooks: RunbookEvidence | None = None)
             lines.append("")
     lines.append(
         "# Your task\n"
-        "Suggest 1–3 remediation actions a human on-call could try, ordered safest-first. "
+        "Suggest 1-3 remediation actions a human on-call could try, ordered safest-first. "
         "Each MUST include a `reversal` command. NEVER suggest auto-execution. "
-        "Add 1–3 anti-patterns the on-call should AVOID.\n"
+        "Add 1-3 anti-patterns the on-call should AVOID.\n"
         "If a team runbook above contains a literal mitigation command, "
         "USE IT VERBATIM and cite the runbook path in the `why` field "
         "(e.g. 'see runbooks/chaos-app.md').\n"

@@ -1,0 +1,54 @@
+# Golden case 3: full downstream cascade — SEV-1, the hard case.
+#
+# Signal shape:
+#   - logs: heavy 502s on user-profile-api
+#   - metrics: error_rate spike, NO traffic increase (rules out load-driven)
+#   - traces: hot span on a downstream call, downstream_suspect populated
+#   - deploys: clean for the affected service itself (the cause is upstream)
+#
+# What we want the agent to do:
+#   - reach `diagnosed`
+#   - cite traces + metrics (the smoking gun is the spike-without-traffic)
+#   - mention downstream / cascade / dependency in the top hypothesis
+#   - if LLM is up, confidence should be in the upper band (0.6+)
+#   - if LLM is down, accept the rule-based fallback's lower confidence
+#
+# Why this case is hard:
+#   The naive instinct is "error spike → recent deploy", but deploys is
+#   NO_SIGNAL here. The agent has to *not* blame deploys when there is
+#   no deploy, and must correctly attribute upstream to a downstream call.
+
+id: downstream-cascade
+description: |
+  Tests downstream-cascade reasoning. Traces + metrics are the load-bearing
+  signals; deploys is intentionally NO_SIGNAL to verify the agent doesn't
+  manufacture a deploy-driven story when there's no deploy.
+
+# This case truly needs the LLM to discriminate "load-driven cascade" from
+# "deploy-driven failure" — rule-based fallback can't make that distinction
+# because it doesn't reason about deploys=NO_SIGNAL as a negative signal.
+# With a live LLM the case should hit `diagnosed` with confidence > 0.5.
+# Offline runs SKIP this case (see test_eval.py).
+requires_llm: true
+threshold: 0.7
+tags: [cascade, hard-case, requires-llm]
+
+alert:
+  service: user-profile-api
+  severity: SEV-1
+  description: user-profile-api 100% 502 errors, all requests failing
+  scenario_id: downstream-cascade
+  tags: [team:platform, env:prod]
+
+expected:
+  phase: [diagnosed]
+  must_not_phase: [failed, no_signal]
+  must_cite_evidence: [traces, metrics]
+  hypothesis_keywords_any:
+    - downstream
+    - dependency
+    - cascade
+    - upstream
+    - timeout
+    - "502"     # quoted so PyYAML keeps it as a string
+  confidence_range: [0.50, 1.0]

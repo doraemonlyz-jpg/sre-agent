@@ -7,10 +7,11 @@ from typing import Any
 
 from langchain_core.messages import HumanMessage, SystemMessage
 
+from sre_agent.harness import bind_agent, record_persona_load
 from sre_agent.logging import get_logger
 from sre_agent.models import ModelRole, get_chat_model
 from sre_agent.nodes._helpers import make_event
-from sre_agent.personas import load as load_persona
+from sre_agent.personas import load_with_sha
 from sre_agent.providers import get_provider
 from sre_agent.schemas import DeploysEvidence, EvidenceResult, GraphState
 
@@ -27,7 +28,7 @@ def deploy_historian(state: GraphState) -> dict[str, Any]:
 
     # Include the affected service AND likely neighbours (we use a simple heuristic;
     # production would query a service-graph here).
-    services = [alert.service] + _likely_neighbours(alert.service)
+    services = [alert.service, *_likely_neighbours(alert.service)]
 
     try:
         if provider.name == "mock":
@@ -77,7 +78,8 @@ def _likely_neighbours(service: str) -> list[str]:
 
 def _refine_with_llm(ev: DeploysEvidence, service: str) -> DeploysEvidence:
     try:
-        persona = load_persona("deploy-historian")
+        persona, _sha = load_with_sha("deploy-historian")
+        record_persona_load("deploy-historian", _sha)
         llm = get_chat_model(ModelRole.WORKER)
         lines = [
             f"- {d.service} {d.sha[:7]} @ {d.deployed_at} ({d.minutes_before:.0f}min before) "
@@ -92,7 +94,8 @@ def _refine_with_llm(ev: DeploysEvidence, service: str) -> DeploysEvidence:
             "Write ONE sentence (<300 chars). Identify the single most-suspect change and why "
             "(timing, file paths, etc). No preamble."
         )
-        out = llm.invoke([SystemMessage(content=persona), HumanMessage(content=user)])
+        with bind_agent("deploy-historian", prompt_sha=_sha):
+            out = llm.invoke([SystemMessage(content=persona), HumanMessage(content=user)])
         text = (out.content or "").strip().split("\n")[0][:380]
         if text:
             return ev.model_copy(update={"interpretation": text})

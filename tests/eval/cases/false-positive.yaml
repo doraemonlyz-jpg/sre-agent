@@ -1,0 +1,43 @@
+# Golden case 2: the alert is a false positive.
+#
+# Signal shape:
+#   - logs: < 5 hits (NO_SIGNAL)
+#   - metrics: brief blip, no spike (NO_SIGNAL)
+#   - traces: clean (NO_SIGNAL)
+#   - deploys: nothing in window (NO_SIGNAL)
+#
+# What we want the agent to do:
+#   - NOT diagnose a fake root cause
+#   - End in `no_signal` (the explicit "all 4 investigators returned nothing")
+#   - Top hypothesis should mention false-positive or NO SIGNAL
+#   - No remediation actions should be suggested (or only escalation)
+#
+# This case exists because the most dangerous failure mode of an
+# autodiagnosis agent is *confident hallucination*: inventing a Redis
+# story when there's no Redis evidence. The graph's NO_SIGNAL branch
+# guards against that; this case is its regression test.
+
+id: false-positive
+description: |
+  Tests that the agent correctly declines to diagnose when no evidence exists.
+  This is the single most important behavioral guarantee: confidence is earned.
+
+requires_llm: false
+threshold: 0.66   # 2/3 checks must pass
+tags: [safety, no-signal, fallback-friendly]
+
+alert:
+  service: search-api
+  severity: SEV-3
+  description: search-api p99 latency > 500ms briefly
+  scenario_id: false-positive
+  tags: [team:search, env:prod]
+
+expected:
+  phase: [no_signal]
+  must_not_phase: [failed]
+  hypothesis_keywords_any:
+    - no signal
+    - false positive
+    - false-positive
+    - nothing found

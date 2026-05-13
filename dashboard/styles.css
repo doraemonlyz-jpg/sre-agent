@@ -424,6 +424,57 @@ button { cursor: pointer; }
 .tier-badge.tier-cheap   { border-color: rgba(96, 165, 250, 0.45); color: #93c5fd; }
 .tier-badge.tier-premium { border-color: rgba(244, 114, 182, 0.45); color: #f9a8d4; }
 
+/* Harness L3/L4 strip — same shape as scale strip, accent shifted to lime
+   so the two strips read as related-but-different lanes of telemetry. */
+.harness-strip {
+  background:
+    linear-gradient(180deg, rgba(132, 204, 22, 0.025), transparent 70%),
+    var(--bg-elev);
+}
+.scale-badge.harness-badge {
+  border-color: rgba(132, 204, 22, 0.55);
+  color: #bef264;
+  background: rgba(132, 204, 22, 0.06);
+}
+
+/* Cache-served incident gets a faint glow on the left edge of its card so
+   it's visually distinguishable from the LLM-touched ones — same kind of
+   "I cost zero" cue you want when reviewing a wall of incidents. */
+.incident-item.cache-hit::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(132, 204, 22, 0.8), rgba(132, 204, 22, 0.1));
+  border-radius: 2px;
+}
+.incident-item { position: relative; }
+
+/* Prompt SHA chip — small mono pill clustered under each agent name in the
+   detail view, showing "log-detective · a1b2c3d4". Tells you exactly
+   which prompt produced this output, so prompt-edit accountability is one
+   glance away. */
+.prompt-sha-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 6px;
+  font-family: var(--font-mono);
+  font-size: var(--t-2xs);
+  color: var(--fg-3);
+  background: var(--bg-tint);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  margin-left: 6px;
+}
+.prompt-sha-chip i {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: rgba(132, 204, 22, 0.7);
+  display: inline-block;
+}
+
 /* Primary action button — gradient violet→rose */
 .btn-fire {
   position: relative;

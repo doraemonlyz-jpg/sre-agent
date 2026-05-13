@@ -7,10 +7,11 @@ from typing import Any
 
 from langchain_core.messages import HumanMessage, SystemMessage
 
+from sre_agent.harness import bind_agent, record_persona_load
 from sre_agent.logging import get_logger
 from sre_agent.models import ModelRole, get_chat_model
 from sre_agent.nodes._helpers import make_event
-from sre_agent.personas import load as load_persona
+from sre_agent.personas import load_with_sha
 from sre_agent.providers import get_provider
 from sre_agent.schemas import EvidenceResult, GraphState, MetricsEvidence
 
@@ -64,7 +65,8 @@ def metrics_analyst(state: GraphState) -> dict[str, Any]:
 
 def _refine_with_llm(ev: MetricsEvidence, service: str) -> MetricsEvidence:
     try:
-        persona = load_persona("metrics-analyst")
+        persona, _sha = load_with_sha("metrics-analyst")
+        record_persona_load("metrics-analyst", _sha)
         llm = get_chat_model(ModelRole.ORCHESTRATOR)  # synthesis benefits from reasoning
         lines = [
             f"- {m.name}: baseline {m.baseline} → peak {m.peak} | verdict={m.verdict}"
@@ -78,7 +80,8 @@ def _refine_with_llm(ev: MetricsEvidence, service: str) -> MetricsEvidence:
             "metrics imply: traffic-driven? downstream-driven? capacity-driven? "
             "Or no signal. No preamble."
         )
-        out = llm.invoke([SystemMessage(content=persona), HumanMessage(content=user)])
+        with bind_agent("metrics-analyst", prompt_sha=_sha):
+            out = llm.invoke([SystemMessage(content=persona), HumanMessage(content=user)])
         text = (out.content or "").strip().split("\n")[0][:380]
         if text:
             return ev.model_copy(update={"interpretation": text})

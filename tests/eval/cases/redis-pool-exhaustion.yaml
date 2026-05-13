@@ -1,0 +1,46 @@
+# Golden case 1: classic Redis connection pool exhaustion after a deploy.
+#
+# What we want the agent to do:
+#   - reach a `diagnosed` phase (NOT no_signal — there is plenty of evidence)
+#   - cite at least logs + deploys (the smoking gun is a code change + error spike)
+#   - mention Redis / connection / pool in the top hypothesis
+#   - reference the checkout-api runbook (the team has documented this exact pattern)
+#   - confidence > 0.40 (with the fallback path that's the floor; the LLM path lands ~0.70+)
+#
+# We do NOT require the LLM here — the rule-based fallback should still
+# produce something close to this answer because the evidence is unambiguous.
+# That guards us against regressions in the fallback path, which is the
+# safety net for the 2% of incidents where the LLM is unreachable.
+
+id: redis-pool-exhaustion
+description: |
+  Canonical evidence-rich incident. Tests that the graph correctly weights
+  the deploy + log signals together and finds the matching runbook.
+
+requires_llm: false
+threshold: 0.7
+tags: [smoke, fallback-friendly]
+
+alert:
+  service: checkout-api
+  severity: SEV-2
+  description: checkout-api 5xx error rate > 5% for 3 minutes
+  scenario_id: redis-pool-exhaustion
+  tags: [team:checkout, env:prod]
+
+expected:
+  phase: [diagnosed]
+  must_not_phase: [failed]
+  must_cite_evidence: [logs, deploys]
+  hypothesis_keywords_any:
+    - redis
+    - connection
+    - pool
+    - deploy
+  runbook_path_contains: checkout-api
+  confidence_range: [0.30, 1.0]
+  remediation_action_titles_any:
+    - rollback
+    - revert
+    - restart
+    - escalate     # fallback path may suggest pager-page; still acceptable

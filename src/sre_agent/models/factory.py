@@ -25,30 +25,15 @@ from enum import Enum
 from functools import lru_cache
 from typing import Literal
 
-from langchain_core.callbacks import BaseCallbackHandler
 from langchain_core.language_models.chat_models import BaseChatModel
 
+# HarnessCallback both (a) increments the Phase-E counter (in scale.COUNTERS)
+# AND (b) records a per-call LLMCallRecord into the harness ring buffer with
+# agent / incident / prompt_sha / latency / token-usage / status. One callback
+# feeds both observability planes — counter strip and call-trace endpoint.
+from sre_agent.harness import HARNESS_CALLBACK
+
 Provider = Literal["openai", "anthropic", "ollama"]
-
-
-class _LlmCallCounter(BaseCallbackHandler):
-    """
-    Increment the Phase-E LLM call counter every time a chat model is invoked.
-
-    `on_chat_model_start` fires once per `.invoke()` even when the model is
-    wrapped by `.with_structured_output(...)` — callbacks propagate through
-    the structured-output runnable. We count *attempts* (start), not
-    *successes*, because the production-scale concern is "how many calls
-    did we make to a paid endpoint?", not "how many returned 200".
-    """
-
-    def on_chat_model_start(self, *args, **kwargs):
-        from sre_agent.scale import COUNTERS
-
-        COUNTERS.record_llm_call()
-
-
-_COUNTER_CALLBACK = _LlmCallCounter()
 
 
 class ModelRole(str, Enum):
@@ -103,7 +88,7 @@ def get_chat_model(role: ModelRole | str, temperature: float = 0.0) -> BaseChatM
     provider = get_default_provider()
     model_id = _resolve_model_id(role, provider)
 
-    callbacks = [_COUNTER_CALLBACK]
+    callbacks = [HARNESS_CALLBACK]
 
     if provider == "openai":
         from langchain_openai import ChatOpenAI

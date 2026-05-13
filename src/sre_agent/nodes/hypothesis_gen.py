@@ -2,7 +2,7 @@
 Hypothesis Generator node — the brain.
 
 Gathers all 4 evidence sources from state, asks the LLM (with structured output)
-for 1–5 ranked root-cause hypotheses with citations.
+for 1-5 ranked root-cause hypotheses with citations.
 
 If the LLM fails or returns nonsense, we fall back to a rule-based hypothesis
 so the pipeline still produces a result (low confidence). This is critical for
@@ -16,10 +16,12 @@ from typing import Any
 
 from langchain_core.messages import HumanMessage, SystemMessage
 
+from sre_agent.harness import bind_agent, record_persona_load
 from sre_agent.logging import get_logger
 from sre_agent.models import ModelRole, get_chat_model
 from sre_agent.nodes._helpers import make_event
-from sre_agent.personas import load as load_persona
+from sre_agent.personas import load_with_sha
+from sre_agent.retry import with_retries
 from sre_agent.schemas import (
     EvidenceResult,
     GraphState,
@@ -51,14 +53,19 @@ def hypothesis_generator(state: GraphState) -> dict[str, Any]:
         return _no_signal_result()
 
     try:
-        persona = load_persona("hypothesis-gen")
+        persona, _sha = load_with_sha("hypothesis-gen")
+        record_persona_load("hypothesis-gen", _sha)
         llm = get_chat_model(ModelRole.ORCHESTRATOR).with_structured_output(
             HypothesisList, include_raw=False
         )
         user = _build_synthesis_prompt(alert, logs, metrics, traces, deploys, runbooks)
-        out: HypothesisList = llm.invoke(
-            [SystemMessage(content=persona), HumanMessage(content=user)]
-        )  # type: ignore[assignment]
+        with bind_agent("hypothesis-gen", prompt_sha=_sha):
+            out: HypothesisList = with_retries(
+                lambda: llm.invoke(
+                    [SystemMessage(content=persona), HumanMessage(content=user)]
+                ),
+                agent="hypothesis-gen",
+            )  # type: ignore[assignment]
         top = out.top
         return {
             "hypotheses": out,
@@ -132,7 +139,7 @@ def _build_synthesis_prompt(alert, logs, metrics, traces, deploys, runbooks=None
         )
     sections.append(
         "# Your task\n"
-        "Produce 1–3 ranked hypotheses with confidence 0–1. Cite supporting "
+        "Produce 1-3 ranked hypotheses with confidence 0-1. Cite supporting "
         "AND contradicting evidence sources by name "
         "(logs|metrics|traces|deploys|runbooks). "
         "If a team runbook documents this exact pattern, MENTION THE RUNBOOK "

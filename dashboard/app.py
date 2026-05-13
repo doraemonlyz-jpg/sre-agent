@@ -34,7 +34,11 @@ from typing import Any
 
 from flask import Flask, jsonify, request, send_from_directory
 
+from sre_agent.cache import CACHE
+from sre_agent.cache import store as cache_store
+from sre_agent.cache import try_get as cache_try_get
 from sre_agent.graph import build_graph
+from sre_agent.harness import RECORDER, bind_incident
 from sre_agent.logging import setup_logging
 from sre_agent.notifications import SlackNotifier
 from sre_agent.providers.mock import MockProvider
@@ -210,19 +214,23 @@ def _run_pipeline(incident_id: str, alert: AlertIn) -> None:
     Stream the LangGraph run. Each chunk's `events` go to the UI feed; the
     final state is persisted. Exceptions are caught so a broken LLM doesn't
     crash the Flask app.
+
+    `bind_incident(incident_id)` tags every LLM call made inside this
+    block with our domain identifier, so the harness ring buffer can
+    return "all calls for incident X" via `/api/incidents/<id>/calls`.
     """
     started_at = _now_ms()
     config = {"configurable": {"thread_id": incident_id}}
     initial: GraphState = {"alert": alert, "events": []}
 
     try:
-        for chunk in _GRAPH.stream(initial, config=config):
-            for _node_name, partial in chunk.items():
-                for ev in partial.get("events", []) or []:
-                    _push_event(incident_id, ev)
+        with bind_incident(incident_id):
+            for chunk in _GRAPH.stream(initial, config=config):
+                for _node_name, partial in chunk.items():
+                    for ev in partial.get("events", []) or []:
+                        _push_event(incident_id, ev)
 
-        # Pull final state from checkpointer
-        state = _GRAPH.get_state(config).values
+            state = _GRAPH.get_state(config).values
         report: IncidentReport | None = state.get("report")
         if report is None:
             raise RuntimeError("graph completed without producing a report")
@@ -238,6 +246,28 @@ def _run_pipeline(incident_id: str, alert: AlertIn) -> None:
             inc["remediation"] = _remediation_to_legacy(report)
             inc["report_json"] = report.model_dump(mode="json", exclude_none=True)
         _persist(incident_id)
+        # Stash a compact snapshot in the response cache so identical
+        # alerts in the next SRE_CACHE_TTL_SECONDS skip the full pipeline.
+        # Failed runs intentionally don't go into the cache.
+        try:
+            with INCIDENTS_LOCK:
+                snapshot = {
+                    "phase": INCIDENTS[incident_id]["phase"],
+                    "findings": INCIDENTS[incident_id].get("findings", {}),
+                    "hypothesis": INCIDENTS[incident_id].get("hypothesis"),
+                    "remediation": INCIDENTS[incident_id].get("remediation"),
+                    "report_json": INCIDENTS[incident_id].get("report_json"),
+                    "diagnosis_ms": INCIDENTS[incident_id].get("diagnosis_ms"),
+                }
+            cache_store(
+                alert.service,
+                alert.severity.value,
+                alert.description,
+                incident_id,
+                snapshot,
+            )
+        except Exception:
+            logger.exception("cache.store_failed for %s", incident_id)
 
     except Exception as e:
         logger.exception("pipeline failed for incident %s", incident_id)
@@ -301,18 +331,56 @@ def api_scenarios():
 
 
 def _spawn_incident(alert: AlertIn, *, scenario_id: str | None = None) -> str:
-    """Register an incident, persist, and kick off the LangGraph run."""
+    """Register an incident, persist, and kick off the LangGraph run.
+
+    Harness L4 — response cache: if an identical alert was diagnosed in the
+    last `SRE_CACHE_TTL_SECONDS`, materialize a *new* incident_id pointing
+    at the cached findings. This protects us from misconfigured alert
+    rules that re-fire every 30s, and is the in-process mock of an
+    upstream Redis/Memcached.
+    """
     incident_id = uuid.uuid4().hex[:10]
-    # Tier classification is cheap and deterministic — happens at submit
-    # time so the dashboard can show "premium" / "cheap" / "rule" instantly.
-    # The actual model still runs whatever SRE_LLM_* points at — the tier
-    # is the *production-scale routing decision* we'd make if we had the
-    # tiered model fleet wired up.
+    cached = cache_try_get(alert.service, alert.severity.value, alert.description)
     tier = classify_tier(
         severity=alert.severity.value,
         description=alert.description,
         scenario_id=scenario_id,
     )
+
+    if cached is not None:
+        cached_id, payload = cached
+        now = _now_ms()
+        with INCIDENTS_LOCK:
+            INCIDENTS[incident_id] = {
+                "id": incident_id,
+                "scenario_id": scenario_id,
+                "alert": alert.model_dump(mode="json"),
+                "phase": payload.get("phase", "diagnosed"),
+                "started_at": now,
+                "diagnosed_at": now,
+                "diagnosis_ms": 0,
+                "events": [
+                    {
+                        "ts": now,
+                        "agent": "harness",
+                        "action": "cache_hit",
+                        "detail": (
+                            f"reused diagnosis from incident {cached_id} "
+                            f"(SRE_CACHE_TTL_SECONDS = {int(_cache_ttl())}s)"
+                        ),
+                    }
+                ],
+                "findings": payload.get("findings", {}),
+                "hypothesis": payload.get("hypothesis"),
+                "remediation": payload.get("remediation"),
+                "report_json": payload.get("report_json"),
+                "model_tier": "rule",  # cache hit costs no LLM, so it's a "rule"-tier conclusion
+                "served_from_cache": True,
+                "cache_origin_incident_id": cached_id,
+            }
+        _persist(incident_id)
+        return incident_id
+
     with INCIDENTS_LOCK:
         INCIDENTS[incident_id] = {
             "id": incident_id,
@@ -325,13 +393,18 @@ def _spawn_incident(alert: AlertIn, *, scenario_id: str | None = None) -> str:
             "hypothesis": None,
             "remediation": None,
             "model_tier": tier,
+            "served_from_cache": False,
         }
     _persist(incident_id)
-    # Submit to the bounded worker pool. Beyond SRE_MAX_CONCURRENT
-    # in-flight investigations, subsequent submissions queue up — this is
-    # the in-process mock of "Kafka + Temporal worker pool" in production.
     submit_job(_run_pipeline, incident_id, alert, tier=tier)
     return incident_id
+
+
+def _cache_ttl() -> float:
+    try:
+        return float(os.environ.get("SRE_CACHE_TTL_SECONDS", "300"))
+    except ValueError:
+        return 300.0
 
 
 @app.route("/api/incidents/fire", methods=["POST"])
@@ -416,6 +489,8 @@ def api_list_incidents():
                     "diagnosed_at": i.get("diagnosed_at"),
                     "diagnosis_ms": i.get("diagnosis_ms"),
                     "model_tier": i.get("model_tier", "cheap"),
+                    "served_from_cache": i.get("served_from_cache", False),
+                    "cache_origin_incident_id": i.get("cache_origin_incident_id"),
                 }
                 for i in INCIDENTS.values()
             ),
@@ -610,6 +685,61 @@ def api_burst():
                 "All alerts submitted to the bounded worker pool. "
                 "Poll /api/scale/stats to watch queue depth drain."
             ),
+        }
+    )
+
+
+# ---- Harness (L3/L4) -----------------------------------------------------
+
+
+@app.route("/api/harness/summary", methods=["GET"])
+def api_harness_summary():
+    """Aggregate stats over the harness ring buffer + response cache."""
+    return jsonify(
+        {
+            "recorder": RECORDER.summary(),
+            "cache": CACHE.stats(),
+        }
+    )
+
+
+@app.route("/api/harness/calls", methods=["GET"])
+def api_harness_calls():
+    """
+    Recent harness records (LLM calls, persona loads, cache events, retries).
+    Filter with ?kind=llm_call|cache_hit|cache_miss|persona_load|retry and
+    ?limit=N (default 50, max 500).
+    """
+    kind = request.args.get("kind")
+    try:
+        limit = max(1, min(500, int(request.args.get("limit", "50"))))
+    except ValueError:
+        limit = 50
+    recs = RECORDER.recent(limit=limit, kind=kind)  # type: ignore[arg-type]
+    return jsonify({"records": [r.to_json() for r in recs]})
+
+
+@app.route("/api/incidents/<incident_id>/calls", methods=["GET"])
+def api_incident_calls(incident_id: str):
+    """Every harness record tagged with this incident_id."""
+    with INCIDENTS_LOCK:
+        exists = incident_id in INCIDENTS
+    if not exists:
+        return jsonify({"error": "unknown incident"}), 404
+    recs = RECORDER.for_incident(incident_id)
+    by_agent: dict[str, int] = {}
+    prompt_shas: dict[str, str] = {}
+    for r in recs:
+        by_agent[r.agent] = by_agent.get(r.agent, 0) + 1
+        if r.prompt_sha and r.agent not in prompt_shas:
+            prompt_shas[r.agent] = r.prompt_sha
+    return jsonify(
+        {
+            "incident_id": incident_id,
+            "n_records": len(recs),
+            "by_agent": by_agent,
+            "prompt_shas": prompt_shas,
+            "records": [r.to_json() for r in recs],
         }
     )
 

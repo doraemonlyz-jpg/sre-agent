@@ -71,6 +71,15 @@
       'scale.completed':     'done',
       'scale.llm_rate':      'llm/min',
       'scale.cost_saved':    'saved vs all-premium',
+      'harness.label':       'HARNESS',
+      'harness.sub':         'L3 trace + L4 cache',
+      'harness.calls':       'llm calls',
+      'harness.latency':     'avg latency',
+      'harness.tokens_in':   'tokens in',
+      'harness.tokens_out':  'tokens out',
+      'harness.cache_hit':   'cache hit',
+      'harness.retries':     'retries',
+      'cache.hit_label':     'CACHE',
       'tier.rule':           'rule',
       'tier.cheap':          'cheap',
       'tier.premium':        'premium',
@@ -142,6 +151,15 @@
       'scale.completed':     '已完成',
       'scale.llm_rate':      'LLM 调用/分',
       'scale.cost_saved':    '相比全 premium 节省',
+      'harness.label':       '工程框架',
+      'harness.sub':         'L3 追踪 + L4 缓存',
+      'harness.calls':       'LLM 调用',
+      'harness.latency':     '平均延迟',
+      'harness.tokens_in':   '输入 tokens',
+      'harness.tokens_out':  '输出 tokens',
+      'harness.cache_hit':   '缓存命中',
+      'harness.retries':     '重试',
+      'cache.hit_label':     '缓存',
       'tier.rule':           '规则',
       'tier.cheap':          '小模型',
       'tier.premium':        '大模型',
@@ -208,10 +226,14 @@
     await loadScenarios();
     await refresh();
     await refreshScale();
+    await refreshHarness();
     setInterval(refresh, 1000);
     // Scale stats can refresh on a slightly faster cadence so the burst
     // demo "feels live" (queue depth drains visibly).
     setInterval(refreshScale, 750);
+    // Harness summary moves on the same cadence as incidents — it is
+    // updated only when LLMs are called, so a 1Hz refresh is plenty.
+    setInterval(refreshHarness, 1200);
   });
 
   function bindUi() {
@@ -277,6 +299,35 @@
     set('scale-llm',          stats.llm_calls_per_min ?? 0);
     const saved = stats.cost_saved_usd ?? 0;
     set('scale-cost-saved', '$' + (saved < 1 ? saved.toFixed(4) : saved.toFixed(2)));
+  }
+
+  async function refreshHarness() {
+    let j;
+    try {
+      const r = await fetch('/api/harness/summary');
+      if (!r.ok) return;
+      j = await r.json();
+    } catch { return; }
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    const rec = j.recorder || {};
+    const cache = j.cache || {};
+    const byKind = rec.by_kind || {};
+    set('harness-calls',      byKind.llm_call ?? 0);
+    set('harness-latency',    rec.avg_latency_ms ?? 0);
+    set('harness-tokens-in',  formatTokens(rec.total_input_tokens ?? 0));
+    set('harness-tokens-out', formatTokens(rec.total_output_tokens ?? 0));
+    set('harness-retries',    byKind.retry ?? 0);
+    const hits = cache.hits ?? 0;
+    const total = (cache.hits ?? 0) + (cache.misses ?? 0);
+    set('harness-cache-hits', hits);
+    set('harness-cache-total', total);
+    set('harness-cache-hit', total ? Math.round((hits / total) * 100) + '%' : '0%');
+  }
+
+  function formatTokens(n) {
+    if (n < 1000) return String(n);
+    if (n < 1_000_000) return (n / 1000).toFixed(1) + 'k';
+    return (n / 1_000_000).toFixed(2) + 'M';
   }
 
   async function loadScenarios() {
@@ -413,10 +464,15 @@
 
       const tier = inc.model_tier || 'cheap';
       const tierLabel = t(`tier.${tier}`);
+      const fromCache = !!inc.served_from_cache;
+      el.classList.toggle('cache-hit', fromCache);
+      const cacheChip = fromCache
+        ? `<span class="tier-badge tier-rule" title="response cache hit — zero LLM cost">${t('cache.hit_label')}</span>`
+        : '';
 
       // Only touch the inner HTML if something changed — avoids restarting
       // the pulse animation on the investigating phase pill.
-      const signature = `${STATE.lang}|${inc.alert.service}|${sevN}|${inc.phase}|${elapsed}|${tier}`;
+      const signature = `${STATE.lang}|${inc.alert.service}|${sevN}|${inc.phase}|${elapsed}|${tier}|${fromCache ? 'c' : '-'}`;
       if (el.dataset.signature !== signature) {
         el.dataset.signature = signature;
         el.innerHTML = `
@@ -425,6 +481,7 @@
             <span class="sev-pill sev-${sevN}">SEV-${sevN}</span>
             <span class="phase-pill ${phaseCls}">${phaseLabel}</span>
             <span class="tier-badge tier-${tier}" title="Phase E: model tier routing">${tierLabel}</span>
+            ${cacheChip}
             <span>${elapsed}</span>
           </div>
         `;

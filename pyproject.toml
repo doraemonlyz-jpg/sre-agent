@@ -57,6 +57,11 @@ dependencies = [
 
     # HTTP client — used by DatadogProvider, Slack notifier, and tests.
     "httpx>=0.28.1",
+
+    # Eval harness: golden incident cases are YAML so non-engineers
+    # can review them. PyYAML is also already a transitive dep of
+    # langgraph (via cloudpickle paths) but we pin it explicitly.
+    "pyyaml>=6.0.1",
 ]
 
 [project.optional-dependencies]
@@ -104,5 +109,10 @@ disallow_untyped_defs = false
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-ra -q --strict-markers"
+# Default unit-test run skips the eval suite — it boots the full graph
+# for each YAML case (~5-30s each) and is opt-in via `pytest -m eval`.
+addopts = "-ra -q --strict-markers -m 'not eval'"
 asyncio_mode = "auto"
+markers = [
+    "eval: end-to-end accuracy eval (slow, run with `pytest -m eval`)",
+]

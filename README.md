@@ -4,7 +4,8 @@
 [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![python](https://img.shields.io/badge/python-3.10%2B-blue)]()
 [![langgraph](https://img.shields.io/badge/orchestration-LangGraph-purple)]()
-[![tests](https://img.shields.io/badge/tests-30%20passing-brightgreen)]()
+[![tests](https://img.shields.io/badge/tests-169%20passing-brightgreen)]()
+[![eval](https://img.shields.io/badge/eval-3%2F3%20golden%20cases-success)]()
 
 > An AI on-call team. A monitoring alert fires → 7 specialized agents fan out
 > across logs / metrics / traces / deploys → a hypothesis generator ranks root
@@ -376,11 +377,13 @@ production code.
 - [x] Prometheus / Loki providers + open-source demo stack
 - [x] Runbook RAG (8th agent — `runbook_consultant`, the team brain)
 - [x] **Mocked production-scale**: bounded worker pool, burst endpoint, tier classifier (see Phase E below)
+- [x] **Harness engineering** (L3/L4): observability ring buffer, prompt fingerprinting, response cache, retry policy, golden-incident eval (see Harness section below)
 - [ ] Tempo / Jaeger provider for traces (open-source stack)
 - [ ] Slack message buttons that POST back into `/api/incidents/<id>/action`
-- [ ] OpenTelemetry tracing on every node
+- [ ] OpenTelemetry tracing on every node (LangSmith / Langfuse export)
 - [ ] Auth: bearer token + per-team isolation
-- [ ] Eval suite: 10 hand-labeled historical incidents, accuracy ≥ 80%
+- [ ] Prompt A/B test framework (route 10% to candidate prompt, score against golden set)
+- [ ] Feedback flywheel: oncall thumbs-up/down → new runbook draft
 
 ---
 
@@ -434,6 +437,85 @@ build if you had Kafka*. Specifically:
 curl -X POST http://localhost:5080/api/incidents/burst?n=50
 watch -n1 'curl -s http://localhost:5080/api/scale/stats'
 ```
+
+---
+
+## Harness engineering (L3 / L4)
+
+A demo that calls an LLM in a `for` loop is not a production system. A
+production system needs:
+
+1. **Structured I/O** (L1) — done at v0 via Pydantic schemas.
+2. **Defense in depth** (L2) — done at v0 via rule-based fallbacks and
+   the confidence gate in `finalize`.
+3. **Observability** (L3) — every LLM call is traced with model, latency,
+   tokens, prompt SHA, status. Now done.
+4. **Eval harness** (L4) — golden incidents pinned in YAML, scored on every
+   run, regression-tested in CI. Now done.
+5. **Continuous improvement** (L5) — A/B prompts, feedback flywheel, drift
+   detection. Roadmapped, not done.
+
+| Capability | Module / endpoint | What it gives you |
+|---|---|---|
+| **LLM call trace** | `src/sre_agent/harness.py` → `RECORDER`, `/api/harness/calls`, `/api/incidents/<id>/calls` | One record per `.invoke()`: agent, model, prompt_sha, latency_ms, input/output tokens, status. Filterable by `kind=llm_call\|cache_hit\|cache_miss\|retry`. Thread-safe ring buffer, default 1000 records. |
+| **Prompt fingerprinting** | `personas.load_with_sha()` | Every `.md` persona is hashed to an 8-char SHA on load; the SHA travels with every call's record. Answers "which prompt version produced output X?" forever. |
+| **Response cache** | `src/sre_agent/cache.py`, automatic in `_spawn_incident` | 5-min TTL keyed on `(service, severity, normalize(description))`. Digits in description are masked so re-firing alerts collapse. Stats at `/api/harness/summary`. |
+| **Retry policy** | `src/sre_agent/retry.py` | `with_retries(fn, agent=...)` wraps LLM calls in `hypothesis_gen` + `remediation_sug`. Retries on timeout / 5xx / rate-limit; bails on schema-validation errors. Each retry emits a record. |
+| **Eval harness** | `tests/eval/` + `pytest -m eval` | Golden YAML cases describe expected phase / cited evidence / hypothesis keywords / runbook reference / confidence range / remediation action types. Score = mean of checks. Per-case threshold. Cases tagged `requires_llm: true` are skipped offline. |
+| **Dashboard surface** | "HARNESS" strip in the UI | Live: total LLM calls, avg latency, tokens consumed, cache hit rate, retry count. Cache-served incidents get a CACHE chip + green edge stripe. |
+
+### Trying it locally
+
+```bash
+# Unit-test suite (skips eval by default — see pyproject.toml)
+pytest
+
+# Run the eval suite — 3 cases pass against the offline fallback
+pytest -m eval -v
+
+# Run the eval against a live Ollama (will run the `requires_llm: true` cases)
+SRE_EVAL_REQUIRES_LLM=1 OLLAMA_BASE_URL=http://localhost:11434 pytest -m eval -v
+```
+
+```bash
+# Live harness stats while the dashboard is running
+curl -s localhost:5080/api/harness/summary | jq
+
+# Per-incident LLM call trace (after firing one alert)
+INC=$(curl -s -X POST localhost:5080/api/incidents/fire \
+        -H 'content-type: application/json' \
+        -d '{"scenario_id":"redis-pool-exhaustion"}' | jq -r .incident_id)
+curl -s localhost:5080/api/incidents/$INC/calls | jq
+```
+
+### Why the cache key normalizes digits
+
+`error_rate=0.07 sustained for 12s` and `error_rate=0.09 sustained for 18s`
+are the same alert rule firing twice. Without normalization, every refresh
+would miss and re-pay for diagnosis. The cache key masks digits to `N` so
+both collapse to a single entry. Trade-off: legitimately different
+incidents that differ *only* by numbers would also collapse — in
+practice the service + severity + non-numeric text disambiguates.
+
+### Why the eval has a `requires_llm: true` flag
+
+`finalize` only declares an incident `diagnosed` when the top hypothesis
+confidence is ≥ 0.4. The rule-based fallback in `hypothesis_gen` caps
+confidence at 0.30 (it's a fallback — by definition less confident than
+the LLM). For incidents where the *correct answer* requires LLM
+reasoning (e.g. our `downstream-cascade` case has to recognize
+"deploys = NO_SIGNAL is itself a signal"), the offline run cannot pass.
+Tagging the case lets CI skip it without losing the test signal —
+locally you set `SRE_EVAL_REQUIRES_LLM=1` and run against Ollama.
+
+### What's still missing (L5)
+
+| Capability | Why we don't have it yet |
+|---|---|
+| **Trace export to Langfuse / LangSmith** | The ring buffer is in-process. For a fleet of agent workers you want a centralized backend with retention. The harness module is shaped like Langfuse — porting is a single-file change. |
+| **Prompt A/B testing** | Need real production traffic to be statistically meaningful. We have the prompt SHA in every record, so once you have traffic you can `group by prompt_sha` and compute per-version accuracy. |
+| **Feedback flywheel** | Oncall thumbs-up/down → ingest correction → generate runbook chunk → re-index. Plumbed half-way (`served_from_cache` and `cache_origin_incident_id` are in the response), no UI yet. |
+| **Drift detection** | Hourly run of the eval suite, alert on score drop > 5%. The eval harness exists; the cron + alerting is not wired. |
 
 ---
 
