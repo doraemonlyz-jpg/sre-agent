@@ -1,0 +1,33 @@
+{
+  "incident_id": "d40b6da2d9",
+  "records": [
+    {
+      "id": "fb-45c1ed009d",
+      "ts": 1778755108.5150957,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "queue head-of-line blocking in checkout-api, not what the agent said",
+      "correct_remediation": "increase checkout-api concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.76,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778755108.5151792,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-3",
+    "description": "memory usage 91% on image-thumbnail -- OOM kill predicted in 22m",
+    "started_at": "2026-05-09T05:21:51.352059+00:00"
+  }
+}

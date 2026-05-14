@@ -1,0 +1,33 @@
+{
+  "incident_id": "312d68bb14",
+  "records": [
+    {
+      "id": "fb-d6f80afd72",
+      "ts": 1778755108.7392054,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream ad-bidder timeout, not live-stream-edge",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778755108.7392893,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-4",
+    "description": "downstream service ad-bidder returning 502 -- error budget burning at 12x",
+    "started_at": "2026-05-09T08:21:14.878046+00:00"
+  }
+}

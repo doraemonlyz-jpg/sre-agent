@@ -1,0 +1,33 @@
+{
+  "incident_id": "59172947b7",
+  "records": [
+    {
+      "id": "fb-649ab26819",
+      "ts": 1778755108.3274884,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the notification-fanout sidecar",
+      "correct_remediation": "increase notification-fanout concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.82,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778755108.3275766,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-4",
+    "description": "5xx rate 10% sustained for 338s after deploy of #34846",
+    "started_at": "2026-05-07T16:10:43.067880+00:00"
+  }
+}

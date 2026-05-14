@@ -1,0 +1,35 @@
+{
+  "incident_id": "318e80672f",
+  "records": [
+    {
+      "id": "fb-5b5931c6c8",
+      "ts": 1778755108.6478932,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in checkout-api, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778755108.6479785,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 326ms briefly, recovered in 23s",
+    "started_at": "2026-05-13T09:07:50.426196+00:00"
+  }
+}

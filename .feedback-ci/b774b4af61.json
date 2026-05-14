@@ -1,0 +1,33 @@
+{
+  "incident_id": "b774b4af61",
+  "records": [
+    {
+      "id": "fb-b938afbf94",
+      "ts": 1778755108.1892774,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream video-encoder timeout, not order-pipeline",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.84,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778755108.1893988,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-4",
+    "description": "memory usage 87% on promo-engine -- OOM kill predicted in 29m",
+    "started_at": "2026-05-09T09:41:29.107892+00:00"
+  }
+}

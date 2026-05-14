@@ -1,0 +1,33 @@
+{
+  "incident_id": "9c80167982",
+  "records": [
+    {
+      "id": "fb-e59ff77c98",
+      "ts": 1778755108.902092,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for live-stream-edge was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.92,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778755108.9021785,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-3",
+    "description": "p99 latency 2534ms spiking on /checkout, error rate 10%",
+    "started_at": "2026-05-10T03:36:17.323250+00:00"
+  }
+}

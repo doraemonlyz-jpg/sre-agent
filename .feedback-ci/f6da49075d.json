@@ -1,0 +1,33 @@
+{
+  "incident_id": "f6da49075d",
+  "records": [
+    {
+      "id": "fb-5e87c114be",
+      "ts": 1778755108.6547267,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the inventory-sync sidecar",
+      "correct_remediation": "page the cdn-router oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.57,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778755108.6548104,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "p99 latency 3657ms spiking on /checkout, error rate 11%",
+    "started_at": "2026-05-09T12:55:34.929163+00:00"
+  }
+}

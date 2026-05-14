@@ -1,0 +1,33 @@
+{
+  "incident_id": "9bc18d3735",
+  "records": [
+    {
+      "id": "fb-b7bcc9943b",
+      "ts": 1778755108.1640282,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.88,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778755108.1641083,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-2",
+    "description": "downstream service user-profile returning 502 -- error budget burning at 4x",
+    "started_at": "2026-05-10T13:33:00.847590+00:00"
+  }
+}

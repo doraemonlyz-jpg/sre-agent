@@ -1,0 +1,35 @@
+{
+  "incident_id": "5bff209624",
+  "records": [
+    {
+      "id": "fb-5782aa73eb",
+      "ts": 1778755108.6333375,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in comment-svc, not what the agent said",
+      "correct_remediation": "disable feature flag svc.comment-svc.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778755108.633431,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 573ms briefly, recovered in 15s",
+    "started_at": "2026-05-08T21:03:07.075796+00:00"
+  }
+}

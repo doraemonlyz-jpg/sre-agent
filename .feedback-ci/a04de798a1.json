@@ -1,0 +1,33 @@
+{
+  "incident_id": "a04de798a1",
+  "records": [
+    {
+      "id": "fb-eb4e84db4e",
+      "ts": 1778755108.6031382,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream order-pipeline timeout, not auth-service",
+      "correct_remediation": "increase auth-service concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.79,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778755108.6032214,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-4",
+    "description": "5xx rate 16% sustained for 163s after deploy of #95177",
+    "started_at": "2026-05-07T13:33:19.338311+00:00"
+  }
+}

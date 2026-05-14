@@ -1,0 +1,33 @@
+{
+  "incident_id": "dc49c8f98c",
+  "records": [
+    {
+      "id": "fb-c5b1d232cf",
+      "ts": 1778755108.885413,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not comment-svc",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778755108.8855062,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-2",
+    "description": "downstream service order-pipeline returning 502 -- error budget burning at 18x",
+    "started_at": "2026-05-09T07:27:26.823745+00:00"
+  }
+}

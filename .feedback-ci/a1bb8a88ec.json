@@ -1,0 +1,33 @@
+{
+  "incident_id": "a1bb8a88ec",
+  "records": [
+    {
+      "id": "fb-fa04506e28",
+      "ts": 1778755109.0588505,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for session-store was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778755109.058936,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "downstream service live-stream-edge returning 502 -- error budget burning at 12x",
+    "started_at": "2026-05-14T09:54:00.027625+00:00"
+  }
+}

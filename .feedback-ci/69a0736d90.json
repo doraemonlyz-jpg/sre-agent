@@ -1,0 +1,33 @@
+{
+  "incident_id": "69a0736d90",
+  "records": [
+    {
+      "id": "fb-336af70db4",
+      "ts": 1778755108.1831002,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the checkout-api sidecar",
+      "correct_remediation": "disable feature flag svc.checkout-api.new_path",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.9,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778755108.183185,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-3",
+    "description": "memory usage 94% on order-pipeline -- OOM kill predicted in 22m",
+    "started_at": "2026-05-08T01:53:57.823491+00:00"
+  }
+}

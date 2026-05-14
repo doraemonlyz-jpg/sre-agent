@@ -1,0 +1,33 @@
+{
+  "incident_id": "f25be04d6c",
+  "records": [
+    {
+      "id": "fb-9c9ede14f7",
+      "ts": 1778755108.2338667,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in checkout-api, not what the agent said",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778755108.2339523,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-1",
+    "description": "p99 latency 3656ms spiking on /checkout, error rate 4%",
+    "started_at": "2026-05-13T14:32:28.508983+00:00"
+  }
+}

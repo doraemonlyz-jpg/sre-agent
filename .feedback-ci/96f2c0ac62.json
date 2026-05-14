@@ -1,0 +1,33 @@
+{
+  "incident_id": "96f2c0ac62",
+  "records": [
+    {
+      "id": "fb-31b9029e87",
+      "ts": 1778755108.1879938,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for live-stream-edge was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778755108.1880767,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-4",
+    "description": "p99 latency 3565ms spiking on /checkout, error rate 3%",
+    "started_at": "2026-05-12T20:13:50.528903+00:00"
+  }
+}

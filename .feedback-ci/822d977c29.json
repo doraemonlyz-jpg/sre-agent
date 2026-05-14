@@ -1,0 +1,33 @@
+{
+  "incident_id": "822d977c29",
+  "records": [
+    {
+      "id": "fb-7fb1b68dd9",
+      "ts": 1778755109.0462098,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "increase user-profile concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.63,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778755109.046297,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-4",
+    "description": "5xx rate 18% sustained for 183s after deploy of #42839",
+    "started_at": "2026-05-09T13:30:59.644881+00:00"
+  }
+}

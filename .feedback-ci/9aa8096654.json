@@ -1,0 +1,35 @@
+{
+  "incident_id": "9aa8096654",
+  "records": [
+    {
+      "id": "fb-820ca4ea15",
+      "ts": 1778755108.59941,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for video-encoder was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778755108.599498,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 690ms briefly, recovered in 20s",
+    "started_at": "2026-05-07T11:33:18.782990+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "5ee7b9e90a",
+  "records": [
+    {
+      "id": "fb-88e9de93d0",
+      "ts": 1778755108.396957,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream inventory-sync timeout, not comment-svc",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.82,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778755108.39704,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "p99 latency 3517ms spiking on /checkout, error rate 9%",
+    "started_at": "2026-05-12T13:45:54.968966+00:00"
+  }
+}

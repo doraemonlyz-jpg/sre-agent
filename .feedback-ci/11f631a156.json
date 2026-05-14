@@ -1,0 +1,35 @@
+{
+  "incident_id": "11f631a156",
+  "records": [
+    {
+      "id": "fb-9824ef30ad",
+      "ts": 1778755108.7146962,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream video-encoder timeout, not order-pipeline",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778755108.7147796,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 485ms briefly, recovered in 19s",
+    "started_at": "2026-05-13T20:51:22.408867+00:00"
+  }
+}

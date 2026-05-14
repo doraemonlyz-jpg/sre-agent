@@ -1,0 +1,33 @@
+{
+  "incident_id": "0cdf7e3459",
+  "records": [
+    {
+      "id": "fb-4bad9702d3",
+      "ts": 1778755109.0405502,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream checkout-api timeout, not ad-bidder",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.56,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778755109.0406368,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "memory usage 99% on ad-bidder -- OOM kill predicted in 24m",
+    "started_at": "2026-05-11T04:04:22.876734+00:00"
+  }
+}

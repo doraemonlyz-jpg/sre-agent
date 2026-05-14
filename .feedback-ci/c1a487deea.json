@@ -1,0 +1,33 @@
+{
+  "incident_id": "c1a487deea",
+  "records": [
+    {
+      "id": "fb-1deed77107",
+      "ts": 1778755108.252497,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream rate-limiter-edge timeout, not order-pipeline",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778755108.252583,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-2",
+    "description": "memory usage 97% on inventory-sync -- OOM kill predicted in 30m",
+    "started_at": "2026-05-11T08:16:06.144443+00:00"
+  }
+}

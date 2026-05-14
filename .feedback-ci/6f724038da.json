@@ -1,0 +1,33 @@
+{
+  "incident_id": "6f724038da",
+  "records": [
+    {
+      "id": "fb-793cca6b59",
+      "ts": 1778755108.40077,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "page the order-pipeline oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778755108.400855,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "p99 latency 3393ms spiking on /checkout, error rate 14%",
+    "started_at": "2026-05-08T21:29:38.526067+00:00"
+  }
+}
