@@ -102,6 +102,21 @@ _CALIBRATOR_PATH = Path(
 )
 CALIBRATOR = IsotonicCalibrator.load(_CALIBRATOR_PATH)
 
+# Prometheus (B1): publish current calibrator-health gauges. These are
+# point-in-time fit metrics; a watchdog rule like
+#   sre_calibrator_ece > 0.10
+# will catch drift before it hits oncall numbers.
+try:
+    from sre_agent import metrics as _m
+    _m.initialise_from_env()
+    _m.update_calibrator_health(
+        ece=CALIBRATOR.fit_ece_after if not CALIBRATOR.is_identity else CALIBRATOR.fit_ece_before,
+        brier=CALIBRATOR.fit_brier_after if not CALIBRATOR.is_identity else CALIBRATOR.fit_brier_before,
+        n_train=CALIBRATOR.n_train,
+    )
+except Exception:
+    pass
+
 
 def _apply_calibrator_to_incident(inc: dict[str, Any]) -> dict[str, Any]:
     """Return a shallow copy of `inc` with hypothesis.confidence calibrated.
@@ -128,6 +143,24 @@ def _apply_calibrator_to_incident(inc: dict[str, Any]) -> dict[str, Any]:
     out_hyp["calibrated"] = True
     out["hypothesis"] = out_hyp
     return out
+
+
+def _redact_dsn(dsn: str) -> str:
+    """Return `host:port/db` from a postgresql DSN -- safe to surface.
+
+    Never logs the password. Falls back to "<redacted>" on any parse
+    error so the readiness probe doesn't leak credentials through a
+    panic path.
+    """
+    try:
+        from urllib.parse import urlparse
+        u = urlparse(dsn)
+        host = u.hostname or "?"
+        port = u.port or 5432
+        db = (u.path or "/").lstrip("/")
+        return f"{host}:{port}/{db}"
+    except Exception:
+        return "<redacted>"
 
 
 def _now_ms() -> int:
@@ -278,6 +311,11 @@ def _run_pipeline(incident_id: str, alert: AlertIn) -> None:
     config = {"configurable": {"thread_id": incident_id}}
     initial: GraphState = {"alert": alert, "events": []}
 
+    # Prometheus (B1): live-incident gauge tracks "things in flight" so
+    # ops can alarm on a backlog without crawling the dashboard JSON.
+    from sre_agent import metrics as _m
+    _m.incident_started()
+
     try:
         with bind_incident(incident_id):
             for chunk in _GRAPH.stream(initial, config=config):
@@ -300,6 +338,9 @@ def _run_pipeline(incident_id: str, alert: AlertIn) -> None:
             inc["hypothesis"] = _hypothesis_to_legacy(report)
             inc["remediation"] = _remediation_to_legacy(report)
             inc["report_json"] = report.model_dump(mode="json", exclude_none=True)
+        _m.record_incident_terminal(
+            result=report.phase, duration_seconds=(finished_at - started_at) / 1000.0,
+        )
         _persist(incident_id)
         # Stash a compact snapshot in the response cache so identical
         # alerts in the next SRE_CACHE_TTL_SECONDS skip the full pipeline.
@@ -341,7 +382,12 @@ def _run_pipeline(incident_id: str, alert: AlertIn) -> None:
                     "detail": f"pipeline crashed: {e}",
                 }
             )
+        _m.record_incident_terminal(
+            result="error", duration_seconds=(finished_at - started_at) / 1000.0,
+        )
         _persist(incident_id)
+    finally:
+        _m.incident_ended()
 
 
 # ---------------------------------------------------------------------------
@@ -1073,6 +1119,30 @@ def api_health():
     return jsonify({"ok": True, "ts": _now_ms()})
 
 
+@app.route("/metrics", methods=["GET"])
+def metrics_endpoint():
+    """Prometheus scrape endpoint (B1).
+
+    Returns a snapshot of all `sre_*` counters / histograms / gauges in
+    Prometheus text format. Configure your scraper with:
+
+        - job_name: sre-agent
+          scrape_interval: 15s
+          static_configs:
+            - targets: ['sre-agent-dashboard:5080']
+
+    The route is intentionally unauthenticated -- it's standard practice
+    to scrape on a private network or behind a side-car. If you need to
+    expose this publicly, put it behind your reverse-proxy's auth and
+    rate-limit.
+    """
+    from flask import Response
+
+    from sre_agent import metrics as _m
+    body, ctype = _m.render_latest()
+    return Response(body, mimetype=ctype)
+
+
 @app.route("/api/readiness", methods=["GET"])
 def api_readiness():
     """
@@ -1094,15 +1164,42 @@ def api_readiness():
         ok = False
 
     # 2. Checkpointer reachable (LangGraph state store).
+    #    For Postgres: real TCP + SELECT 1 round-trip with a short
+    #    timeout, so a wedged DB pulls us out of the service mesh.
+    #    For SQLite: confirm we can write to the state dir.
+    backend = (os.environ.get("SRE_CHECKPOINTER") or "sqlite").lower()
     try:
-        state_dir = Path(os.environ.get("SRE_STATE_DIR") or "~/.sre-agent").expanduser()
-        state_dir.mkdir(parents=True, exist_ok=True)
-        checks["checkpointer"] = {
-            "ok": True,
-            "backend": os.environ.get("SRE_CHECKPOINTER", "sqlite"),
-        }
+        if backend == "postgres":
+            import psycopg  # type: ignore[import-not-found]
+
+            dsn = os.environ.get(
+                "DATABASE_URL",
+                "postgresql://sre:sre@localhost:5432/sre_agent",
+            )
+            with psycopg.connect(dsn, connect_timeout=2) as conn:
+                with conn.cursor() as cur:
+                    cur.execute("SELECT 1")
+                    cur.fetchone()
+            checks["checkpointer"] = {
+                "ok": True,
+                "backend": "postgres",
+                "dsn_host": _redact_dsn(dsn),
+            }
+        else:
+            state_dir = Path(
+                os.environ.get("SRE_STATE_DIR") or "~/.sre-agent",
+            ).expanduser()
+            state_dir.mkdir(parents=True, exist_ok=True)
+            # Real write test -- a read-only filesystem here would have
+            # masked the real failure until first incident.
+            probe = state_dir / ".readiness-probe"
+            probe.write_text("ok")
+            probe.unlink(missing_ok=True)
+            checks["checkpointer"] = {"ok": True, "backend": "sqlite"}
     except Exception as e:
-        checks["checkpointer"] = {"ok": False, "error": str(e)[:120]}
+        checks["checkpointer"] = {
+            "ok": False, "backend": backend, "error": str(e)[:160],
+        }
         ok = False
 
     # 3. Provider — for mock this is trivial; for real Datadog/Prom we'd
@@ -1127,10 +1224,57 @@ def api_readiness():
 
         store = get_store()
         # `size` is a @property on RunbookStore — accessed, not called.
-        checks["runbooks"] = {"ok": True, "library_size": store.size}
+        checks["runbooks"] = {
+            "ok": True,
+            "library_size": store.size,
+            "backend": store.backend.name,
+        }
     except Exception as e:
         # Runbooks are optional — failures here degrade but don't fail.
         checks["runbooks"] = {"ok": True, "degraded": True, "error": str(e)[:120]}
+
+    # 5. Observability exporter health (C2). Reports the active mode
+    #    (off / langfuse / otlp / stdout), queue depth, and ship/fail
+    #    counters. Degraded ! = failed: an observability outage shouldn't
+    #    pull us from the mesh, only set a `degraded` flag the dashboard
+    #    surfaces. The actual failure threshold (e.g. drops > N/min)
+    #    should live in the Prometheus alert rule, not here.
+    try:
+        from sre_agent.observability import EXPORTER
+
+        s = EXPORTER.stats()
+        degraded = (
+            s["mode"] != "off"
+            and (s["failed"] >= 5 or s["dropped"] >= 100)
+        )
+        checks["observability"] = {
+            "ok": True,
+            "degraded": degraded,
+            **s,
+        }
+    except Exception as e:
+        checks["observability"] = {"ok": True, "degraded": True, "error": str(e)[:120]}
+
+    # 6. LLM provider sanity. We DON'T do a live `client.chat()` call here
+    #    -- one round-trip on every readiness probe would burn money and
+    #    rate-limit budget. Instead, we sanity-check that the factory
+    #    can construct a client (which exercises env var wiring) and
+    #    report the configured provider + role.
+    try:
+        from sre_agent.models import ModelRole, get_chat_model
+        from sre_agent.models.factory import get_default_provider
+
+        _ = get_chat_model(ModelRole.WORKER)
+        checks["llm"] = {
+            "ok": True,
+            "provider": get_default_provider(),
+            "fallback_enabled": os.environ.get(
+                "SRE_LLM_FALLBACK", "off",
+            ).lower() in ("on", "true", "1"),
+        }
+    except Exception as e:
+        checks["llm"] = {"ok": False, "error": str(e)[:160]}
+        ok = False
 
     body = {
         "ok": ok,

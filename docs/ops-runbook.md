@@ -425,3 +425,189 @@ calibrator never silently swallows alerts.
 - **ECE goes up between refits**: prompt promotion drift. The newly
   promoted variant has a different confidence distribution than its
   predecessor; the old calibrator is mis-applied. Refit immediately.
+
+---
+
+## 13. Prometheus metrics + alerting (B1)
+
+The dashboard exposes a `/metrics` endpoint in Prometheus text format.
+All names are prefixed `sre_` and follow the upstream naming guide.
+
+### 13.1 The metric surface area
+
+  * **Counters**
+    * `sre_incidents_total{result}` — per-phase incident count
+    * `sre_llm_calls_total{agent,model,status}` — LLM RPS by status
+    * `sre_llm_tokens_total{agent,direction}` — token cost driver
+    * `sre_llm_fallbacks_total{agent,from_tier,to_tier,reason}` — B4
+    * `sre_cache_events_total{kind}` — `hit` / `miss` / `store` / `evict`
+    * `sre_feedback_total{verdict}` — oncall sentiment over time
+    * `sre_rate_limit_drops_total{scope}` — L5 rejections
+    * `sre_runbook_search_total{backend,hit}` — RAG hit rate
+
+  * **Histograms** (p50 / p95 / p99 buckets baked in)
+    * `sre_incident_duration_seconds{result}`
+    * `sre_llm_latency_seconds{agent,model}`
+    * `sre_runbook_search_latency_seconds{backend}`
+
+  * **Gauges**
+    * `sre_calibrator_ece` / `sre_calibrator_brier` / `sre_calibrator_n_train`
+    * `sre_active_incidents`
+    * `sre_build_info{version,checkpointer,llm_provider}` (constant `1`)
+
+### 13.2 Scrape config
+
+```yaml
+scrape_configs:
+  - job_name: sre-agent
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['sre-agent-dashboard:5080']
+```
+
+The route is unauthenticated by convention; expose it on a private
+network or behind a sidecar.
+
+### 13.3 Recommended alert rules
+
+```yaml
+groups:
+  - name: sre-agent
+    rules:
+      # Quality alert -- the calibrator drifted.
+      - alert: SREAgentCalibratorDrift
+        expr: sre_calibrator_ece > 0.10
+        for: 6h
+        labels: { severity: warning }
+        annotations:
+          summary: "SRE Agent calibrator ECE > 0.10 for 6h — refit recommended"
+
+      # Reliability alert -- LLM tier-1 is failing a lot.
+      - alert: SREAgentExcessFallbacks
+        expr: rate(sre_llm_fallbacks_total[5m]) > 0.5
+        for: 10m
+        labels: { severity: critical }
+        annotations:
+          summary: "More than 0.5 fallback transitions/sec — primary LLM degraded"
+
+      # Latency alert -- p95 diagnosis breaching 90s SLA.
+      - alert: SREAgentDiagnosisSlow
+        expr: |
+          histogram_quantile(0.95, rate(sre_incident_duration_seconds_bucket[5m])) > 90
+        for: 15m
+        labels: { severity: warning }
+```
+
+---
+
+## 14. LLM fallback chains (B4)
+
+Enable with `SRE_LLM_FALLBACK=on`. Every `get_chat_model()` call returns
+a `FallbackChainModel` that proxies `.invoke()` / `.with_structured_output()`
+through a chain.
+
+### 14.1 Default chain
+
+For both `orchestrator` and `worker` roles:
+
+```
+primary (configured provider, 30s timeout)
+  ↓ on timeout / error / rate_limit
+cheap (local Ollama, 20s timeout)
+  ↓ on timeout / error
+rule-based (0-latency degraded responder, no timeout)
+```
+
+When the primary IS Ollama, the cheap tier is skipped (no duplicate).
+
+### 14.2 Observing transitions
+
+Every transition writes:
+
+  * `LLMCallRecord(kind="fallback", agent=..., detail={from_tier, to_tier, reason})`
+    — visible in `/api/harness/calls`.
+  * `sre_llm_fallbacks_total{...}` — Prometheus counter.
+
+### 14.3 Failure modes
+
+- **Rule-based tier serving real traffic**: an SLA-level failure. The
+  rule tier is the last-line safety net; if you're seeing
+  `to_tier="rule"` increments, your primary AND your local Ollama are
+  both unhealthy. Page primary-LLM owner immediately.
+- **Spurious fallbacks under load**: if `reason="timeout"` ticks up
+  during traffic spikes only, the primary tier's timeout is too
+  aggressive. Tune `primary_timeout_s` in `build_default_chain()` or
+  scale your primary.
+
+---
+
+## 15. BM25 runbook RAG + persistent index (C1)
+
+### 15.1 Building the index
+
+```bash
+sre-agent runbook-index --output data/runbook-index.json --backend bm25
+export SRE_RUNBOOK_INDEX_PATH=$(pwd)/data/runbook-index.json
+```
+
+Backends:
+
+  * `bm25`     — Lucene-default BM25, zero deps, **recommended**
+  * `keyword`  — TF-IDF cosine fallback, kept for tests
+  * `openai`   — `text-embedding-3-small` via langchain-openai (network)
+  * `ollama`   — `nomic-embed-text` via langchain-ollama (local)
+  * `auto`     — tries openai → ollama → bm25
+
+### 15.2 When to rebuild
+
+Whenever any file under `runbooks/` changes. Recommended CI step:
+
+```yaml
+- name: Rebuild runbook RAG index
+  run: |
+    sre-agent runbook-index --output data/runbook-index.json --backend bm25
+    git diff --quiet data/runbook-index.json || echo "::error::index drift -- commit data/runbook-index.json"
+```
+
+### 15.3 Health metrics
+
+Watch `sre_runbook_search_total{hit="true"}` / `{hit="false"}`. A
+hit-rate below 50% means either:
+
+  1. Runbooks are stale (agents are asking questions you don't have
+     answers for) — extend the library.
+  2. Backend mismatch — you've changed `SRE_EMBEDDINGS_BACKEND` but
+     `SRE_RUNBOOK_INDEX_PATH` still points at the old artifact. Rebuild.
+
+---
+
+## 16. Calibration auto-PR cron (B2)
+
+The third L6 cron, alongside `harness-winner` and `harness-autorunbook`.
+Lives at `.github/workflows/harness-calibration.yml`. Same template
+and CODEOWNERS pattern as the other two:
+
+  * **Schedule**: weekly, Sunday 04:00 UTC.
+  * **Threshold**: PR only when new ECE beats live ECE by ≥`CAL_DELTA_THRESHOLD`
+    (default 0.03, i.e. 3 percentage points).
+  * **Body**: rendered from `PULL_REQUEST_TEMPLATE.md`; the
+    `Auto-refit calibrator` checkbox is pre-ticked; the bot's
+    statistical report is dropped inside the `<!-- bot-report -->`
+    markers.
+
+Manual one-off run (mirrors what the cron does):
+
+```bash
+SEED_N=3000 SEED_RNG=42 SEED_AB=0.3 \
+  CAL_OUT_PATH=data/calibrator.json \
+  CAL_CURRENT_PATH=data/calibrator.json \
+  CAL_DELTA_THRESHOLD=0.03 \
+  REPORTS_DIR=./reports \
+  python scripts/run-calibration-job.py
+```
+
+Decision logic:
+
+  * `propose=true`  → calibrator written + PR opened with the report.
+  * `propose=false` → report still uploaded as a GitHub artifact for
+    audit. We never silently skip.

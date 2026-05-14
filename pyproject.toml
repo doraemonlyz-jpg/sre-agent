@@ -50,6 +50,10 @@ dependencies = [
 
     # Observability
     "structlog>=24.4.0",
+    # Prometheus metrics — pure-Python, ~20kb, zero transitive deps. The
+    # de-facto standard for Python-side instrumentation; the dashboard
+    # exposes /metrics in Prometheus text format for scrapers.
+    "prometheus-client>=0.21.0",
 
     # Persistence for prod
     "psycopg[binary]>=3.2.3",

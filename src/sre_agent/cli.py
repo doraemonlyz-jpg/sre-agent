@@ -496,6 +496,72 @@ def calibrate_show_command(
         console.print(f"    raw={x:.3f}  ->  calibrated={y:.3f}")
 
 
+@app.command("runbook-index")
+def runbook_index(
+    output: str = typer.Option(
+        "data/runbook-index.json",
+        "--output", "-o",
+        help="Where to write the persisted index (JSON).",
+    ),
+    backend: str = typer.Option(
+        "bm25",
+        "--backend",
+        help="Embedding backend: bm25 | keyword | openai | ollama | auto.",
+    ),
+    runbooks_dir: str = typer.Option(
+        None,
+        "--runbooks-dir",
+        help="Source dir (default: ${SRE_RUNBOOKS_DIR} or auto-detect).",
+    ),
+) -> None:
+    """
+    C1: Build a persistent runbook RAG index.
+
+    Run this once at deploy time (or after any runbook edit). At runtime,
+    set `SRE_RUNBOOK_INDEX_PATH` to the same path and the dashboard
+    will skip the from-scratch re-embed.
+
+    Typical CI step:
+
+        sre-agent runbook-index --output data/runbook-index.json --backend bm25
+        docker build -t sre-agent .
+
+    The index file is human-readable JSON; review it in pull requests
+    when a runbook is added or changed.
+    """
+    import os
+    from pathlib import Path
+
+    from sre_agent.runbooks.embedders import get_embedder
+    from sre_agent.runbooks.store import RunbookStore
+
+    if runbooks_dir:
+        os.environ["SRE_RUNBOOKS_DIR"] = runbooks_dir
+    from sre_agent.runbooks.store import _default_runbook_dir
+    src = _default_runbook_dir()
+    if not src.exists():
+        console.print(f"[red]error[/red]: runbooks dir {src} does not exist")
+        raise typer.Exit(code=1)
+
+    emb = get_embedder(backend)
+    console.print(f"[bold]indexing[/bold]  src={src}  backend={emb.name}")
+    store = RunbookStore.from_directory(src, backend=emb)
+    if store.size == 0:
+        console.print("[yellow]warning[/yellow]: no chunks indexed -- nothing to write")
+        raise typer.Exit(code=1)
+
+    out = Path(output)
+    store.save_to_disk(out)
+    console.print(
+        f"[green]ok[/green]  wrote {store.size} chunks to {out} "
+        f"({out.stat().st_size // 1024} KB)"
+    )
+    console.print(
+        f"\n[dim]to use this index at runtime:[/dim]\n"
+        f"    export SRE_RUNBOOK_INDEX_PATH={out.resolve()}"
+    )
+
+
 @app.command("eval-drift")
 def eval_drift(
     baseline: str = typer.Option(

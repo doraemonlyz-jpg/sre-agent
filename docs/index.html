@@ -549,6 +549,7 @@ h2:hover .anchor, h3:hover .anchor { opacity: 1; }
     <li><a href="#scale">生产规模化（Phase E）</a></li>
     <li><a href="#flywheel">自我改进闭环（L6）</a></li>
     <li><a href="#trace">一条 incident 全程</a></li>
+    <li><a href="#prod">工业化加固（B + C）</a></li>
     <li><a href="#code">代码地图</a></li>
     <li><a href="#interview">面试高频问答</a></li>
     <li><a href="#run">动手跑一遍</a></li>
@@ -1704,9 +1705,146 @@ over `personas/hypothesis-gen.md`, bump prompt_sha, redeploy.</pre>
   </div>
 </section>
 
-<!-- ─────────────────────────────────── 12. CODE MAP -->
+<!-- ─────────────────────────────────── 13. PROD HARDENING (B + C) -->
+<section id="prod">
+  <h2><span class="num">13</span>工业化加固：4 个让它上得了生产的特性<a class="anchor" href="#prod">#</a></h2>
+  <p class="lead">这 4 件事都不"性感"——它们就是把 demo 变成"能挂在监控告警后面"的项目要做的事。每一项都对应一个面试问题。</p>
+
+  <h3>① <code>/metrics</code>——Prometheus 一类直接 scrape</h3>
+  <p>整个系统暴露了一套低基数的 <code>sre_*</code> 指标，全部按 Prometheus 命名规范来：counter 用 <code>_total</code>，histogram 带单位（<code>_seconds</code>），label 永远不含 <code>incident_id</code> 这种高基数字段。</p>
+
+  <div class="code">
+    <div class="code-header"><span class="file">curl http://localhost:5080/metrics</span><span class="lang">PROMETHEUS</span></div>
+<pre><span class="cmt"># 每个阶段的 incident 数</span>
+sre_incidents_total{result="diagnosed"} 142
+sre_incidents_total{result="no_signal"}   8
+sre_incidents_total{result="error"}       2
+
+<span class="cmt"># LLM 调用延迟 histogram（p50/p95/p99 都能算出来）</span>
+sre_llm_latency_seconds_bucket{agent="hypothesis-gen",model="gpt-oss:20b",le="10.0"} 134
+sre_llm_latency_seconds_bucket{agent="hypothesis-gen",model="gpt-oss:20b",le="60.0"} 156
+
+<span class="cmt"># LLM fallback 次数（B4 的核心可观测信号）</span>
+sre_llm_fallbacks_total{agent="chain.orchestrator",from_tier="primary",to_tier="cheap",reason="timeout"} 6
+
+<span class="cmt"># Calibrator 健康度（漂移监控）</span>
+sre_calibrator_ece 0.019
+sre_calibrator_brier 0.191</pre>
+  </div>
+
+  <p>面试官最常问的两条告警规则：</p>
+  <div class="code">
+    <div class="code-header"><span class="file">推荐告警规则</span><span class="lang">PROMQL</span></div>
+<pre><span class="cmt"># 1. Calibrator drift —— 校准误差超过 10pp 持续 6 小时</span>
+- alert: SREAgentCalibratorDrift
+  expr: sre_calibrator_ece &gt; 0.10
+  for: 6h
+
+<span class="cmt"># 2. Diagnosis SLA —— p95 诊断耗时突破 90s</span>
+- alert: SREAgentDiagnosisSlow
+  expr: |
+    histogram_quantile(0.95,
+      rate(sre_incident_duration_seconds_bucket[5m])) &gt; 90
+  for: 15m
+
+<span class="cmt"># 3. Excess fallbacks —— 主模型扛不住</span>
+- alert: SREAgentExcessFallbacks
+  expr: rate(sre_llm_fallbacks_total[5m]) &gt; 0.5
+  for: 10m</pre>
+  </div>
+
+  <h3>② 三层 LLM fallback——主模型挂了不黑屏</h3>
+  <p>开 <code>SRE_LLM_FALLBACK=on</code>，每次 <code>get_chat_model()</code> 返回的是一条链子，不是单个模型：</p>
+
+  <div class="code">
+    <div class="code-header"><span class="file">tier 链路</span><span class="lang">DIAGRAM</span></div>
+<pre>primary (e.g. gpt-oss:20b, 30s timeout)
+   ↓  on timeout / error / rate_limit
+cheap (local ollama qwen2.5-coder:7b, 20s timeout)
+   ↓  on timeout / error
+rule-based (0-latency 兜底, schema-valid 占位响应)</pre>
+  </div>
+
+  <p>每一次降级都会：</p>
+  <ul>
+    <li>写一条 <code>LLMCallRecord(kind="fallback", agent=..., detail={from_tier, to_tier, reason})</code>——可以在 <code>/api/harness/calls</code> 里事后回放。</li>
+    <li>触发 <code>sre_llm_fallbacks_total</code> 计数器——监控直接可以看 "primary 在过去 5 分钟内挂了几次"。</li>
+  </ul>
+
+  <div class="callout">
+    <span class="callout-title">为什么这事很重要</span>
+    <p>线上 LLM 不是"99.99%"那种 SLA。OpenAI 一次 5 分钟的 503 就能让你的诊断系统这 5 分钟里所有 alert 都黑屏。三层链子的代价是写 200 行代码，收益是把"<strong>主模型挂了</strong>"从 "incident" 降级成 "<strong>一个 fallback 计数器涨了</strong>"。</p>
+  </div>
+
+  <h3>③ BM25 RAG + 持久化索引</h3>
+  <p>v1 是直接字符串匹配 → v2 用 TF-IDF cosine → 这一版换成了 Lucene 默认参数的 <strong>BM25</strong>（<code>k1=1.2</code>, <code>b=0.75</code>）。BM25 比 cosine 强在两个工业界都吃过亏的点：</p>
+  <ul>
+    <li><strong>词频饱和</strong>：一篇 runbook 里出现 5 次 "OOM" 不等于出现 1 次的 5 倍权重。</li>
+    <li><strong>长度归一化</strong>：4 行 runbook 里有 1 次 "OOM"，比 40 行长 runbook 里夹一次 "OOM"，前者更相关。</li>
+  </ul>
+
+  <p>外加把索引<strong>序列化到磁盘</strong>——以前每次 boot 都要重新 embedding 整个 runbook 库，500 个 chunk 的 prod 库要 6 分钟冷启动。现在：</p>
+  <div class="code">
+    <div class="code-header"><span class="file">部署时一行命令构建索引</span><span class="lang">BASH</span></div>
+<pre><span class="cmt"># 部署时把索引刷出来（CI 里执行）</span>
+sre-agent runbook-index --output data/runbook-index.json --backend bm25
+<span class="cmt"># → wrote 15 chunks to data/runbook-index.json (39 KB)</span>
+
+<span class="cmt"># 运行时只需指向这个文件，O(n_chunks) 启动</span>
+export SRE_RUNBOOK_INDEX_PATH=$(pwd)/data/runbook-index.json
+docker compose up</pre>
+  </div>
+
+  <h3>④ Calibration 自动 PR Cron（第三个 L6 机器人）</h3>
+  <p>已经有 winner cron（每天提名 prompt variant）和 autorunbook cron（每周起草新 runbook）。第三个是 calibration cron——每周日 04:00 UTC 重新拟合 isotonic calibrator，如果新 ECE 比线上 ECE 至少低 3 个百分点，就开 PR：</p>
+
+  <div class="code">
+    <div class="code-header"><span class="file">.github/workflows/harness-calibration.yml</span><span class="lang">YAML</span></div>
+<pre>on:
+  schedule:
+    - cron: "0 4 * * 0"   <span class="cmt"># 周日 4 点</span>
+  workflow_dispatch:
+    inputs:
+      cal_delta_threshold:
+        default: "0.03"   <span class="cmt"># 3pp ECE 改进才开 PR</span>
+</pre>
+  </div>
+
+  <p>PR 用同一套 <code>PULL_REQUEST_TEMPLATE.md</code>——bot 的 PR 看起来和人写的 PR 一模一样，<code>Auto-refit calibrator</code> 那个 checkbox 自动打勾，统计报告塞在 <code>&lt;!-- bot-report --&gt;</code> 标记之间。CODEOWNERS 把 <code>/data/calibrator.json</code> 路由给 SRE leads + ML platform——两层 review 才能合。</p>
+
+  <div class="callout success">
+    <span class="callout-title">面试可以这么说</span>
+    <p>"我没有 prod 数据，但我用合成数据走完了 prod 闭环：每周 GitHub Action 跑一次校准，触发条件是 ECE 改进 ≥3pp 才开 PR，CODEOWNERS 让 SRE lead 必 review。生产里换上真 oncall 反馈、第二天就能跑——cron 不变，PR 模板不变，决策阈值通过 env 调。"</p>
+  </div>
+
+  <h3>5 个指标看健康度</h3>
+  <p>所有这些加起来，<code>/api/readiness</code> 深度探针返回的 JSON 长这样——k8s readinessProbe 直接打这个，Postgres 挂了 / Langfuse 挂了 / Ollama 挂了，pod 会自动从 service mesh 拉出去：</p>
+
+  <div class="code">
+    <div class="code-header"><span class="file">curl /api/readiness | jq</span><span class="lang">JSON</span></div>
+<pre>{
+  "ok": true,
+  "checks": {
+    "graph":         { "ok": true },
+    "checkpointer":  { "ok": true, "backend": "postgres",
+                       "dsn_host": "postgres:5432/sre_agent" },
+    "provider":      { "ok": true, "name": "datadog" },
+    "runbooks":      { "ok": true, "backend": "bm25",
+                       "library_size": 15 },
+    "observability": { "ok": true, "mode": "langfuse",
+                       "sent": 1247, "failed": 0, "queue_depth": 3 },
+    "llm":           { "ok": true, "provider": "ollama",
+                       "fallback_enabled": true }
+  }
+}</pre>
+  </div>
+
+  <p>真正"上生产"就是这些不起眼的细节叠起来——任何一项缺，都会让线下能跑、线上凌晨三点出事。</p>
+</section>
+
+<!-- ─────────────────────────────────── 14. CODE MAP -->
 <section id="code">
-  <h2><span class="num">13</span>代码地图<a class="anchor" href="#code">#</a></h2>
+  <h2><span class="num">14</span>代码地图<a class="anchor" href="#code">#</a></h2>
   <p class="lead">面试官说"打开你的项目我们看看代码"——你应该按这个路径走。</p>
 
   <div class="code">
@@ -1776,7 +1914,7 @@ over `personas/hypothesis-gen.md`, bump prompt_sha, redeploy.</pre>
 
 <!-- ─────────────────────────────────── 13. INTERVIEW -->
 <section id="interview">
-  <h2><span class="num">14</span>面试高频问答<a class="anchor" href="#interview">#</a></h2>
+  <h2><span class="num">15</span>面试高频问答<a class="anchor" href="#interview">#</a></h2>
   <p class="lead">10 道一定会被问的，把答案背下来。</p>
 
   <details class="faq">
@@ -1876,7 +2014,7 @@ over `personas/hypothesis-gen.md`, bump prompt_sha, redeploy.</pre>
 
 <!-- ─────────────────────────────────── 14. RUN -->
 <section id="run">
-  <h2><span class="num">15</span>动手跑一遍<a class="anchor" href="#run">#</a></h2>
+  <h2><span class="num">16</span>动手跑一遍<a class="anchor" href="#run">#</a></h2>
   <p class="lead">从 clone 到看到 burst 队列变化，5 分钟。</p>
 
   <h3>前置</h3>

@@ -46,6 +46,12 @@
 /.github/workflows/                @your-org/sre-agent-core @your-org/infra
 /scripts/                          @your-org/sre-agent-core
 
+# ── Calibrator artifact -- model-behaviour relevant ───────────────────────
+# (harness-calibration opens PRs touching only `data/calibrator.json`.
+# CODEOWNERS guarantees an SRE-lead + ML-platform person sign off
+# before the new confidence mapping ships to oncall.)
+/data/calibrator.json              @your-org/sre-leads @your-org/ml-platform
+
 # ── Dashboard (Flask + JS) ────────────────────────────────────────────────
 /dashboard/                        @your-org/sre-agent-core
 

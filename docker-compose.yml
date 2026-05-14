@@ -25,20 +25,30 @@ services:
       DATABASE_URL: postgresql://sre:sre@postgres:5432/sre_agent
       SRE_DATA_PROVIDER: ${SRE_DATA_PROVIDER:-mock}
       SRE_LLM_PROVIDER: ${SRE_LLM_PROVIDER:-}
+      SRE_LLM_FALLBACK: ${SRE_LLM_FALLBACK:-on}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://ollama:11434}
+      SRE_RUNBOOK_INDEX_PATH: ${SRE_RUNBOOK_INDEX_PATH:-}
+      LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY:-}
+      LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY:-}
+      LANGFUSE_HOST: ${LANGFUSE_HOST:-}
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
+      OTEL_SERVICE_NAME: ${OTEL_SERVICE_NAME:-sre-agent}
       SRE_LOG_LEVEL: ${SRE_LOG_LEVEL:-INFO}
       SRE_LOG_JSON: "true"
     depends_on:
       postgres:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "--fail", "http://127.0.0.1:5080/api/health"]
+      # Deep readiness probe -- not `/api/health`. We want unhealthy
+      # pods pulled from the LB when Postgres / runbooks / LLM are
+      # broken, not just when Flask is alive.
+      test: ["CMD", "curl", "--fail", "http://127.0.0.1:5080/api/readiness"]
       interval: 30s
       timeout: 5s
       retries: 3
-      start_period: 10s
+      start_period: 15s
 
   postgres:
     image: postgres:16-alpine

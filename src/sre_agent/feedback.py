@@ -153,6 +153,14 @@ class FeedbackStore:
 
             self._counters[rec.verdict] = self._counters.get(rec.verdict, 0) + 1
 
+        # Prometheus (B1): increment outside the lock to avoid holding it
+        # across an external module call. The counter is thread-safe.
+        try:
+            from sre_agent import metrics as _m
+            _m.record_feedback(rec.verdict)
+        except Exception:
+            pass
+
     # ── read ─────────────────────────────────────────────────────────
 
     def get(self, incident_id: str) -> dict[str, Any] | None:

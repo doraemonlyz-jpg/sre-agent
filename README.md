@@ -4,8 +4,11 @@
 [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![python](https://img.shields.io/badge/python-3.10%2B-blue)]()
 [![langgraph](https://img.shields.io/badge/orchestration-LangGraph-purple)]()
-[![tests](https://img.shields.io/badge/tests-346%20passing-brightgreen)]()
+[![tests](https://img.shields.io/badge/tests-396%20passing-brightgreen)]()
 [![harness-L6](https://img.shields.io/badge/harness-L6%20A%2FB%20%2B%20calibration-blue)]()
+[![prometheus](https://img.shields.io/badge/metrics-prometheus-orange)]()
+[![rag](https://img.shields.io/badge/RAG-BM25%20persisted-success)]()
+[![fallback](https://img.shields.io/badge/LLM-3--tier%20fallback-blueviolet)]()
 [![ci](https://img.shields.io/badge/ci-GitHub%20Actions-blueviolet)]()
 [![harness](https://img.shields.io/badge/harness-L5-blueviolet)]()
 [![eval](https://img.shields.io/badge/eval-3%2F3%20golden%20cases-success)]()
@@ -105,6 +108,90 @@ sre-agent calibrate --out data/calibrator.json --out-md reports/calibration.md
 sre-agent calibrate-show         # inspect what's loaded
 curl http://localhost:5080/api/harness/calibration | jq
 ```
+
+---
+
+## Production hardening (the boring, important parts)
+
+Below are the four capabilities that turn this from "a demo with a flywheel"
+into something you can put behind a Prometheus alert rule.
+
+### Prometheus metrics (`/metrics`)
+
+Every counter you'd want to alert on, exposed in standard text format:
+
+```text
+# HELP sre_incidents_total Number of incidents seen by the agent, by terminal phase.
+# TYPE sre_incidents_total counter
+sre_incidents_total{result="diagnosed"} 142
+sre_incidents_total{result="no_signal"} 8
+sre_incidents_total{result="error"}     2
+
+# HELP sre_llm_latency_seconds LLM call wall-time, in seconds.
+# TYPE sre_llm_latency_seconds histogram
+sre_llm_latency_seconds_bucket{agent="hypothesis-gen",model="gpt-oss:20b",le="10.0"} 134
+...
+
+# HELP sre_llm_fallbacks_total B4 fallback transitions, by agent and the (from, to) tier pair.
+sre_llm_fallbacks_total{agent="chain.orchestrator",from_tier="primary",to_tier="cheap",reason="timeout"} 6
+
+# HELP sre_calibrator_ece Expected Calibration Error of the currently-loaded calibrator (training set).
+# TYPE sre_calibrator_ece gauge
+sre_calibrator_ece 0.019
+```
+
+Use the example alert rules in [`docs/ops-runbook.md`](docs/ops-runbook.md)
+or wire your own. The metric set is intentionally low-cardinality —
+no per-incident labels, ever.
+
+### 3-tier LLM fallback (`SRE_LLM_FALLBACK=on`)
+
+Every LLM call goes through `primary → local-ollama → rule-based-degraded`,
+with per-tier timeouts enforced in a worker thread. Each transition
+records:
+
+  * a typed `LLMCallRecord(kind="fallback")` in the harness ring buffer
+    (post-mortem visibility), and
+  * a `sre_llm_fallbacks_total` counter tick (alert visibility).
+
+The rule-based tier is a 0-latency safety net: it returns a
+schema-valid but explicitly low-confidence response so the pipeline
+finishes even when every LLM provider is down.
+
+### Persistent BM25 runbook index
+
+Cold-boot used to mean re-embedding every runbook chunk. On a 500-chunk
+prod library with OpenAI embeddings that's a 6-minute boot. Now:
+
+```bash
+sre-agent runbook-index --output data/runbook-index.json --backend bm25
+# 39kb file, builds in <1s for 15 chunks
+```
+
+```bash
+# At runtime, set the env var. The store loads in O(n_chunks), not
+# O(n_chunks * embedding_latency).
+export SRE_RUNBOOK_INDEX_PATH=$(pwd)/data/runbook-index.json
+```
+
+BM25 (Lucene defaults: `k1=1.2`, `b=0.75`) beats the previous
+TF-IDF-cosine on precision-at-1 because it understands term saturation
+and document length — table-stakes for ranked retrieval.
+
+### Calibration auto-PR cron (3rd L6 bot)
+
+```yaml
+# .github/workflows/harness-calibration.yml
+on:
+  schedule:
+    - cron: "0 4 * * 0"   # weekly, Sunday 04:00 UTC
+```
+
+Same template/CODEOWNERS pattern as winner.yml and autorunbook.yml.
+Opens a PR touching `data/calibrator.json` **only when** the new
+candidate's ECE beats the live calibrator's ECE by ≥3pp (configurable).
+Statistical report goes in the PR body via
+`PULL_REQUEST_TEMPLATE.md`. Bot PRs look like human PRs.
 
 ---
 

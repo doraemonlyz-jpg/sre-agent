@@ -117,6 +117,15 @@ class RateLimiter:
                 self.allowed_total += 1
             else:
                 self.rejected_total += 1
+        if not ok:
+            # Prometheus (B1): only the drop is interesting; allowed
+            # traffic is already counted via the request handler's normal
+            # metrics path.
+            try:
+                from sre_agent import metrics as _m
+                _m.record_rate_limit_drop(scope=endpoint)
+            except Exception:
+                pass
         return ok
 
     def stats(self) -> dict:

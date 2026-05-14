@@ -20,6 +20,7 @@ focus on the "Reviewer checklist" below.
 - [ ] Runbook addition or edit (knowledge base)
 - [ ] **Auto-promoted prompt variant** (opened by `harness-winner`)
 - [ ] **Auto-drafted runbook** (opened by `harness-autorunbook`)
+- [ ] **Auto-refit calibrator** (opened by `harness-calibration`)
 - [ ] Tooling / CI / infra
 - [ ] Docs only
 

@@ -305,6 +305,19 @@ class HarnessCallback(BaseCallbackHandler):
             return
         start = rec.detail.get("_start") or rec.ts
         rec.latency_ms = round((time.time() - start) * 1000, 1)
+        # Prometheus (B1): record per-call latency + status. Token counts
+        # are extracted below; we re-call into metrics at the end so the
+        # numbers are populated.
+        try:
+            from sre_agent import metrics as _m
+            _m.record_llm_call(
+                agent=rec.agent or "unknown",
+                model=rec.model or "unknown",
+                status="ok",
+                latency_seconds=(rec.latency_ms or 0) / 1000.0,
+            )
+        except Exception:
+            pass
         # Try to extract token usage from the response (provider-specific shapes)
         try:
             usage = None
@@ -336,6 +349,20 @@ class HarnessCallback(BaseCallbackHandler):
             # Token accounting is best-effort; don't break the call on parsing
             pass
         rec.detail.pop("_start", None)
+        # Prometheus (B1): retroactively account tokens to the counter.
+        if rec.input_tokens or rec.output_tokens:
+            try:
+                from sre_agent.metrics import LLM_TOKENS_TOTAL
+                if rec.input_tokens:
+                    LLM_TOKENS_TOTAL.labels(
+                        agent=rec.agent or "unknown", direction="input",
+                    ).inc(rec.input_tokens)
+                if rec.output_tokens:
+                    LLM_TOKENS_TOTAL.labels(
+                        agent=rec.agent or "unknown", direction="output",
+                    ).inc(rec.output_tokens)
+            except Exception:
+                pass
 
     def on_llm_error(  # type: ignore[override]
         self, error: BaseException, *, run_id: Any = None, **kwargs: Any
@@ -348,6 +375,16 @@ class HarnessCallback(BaseCallbackHandler):
         rec.status = "error"
         rec.error = type(error).__name__ + ": " + str(error)[:200]
         rec.detail.pop("_start", None)
+        try:
+            from sre_agent import metrics as _m
+            _m.record_llm_call(
+                agent=rec.agent or "unknown",
+                model=rec.model or "unknown",
+                status="error",
+                latency_seconds=(rec.latency_ms or 0) / 1000.0,
+            )
+        except Exception:
+            pass
 
 
 # Singleton callback (LangChain expects callbacks to be reusable objects).
@@ -392,6 +429,12 @@ def record_cache_event(
             detail={"cache_key": cache_key, "age_s": age_s} if (cache_key or age_s) else {},
         )
     )
+    # Prometheus (B1): bump the cache-event counter on the same path.
+    try:
+        from sre_agent import metrics as _m
+        _m.record_cache_event("hit" if hit else "miss")
+    except Exception:
+        pass
 
 
 def record_retry(

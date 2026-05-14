@@ -152,6 +152,113 @@ class KeywordBackend(EmbeddingBackend):
 
 
 # ──────────────────────────────────────────────────────────────────────────
+# BM25 backend (C1) -- real ranking algorithm, still zero-dep
+#
+# Why BM25 not TF-IDF cosine
+# --------------------------
+# TF-IDF cosine is a similarity, not a ranking model. BM25 is the de-facto
+# industrial standard for ranked retrieval (Elasticsearch / Lucene /
+# OpenSearch all use it as their default scorer). The two tunable
+# parameters `k1` (term-saturation) and `b` (length normalisation) are
+# chosen to match the Lucene defaults so behaviour is portable.
+#
+# For our use-case (10-100 runbook chunks, queries 5-25 tokens),
+# BM25 dominates cosine in precision-at-1 because it knows:
+#   * Term saturation: 5 occurrences of "OOM" isn't 5x better than 1.
+#   * Length penalty: a 4-line chunk and a 40-line chunk that BOTH
+#     mention "OOM" once -- the short one is more likely on-topic.
+# Cosine has neither effect.
+# ──────────────────────────────────────────────────────────────────────────
+
+
+class BM25Backend(EmbeddingBackend):
+    """
+    Okapi BM25 ranking over tokenized runbook chunks.
+
+    Implementation notes:
+      * `index()` stores doc-level token counts + lengths. We return
+        the doc indices as opaque "representations" -- score lookups
+        go through `_score_doc()` which references the indexed state.
+      * `score()` is intentionally O(|query_terms|), not the whole
+        vocabulary -- BM25's strength is that you only iterate over
+        the words actually in the query.
+      * Output scores are squashed into [0, 1] with a soft cutoff so
+        downstream confidence checks behave like the other backends.
+    """
+
+    name = "bm25"
+    k1: float = 1.2  # Lucene default
+    b: float = 0.75  # Lucene default
+
+    def __init__(self) -> None:
+        self._doc_lens: list[int] = []
+        self._doc_tfs: list[Counter] = []
+        self._idf: dict[str, float] = {}
+        self._avg_len: float = 0.0
+        self._n_docs: int = 0
+        # Kept for backward-compat with persisted indexes from earlier
+        # snapshots. We no longer use it at score time -- see score().
+        self._max_score_seen: float = 1.0
+
+    def index(self, texts: list[str]) -> list[int]:
+        token_lists: list[list[str]] = [_tokens(t) for t in texts]
+        self._doc_lens = [len(toks) for toks in token_lists]
+        self._doc_tfs = [Counter(toks) for toks in token_lists]
+        self._n_docs = max(1, len(texts))
+        self._avg_len = sum(self._doc_lens) / self._n_docs if self._n_docs else 0.0
+
+        df: Counter = Counter()
+        for toks in token_lists:
+            for w in set(toks):
+                df[w] += 1
+        # Robertson-Sparck-Jones IDF with +0.5 smoothing and max(0, .)
+        # floor to keep negative IDFs from punishing common-but-relevant
+        # terms.
+        self._idf = {
+            w: max(
+                0.0,
+                math.log((self._n_docs - d + 0.5) / (d + 0.5) + 1.0),
+            )
+            for w, d in df.items()
+        }
+
+        # Return one opaque "representation" per doc: the doc index.
+        return list(range(self._n_docs))
+
+    def query(self, text: str) -> set:
+        return set(_tokens(text))
+
+    def _score_doc_idx_by_terms(self, qterms: set, doc_idx: int) -> float:
+        if not qterms or doc_idx >= len(self._doc_tfs):
+            return 0.0
+        tf = self._doc_tfs[doc_idx]
+        dl = self._doc_lens[doc_idx]
+        score = 0.0
+        for w in qterms:
+            if w not in tf or w not in self._idf:
+                continue
+            f = tf[w]
+            idf = self._idf[w]
+            num = f * (self.k1 + 1.0)
+            denom = f + self.k1 * (1.0 - self.b + self.b * (dl / (self._avg_len or 1.0)))
+            score += idf * (num / (denom or 1.0))
+        return score
+
+    def score(self, query_repr: set, candidate_repr: int) -> float:
+        # Squash BM25 raw scores (unbounded above) into a [0, 1] range
+        # via a soft sigmoid-ish saturator. We use 1 - exp(-raw / scale)
+        # where `scale` is a conservative typical-good-match value. This
+        # preserves rank ordering AND keeps the score in [0, 1] without
+        # collapsing the corpus the way max-normalisation did. A truly
+        # great match (raw ~10) lands at ~0.93; a noise hit (raw ~0.5)
+        # lands at ~0.05.
+        raw = self._score_doc_idx_by_terms(query_repr, candidate_repr)
+        if raw <= 0.0:
+            return 0.0
+        return 1.0 - math.exp(-raw / 4.0)
+
+
+# ──────────────────────────────────────────────────────────────────────────
 # LangChain-backed dense embedding adapter
 # ──────────────────────────────────────────────────────────────────────────
 
@@ -223,11 +330,14 @@ def get_embedder(name: str | None = None) -> EmbeddingBackend:
 
     if choice == "keyword":
         return KeywordBackend()
+    if choice == "bm25":
+        return BM25Backend()
     if choice == "openai":
         b = _try_openai()
-        return b or KeywordBackend()
+        return b or BM25Backend()
     if choice == "ollama":
         b = _try_ollama()
-        return b or KeywordBackend()
-    # auto
-    return _try_openai() or _try_ollama() or KeywordBackend()
+        return b or BM25Backend()
+    # auto: try dense embeddings, then BM25 (better than keyword TF-IDF
+    # for ranked retrieval), then keyword as the last-line fallback.
+    return _try_openai() or _try_ollama() or BM25Backend()

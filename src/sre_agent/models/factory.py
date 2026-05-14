@@ -81,9 +81,25 @@ def get_chat_model(role: ModelRole | str, temperature: float = 0.0) -> BaseChatM
     Cached so repeated calls in the same process share one client. We disable
     streaming because every node downstream uses .with_structured_output()
     which doesn't stream anyway.
+
+    If `SRE_LLM_FALLBACK=on` (the recommended prod setting), this returns
+    a B4 `FallbackChainModel` instead -- a drop-in replacement that
+    proxies `invoke` / `with_structured_output` and falls back through a
+    chain of (primary -> local Ollama -> rule-based) on timeout/error.
+    The chain records every transition into the harness ring buffer
+    and bumps the `sre_llm_fallbacks_total` Prometheus counter.
     """
     if isinstance(role, str):
         role = ModelRole(role)
+
+    if os.environ.get("SRE_LLM_FALLBACK", "").lower() in ("on", "true", "1"):
+        # Lazy import: keeps the dependency one-way.
+        from sre_agent.models.fallback import build_default_chain
+
+        agent_label = f"chain.{role.value}"
+        return build_default_chain(  # type: ignore[return-value]
+            agent=agent_label, role=role.value,
+        )
 
     provider = get_default_provider()
     model_id = _resolve_model_id(role, provider)

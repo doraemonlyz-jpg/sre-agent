@@ -1,0 +1,170 @@
+# ───────────────────────────────────────────────────────────────────────
+# harness-calibration.yml -- L6.3 weekly calibrator refit (scheduled)
+#
+# Third bot in the L6 flywheel. Counterpart to harness-winner.yml and
+# harness-autorunbook.yml. Runs weekly: rebuilds the isotonic
+# calibrator from the latest feedback corpus, compares the candidate
+# ECE to the currently-live ECE, and opens a PR only if the new
+# calibrator beats the live one by a configurable threshold (default
+# 3 ECE percentage points).
+#
+# Why weekly (vs daily like winner.yml)
+# -------------------------------------
+# Calibration is slower-moving than prompt A/B winners. Daily refits
+# would just churn the artifact for noise. Weekly gives us enough
+# fresh data for tight CIs while keeping the PR cadence manageable.
+#
+# What this is NOT
+# ----------------
+# This workflow does not merge anything. It opens a PR for SRE-lead
+# review (CODEOWNERS routes `/data/calibrator.json` to
+# `@your-org/sre-agent-core @your-org/ml-platform`).
+# ───────────────────────────────────────────────────────────────────────
+
+name: harness-calibration
+
+on:
+  schedule:
+    # Sunday 04:00 UTC -- weekend is settled, before US-east oncall
+    # starts their Monday week.
+    - cron: "0 4 * * 0"
+  workflow_dispatch:
+    inputs:
+      seed_n:
+        description: "Synthetic incidents to seed (0 = use real corpus)"
+        type: string
+        default: "3000"
+      seed_rng:
+        description: "Deterministic RNG seed"
+        type: string
+        default: "42"
+      seed_ab:
+        description: "A/B variant traffic fraction"
+        type: string
+        default: "0.3"
+      cal_delta_threshold:
+        description: "Min ECE drop (e.g. 0.03 = 3pp) required to propose an update"
+        type: string
+        default: "0.03"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: harness-calibration
+  cancel-in-progress: true
+
+jobs:
+  refit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Run calibration refit
+        id: cal
+        env:
+          SRE_FEEDBACK_DIR: ${{ github.workspace }}/.feedback-ci
+          REPORTS_DIR:      ${{ github.workspace }}/reports
+          CAL_OUT_PATH:     ${{ github.workspace }}/data/calibrator.json
+          CAL_CURRENT_PATH: ${{ github.workspace }}/data/calibrator.json
+          SEED_N:           ${{ github.event.inputs.seed_n || '3000' }}
+          SEED_RNG:         ${{ github.event.inputs.seed_rng || '42' }}
+          SEED_AB:          ${{ github.event.inputs.seed_ab || '0.3' }}
+          CAL_DELTA_THRESHOLD: ${{ github.event.inputs.cal_delta_threshold || '0.03' }}
+        run: |
+          mkdir -p "$SRE_FEEDBACK_DIR" "$REPORTS_DIR" "$(dirname "$CAL_OUT_PATH")"
+          python scripts/run-calibration-job.py
+
+      - name: Upload calibration report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: calibration-${{ steps.cal.outputs.date }}
+          path: |
+            reports/calibration-${{ steps.cal.outputs.date }}.*
+          retention-days: 60
+
+      - name: No update this run
+        if: steps.cal.outputs.propose != 'true'
+        run: |
+          echo "::notice::Calibrator unchanged. ECE drop did not clear the threshold."
+          echo "See artifact calibration-${{ steps.cal.outputs.date }} for the full analysis."
+
+      # ── Propose path: stage the candidate calibrator + open a PR ──
+      - name: Stage candidate calibrator
+        if: steps.cal.outputs.propose == 'true'
+        run: |
+          set -euo pipefail
+          git add data/calibrator.json reports/
+
+      # Render the PR body from the template (same pattern as
+      # harness-winner.yml -- bot PRs look like human PRs).
+      - name: Render PR body from template
+        if: steps.cal.outputs.propose == 'true'
+        env:
+          REPORT_MD: ${{ steps.cal.outputs.report_md }}
+          DATE:      ${{ steps.cal.outputs.date }}
+        run: |
+          python - <<'PY'
+          import os, pathlib
+          tmpl = pathlib.Path(".github/PULL_REQUEST_TEMPLATE.md").read_text()
+          rpt  = pathlib.Path(os.environ["REPORT_MD"]).read_text()
+          date = os.environ["DATE"]
+
+          tmpl = tmpl.replace(
+              "## What & why\n\n<!-- 1–3 sentences. What does this change? Why is it needed? -->",
+              f"## What & why\n\n"
+              f"Auto-refit of the confidence calibrator by `harness-calibration` "
+              f"({date}). The candidate calibrator's ECE on the latest feedback "
+              f"corpus beats the live calibrator's ECE by the configured "
+              f"threshold. The full statistical report is below.",
+          )
+          tmpl = tmpl.replace(
+              "- [ ] **Auto-refit calibrator** (opened by `harness-calibration`)",
+              "- [x] **Auto-refit calibrator** (opened by `harness-calibration`)",
+          )
+          tmpl = tmpl.replace(
+              "<!-- bot-report-start -->\n<!-- bot-report-end -->",
+              f"<!-- bot-report-start -->\n\n{rpt}\n\n<!-- bot-report-end -->",
+          )
+
+          out = pathlib.Path("/tmp/pr-body.md")
+          out.write_text(tmpl)
+          print(f"::notice::Rendered PR body to {out} ({len(tmpl)} chars)")
+          PY
+
+      - name: Open calibration PR
+        if: steps.cal.outputs.propose == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: |
+            harness L6: auto-refit confidence calibrator (${{ steps.cal.outputs.date }})
+
+            Generated by .github/workflows/harness-calibration.yml.
+            Full report: reports/calibration-${{ steps.cal.outputs.date }}.md
+          branch: auto/calibration-${{ steps.cal.outputs.date }}
+          delete-branch: true
+          title: "harness L6: refit calibrator (${{ steps.cal.outputs.date }})"
+          body-path: /tmp/pr-body.md
+          labels: |
+            automation
+            harness-l6
+            calibration
+            needs-review
