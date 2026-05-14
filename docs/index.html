@@ -1591,32 +1591,143 @@ over `personas/hypothesis-gen.md`, bump prompt_sha, redeploy.</pre>
   <p>关键设计：<strong>从不自动合并</strong>。起草器输出审稿用的 Markdown，<strong>真的 runbook 文案得人写</strong>——AI 写的 runbook 没有判断力，会把噪声当模式。</p>
 
   <h3>④ GitHub Actions：让飞轮自己转</h3>
-  <p>L6 不靠人手动跑这些命令——靠定时任务。</p>
+  <p>L6 不靠人手动跑这些命令——靠定时任务。三个 cron，三条腿，看的是<strong>不同维度的反馈信号</strong>，开的是<strong>不同类型的 PR</strong>，过的是<strong>不同的 CODEOWNERS review</strong>。</p>
 
   <div class="table-wrap">
   <table>
-    <thead><tr><th>Workflow</th><th>时间</th><th>positive 时做什么</th></tr></thead>
+    <thead><tr><th>Cron</th><th>看什么数据</th><th>改什么</th><th>动哪个文件</th><th>频率</th></tr></thead>
     <tbody>
       <tr>
-        <td><code>.github/workflows/<br/>harness-winner.yml</code></td>
-        <td>每天 02:00 UTC</td>
-        <td>runs <code>scripts/run-winner-job.py</code>。任意 agent 过三道闸 → 自动把 variant prompt 文件覆盖 baseline + 开 PR，PR body <strong>就是</strong>那份统计分析报告</td>
+        <td><code>harness-winner</code></td>
+        <td>不同 prompt 变体的 thumbs-up 率</td>
+        <td><strong>换 prompt</strong></td>
+        <td><code>personas/variants/*.md</code> baseline 指针</td>
+        <td>每天 03:00 UTC</td>
       </tr>
       <tr>
-        <td><code>.github/workflows/<br/>harness-autorunbook.yml</code></td>
-        <td>每周一 06:00 UTC</td>
-        <td>runs <code>scripts/run-autorunbook-job.py</code>。把 draft 放到 <code>runbooks/_drafts/</code>，开 PR，label <code>needs-review</code></td>
+        <td><code>harness-autorunbook</code></td>
+        <td>thumbs-down 时 oncall 写的"正确根因"</td>
+        <td><strong>加新知识</strong></td>
+        <td>新建 <code>runbooks/auto/*.md</code></td>
+        <td>每周一 02:00 UTC</td>
       </tr>
       <tr>
-        <td><code>.github/workflows/ci.yml</code></td>
-        <td>每次 push/PR</td>
-        <td>pytest + ruff，保证上面两个飞轮 job 本身的代码质量</td>
+        <td><code>harness-calibration</code></td>
+        <td>agent confidence vs. 实际正确率</td>
+        <td><strong>修不确定性表达</strong></td>
+        <td><code>data/calibrator.json</code></td>
+        <td>每周日 04:00 UTC</td>
       </tr>
     </tbody>
   </table>
   </div>
 
-  <p>每个 workflow 都接受 <code>workflow_dispatch</code> 手动触发——参数可以自定义（RNG 种子、A/B 流量比、显著性阈值），方便定向调查"上次 prompt 改动是不是把效果搞差了"。</p>
+  <p>每个 workflow 都接受 <code>workflow_dispatch</code> 手动触发——参数可以自定义（RNG 种子、A/B 流量比、显著性阈值），方便定向调查"上次 prompt 改动是不是把效果搞差了"。再叠一条 <code>ci.yml</code> 在每次 push/PR 上跑 pytest + ruff，保证这三个飞轮 job 本身的代码质量。</p>
+
+  <h3>为什么是三个，不是一个？</h3>
+  <p>"agent 这次没干好"这个事的根因，至少分三种——每种对应一种修复方式：</p>
+
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>故障形态</th><th>根因</th><th>哪条腿管</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>同类问题里，新 prompt 答得更准</td>
+        <td>prompt 写得不够好</td>
+        <td><code>winner</code> 提名换 baseline</td>
+      </tr>
+      <tr>
+        <td>oncall 反馈说"真正根因是 X"，但 runbook 库里压根没有 X</td>
+        <td>agent 没见过这种故障</td>
+        <td><code>autorunbook</code> 把 oncall 现场写下的修复方法整理成新 runbook</td>
+      </tr>
+      <tr>
+        <td>诊断本身没错，但 confidence 高了 / 低了，oncall 不知道该不该信</td>
+        <td>agent 自我评估不准</td>
+        <td><code>calibration</code> 用真实 outcome 重拟合校准函数</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>分开做有两个工程上的好处：</p>
+  <ul>
+    <li><strong>可解释性</strong>：PR 标题就告诉你"这次提的是 prompt 改动"还是"这次提的是新 runbook"——review 心智完全不一样。</li>
+    <li><strong>CODEOWNERS 路由不同</strong>：prompt 改 sre-leads review；runbook 改服务 owner review；校准器改 sre-leads + ml-platform 双 review。</li>
+  </ul>
+
+  <h3>三条腿在做的事，更具体一点</h3>
+
+  <h4>① <code>winner</code> ——"哪个 prompt 真的更好用"</h4>
+  <p>跑的是统计学：把同一个 agent 的不同 prompt SHA 分组，每组算 thumbs-up 率，跑两比例 z-test，Wilson 置信区间。</p>
+  <div class="code">
+    <div class="code-header"><span class="file">winner cron 输出</span><span class="lang">REPORT</span></div>
+<pre>✅ <span class="cmt">hypothesis-gen — promote</span>
+&gt; variant 9a4e2b73 beats 0c8f14d5 by +7.0pp at p=0.001 (n=607 vs 1658)
+
+⏸ <span class="cmt">log-detective — hold</span>
+&gt; not significant at alpha=0.05 (p=0.056) — collect more data</pre>
+  </div>
+  <p>显著的开 PR 改 baseline 指针；不显著的 hold 着继续收数据。<strong>这条最重要的是它会说 "no"</strong>——一个总是 promote 的飞轮就是 p-hacking 机器，没用。</p>
+
+  <h4>② <code>autorunbook</code> ——"我们少了哪几本 runbook"</h4>
+  <p>聚类 thumbs-down 的反馈：按 <code>(service, alert-shape)</code> 把 oncall 的 <code>correct_root_cause</code> 字段聚成簇。簇里 ≥5 条 → 整理成一条新 runbook 草稿，PR 出去。</p>
+  <div class="code">
+    <div class="code-header"><span class="file">autorunbook PR 草稿</span><span class="lang">MARKDOWN</span></div>
+<pre>Service: payments-api
+Alert shape: latency_p99 &gt; 500ms
+
+Suggested runbook entry:
+  Symptom: ...
+  Root cause: stripe webhook retry storm
+  Mitigation: ...
+  (drafted from 7 thumbs-down incidents over the last week)</pre>
+  </div>
+  <p>review 通过合并后，下次同样的 alert 进来，runbook RAG 就能命中——agent 第一次就答得上。</p>
+
+  <h4>③ <code>calibration</code> ——"85% 应该是真的 85%"</h4>
+  <p>收集所有 <code>(agent_confidence, oncall_verdict)</code> 对，跑 PAV 等渗回归拟合一个分段函数。如果新 ECE 比线上低 ≥3pp 才开 PR：</p>
+  <div class="code">
+    <div class="code-header"><span class="file">calibration PR 报告</span><span class="lang">REPORT</span></div>
+<pre>| bin           | mean_pred | frac_correct |   gap |
+|--------------|-----------|--------------|-------|
+| [0.80, 0.90) |     0.843 |        0.762 | +8.1pp |  ← 校准前过自信
+| [0.80, 0.90) |     0.833 |        0.828 | +0.5pp |  ← 校准后</pre>
+  </div>
+  <p>合并后，dashboard 上展示的 confidence 数字会自动经过这个函数——oncall 看到 "85%" 就真的是 85%，不用脑子里折扣 10pp。</p>
+
+  <h3>用一个实际场景串起来</h3>
+  <p>想象 oncall 这周给了 50 条反馈：</p>
+  <ul>
+    <li><strong>25 条 thumbs-up</strong>，分布在 3 个 prompt variant 上 → <code>winner</code> 周日早上跑完，发现 variant <code>9a4e2b73</code> 显著好，开 PR 换 baseline。</li>
+    <li><strong>12 条 thumbs-down</strong>，里面 7 条都说"真实根因是 stripe webhook 风暴" → <code>autorunbook</code> 周一早上跑完，开 PR 起草新 runbook <code>runbooks/auto/stripe-webhook-storm.md</code>。</li>
+    <li><strong>所有 50 条的 confidence 数字</strong>喂给 <code>calibration</code> 周日凌晨跑完，发现高分位 (&gt;0.8) 普遍过自信 12pp → 开 PR 更新 <code>data/calibrator.json</code>。</li>
+  </ul>
+  <p>三个 PR，三个独立 review，三个独立合并节奏。<strong>这就是"飞轮"两个字真正的意思</strong>——系统不是"上线就定型"，而是 oncall 每给一次反馈，三条腿就各自往前蹭一点。</p>
+
+  <h3>怎么手动触发（演示 / 调试用）</h3>
+  <p>三个 cron 都配了 <code>workflow_dispatch</code>，可以走 GitHub UI 或 <code>gh</code> CLI 手动开一次：</p>
+  <div class="code">
+    <div class="code-header"><span class="file">手动触发</span><span class="lang">BASH</span></div>
+<pre><span class="cmt"># 方法 A：GitHub UI</span>
+<span class="cmt"># 进 repo → Actions 标签 → 左侧选 workflow → 右上角 Run workflow → 填参数 → 触发</span>
+
+<span class="cmt"># 方法 B：gh CLI</span>
+gh workflow run harness-calibration.yml \
+  -f seed_n=3000 -f cal_delta_threshold=0.03
+
+gh run list --workflow=harness-calibration.yml --limit 5    <span class="cmt"># 看最近的 run</span>
+gh run view --log                                           <span class="cmt"># 看实时日志</span></pre>
+  </div>
+
+  <div class="callout">
+    <span class="callout-title">第一次开起来失败的常见原因</span>
+    <ul>
+      <li><strong>看不到 Actions 标签</strong>：repo Settings → Actions → General → 选 "Allow all actions and reusable workflows"。</li>
+      <li><strong>peter-evans/create-pull-request 报 403</strong>：Settings → Actions → General → Workflow permissions → 勾 "Read and write permissions" + "Allow GitHub Actions to create and approve pull requests"。</li>
+      <li><strong>Run workflow 按钮缺失</strong>：必须在默认分支（main）上才能触发 <code>workflow_dispatch</code>。</li>
+    </ul>
+  </div>
 
   <h3>把它讲给面试官听</h3>
   <p>这是面试时最 punchy 的一段：</p>
