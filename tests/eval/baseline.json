@@ -1,29 +1,134 @@
 {
-  "_comment": "Baseline produced from an offline eval run. Run `sre-agent eval-drift --update-baseline` to refresh after intentional prompt changes. CI fails when drift exceeds --threshold (default 0.05).",
-  "ts": "2026-05-13T00:00:00+00:00",
-  "n_cases": 3,
-  "scored": 2,
-  "skipped": 1,
+  "ts": "2026-05-14T03:58:29.046277+00:00",
+  "n_cases": 10,
+  "scored": 3,
+  "skipped": 7,
   "errors": [],
-  "passed": 2,
-  "mean_score": 1.0,
+  "passed": 3,
+  "mean_score": 0.8413,
   "per_case": {
-    "false-positive": {
-      "score": 1.0,
-      "threshold": 0.8,
-      "passed": true,
-      "phase": "no_signal"
+    "certificate-expiry": {
+      "skipped": true,
+      "score": null,
+      "threshold": 0.66
     },
-    "redis-pool-exhaustion": {
-      "score": 1.0,
-      "threshold": 0.8,
+    "disk-full": {
+      "score": 0.6666666666666666,
+      "threshold": 0.66,
       "passed": true,
-      "phase": "diagnosed"
+      "phase": "no_signal",
+      "checks": [
+        [
+          "phase",
+          false
+        ],
+        [
+          "must_not_phase",
+          true
+        ],
+        [
+          "must_cite_evidence",
+          true
+        ],
+        [
+          "hypothesis_keywords_any",
+          true
+        ],
+        [
+          "confidence_range",
+          true
+        ],
+        [
+          "remediation_action_titles_any",
+          false
+        ]
+      ]
+    },
+    "dns-resolution-failure": {
+      "skipped": true,
+      "score": null,
+      "threshold": 0.66
     },
     "downstream-cascade": {
       "skipped": true,
       "score": null,
-      "threshold": 0.8
+      "threshold": 0.7
+    },
+    "false-positive": {
+      "score": 1.0,
+      "threshold": 0.66,
+      "passed": true,
+      "phase": "no_signal",
+      "checks": [
+        [
+          "phase",
+          true
+        ],
+        [
+          "must_not_phase",
+          true
+        ],
+        [
+          "hypothesis_keywords_any",
+          true
+        ]
+      ]
+    },
+    "memory-leak-after-deploy": {
+      "skipped": true,
+      "score": null,
+      "threshold": 0.66
+    },
+    "network-partition": {
+      "skipped": true,
+      "score": null,
+      "threshold": 0.66
+    },
+    "rate-limit-throttling": {
+      "skipped": true,
+      "score": null,
+      "threshold": 0.66
+    },
+    "redis-pool-exhaustion": {
+      "score": 0.8571428571428571,
+      "threshold": 0.7,
+      "passed": true,
+      "phase": "no_signal",
+      "checks": [
+        [
+          "phase",
+          false
+        ],
+        [
+          "must_not_phase",
+          true
+        ],
+        [
+          "must_cite_evidence",
+          true
+        ],
+        [
+          "hypothesis_keywords_any",
+          true
+        ],
+        [
+          "runbook_path_contains",
+          true
+        ],
+        [
+          "confidence_range",
+          true
+        ],
+        [
+          "remediation_action_titles_any",
+          true
+        ]
+      ]
+    },
+    "slow-database-query": {
+      "skipped": true,
+      "score": null,
+      "threshold": 0.66
     }
   }
 }

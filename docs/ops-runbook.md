@@ -611,3 +611,191 @@ Decision logic:
   * `propose=true`  → calibrator written + PR opened with the report.
   * `propose=false` → report still uploaded as a GitHub artifact for
     audit. We never silently skip.
+
+---
+
+## 17. Real backends (D1) — Prometheus + Loki provider operations
+
+Both providers now share the same hardened HTTP path
+(`src/sre_agent/providers/_http.py`):
+
+| Capability | Knob |
+| --- | --- |
+| Bearer token | `PROMETHEUS_BEARER_TOKEN` / `LOKI_BEARER_TOKEN` |
+| Basic auth | `PROMETHEUS_BASIC_AUTH_USER` + `_PASSWORD` (same for `LOKI_*`) |
+| Per-call timeout | `PROMETHEUS_HTTP_TIMEOUT_S` / `LOKI_HTTP_TIMEOUT_S` (default 10) |
+| Retry attempts | hard-coded 3, full-jitter exponential backoff (0.2s → 5s ceiling) |
+| Retried statuses | 429, 500, 502, 503, 504, plus `TimeoutException` / `NetworkError` / `RemoteProtocolError` |
+
+### Health probes
+
+`/api/readiness` calls `provider.health()` for every wired provider.
+The probe hits `/-/healthy` (Prometheus) or `/ready` (Loki) with a
+2-second timeout and **does not retry** — a wedged backend should
+fail fast in the readiness endpoint, not after 30 seconds of retries.
+
+### Self-metrics to dashboard
+
+```text
+sre_provider_requests_total{provider="prometheus", outcome="ok"}        12384
+sre_provider_requests_total{provider="prometheus", outcome="retry_503"}    18
+sre_provider_requests_total{provider="loki",       outcome="ok"}         9012
+sre_provider_request_latency_seconds_bucket{provider="prometheus", le="0.5"} 12100
+```
+
+### Suggested alert rules
+
+```yaml
+- alert: SreProviderHighErrorRate
+  expr: sum by (provider) (rate(sre_provider_requests_total{outcome!~"ok|retry_.*"}[5m]))
+        / sum by (provider) (rate(sre_provider_requests_total[5m])) > 0.05
+  for: 10m
+  labels: { severity: warning }
+  annotations:
+    summary: "{{ $labels.provider }} provider errors > 5% over 10m"
+
+- alert: SreProviderUnhealthy
+  expr: probe_success{job="sre-readiness", provider!=""} == 0
+  for: 3m
+  labels: { severity: critical }
+```
+
+---
+
+## 18. PagerDuty paging (D4)
+
+The notifier lives at `src/sre_agent/notifications/pagerduty.py`.
+Three lifecycle events: `trigger`, `acknowledge`, `resolve`. Each
+posts to PagerDuty's Events API v2 (`/v2/enqueue`) with a stable
+`dedup_key` (the agent's `incident_id`).
+
+### Configuration
+
+| Env | Effect |
+| --- | --- |
+| `PAGERDUTY_ROUTING_KEY` | Integration key from a PD service. Without this the notifier is dry-run. |
+| `PAGERDUTY_API_URL` | Override (default `https://events.pagerduty.com`). Useful for sandbox accounts. |
+| `PAGERDUTY_HTTP_TIMEOUT_S` | Per-request timeout. Default 5. |
+| `PAGERDUTY_MIN_SEVERITY` | `SEV-1` / `SEV-2` / `SEV-3` / `SEV-4`. Default `SEV-2`. |
+| `SRE_PAGERDUTY_DRY_RUN` | `true` → never POST; build the payload and return it. |
+| `SRE_PAGERDUTY_AUTO_PAGE` | `on` → auto-trigger when the diagnosis pipeline finishes a SEV-1/2 with `phase=diagnosed`. |
+| `SRE_DASHBOARD_PUBLIC_URL` | Used in `custom_details.dashboard_url`. |
+
+### Self-metrics
+
+```text
+sre_pagerduty_events_total{event_type="trigger",     severity="SEV-1", outcome="ok"}      12
+sre_pagerduty_events_total{event_type="trigger",     severity="SEV-1", outcome="dry_run"} 4
+sre_pagerduty_events_total{event_type="resolve",     severity="N/A",   outcome="ok"}       9
+sre_pagerduty_events_total{event_type="trigger",     severity="SEV-2", outcome="http_500"} 1
+```
+
+### Common operations
+
+```bash
+# Manually page oncall for a known incident:
+curl -XPOST http://localhost:5080/api/incidents/INC-2026...../page
+
+# Resolve when on-call closes the incident:
+curl -XPOST http://localhost:5080/api/incidents/INC-2026...../resolve-page
+```
+
+### Suggested alert rules
+
+```yaml
+- alert: SrePagerDutyDeliveryFailures
+  expr: rate(sre_pagerduty_events_total{outcome!~"ok|dry_run|below.*"}[15m]) > 0
+  for: 15m
+  labels: { severity: critical }
+  annotations:
+    summary: "PagerDuty notifier failing — incidents not paging"
+
+- alert: SrePagerDutyAllDryRun
+  # If you've configured a routing key but EVERY trigger is dry_run,
+  # the env var probably isn't reaching the dashboard process.
+  expr: increase(sre_pagerduty_events_total{event_type="trigger",outcome="dry_run"}[1h]) > 0
+        and on() absent(sre_pagerduty_events_total{event_type="trigger",outcome!="dry_run"})
+  for: 1h
+  labels: { severity: warning }
+```
+
+---
+
+## 19. Self-consistency ensemble (G2)
+
+`SRE_HYPOTHESIS_ENSEMBLE_K` controls the ensemble size for
+`hypothesis_generator`:
+
+  * **K=1** (default) — single LLM call. Original behaviour, no
+    thread-pool overhead.
+  * **K=3** — 3 parallel calls, pick the highest-confidence answer.
+    Adds ~1× the latency of the slowest call (not 3×) plus ~10ms
+    of thread overhead.
+  * **K up to 5** — diminishing returns; more cost for marginal
+    accuracy gains. We cap at 5 to defend against typos.
+
+### Self-metrics
+
+```text
+sre_ensemble_runs_total{agent="hypothesis-gen", k="3", outcome="ok"}        220
+sre_ensemble_runs_total{agent="hypothesis-gen", k="3", outcome="partial"}     8
+sre_ensemble_runs_total{agent="hypothesis-gen", k="3", outcome="all_failed"}  1
+sre_ensemble_latency_seconds_bucket{agent="hypothesis-gen", le="5"}          200
+sre_ensemble_agreement_bucket{agent="hypothesis-gen", le="0.67"}              45
+```
+
+### Reading agreement
+
+`sre_ensemble_agreement` is the fraction of ensemble members landing
+on the same root-cause bucket (first 40 chars of the hypothesis
+title, lowercased). Steady-state expectations:
+
+  * **0.9+** — ensemble is consistent; the model's answer is stable.
+  * **0.5–0.8** — model is split. The picker still chooses the most
+    confident, but the disagreement is signal that the case is hard.
+  * **< 0.4** — every member found something different. Treat the
+    output as low-confidence regardless of the displayed score.
+
+### Suggested alert rules
+
+```yaml
+- alert: SreEnsembleAllFailing
+  expr: rate(sre_ensemble_runs_total{outcome="all_failed"}[15m]) > 0
+  for: 15m
+  labels: { severity: critical }
+  annotations:
+    summary: "Every ensemble member failing — LLM upstream is wedged"
+
+- alert: SreEnsembleConsistentlyDivergent
+  expr: histogram_quantile(0.5, rate(sre_ensemble_agreement_bucket[1h])) < 0.5
+  for: 1h
+  labels: { severity: warning }
+  annotations:
+    summary: "Ensemble agreement p50 below 0.5 — model is consistently split"
+```
+
+---
+
+## 20. Golden eval suite operations (E1)
+
+The suite lives under `tests/eval/cases/` (10 YAML cases as of this
+release) and the mock scenarios at `mocks/scenarios.json`. Run the
+harness three ways:
+
+```bash
+# Offline (CI default) — only the 3 fallback-friendly cases run;
+# 7 LLM-gated cases skip cleanly.
+pytest tests/test_eval.py -m eval
+
+# Online — point at a real LLM and run all 10.
+SRE_EVAL_REQUIRES_LLM=1 OLLAMA_BASE_URL=http://localhost:11434 \
+  pytest tests/test_eval.py -m eval
+
+# Drift gate — for cron / pre-merge checks.
+sre-agent eval-drift                       # exits 1 if mean score dropped > 5%
+sre-agent eval-drift --update-baseline     # after intentional prompt changes
+```
+
+The baseline JSON (`tests/eval/baseline.json`) is checked in; updating
+it requires a PR review (it's effectively the "we agree this score is
+acceptable" contract).

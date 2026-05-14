@@ -1,0 +1,84 @@
+version: 2
+
+# Dependabot config (K5).
+#
+# What it watches:
+#   - Python dependencies declared in pyproject.toml.
+#   - GitHub Actions used by .github/workflows/*.yml.
+#   - Docker base images referenced from Dockerfile / docker-compose.yml.
+#
+# Why grouped:
+#   Without grouping, a quiet week produces ~20 individual PRs which
+#   nobody reviews. We group security updates immediately (separate
+#   PRs, fast-track) and version bumps weekly into a single rollup.
+
+updates:
+  # ── Python ────────────────────────────────────────────────────────
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:00"
+      timezone: "America/Los_Angeles"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "your-org/sre-leads"
+    labels:
+      - "dependencies"
+      - "python"
+    commit-message:
+      prefix: "deps(python)"
+    groups:
+      langchain-ecosystem:
+        patterns:
+          - "langchain*"
+          - "langgraph*"
+          - "langsmith*"
+      observability:
+        patterns:
+          - "structlog"
+          - "prometheus-client"
+          - "opentelemetry-*"
+      llm-providers:
+        patterns:
+          - "openai"
+          - "anthropic"
+          - "ollama"
+      dev-tools:
+        patterns:
+          - "ruff"
+          - "pytest*"
+          - "respx"
+          - "mypy"
+        update-types:
+          - "patch"
+          - "minor"
+
+  # ── GitHub Actions ────────────────────────────────────────────────
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:30"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "deps(actions)"
+
+  # ── Docker ────────────────────────────────────────────────────────
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "docker"
+    commit-message:
+      prefix: "deps(docker)"

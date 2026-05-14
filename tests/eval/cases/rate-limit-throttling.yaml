@@ -1,0 +1,41 @@
+# Golden case: rate-limit-throttling.
+#
+# Scenario: Marketing batch (50k) pushed SES send rate above the account limit; 429s collateral-damaging transactional sends.
+#
+# Why we keep this:
+#   Cross-tenant noisy-neighbour: needs LLM to spot that marketing == transactional == same SES quota.
+
+id: rate-limit-throttling
+description: |
+  Marketing batch (50k) pushed SES send rate above the account limit; 429s collateral-damaging transactional sends.
+
+requires_llm: true
+threshold: 0.66
+tags: [requires-llm]
+
+alert:
+  service: email-svc
+  severity: SEV-3
+  description: 'email-svc bounce rate > 30% on transactional sends'
+  scenario_id: rate-limit-throttling
+  tags: ["team:growth", "env:prod"]
+
+expected:
+  phase: ['diagnosed']
+  must_not_phase: [failed]
+  must_cite_evidence: ['logs', 'traces']
+  hypothesis_keywords_any:
+    - rate
+    - throttle
+    - "429"
+    - ses
+    - limit
+    - marketing
+    - batch
+  confidence_range: [0.4, 1.0]
+  remediation_action_titles_any:
+    - scale
+    - pause
+    - kubectl
+    - ticket
+    - escalate

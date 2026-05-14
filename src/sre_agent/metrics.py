@@ -224,6 +224,53 @@ ACTIVE_INCIDENTS = Gauge(
     "Currently-investigating incidents (live count).",
 )
 
+# Provider self-metrics (D1). One pair per real backend (Prometheus, Loki,
+# Datadog, PagerDuty). The label `outcome` collapses success / retry codes
+# / network exceptions into a small low-cardinality set:
+#   ok | http_4xx | http_5xx | retry_5xx | timeoutexception | networkerror
+PROVIDER_REQUESTS_TOTAL = Counter(
+    "sre_provider_requests_total",
+    "HTTP requests issued by sre-agent providers (Prometheus / Loki / Datadog / etc.)",
+    ["provider", "outcome"],
+)
+PROVIDER_REQUEST_LATENCY = Histogram(
+    "sre_provider_request_latency_seconds",
+    "Per-call latency to a provider backend, in seconds.",
+    ["provider"],
+    buckets=(0.025, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5, 5.0, 10.0),
+)
+
+# PagerDuty notifier self-metrics (D4). Counts trigger / acknowledge /
+# resolve events and their delivery status. `severity` is from the alert
+# (SEV-1 / SEV-2 / etc.) so we can dashboard "what fraction of SEV-1
+# pages did the bot send vs error out".
+PAGERDUTY_EVENTS_TOTAL = Counter(
+    "sre_pagerduty_events_total",
+    "PagerDuty Events API v2 deliveries by event type, severity, and outcome.",
+    ["event_type", "severity", "outcome"],  # event_type: trigger|acknowledge|resolve
+)
+
+# Ensemble / concurrent-LLM metrics (G2). `k` is the ensemble size
+# bucketed as a label string (so 1, 3, 5 stay distinguishable on the
+# dashboard). `outcome` is one of: ok | partial | all_failed.
+ENSEMBLE_RUNS_TOTAL = Counter(
+    "sre_ensemble_runs_total",
+    "Concurrent LLM ensemble invocations by agent, k (ensemble size), outcome.",
+    ["agent", "k", "outcome"],
+)
+ENSEMBLE_LATENCY = Histogram(
+    "sre_ensemble_latency_seconds",
+    "Wall-clock latency of an ensemble fan-out (slowest member dominates).",
+    ["agent"],
+    buckets=(0.5, 1, 2.5, 5, 10, 25, 60, 120),
+)
+ENSEMBLE_AGREEMENT = Histogram(
+    "sre_ensemble_agreement",
+    "Fraction of ensemble members that landed on the same root cause bucket.",
+    ["agent"],
+    buckets=(0.0, 0.34, 0.5, 0.67, 0.75, 1.0),
+)
+
 BUILD_INFO = Gauge(
     "sre_build_info",
     "Build / runtime info as labels (value is always 1).",

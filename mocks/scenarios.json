@@ -7,7 +7,10 @@
         "service": "checkout-api",
         "severity": "SEV-2",
         "description": "checkout-api 5xx error rate > 5% for 3 minutes",
-        "tags": ["env:prod", "team:payments"]
+        "tags": [
+          "env:prod",
+          "team:payments"
+        ]
       },
       "logs": {
         "hits": 1247,
@@ -28,27 +31,86 @@
           }
         ],
         "samples": [
-          {"log_id": "AwAAAYj-checkout-1", "timestamp": "2026-05-11T03:48:23Z", "message": "ConnectionPoolTimeout: timed out waiting for a connection (pool size: 10, in use: 10)"},
-          {"log_id": "AwAAAYj-checkout-2", "timestamp": "2026-05-11T03:48:31Z", "message": "redis.exceptions.ConnectionError: Error connecting to redis-prod-2.cache.svc on port 6379"},
-          {"log_id": "AwAAAYj-checkout-3", "timestamp": "2026-05-11T03:48:34Z", "message": "ConnectionPoolTimeout: timed out waiting for a connection (pool size: 10, in use: 10)"}
+          {
+            "log_id": "AwAAAYj-checkout-1",
+            "timestamp": "2026-05-11T03:48:23Z",
+            "message": "ConnectionPoolTimeout: timed out waiting for a connection (pool size: 10, in use: 10)"
+          },
+          {
+            "log_id": "AwAAAYj-checkout-2",
+            "timestamp": "2026-05-11T03:48:31Z",
+            "message": "redis.exceptions.ConnectionError: Error connecting to redis-prod-2.cache.svc on port 6379"
+          },
+          {
+            "log_id": "AwAAAYj-checkout-3",
+            "timestamp": "2026-05-11T03:48:34Z",
+            "message": "ConnectionPoolTimeout: timed out waiting for a connection (pool size: 10, in use: 10)"
+          }
         ]
       },
       "metrics": {
-        "cpu_pct":         {"baseline": 18,  "peak": 22,   "peak_at": "2026-05-11T03:42:00Z", "verdict": "NORMAL"},
-        "mem_pct":         {"baseline": 61,  "peak": 63,   "peak_at": "2026-05-11T03:42:00Z", "verdict": "NORMAL"},
-        "request_rate":    {"baseline": 240, "peak": 247,  "peak_at": "2026-05-11T03:42:00Z", "verdict": "NORMAL"},
-        "error_rate_pct":  {"baseline": 0.2, "peak": 38.4, "peak_at": "2026-05-11T03:48:00Z", "verdict": "SPIKE (192x)"},
-        "latency_p99_ms":  {"baseline": 180, "peak": 9840, "peak_at": "2026-05-11T03:48:00Z", "verdict": "SPIKE (55x)"}
+        "cpu_pct": {
+          "baseline": 18,
+          "peak": 22,
+          "peak_at": "2026-05-11T03:42:00Z",
+          "verdict": "NORMAL"
+        },
+        "mem_pct": {
+          "baseline": 61,
+          "peak": 63,
+          "peak_at": "2026-05-11T03:42:00Z",
+          "verdict": "NORMAL"
+        },
+        "request_rate": {
+          "baseline": 240,
+          "peak": 247,
+          "peak_at": "2026-05-11T03:42:00Z",
+          "verdict": "NORMAL"
+        },
+        "error_rate_pct": {
+          "baseline": 0.2,
+          "peak": 38.4,
+          "peak_at": "2026-05-11T03:48:00Z",
+          "verdict": "SPIKE (192x)"
+        },
+        "latency_p99_ms": {
+          "baseline": 180,
+          "peak": 9840,
+          "peak_at": "2026-05-11T03:48:00Z",
+          "verdict": "SPIKE (55x)"
+        }
       },
       "traces": {
         "traces_inspected": 18,
         "error_rate": "14/18",
-        "hot_span":   {"service": "checkout-api", "name": "redis.get",      "baseline_ms": 3,   "median_ms": 8430, "ratio": "2810x", "verdict": "SLOW"},
-        "other_span": {"service": "checkout-api", "name": "postgres.query", "baseline_ms": 22,  "median_ms": 24,   "ratio": "1.1x",  "verdict": "NORMAL"},
-        "downstream_suspect": "redis-prod (8.4s timeouts on `.get` — pool exhaustion or network issue)",
+        "hot_span": {
+          "service": "checkout-api",
+          "name": "redis.get",
+          "baseline_ms": 3,
+          "median_ms": 8430,
+          "ratio": "2810x",
+          "verdict": "SLOW"
+        },
+        "other_span": {
+          "service": "checkout-api",
+          "name": "postgres.query",
+          "baseline_ms": 22,
+          "median_ms": 24,
+          "ratio": "1.1x",
+          "verdict": "NORMAL"
+        },
+        "downstream_suspect": "redis-prod (8.4s timeouts on `.get` \u2014 pool exhaustion or network issue)",
         "sample_trace_ids": [
-          {"trace_id": "abc123def456", "duration_ms": 8612, "errored": true},
-          {"trace_id": "def456ghi789", "duration_ms": 8430, "errored": true}
+          {
+            "trace_id": "abc123def456",
+            "duration_ms": 8612,
+            "errored": true
+          },
+          {
+            "trace_id": "def456ghi789",
+            "duration_ms": 8430,
+            "errored": true
+          }
         ]
       },
       "deploys": {
@@ -79,7 +141,12 @@
       "expected_hypothesis": {
         "top": "Recent checkout-api deploy (redis-client 5.0.1, PR #4421, 28 min before alert) introduced a regression that exhausts the redis connection pool. The new client version likely changed default pool/timeout behaviour.",
         "confidence": 0.87,
-        "supporting_evidence": ["logs", "metrics", "traces", "deploys"]
+        "supporting_evidence": [
+          "logs",
+          "metrics",
+          "traces",
+          "deploys"
+        ]
       },
       "expected_remediation": [
         {
@@ -101,28 +168,65 @@
         "service": "search-api",
         "severity": "SEV-3",
         "description": "search-api p99 latency > 500ms briefly",
-        "tags": ["env:prod", "team:search"]
+        "tags": [
+          "env:prod",
+          "team:search"
+        ]
       },
       "logs": {
         "hits": 3,
         "first_at": "2026-05-11T04:01:00Z",
         "peak_at": "2026-05-11T04:01:00Z",
         "top_messages": [
-          {"count": 3, "message": "warn: slow query detected for user_id:12345 (482ms)"}
+          {
+            "count": 3,
+            "message": "warn: slow query detected for user_id:12345 (482ms)"
+          }
         ],
-        "samples": [{"log_id": "AwAAAYj-search-1", "timestamp": "2026-05-11T04:01:12Z", "message": "warn: slow query detected for user_id:12345 (482ms)"}]
+        "samples": [
+          {
+            "log_id": "AwAAAYj-search-1",
+            "timestamp": "2026-05-11T04:01:12Z",
+            "message": "warn: slow query detected for user_id:12345 (482ms)"
+          }
+        ]
       },
       "metrics": {
-        "cpu_pct":        {"baseline": 12, "peak": 14,  "peak_at": "2026-05-11T04:01:00Z", "verdict": "NORMAL"},
-        "mem_pct":        {"baseline": 45, "peak": 47,  "peak_at": "2026-05-11T04:01:00Z", "verdict": "NORMAL"},
-        "request_rate":   {"baseline": 80, "peak": 82,  "peak_at": "2026-05-11T04:01:00Z", "verdict": "NORMAL"},
-        "error_rate_pct": {"baseline": 0.1, "peak": 0.1, "peak_at": "2026-05-11T04:01:00Z", "verdict": "NORMAL"},
-        "latency_p99_ms": {"baseline": 220, "peak": 502, "peak_at": "2026-05-11T04:01:00Z", "verdict": "BRIEF SPIKE (2.3x for 1 min only)"}
+        "cpu_pct": {
+          "baseline": 12,
+          "peak": 14,
+          "peak_at": "2026-05-11T04:01:00Z",
+          "verdict": "NORMAL"
+        },
+        "mem_pct": {
+          "baseline": 45,
+          "peak": 47,
+          "peak_at": "2026-05-11T04:01:00Z",
+          "verdict": "NORMAL"
+        },
+        "request_rate": {
+          "baseline": 80,
+          "peak": 82,
+          "peak_at": "2026-05-11T04:01:00Z",
+          "verdict": "NORMAL"
+        },
+        "error_rate_pct": {
+          "baseline": 0.1,
+          "peak": 0.1,
+          "peak_at": "2026-05-11T04:01:00Z",
+          "verdict": "NORMAL"
+        },
+        "latency_p99_ms": {
+          "baseline": 220,
+          "peak": 502,
+          "peak_at": "2026-05-11T04:01:00Z",
+          "verdict": "BRIEF SPIKE (2.3x for 1 min only)"
+        }
       },
       "traces": {
         "traces_inspected": 20,
         "error_rate": "0/20",
-        "hot_span":   null,
+        "hot_span": null,
         "downstream_suspect": null,
         "sample_trace_ids": []
       },
@@ -133,7 +237,12 @@
       "expected_hypothesis": {
         "top": "Single slow query for one user_id caused a 1-minute p99 blip. No deploys, no error rate change, no trace anomalies. Likely a single noisy customer, not a service issue.",
         "confidence": 0.78,
-        "supporting_evidence": ["logs", "metrics", "traces", "deploys"]
+        "supporting_evidence": [
+          "logs",
+          "metrics",
+          "traces",
+          "deploys"
+        ]
       },
       "expected_remediation": [
         {
@@ -150,36 +259,92 @@
         "service": "user-profile-api",
         "severity": "SEV-1",
         "description": "user-profile-api 100% 502 errors, all requests failing",
-        "tags": ["env:prod", "team:identity"]
+        "tags": [
+          "env:prod",
+          "team:identity"
+        ]
       },
       "logs": {
         "hits": 8214,
         "first_at": "2026-05-11T07:02:00Z",
         "peak_at": "2026-05-11T07:03:00Z",
         "top_messages": [
-          {"count": 6890, "message": "Failed to fetch from auth-service: HTTP 502 Bad Gateway (upstream timeout)"},
-          {"count": 1102, "message": "Circuit breaker OPEN for auth-service (60s cooldown)"},
-          {"count": 222,  "message": "Failed to fetch from auth-service: connection refused"}
+          {
+            "count": 6890,
+            "message": "Failed to fetch from auth-service: HTTP 502 Bad Gateway (upstream timeout)"
+          },
+          {
+            "count": 1102,
+            "message": "Circuit breaker OPEN for auth-service (60s cooldown)"
+          },
+          {
+            "count": 222,
+            "message": "Failed to fetch from auth-service: connection refused"
+          }
         ],
         "samples": [
-          {"log_id": "AwAAAYj-prof-1", "timestamp": "2026-05-11T07:03:00Z", "message": "Failed to fetch from auth-service: HTTP 502 Bad Gateway (upstream timeout)"}
+          {
+            "log_id": "AwAAAYj-prof-1",
+            "timestamp": "2026-05-11T07:03:00Z",
+            "message": "Failed to fetch from auth-service: HTTP 502 Bad Gateway (upstream timeout)"
+          }
         ]
       },
       "metrics": {
-        "cpu_pct":         {"baseline": 32, "peak": 30,  "peak_at": "2026-05-11T07:02:00Z", "verdict": "NORMAL"},
-        "mem_pct":         {"baseline": 58, "peak": 58,  "peak_at": "2026-05-11T07:02:00Z", "verdict": "NORMAL"},
-        "request_rate":    {"baseline": 480, "peak": 480, "peak_at": "2026-05-11T07:02:00Z", "verdict": "NORMAL"},
-        "error_rate_pct":  {"baseline": 0.05, "peak": 99.8, "peak_at": "2026-05-11T07:02:00Z", "verdict": "SPIKE (~2000x)"},
-        "latency_p99_ms":  {"baseline": 95, "peak": 3050, "peak_at": "2026-05-11T07:02:00Z", "verdict": "SPIKE (32x — circuit breaker timeout)"}
+        "cpu_pct": {
+          "baseline": 32,
+          "peak": 30,
+          "peak_at": "2026-05-11T07:02:00Z",
+          "verdict": "NORMAL"
+        },
+        "mem_pct": {
+          "baseline": 58,
+          "peak": 58,
+          "peak_at": "2026-05-11T07:02:00Z",
+          "verdict": "NORMAL"
+        },
+        "request_rate": {
+          "baseline": 480,
+          "peak": 480,
+          "peak_at": "2026-05-11T07:02:00Z",
+          "verdict": "NORMAL"
+        },
+        "error_rate_pct": {
+          "baseline": 0.05,
+          "peak": 99.8,
+          "peak_at": "2026-05-11T07:02:00Z",
+          "verdict": "SPIKE (~2000x)"
+        },
+        "latency_p99_ms": {
+          "baseline": 95,
+          "peak": 3050,
+          "peak_at": "2026-05-11T07:02:00Z",
+          "verdict": "SPIKE (32x \u2014 circuit breaker timeout)"
+        }
       },
       "traces": {
         "traces_inspected": 25,
         "error_rate": "25/25",
-        "hot_span": {"service": "user-profile-api", "name": "http.fetch auth-service", "baseline_ms": 12, "median_ms": 3000, "ratio": "250x", "verdict": "FAILED"},
-        "downstream_suspect": "auth-service (every request to it times out at 3s — circuit breaker open)",
+        "hot_span": {
+          "service": "user-profile-api",
+          "name": "http.fetch auth-service",
+          "baseline_ms": 12,
+          "median_ms": 3000,
+          "ratio": "250x",
+          "verdict": "FAILED"
+        },
+        "downstream_suspect": "auth-service (every request to it times out at 3s \u2014 circuit breaker open)",
         "sample_trace_ids": [
-          {"trace_id": "cascade-001", "duration_ms": 3052, "errored": true},
-          {"trace_id": "cascade-002", "duration_ms": 3050, "errored": true}
+          {
+            "trace_id": "cascade-001",
+            "duration_ms": 3052,
+            "errored": true
+          },
+          {
+            "trace_id": "cascade-002",
+            "duration_ms": 3050,
+            "errored": true
+          }
         ]
       },
       "deploys": {
@@ -198,9 +363,14 @@
         "config_changes": []
       },
       "expected_hypothesis": {
-        "top": "auth-service deploy 7 min before alert (PR #801, 'Switch to new JWT library') is failing all incoming requests. user-profile-api is healthy itself but cannot get auth tokens — circuit breaker is open and every request fails fast. Real fix is in auth-service, not here.",
+        "top": "auth-service deploy 7 min before alert (PR #801, 'Switch to new JWT library') is failing all incoming requests. user-profile-api is healthy itself but cannot get auth tokens \u2014 circuit breaker is open and every request fails fast. Real fix is in auth-service, not here.",
         "confidence": 0.95,
-        "supporting_evidence": ["logs", "metrics", "traces", "deploys"]
+        "supporting_evidence": [
+          "logs",
+          "metrics",
+          "traces",
+          "deploys"
+        ]
       },
       "expected_remediation": [
         {
@@ -211,7 +381,855 @@
         {
           "action": "Do NOT roll back user-profile-api. It is healthy. The fault is in auth-service.",
           "risk": "NONE (anti-action)",
-          "why": "Common mistake — blaming the service that's alerting. The alert tells you who notices, not who's broken."
+          "why": "Common mistake \u2014 blaming the service that's alerting. The alert tells you who notices, not who's broken."
+        }
+      ]
+    },
+    {
+      "id": "disk-full",
+      "label": "Disk full on batch-processor",
+      "alert": {
+        "service": "batch-processor",
+        "severity": "SEV-2",
+        "description": "batch-processor failing to flush checkpoints; backlog growing",
+        "tags": [
+          "env:prod",
+          "team:data-platform"
+        ]
+      },
+      "logs": {
+        "hits": 412,
+        "first_at": "2026-05-12T01:14:00Z",
+        "peak_at": "2026-05-12T01:21:00Z",
+        "top_messages": [
+          {
+            "count": 311,
+            "message": "OSError: [Errno 28] No space left on device: '/var/lib/batch/checkpoints/0042.parquet'"
+          },
+          {
+            "count": 88,
+            "message": "ERROR: failed to flush checkpoint to disk; will retry in 5s"
+          },
+          {
+            "count": 13,
+            "message": "WARN: free disk %=0.4% on /var/lib/batch (threshold 5%)"
+          }
+        ],
+        "samples": [
+          {
+            "log_id": "AwAAAYj-batch-1",
+            "timestamp": "2026-05-12T01:21:32Z",
+            "message": "OSError: [Errno 28] No space left on device"
+          }
+        ]
+      },
+      "metrics": {
+        "cpu_pct": {
+          "baseline": 24,
+          "peak": 28,
+          "peak_at": "2026-05-12T01:14:00Z",
+          "verdict": "NORMAL"
+        },
+        "mem_pct": {
+          "baseline": 52,
+          "peak": 55,
+          "peak_at": "2026-05-12T01:14:00Z",
+          "verdict": "NORMAL"
+        },
+        "disk_pct": {
+          "baseline": 78,
+          "peak": 99.6,
+          "peak_at": "2026-05-12T01:21:00Z",
+          "verdict": "SPIKE (DISK FULL)"
+        },
+        "request_rate": {
+          "baseline": 12,
+          "peak": 12,
+          "peak_at": "2026-05-12T01:14:00Z",
+          "verdict": "NORMAL"
+        },
+        "error_rate_pct": {
+          "baseline": 0.3,
+          "peak": 86.0,
+          "peak_at": "2026-05-12T01:21:00Z",
+          "verdict": "SPIKE (286x)"
+        },
+        "latency_p99_ms": {
+          "baseline": 220,
+          "peak": 5400,
+          "peak_at": "2026-05-12T01:21:00Z",
+          "verdict": "SPIKE (24x)"
+        }
+      },
+      "traces": {
+        "traces_inspected": 6,
+        "error_rate": "5/6",
+        "hot_span": {
+          "service": "batch-processor",
+          "name": "checkpoint.write",
+          "baseline_ms": 18,
+          "median_ms": 5300,
+          "ratio": "294x",
+          "verdict": "FAILED"
+        },
+        "downstream_suspect": null,
+        "sample_trace_ids": [
+          {
+            "trace_id": "disk-full-001",
+            "duration_ms": 5301,
+            "errored": true
+          }
+        ]
+      },
+      "deploys": {
+        "deploys": [],
+        "config_changes": []
+      },
+      "expected_hypothesis": {
+        "top": "Disk on /var/lib/batch is 99.6% full. Checkpoint writes are failing with ENOSPC. No deploys involved -- this is operational; the checkpoint dir just filled up.",
+        "confidence": 0.92,
+        "supporting_evidence": [
+          "logs",
+          "metrics",
+          "traces"
+        ]
+      },
+      "expected_remediation": [
+        {
+          "action": "kubectl -n prod exec -it batch-processor-0 -- find /var/lib/batch/checkpoints -mtime +7 -delete",
+          "risk": "LOW",
+          "why": "Purge old checkpoints; immediate relief."
+        },
+        {
+          "action": "Resize the PVC: kubectl -n prod patch pvc batch-checkpoints --patch '{\"spec\":{\"resources\":{\"requests\":{\"storage\":\"500Gi\"}}}}'",
+          "risk": "MEDIUM",
+          "why": "Permanent fix; prevents recurrence."
+        }
+      ]
+    },
+    {
+      "id": "dns-resolution-failure",
+      "label": "DNS resolution failure cascading to 100% errors",
+      "alert": {
+        "service": "api-gateway",
+        "severity": "SEV-1",
+        "description": "api-gateway 100% errors; cannot reach upstream services",
+        "tags": [
+          "env:prod",
+          "team:platform"
+        ]
+      },
+      "logs": {
+        "hits": 9420,
+        "first_at": "2026-05-12T03:44:00Z",
+        "peak_at": "2026-05-12T03:45:00Z",
+        "top_messages": [
+          {
+            "count": 7800,
+            "message": "getaddrinfo ENOTFOUND payments-svc.prod.svc.cluster.local"
+          },
+          {
+            "count": 1500,
+            "message": "getaddrinfo ENOTFOUND orders-svc.prod.svc.cluster.local"
+          },
+          {
+            "count": 120,
+            "message": "Error: connect ECONNREFUSED 10.96.0.10:53 (kube-dns)"
+          }
+        ],
+        "samples": [
+          {
+            "log_id": "AwAAAYj-gw-1",
+            "timestamp": "2026-05-12T03:44:55Z",
+            "message": "getaddrinfo ENOTFOUND payments-svc.prod.svc.cluster.local"
+          }
+        ]
+      },
+      "metrics": {
+        "cpu_pct": {
+          "baseline": 18,
+          "peak": 22,
+          "peak_at": "2026-05-12T03:44:00Z",
+          "verdict": "NORMAL"
+        },
+        "mem_pct": {
+          "baseline": 41,
+          "peak": 42,
+          "peak_at": "2026-05-12T03:44:00Z",
+          "verdict": "NORMAL"
+        },
+        "request_rate": {
+          "baseline": 920,
+          "peak": 935,
+          "peak_at": "2026-05-12T03:44:00Z",
+          "verdict": "NORMAL"
+        },
+        "error_rate_pct": {
+          "baseline": 0.1,
+          "peak": 99.9,
+          "peak_at": "2026-05-12T03:45:00Z",
+          "verdict": "SPIKE (~1000x)"
+        },
+        "latency_p99_ms": {
+          "baseline": 80,
+          "peak": 30050,
+          "peak_at": "2026-05-12T03:45:00Z",
+          "verdict": "SPIKE (DNS timeout)"
+        }
+      },
+      "traces": {
+        "traces_inspected": 30,
+        "error_rate": "30/30",
+        "hot_span": {
+          "service": "api-gateway",
+          "name": "dns.lookup",
+          "baseline_ms": 1,
+          "median_ms": 30000,
+          "ratio": "30000x",
+          "verdict": "TIMEOUT"
+        },
+        "downstream_suspect": "kube-dns / coredns is unreachable from api-gateway pods",
+        "sample_trace_ids": [
+          {
+            "trace_id": "dns-001",
+            "duration_ms": 30001,
+            "errored": true
+          }
+        ]
+      },
+      "deploys": {
+        "deploys": [
+          {
+            "service": "coredns",
+            "sha": "dns2026",
+            "pr_url": "https://github.com/acme/k8s-infra/pull/142",
+            "pr_title": "Bump coredns to 1.11; tighten upstream timeout",
+            "author": "platform-bot",
+            "deployed_at": "2026-05-12T03:30:00Z",
+            "minutes_before": 14,
+            "suspect": "HIGH"
+          }
+        ],
+        "config_changes": []
+      },
+      "expected_hypothesis": {
+        "top": "kube-dns / coredns deploy 14 min before alert is failing to resolve in-cluster service names. Every api-gateway pod can no longer reach upstreams (payments-svc, orders-svc), causing 100% errors. Fix is in coredns, not api-gateway.",
+        "confidence": 0.94,
+        "supporting_evidence": [
+          "logs",
+          "metrics",
+          "traces",
+          "deploys"
+        ]
+      },
+      "expected_remediation": [
+        {
+          "action": "kubectl -n kube-system rollout undo deployment/coredns",
+          "risk": "LOW",
+          "why": "Roll back coredns; api-gateway will recover automatically."
+        },
+        {
+          "action": "Confirm with: kubectl -n kube-system rollout status deployment/coredns",
+          "risk": "NONE",
+          "why": "Verify rollback completed."
+        }
+      ]
+    },
+    {
+      "id": "memory-leak-after-deploy",
+      "label": "Slow memory leak after deploy; OOMKills 6h later",
+      "alert": {
+        "service": "recommendation-svc",
+        "severity": "SEV-2",
+        "description": "recommendation-svc pods cycling; OOMKilled every 90s",
+        "tags": [
+          "env:prod",
+          "team:ml-platform"
+        ]
+      },
+      "logs": {
+        "hits": 240,
+        "first_at": "2026-05-12T08:14:00Z",
+        "peak_at": "2026-05-12T08:32:00Z",
+        "top_messages": [
+          {
+            "count": 120,
+            "message": "WARN: pod recommendation-svc-7f8b9-xj4kp killed by OOMKiller (RSS 7.9 GiB / limit 8 GiB)"
+          },
+          {
+            "count": 88,
+            "message": "ERROR: connection from 10.0.42.7 reset by peer (pod restarting)"
+          },
+          {
+            "count": 32,
+            "message": "INFO: pod recommendation-svc-7f8b9-xj4kp starting up; loading model weights..."
+          }
+        ],
+        "samples": [
+          {
+            "log_id": "AwAAAYj-rec-1",
+            "timestamp": "2026-05-12T08:32:10Z",
+            "message": "OOMKilled"
+          }
+        ]
+      },
+      "metrics": {
+        "cpu_pct": {
+          "baseline": 38,
+          "peak": 42,
+          "peak_at": "2026-05-12T08:14:00Z",
+          "verdict": "NORMAL"
+        },
+        "mem_pct": {
+          "baseline": 45,
+          "peak": 99,
+          "peak_at": "2026-05-12T08:30:00Z",
+          "verdict": "SPIKE (steady creep then OOMKill)"
+        },
+        "request_rate": {
+          "baseline": 320,
+          "peak": 290,
+          "peak_at": "2026-05-12T08:14:00Z",
+          "verdict": "SLIGHT DROP"
+        },
+        "error_rate_pct": {
+          "baseline": 0.2,
+          "peak": 14.0,
+          "peak_at": "2026-05-12T08:32:00Z",
+          "verdict": "SPIKE (70x; restart-driven)"
+        },
+        "latency_p99_ms": {
+          "baseline": 95,
+          "peak": 4200,
+          "peak_at": "2026-05-12T08:32:00Z",
+          "verdict": "SPIKE (44x; cold-start re-load)"
+        }
+      },
+      "traces": {
+        "traces_inspected": 16,
+        "error_rate": "3/16",
+        "hot_span": {
+          "service": "recommendation-svc",
+          "name": "model.embed",
+          "baseline_ms": 14,
+          "median_ms": 220,
+          "ratio": "16x",
+          "verdict": "ELEVATED"
+        },
+        "downstream_suspect": null,
+        "sample_trace_ids": [
+          {
+            "trace_id": "leak-001",
+            "duration_ms": 230,
+            "errored": false
+          }
+        ]
+      },
+      "deploys": {
+        "deploys": [
+          {
+            "service": "recommendation-svc",
+            "sha": "abc1234",
+            "pr_url": "https://github.com/acme/recsys/pull/388",
+            "pr_title": "Add per-request feature cache (forgot eviction)",
+            "author": "dave",
+            "deployed_at": "2026-05-12T02:10:00Z",
+            "minutes_before": 384,
+            "suspect": "HIGH"
+          }
+        ],
+        "config_changes": []
+      },
+      "expected_hypothesis": {
+        "top": "PR #388 adds a per-request feature cache without eviction. Memory grows linearly with traffic, and ~6h after deploy each pod hits its 8 GiB cgroup limit and is OOMKilled. Latency-on-restart (cold start re-loads the model) drives the visible error spike.",
+        "confidence": 0.88,
+        "supporting_evidence": [
+          "logs",
+          "metrics",
+          "deploys"
+        ]
+      },
+      "expected_remediation": [
+        {
+          "action": "kubectl -n prod rollout undo deployment/recommendation-svc",
+          "risk": "LOW",
+          "why": "Revert PR #388; the cache without eviction is the leak."
+        },
+        {
+          "action": "After rollback, file a follow-up to add LRU eviction to the feature cache before re-rolling forward.",
+          "risk": "NONE",
+          "why": "Prevents the same regression."
+        }
+      ]
+    },
+    {
+      "id": "certificate-expiry",
+      "label": "TLS certificate expired at midnight UTC",
+      "alert": {
+        "service": "payments-gateway",
+        "severity": "SEV-1",
+        "description": "payments-gateway: ALL outbound calls failing with TLS handshake error",
+        "tags": [
+          "env:prod",
+          "team:payments"
+        ]
+      },
+      "logs": {
+        "hits": 5210,
+        "first_at": "2026-05-13T00:00:01Z",
+        "peak_at": "2026-05-13T00:00:30Z",
+        "top_messages": [
+          {
+            "count": 4900,
+            "message": "tls: failed to verify certificate: x509: certificate has expired or is not yet valid: current time 2026-05-13T00:00:01Z is after 2026-05-13T00:00:00Z"
+          },
+          {
+            "count": 280,
+            "message": "ERROR: connection to stripe.com:443 failed -- TLS handshake error"
+          },
+          {
+            "count": 30,
+            "message": "FATAL: cannot establish mTLS to internal vault.prod.svc"
+          }
+        ],
+        "samples": [
+          {
+            "log_id": "AwAAAYj-pay-1",
+            "timestamp": "2026-05-13T00:00:14Z",
+            "message": "x509: certificate has expired"
+          }
+        ]
+      },
+      "metrics": {
+        "cpu_pct": {
+          "baseline": 22,
+          "peak": 23,
+          "peak_at": "2026-05-13T00:00:00Z",
+          "verdict": "NORMAL"
+        },
+        "mem_pct": {
+          "baseline": 51,
+          "peak": 52,
+          "peak_at": "2026-05-13T00:00:00Z",
+          "verdict": "NORMAL"
+        },
+        "request_rate": {
+          "baseline": 180,
+          "peak": 178,
+          "peak_at": "2026-05-13T00:00:00Z",
+          "verdict": "NORMAL"
+        },
+        "error_rate_pct": {
+          "baseline": 0.4,
+          "peak": 100.0,
+          "peak_at": "2026-05-13T00:00:30Z",
+          "verdict": "SPIKE (250x; CLIFF at midnight)"
+        },
+        "latency_p99_ms": {
+          "baseline": 142,
+          "peak": 160,
+          "peak_at": "2026-05-13T00:00:00Z",
+          "verdict": "NORMAL (fast TLS rejects)"
+        }
+      },
+      "traces": {
+        "traces_inspected": 12,
+        "error_rate": "12/12",
+        "hot_span": {
+          "service": "payments-gateway",
+          "name": "tls.handshake",
+          "baseline_ms": 18,
+          "median_ms": 22,
+          "ratio": "1.2x",
+          "verdict": "FAILED"
+        },
+        "downstream_suspect": null,
+        "sample_trace_ids": [
+          {
+            "trace_id": "tls-001",
+            "duration_ms": 22,
+            "errored": true
+          }
+        ]
+      },
+      "deploys": {
+        "deploys": [],
+        "config_changes": []
+      },
+      "expected_hypothesis": {
+        "top": "Certificate notAfter=2026-05-13T00:00:00Z. The error rate went from 0% to 100% at exactly that timestamp. No deploy involved -- the cert just expired. cert-manager renewal must have failed silently.",
+        "confidence": 0.96,
+        "supporting_evidence": [
+          "logs",
+          "metrics"
+        ]
+      },
+      "expected_remediation": [
+        {
+          "action": "Force cert-manager to re-issue: kubectl -n prod annotate certificate payments-tls cert-manager.io/issue-temporary-certificate=true --overwrite",
+          "risk": "LOW",
+          "why": "Triggers immediate re-issuance; service recovers in <60s."
+        },
+        {
+          "action": "After recovery: investigate why the renewal cron didn't fire 30d earlier as it should.",
+          "risk": "NONE",
+          "why": "Address the silent-failure root cause."
+        }
+      ]
+    },
+    {
+      "id": "slow-database-query",
+      "label": "ORM N+1 unleashed by a feature flag",
+      "alert": {
+        "service": "analytics-api",
+        "severity": "SEV-2",
+        "description": "analytics-api p99 > 8s; query queue saturated",
+        "tags": [
+          "env:prod",
+          "team:analytics"
+        ]
+      },
+      "logs": {
+        "hits": 312,
+        "first_at": "2026-05-12T11:02:00Z",
+        "peak_at": "2026-05-12T11:14:00Z",
+        "top_messages": [
+          {
+            "count": 240,
+            "message": "WARN: query >5s -- SELECT * FROM events WHERE user_id = $1 (executed 2400x in 1 request)"
+          },
+          {
+            "count": 60,
+            "message": "ERROR: pgbouncer pool exhausted -- queueing"
+          },
+          {
+            "count": 12,
+            "message": "TIMEOUT: tx aborted after 30s (statement_timeout)"
+          }
+        ],
+        "samples": [
+          {
+            "log_id": "AwAAAYj-an-1",
+            "timestamp": "2026-05-12T11:14:33Z",
+            "message": "WARN: query >5s -- SELECT * FROM events WHERE user_id = $1"
+          }
+        ]
+      },
+      "metrics": {
+        "cpu_pct": {
+          "baseline": 32,
+          "peak": 41,
+          "peak_at": "2026-05-12T11:14:00Z",
+          "verdict": "NORMAL"
+        },
+        "mem_pct": {
+          "baseline": 60,
+          "peak": 62,
+          "peak_at": "2026-05-12T11:14:00Z",
+          "verdict": "NORMAL"
+        },
+        "request_rate": {
+          "baseline": 220,
+          "peak": 215,
+          "peak_at": "2026-05-12T11:14:00Z",
+          "verdict": "NORMAL"
+        },
+        "error_rate_pct": {
+          "baseline": 0.5,
+          "peak": 8.0,
+          "peak_at": "2026-05-12T11:14:00Z",
+          "verdict": "ELEVATED (16x)"
+        },
+        "latency_p99_ms": {
+          "baseline": 380,
+          "peak": 8420,
+          "peak_at": "2026-05-12T11:14:00Z",
+          "verdict": "SPIKE (22x)"
+        }
+      },
+      "traces": {
+        "traces_inspected": 24,
+        "error_rate": "3/24",
+        "hot_span": {
+          "service": "analytics-api",
+          "name": "postgres.events.SELECT",
+          "baseline_ms": 4,
+          "median_ms": 5400,
+          "ratio": "1350x",
+          "verdict": "VERY SLOW (N+1 detected)"
+        },
+        "downstream_suspect": "Postgres -- 2400 individual queries per request, not batched",
+        "sample_trace_ids": [
+          {
+            "trace_id": "n1-001",
+            "duration_ms": 8400,
+            "errored": false
+          }
+        ]
+      },
+      "deploys": {
+        "deploys": [],
+        "config_changes": [
+          {
+            "feature_flag": "analytics_v2_per_user_breakdown",
+            "enabled_at": "2026-05-12T10:55:00Z",
+            "minutes_before": 19,
+            "suspect": "HIGH"
+          }
+        ]
+      },
+      "expected_hypothesis": {
+        "top": "Feature flag `analytics_v2_per_user_breakdown` was enabled ~19 min before alert. The new code path issues a SELECT per user_id (~2400 per request) -- classic N+1. No deploy needed; just the flag turning on. Real fix: batch the query or disable the flag.",
+        "confidence": 0.86,
+        "supporting_evidence": [
+          "logs",
+          "metrics",
+          "traces",
+          "deploys"
+        ]
+      },
+      "expected_remediation": [
+        {
+          "action": "Disable the feature flag: launchctl flag set analytics_v2_per_user_breakdown=false",
+          "risk": "LOW",
+          "why": "Reverts to the v1 query path; latency returns to baseline."
+        },
+        {
+          "action": "Open a fix PR to batch the per-user queries with a single GROUP BY before re-enabling the flag.",
+          "risk": "NONE",
+          "why": "Avoid the N+1 entirely."
+        }
+      ]
+    },
+    {
+      "id": "network-partition",
+      "label": "AZ-east-1c partial network partition",
+      "alert": {
+        "service": "order-service",
+        "severity": "SEV-1",
+        "description": "order-service errors spiking from us-east-1c pods only",
+        "tags": [
+          "env:prod",
+          "team:fulfillment"
+        ]
+      },
+      "logs": {
+        "hits": 6420,
+        "first_at": "2026-05-12T14:22:00Z",
+        "peak_at": "2026-05-12T14:24:00Z",
+        "top_messages": [
+          {
+            "count": 5200,
+            "message": "ECONNREFUSED kafka-broker-3.us-east-1c.internal:9092 (no route to host)"
+          },
+          {
+            "count": 1100,
+            "message": "TimeoutError: connecting to redis-prod.us-east-1c.cache.svc:6379 timed out"
+          },
+          {
+            "count": 120,
+            "message": "INFO: order-service-7-9c8 in us-east-1a -- HEALTHY"
+          }
+        ],
+        "samples": [
+          {
+            "log_id": "AwAAAYj-ord-1",
+            "timestamp": "2026-05-12T14:24:01Z",
+            "message": "ECONNREFUSED kafka-broker-3.us-east-1c.internal"
+          }
+        ]
+      },
+      "metrics": {
+        "cpu_pct": {
+          "baseline": 25,
+          "peak": 28,
+          "peak_at": "2026-05-12T14:22:00Z",
+          "verdict": "NORMAL"
+        },
+        "mem_pct": {
+          "baseline": 48,
+          "peak": 50,
+          "peak_at": "2026-05-12T14:22:00Z",
+          "verdict": "NORMAL"
+        },
+        "request_rate": {
+          "baseline": 1200,
+          "peak": 820,
+          "peak_at": "2026-05-12T14:22:00Z",
+          "verdict": "DROP (1c traffic gone)"
+        },
+        "error_rate_pct": {
+          "baseline": 0.3,
+          "peak": 33.0,
+          "peak_at": "2026-05-12T14:24:00Z",
+          "verdict": "SPIKE (~110x; localized to 1c)"
+        },
+        "latency_p99_ms": {
+          "baseline": 110,
+          "peak": 9000,
+          "peak_at": "2026-05-12T14:24:00Z",
+          "verdict": "SPIKE (82x; timeouts from 1c)"
+        }
+      },
+      "traces": {
+        "traces_inspected": 36,
+        "error_rate": "12/36",
+        "hot_span": {
+          "service": "order-service",
+          "name": "kafka.produce",
+          "baseline_ms": 9,
+          "median_ms": 9000,
+          "ratio": "1000x",
+          "verdict": "TIMEOUT"
+        },
+        "downstream_suspect": "All errors trace to kafka brokers in us-east-1c; us-east-1a/1b are healthy",
+        "sample_trace_ids": [
+          {
+            "trace_id": "az-001",
+            "duration_ms": 9000,
+            "errored": true
+          }
+        ]
+      },
+      "deploys": {
+        "deploys": [],
+        "config_changes": []
+      },
+      "expected_hypothesis": {
+        "top": "Errors are localized to us-east-1c pods reaching us-east-1c kafka brokers and Redis. Other AZs are healthy. AWS is likely having an inter-AZ network event (or a security-group/route change). No deploy involved.",
+        "confidence": 0.9,
+        "supporting_evidence": [
+          "logs",
+          "metrics",
+          "traces"
+        ]
+      },
+      "expected_remediation": [
+        {
+          "action": "Cordon and drain us-east-1c nodes: kubectl get nodes -l topology.kubernetes.io/zone=us-east-1c -o name | xargs -I {} kubectl drain {} --ignore-daemonsets --delete-emptydir-data",
+          "risk": "MEDIUM",
+          "why": "Shifts load to healthy AZs (1a/1b) until 1c recovers."
+        },
+        {
+          "action": "Open AWS support ticket; check the AWS Health Dashboard for us-east-1c network events.",
+          "risk": "NONE",
+          "why": "Likely a known AWS event; ticket gives ETA."
+        }
+      ]
+    },
+    {
+      "id": "rate-limit-throttling",
+      "label": "Upstream provider rate-limited us during a marketing send",
+      "alert": {
+        "service": "email-svc",
+        "severity": "SEV-3",
+        "description": "email-svc bounce rate > 30% on transactional sends",
+        "tags": [
+          "env:prod",
+          "team:growth"
+        ]
+      },
+      "logs": {
+        "hits": 1820,
+        "first_at": "2026-05-12T16:00:00Z",
+        "peak_at": "2026-05-12T16:08:00Z",
+        "top_messages": [
+          {
+            "count": 1620,
+            "message": "WARN: SES rejected -- HTTP 429 Throttling: rate exceeded (current 14/s, limit 10/s)"
+          },
+          {
+            "count": 180,
+            "message": "INFO: marketing batch send initiated by job=marketing-blast-may-12 (50k recipients)"
+          },
+          {
+            "count": 20,
+            "message": "ERROR: max retries (3) exceeded for transactional email to user@example.com"
+          }
+        ],
+        "samples": [
+          {
+            "log_id": "AwAAAYj-em-1",
+            "timestamp": "2026-05-12T16:08:14Z",
+            "message": "HTTP 429 Throttling: rate exceeded"
+          }
+        ]
+      },
+      "metrics": {
+        "cpu_pct": {
+          "baseline": 14,
+          "peak": 18,
+          "peak_at": "2026-05-12T16:08:00Z",
+          "verdict": "NORMAL"
+        },
+        "mem_pct": {
+          "baseline": 36,
+          "peak": 38,
+          "peak_at": "2026-05-12T16:08:00Z",
+          "verdict": "NORMAL"
+        },
+        "request_rate": {
+          "baseline": 8,
+          "peak": 14,
+          "peak_at": "2026-05-12T16:08:00Z",
+          "verdict": "ELEVATED (1.75x; marketing batch)"
+        },
+        "error_rate_pct": {
+          "baseline": 0.8,
+          "peak": 32.0,
+          "peak_at": "2026-05-12T16:08:00Z",
+          "verdict": "ELEVATED (40x; throttle-driven)"
+        },
+        "latency_p99_ms": {
+          "baseline": 540,
+          "peak": 2400,
+          "peak_at": "2026-05-12T16:08:00Z",
+          "verdict": "SPIKE (4.4x; retries)"
+        }
+      },
+      "traces": {
+        "traces_inspected": 18,
+        "error_rate": "6/18",
+        "hot_span": {
+          "service": "email-svc",
+          "name": "ses.SendEmail",
+          "baseline_ms": 220,
+          "median_ms": 1800,
+          "ratio": "8x",
+          "verdict": "RATE_LIMITED"
+        },
+        "downstream_suspect": "AWS SES; throttling responses (HTTP 429) for the prod account",
+        "sample_trace_ids": [
+          {
+            "trace_id": "ses-001",
+            "duration_ms": 2300,
+            "errored": true
+          }
+        ]
+      },
+      "deploys": {
+        "deploys": [],
+        "config_changes": []
+      },
+      "expected_hypothesis": {
+        "top": "A marketing batch (50k recipients) started at 16:00, pushing total send rate to 14/s; SES account limit is 10/s, so SES returns HTTP 429. Transactional sends are collateral damage because they share the same SES account quota.",
+        "confidence": 0.84,
+        "supporting_evidence": [
+          "logs",
+          "metrics",
+          "traces"
+        ]
+      },
+      "expected_remediation": [
+        {
+          "action": "Pause the marketing-blast job: kubectl -n prod scale deployment/marketing-batch --replicas=0",
+          "risk": "LOW",
+          "why": "Stops the burst; transactional sends recover within 60s."
+        },
+        {
+          "action": "File AWS support ticket to raise the SES sending-rate limit; isolate marketing on a separate SES configuration set.",
+          "risk": "NONE",
+          "why": "Permanent fix."
         }
       ]
     }

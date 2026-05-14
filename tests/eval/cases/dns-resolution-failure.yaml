@@ -1,0 +1,39 @@
+# Golden case: dns-resolution-failure.
+#
+# Scenario: kube-dns deploy 14 min before alert; ENOTFOUND on every upstream lookup.
+#
+# Why we keep this:
+#   Hard case: agent must NOT blame api-gateway for what coredns broke. Tests upstream attribution.
+
+id: dns-resolution-failure
+description: |
+  kube-dns deploy 14 min before alert; ENOTFOUND on every upstream lookup.
+
+requires_llm: true
+threshold: 0.66
+tags: [requires-llm]
+
+alert:
+  service: api-gateway
+  severity: SEV-1
+  description: 'api-gateway 100% errors; cannot reach upstream services'
+  scenario_id: dns-resolution-failure
+  tags: ["team:platform", "env:prod"]
+
+expected:
+  phase: ['diagnosed']
+  must_not_phase: [failed]
+  must_cite_evidence: ['logs', 'deploys']
+  hypothesis_keywords_any:
+    - dns
+    - coredns
+    - kube-dns
+    - ENOTFOUND
+    - resolution
+    - lookup
+  confidence_range: [0.5, 1.0]
+  remediation_action_titles_any:
+    - rollout undo
+    - rollback
+    - rollout
+    - escalate

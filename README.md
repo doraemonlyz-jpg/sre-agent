@@ -4,14 +4,18 @@
 [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![python](https://img.shields.io/badge/python-3.10%2B-blue)]()
 [![langgraph](https://img.shields.io/badge/orchestration-LangGraph-purple)]()
-[![tests](https://img.shields.io/badge/tests-396%20passing-brightgreen)]()
+[![tests](https://img.shields.io/badge/tests-447%20passing-brightgreen)]()
 [![harness-L6](https://img.shields.io/badge/harness-L6%20A%2FB%20%2B%20calibration-blue)]()
 [![prometheus](https://img.shields.io/badge/metrics-prometheus-orange)]()
 [![rag](https://img.shields.io/badge/RAG-BM25%20persisted-success)]()
 [![fallback](https://img.shields.io/badge/LLM-3--tier%20fallback-blueviolet)]()
+[![providers](https://img.shields.io/badge/providers-Prometheus%20%7C%20Loki%20%7C%20Datadog-1f6feb)]()
+[![pagerduty](https://img.shields.io/badge/notify-Slack%20%2B%20PagerDuty-red)]()
+[![ensemble](https://img.shields.io/badge/ensemble-self--consistency%20K%3D3-blue)]()
+[![codeql](https://img.shields.io/badge/security-CodeQL%20%2B%20dependabot-green)]()
 [![ci](https://img.shields.io/badge/ci-GitHub%20Actions-blueviolet)]()
-[![harness](https://img.shields.io/badge/harness-L5-blueviolet)]()
-[![eval](https://img.shields.io/badge/eval-3%2F3%20golden%20cases-success)]()
+[![eval](https://img.shields.io/badge/eval-10%20golden%20cases%20%287%20LLM--gated%29-success)]()
+[![adr](https://img.shields.io/badge/ADRs-7%20decisions%20documented-lightgrey)](docs/adr/README.md)
 
 > An AI on-call team. A monitoring alert fires → 7 specialized agents fan out
 > across logs / metrics / traces / deploys → a hypothesis generator ranks root
@@ -110,6 +114,26 @@ curl http://localhost:5080/api/harness/calibration | jq
 ```
 
 ---
+
+## What's new (Q2 release — D1 / D4 / G2 / E1 / J1 / K2 / K5)
+
+The previous release made the system observable and self-correcting.
+This release makes it **defensible**: real backends, real paging,
+better LLM accuracy, more golden cases, and the engineering hygiene
+that gates the whole thing.
+
+| Code | Capability | Where it lives |
+| ---- | ---------- | -------------- |
+| **D1** | Real Prometheus + Loki provider hardening: `health()`, retry-with-backoff (3 attempts, 429/5xx + transient network errors), bearer/basic auth, Prometheus self-metrics for every backend call. | `src/sre_agent/providers/_http.py`, `src/sre_agent/providers/{prometheus,loki}.py` |
+| **D4** | PagerDuty Events API v2 notifier: trigger / acknowledge / resolve, severity gating (`PAGERDUTY_MIN_SEVERITY`), dry-run when no routing key, auto-page hook on diagnosed SEV-1/2 (`SRE_PAGERDUTY_AUTO_PAGE=on`), self-metrics. | `src/sre_agent/notifications/pagerduty.py`, `dashboard/app.py:/api/incidents/<id>/page` |
+| **G2** | Self-consistency LLM ensemble (Wang et al. 2022): K parallel `hypothesis_generator` calls via a thread-pool helper, picks the highest-confidence answer, records ensemble agreement as `sre_ensemble_agreement`. Opt-in via `SRE_HYPOTHESIS_ENSEMBLE_K=3`. | `src/sre_agent/concurrency.py`, `src/sre_agent/nodes/hypothesis_gen.py` |
+| **E1** | Golden eval suite expanded from 3 to 10 hand-curated cases covering 8 distinct failure shapes (Redis pool, downstream cascade, false-positive, disk-full, DNS, memory leak, cert expiry, slow DB, AZ partition, rate-limit). 7 are LLM-gated; 3 run in fallback-only CI. | `tests/eval/cases/`, `mocks/scenarios.json` |
+| **J1** | 7 Architecture Decision Records (LangGraph orchestration, SQLite-vs-Postgres, BM25-no-vector-DB, fallback chain, synthetic data, no-auto-execute, ensemble-via-threads). MADR format. | [`docs/adr/`](docs/adr/README.md) |
+| **J2** | "Why we did NOT do X" — short answers to ideas the team has already evaluated and declined. | [`docs/why-not.md`](docs/why-not.md) |
+| **K2** | Pre-commit hooks (`ruff format`, `ruff check --fix`, fast pytest subset, file-hygiene). | `.pre-commit-config.yaml` |
+| **K5** | CodeQL `security-and-quality` query pack on every PR + weekly cron, plus Dependabot for Python / GitHub Actions / Docker with grouped weekly PRs. | `.github/workflows/codeql.yml`, `.github/dependabot.yml` |
+
+Total tests: **447 passing** (up from 396).
 
 ## Production hardening (the boring, important parts)
 

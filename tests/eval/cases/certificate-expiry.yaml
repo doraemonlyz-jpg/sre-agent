@@ -1,0 +1,40 @@
+# Golden case: certificate-expiry.
+#
+# Scenario: x509 cert expired at 00:00 UTC; error rate 0->100% at exactly that timestamp.
+#
+# Why we keep this:
+#   Smoking-gun log message names the failure mode; no LLM needed for the fallback to point at certificates.
+
+id: certificate-expiry
+description: |
+  x509 cert expired at 00:00 UTC; error rate 0->100% at exactly that timestamp.
+
+requires_llm: true
+threshold: 0.66
+tags: [requires-llm]
+
+alert:
+  service: payments-gateway
+  severity: SEV-1
+  description: 'payments-gateway: ALL outbound calls failing with TLS handshake error'
+  scenario_id: certificate-expiry
+  tags: ["team:payments", "env:prod"]
+
+expected:
+  phase: ['diagnosed']
+  must_not_phase: [failed]
+  must_cite_evidence: ['logs', 'metrics']
+  hypothesis_keywords_any:
+    - certificate
+    - tls
+    - x509
+    - expired
+    - handshake
+  confidence_range: [0.4, 1.0]
+  remediation_action_titles_any:
+    - annotate
+    - issue-temporary-certificate
+    - cert-manager
+    - escalate
+    - rollback
+    - restart

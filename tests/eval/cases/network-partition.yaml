@@ -1,0 +1,41 @@
+# Golden case: network-partition.
+#
+# Scenario: Errors localized to us-east-1c kafka/redis; 1a and 1b are healthy.
+#
+# Why we keep this:
+#   Tests AZ-localised reasoning; agent must spot 1c-only logs and not blame the service code.
+
+id: network-partition
+description: |
+  Errors localized to us-east-1c kafka/redis; 1a and 1b are healthy.
+
+requires_llm: true
+threshold: 0.66
+tags: [requires-llm]
+
+alert:
+  service: order-service
+  severity: SEV-1
+  description: 'order-service errors spiking from us-east-1c pods only'
+  scenario_id: network-partition
+  tags: ["team:fulfillment", "env:prod"]
+
+expected:
+  phase: ['diagnosed']
+  must_not_phase: [failed]
+  must_cite_evidence: ['logs', 'traces']
+  hypothesis_keywords_any:
+    - partition
+    - az
+    - zone
+    - us-east-1c
+    - kafka
+    - network
+    - aws
+  confidence_range: [0.45, 1.0]
+  remediation_action_titles_any:
+    - drain
+    - cordon
+    - kubectl
+    - escalate
+    - ticket

@@ -12,10 +12,16 @@ production: an on-call engineer should ALWAYS see *something*, even if it's
 
 from __future__ import annotations
 
+import os
 from typing import Any
 
 from langchain_core.messages import HumanMessage, SystemMessage
 
+from sre_agent.concurrency import (
+    concurrent_llm_calls,
+    ensemble_agreement,
+    ensemble_pick_best,
+)
 from sre_agent.harness import bind_agent, record_persona_load
 from sre_agent.logging import get_logger
 from sre_agent.models import ModelRole, get_chat_model
@@ -30,6 +36,20 @@ from sre_agent.schemas import (
 )
 
 log = get_logger("hypothesis_gen")
+
+
+def _ensemble_size() -> int:
+    """`SRE_HYPOTHESIS_ENSEMBLE_K=3` enables 3-way self-consistency voting.
+
+    Default 1 keeps behaviour backwards-compatible. We cap at 5 to avoid
+    runaway cost from a typo. Anything <2 disables the ensemble path
+    entirely so we don't pay the thread-pool overhead for the 1-call case.
+    """
+    try:
+        k = int(os.environ.get("SRE_HYPOTHESIS_ENSEMBLE_K", "1"))
+    except ValueError:
+        return 1
+    return max(1, min(5, k))
 
 
 def hypothesis_generator(state: GraphState) -> dict[str, Any]:
@@ -59,13 +79,67 @@ def hypothesis_generator(state: GraphState) -> dict[str, Any]:
             HypothesisList, include_raw=False
         )
         user = _build_synthesis_prompt(alert, logs, metrics, traces, deploys, runbooks)
+        messages = [SystemMessage(content=persona), HumanMessage(content=user)]
+
+        k = _ensemble_size()
+        if k <= 1:
+            # Single-call fast path -- no thread-pool overhead.
+            with bind_agent("hypothesis-gen", prompt_sha=_sha):
+                out: HypothesisList = with_retries(
+                    lambda: llm.invoke(messages),
+                    agent="hypothesis-gen",
+                )  # type: ignore[assignment]
+            top = out.top
+            return {
+                "hypotheses": out,
+                "events": [
+                    make_event(
+                        "hypothesis-generator",
+                        "evidence",
+                        f"Top hypothesis ({int(top.confidence*100)}%): {top.title}",
+                        n_hypotheses=len(out.hypotheses),
+                    )
+                ],
+            }
+
+        # Self-consistency ensemble (G2): K parallel LLM calls, pick the
+        # one whose top hypothesis has the highest confidence; record
+        # agreement-rate as observability.
         with bind_agent("hypothesis-gen", prompt_sha=_sha):
-            out: HypothesisList = with_retries(
-                lambda: llm.invoke(
-                    [SystemMessage(content=persona), HumanMessage(content=user)]
-                ),
+            outcomes = concurrent_llm_calls(
+                [
+                    (lambda llm=llm, msgs=messages: with_retries(
+                        lambda: llm.invoke(msgs), agent="hypothesis-gen",
+                    ))
+                    for _ in range(k)
+                ],
                 agent="hypothesis-gen",
-            )  # type: ignore[assignment]
+                max_workers=k,
+            )
+        winner, info = ensemble_pick_best(
+            outcomes, score_fn=lambda hl: hl.top.confidence,
+        )
+        if winner is None:
+            # Every ensemble member failed -- treat like a single failure.
+            errs = [o.error for o in outcomes if not o.ok]
+            raise RuntimeError(
+                f"all {k} ensemble members failed: {errs[:2]}"
+            )
+        agreement = ensemble_agreement(
+            outcomes,
+            bucket_fn=lambda hl: hl.top.title.lower()[:40],
+        )
+        try:
+            from sre_agent.metrics import ENSEMBLE_AGREEMENT
+            ENSEMBLE_AGREEMENT.labels(agent="hypothesis-gen").observe(agreement)
+        except Exception:
+            pass
+        log.info(
+            "hypothesis_gen.ensemble_done",
+            k=k, n_ok=info["n_ok"], agreement=round(agreement, 2),
+            winner_score=info.get("winner_score"),
+        )
+        out = winner
         top = out.top
         return {
             "hypotheses": out,
@@ -73,8 +147,12 @@ def hypothesis_generator(state: GraphState) -> dict[str, Any]:
                 make_event(
                     "hypothesis-generator",
                     "evidence",
-                    f"Top hypothesis ({int(top.confidence*100)}%): {top.title}",
+                    f"Top hypothesis ({int(top.confidence*100)}%): {top.title} "
+                    f"[ensemble k={k}, agreement={int(agreement*100)}%]",
                     n_hypotheses=len(out.hypotheses),
+                    ensemble_k=k,
+                    ensemble_agreement=round(agreement, 2),
+                    ensemble_n_ok=info["n_ok"],
                 )
             ],
         }

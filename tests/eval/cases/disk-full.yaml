@@ -1,0 +1,40 @@
+# Golden case: disk-full.
+#
+# Scenario: Disk on the checkpoint volume is 99.6% full; ENOSPC on every write.
+#
+# Why we keep this:
+#   Logs are unambiguous (ENOSPC) and metrics show disk_pct=99.6%. The fallback should still produce something useful even without LLM.
+
+id: disk-full
+description: |
+  Disk on the checkpoint volume is 99.6% full; ENOSPC on every write.
+
+requires_llm: false
+threshold: 0.66
+tags: [fallback-friendly]
+
+alert:
+  service: batch-processor
+  severity: SEV-2
+  description: 'batch-processor failing to flush checkpoints; backlog growing'
+  scenario_id: disk-full
+  tags: ["team:data-platform", "env:prod"]
+
+expected:
+  phase: ['diagnosed']
+  must_not_phase: [failed]
+  must_cite_evidence: ['logs', 'metrics']
+  hypothesis_keywords_any:
+    - disk
+    - ENOSPC
+    - no space
+    - full
+    - checkpoint
+  confidence_range: [0.3, 1.0]
+  remediation_action_titles_any:
+    - delete
+    - find
+    - purge
+    - resize
+    - patch
+    - escalate

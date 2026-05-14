@@ -32,6 +32,11 @@ from typing import Any, ClassVar
 
 import httpx
 
+from sre_agent.providers._http import (
+    RetryingClient,
+    make_retrying_client,
+    probe_health,
+)
 from sre_agent.providers.base import DataProvider
 from sre_agent.schemas import (
     DeploysEvidence,
@@ -92,7 +97,7 @@ class PrometheusProvider(DataProvider):
         *,
         base_url: str | None = None,
         queries: dict[str, str] | None = None,
-        client: httpx.Client | None = None,
+        client: httpx.Client | RetryingClient | None = None,
     ) -> None:
         self.base_url = (base_url or os.environ.get("PROMETHEUS_URL", "http://localhost:9090")).rstrip("/")
         timeout = float(os.environ.get("PROMETHEUS_HTTP_TIMEOUT_S", "10"))
@@ -106,7 +111,17 @@ class PrometheusProvider(DataProvider):
                 self.queries[label] = os.environ[env_key]
             else:
                 self.queries[label] = tmpl
-        self._client = client or httpx.Client(base_url=self.base_url, timeout=timeout)
+        # Default client: retrying + auth-aware. Tests inject their own
+        # via `client=`.
+        if client is not None:
+            self._client = client
+        else:
+            self._client = make_retrying_client(
+                base_url=self.base_url,
+                timeout_s=timeout,
+                provider_name="prometheus",
+                auth_env_prefix="PROMETHEUS",
+            )
 
     # ── fetch_metrics ─────────────────────────────────────────────────
 
@@ -250,6 +265,15 @@ class PrometheusProvider(DataProvider):
             result=EvidenceResult.NO_SIGNAL,
             interpretation="PrometheusProvider does not track deploys (use GitHub/CI events)",
         )
+
+    # ── health ────────────────────────────────────────────────────────
+    #
+    # Surfaced via the dashboard's /api/readiness probe. We hit
+    # `/-/healthy`, the canonical Prometheus liveness endpoint -- it's
+    # cheap, doesn't run a query, and unambiguously signals "the
+    # Prometheus process is up".
+    def health(self) -> dict[str, Any]:
+        return probe_health(self._client, path="/-/healthy")
 
     # ── housekeeping ──────────────────────────────────────────────────
 

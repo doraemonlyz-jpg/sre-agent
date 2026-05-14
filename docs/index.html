@@ -550,6 +550,7 @@ h2:hover .anchor, h3:hover .anchor { opacity: 1; }
     <li><a href="#flywheel">自我改进闭环（L6）</a></li>
     <li><a href="#trace">一条 incident 全程</a></li>
     <li><a href="#prod">工业化加固（B + C）</a></li>
+    <li><a href="#defensible">这一版新增（D1 / D4 / G2 / E1 / J / K）</a></li>
     <li><a href="#code">代码地图</a></li>
     <li><a href="#interview">面试高频问答</a></li>
     <li><a href="#run">动手跑一遍</a></li>
@@ -1953,9 +1954,206 @@ docker compose up</pre>
   <p>真正"上生产"就是这些不起眼的细节叠起来——任何一项缺，都会让线下能跑、线上凌晨三点出事。</p>
 </section>
 
-<!-- ─────────────────────────────────── 14. CODE MAP -->
+<!-- ─────────────────────────────────── 14. DEFENSIBLE -->
+<section id="defensible">
+  <h2><span class="num">14</span>这一版新增：让它"防得住"的 8 件事<a class="anchor" href="#defensible">#</a></h2>
+  <p class="lead">上一版让系统<strong>看得见</strong>（Prometheus）和<strong>会自我改进</strong>（L6 三个 cron）。这一版做的事情可以一句话总结——<strong>真实接通 + 真实呼叫 + 更准的 LLM + 更多 case + 工程纪律</strong>。</p>
+
+  <p>每一项都是面试官会问"你们怎么处理 X？"时你能直接拍出一段代码 / 配置 / 文档的题目。</p>
+
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>编号</th><th>能力</th><th>关键文件 / 入口</th><th>开关</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>D1</strong></td>
+        <td>Prometheus + Loki Provider 工业化：<code>health()</code>、3 轮 retry（429/5xx/网络异常）、Bearer/Basic Auth、自身 Prometheus 指标</td>
+        <td><code>providers/_http.py</code>、<code>providers/{prometheus,loki}.py</code></td>
+        <td>默认开；<code>PROMETHEUS_BEARER_TOKEN</code> 等切 auth</td>
+      </tr>
+      <tr>
+        <td><strong>D4</strong></td>
+        <td>PagerDuty Events API v2 通知器：<code>trigger</code>/<code>acknowledge</code>/<code>resolve</code>，severity gate，dry-run，自动呼叫 SEV-1/2</td>
+        <td><code>notifications/pagerduty.py</code>、<code>/api/incidents/&lt;id&gt;/page</code></td>
+        <td><code>PAGERDUTY_ROUTING_KEY</code>、<code>SRE_PAGERDUTY_AUTO_PAGE=on</code></td>
+      </tr>
+      <tr>
+        <td><strong>G2</strong></td>
+        <td>Self-consistency 集成投票：K 路并行 LLM 调用，挑置信度最高的，记录"agreement 一致率"</td>
+        <td><code>concurrency.py</code>、<code>nodes/hypothesis_gen.py</code></td>
+        <td><code>SRE_HYPOTHESIS_ENSEMBLE_K=3</code></td>
+      </tr>
+      <tr>
+        <td><strong>E1</strong></td>
+        <td>Golden eval suite 从 3 → 10 条，覆盖 8 种故障形态（Redis 池、级联、误报、磁盘满、DNS、内存泄漏、证书过期、慢 SQL、AZ 分区、限流）</td>
+        <td><code>tests/eval/cases/</code>、<code>mocks/scenarios.json</code></td>
+        <td><code>SRE_EVAL_REQUIRES_LLM=1</code> 跑全 10 条</td>
+      </tr>
+      <tr>
+        <td><strong>J1</strong></td>
+        <td>7 篇 ADR（架构决策记录），MADR 格式，覆盖 LangGraph / SQLite / BM25 / fallback / 合成数据 / 不自动执行 / 集成线程</td>
+        <td><code>docs/adr/README.md</code></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>J2</strong></td>
+        <td>"Why we did NOT do X" 文档——把"已经评估过决定不做"的事写下来</td>
+        <td><code>docs/why-not.md</code></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>K2</strong></td>
+        <td>Pre-commit hooks：<code>ruff format</code>、<code>ruff check --fix</code>、快速 pytest 子集、文件卫生（trailing whitespace 等）</td>
+        <td><code>.pre-commit-config.yaml</code></td>
+        <td><code>pre-commit install</code></td>
+      </tr>
+      <tr>
+        <td><strong>K5</strong></td>
+        <td>CodeQL（PR + 周扫）+ Dependabot（Python / Actions / Docker，分组周更）</td>
+        <td><code>.github/workflows/codeql.yml</code>、<code>.github/dependabot.yml</code></td>
+        <td>—</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>D1 — 真 Prometheus / Loki 接通</h3>
+  <p>已有的 Provider 是真 HTTP 调用，但缺三件工业化的事：<strong>retry、auth、health</strong>。这一版抽出了 <code>providers/_http.py</code> 的共用层：</p>
+
+  <pre><code>from sre_agent.providers._http import make_retrying_client
+
+# 每个 provider 用同一个 retry+auth 客户端
+client = make_retrying_client(
+    base_url="https://prometheus.prod.svc",
+    timeout_s=10,
+    provider_name="prometheus",
+    auth_env_prefix="PROMETHEUS",   # 自动读 PROMETHEUS_BEARER_TOKEN / _BASIC_AUTH_*
+)
+
+# Retry 策略：3 轮 full-jitter 指数退避，针对 429/5xx + TimeoutException/NetworkError
+# Status 4xx (除了 429) 不 retry —— 401/404 重试无意义
+</code></pre>
+
+  <p><strong>health()</strong> 给 readiness 探针用——<em>不走 retry</em>，因为僵死后端应该立刻显示不健康，而不是 30 秒后才挂掉：</p>
+
+  <pre><code>provider = PrometheusProvider()
+print(provider.health())
+# {"ok": True, "status_code": 200, "latency_ms": 12.4, "error": None}
+</code></pre>
+
+  <p><strong>自身指标</strong>导出到 <code>/metrics</code>：</p>
+  <pre><code>sre_provider_requests_total{provider="prometheus", outcome="ok"}        12384
+sre_provider_requests_total{provider="prometheus", outcome="retry_503"}    18
+sre_provider_request_latency_seconds_bucket{provider="loki", le="0.5"}    9012
+</code></pre>
+
+  <h3>D4 — PagerDuty 真呼叫</h3>
+  <p>之前只有 Slack，但 Slack 不能在 3 点把人叫醒。<code>PagerDutyNotifier</code> 走 PagerDuty Events API v2，三个生命周期事件——<code>trigger</code>、<code>acknowledge</code>、<code>resolve</code>，用 incident_id 做 stable dedup_key 让 PD 自动去重报警。</p>
+
+  <pre><code># 生产配置
+export PAGERDUTY_ROUTING_KEY=your-integration-key
+export PAGERDUTY_MIN_SEVERITY=SEV-2          # SEV-3/4 不呼，只发 Slack
+export SRE_PAGERDUTY_AUTO_PAGE=on            # diagnosed 即自动 trigger
+
+# 没配 routing_key 时自动 dry-run，dashboard 还能给你看 payload 预览
+</code></pre>
+
+  <p>同样导出 self-metrics：</p>
+  <pre><code>sre_pagerduty_events_total{event_type="trigger", severity="SEV-1", outcome="ok"}     12
+sre_pagerduty_events_total{event_type="trigger", severity="SEV-1", outcome="dry_run"} 4
+sre_pagerduty_events_total{event_type="resolve", severity="N/A",   outcome="ok"}       9
+</code></pre>
+
+  <p><strong>设计取舍</strong>：为什么不复用 Slack 的代码结构？因为 PagerDuty 是<em>有状态</em>的（trigger → ack → resolve 是同一个 incident 的三阶段），Slack 是无状态广播。强行复用会把两个 notifier 都扭曲。</p>
+
+  <h3>G2 — Self-consistency 集成投票</h3>
+  <p>论文：<a href="https://arxiv.org/abs/2203.11171">Wang et al. 2022 (Self-Consistency Improves Chain-of-Thought)</a>。原理：跑 K 次 LLM 让它们彼此投票，挑最一致 / 最有信心的那个答案，准确率显著高于单次。</p>
+
+  <p>代码核心是个线程池——<strong>不是改 async</strong>。为什么？见 <a href="#" onclick="window.open('../docs/adr/007-ensemble-via-threads.md');return false;">ADR-007</a>：</p>
+
+  <ul>
+    <li>瓶颈是 LLM 服务端的队列深度，不是 Python 事件循环</li>
+    <li>把 6 个 node 全改 async + LangGraph 改 astream + Flask 接 async 桥，工程量巨大、收益有限</li>
+    <li>线程池 + ContextVars 快照：每个 worker 独立持有父线程的上下文（harness recorder 仍能正确归属）</li>
+  </ul>
+
+  <pre><code># 单次（默认，K=1，跳过线程池开销）
+SRE_HYPOTHESIS_ENSEMBLE_K=1 python ...
+
+# 3 路投票（生产推荐）
+SRE_HYPOTHESIS_ENSEMBLE_K=3 python ...
+# Wall-clock latency ≈ max(member)，不是 3×；agreement 0.9+ 时基本无 hallucination
+</code></pre>
+
+  <p>新指标 <code>sre_ensemble_agreement</code>——直接看模型有多稳：</p>
+  <pre><code>0.9+    所有成员答的是同一个根因桶 → 输出可信
+0.5-0.8 模型分裂 → picker 还是挑最 confident，但本身就是"硬 case"信号
+&lt; 0.4   每个成员都说不一样的 → 把置信度当作低，无论显示多少
+</code></pre>
+
+  <h3>E1 — Golden eval 扩到 10 条</h3>
+  <p>评测数据是<em>系统价值的真正瓶颈</em>。一个只有 3 条 case 的 eval suite 等于"我自己证明自己对"。这一版扩到 10 条，覆盖 8 种独立故障形态：</p>
+
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Case</th><th>故障形态</th><th>是否需要 LLM</th><th>核心考点</th></tr></thead>
+    <tbody>
+      <tr><td>redis-pool-exhaustion</td><td>连接池耗尽 + 部署关联</td><td>否（fallback 也能定位）</td><td>logs+deploys 关联</td></tr>
+      <tr><td>downstream-cascade</td><td>下游级联失败</td><td>是</td><td>不要错怪自己</td></tr>
+      <tr><td>false-positive</td><td>误报警</td><td>否</td><td><strong>不胡说</strong>（最重要的安全保证）</td></tr>
+      <tr><td>disk-full</td><td>磁盘满</td><td>否</td><td>fallback 看 ENOSPC log</td></tr>
+      <tr><td>dns-resolution-failure</td><td>kube-dns 部署后 ENOTFOUND</td><td>是</td><td>归因到上游 coredns，不是 api-gateway</td></tr>
+      <tr><td>memory-leak-after-deploy</td><td>部署 6h 后 OOMKill</td><td>是</td><td>关联慢内存增长 + 部署</td></tr>
+      <tr><td>certificate-expiry</td><td>00:00 UTC 整点证书过期</td><td>是</td><td>错误率 0→100% 的"悬崖时间戳"</td></tr>
+      <tr><td>slow-database-query</td><td>Feature flag 触发 N+1</td><td>是</td><td>config_change 也算"deploy"</td></tr>
+      <tr><td>network-partition</td><td>us-east-1c 单 AZ 分区</td><td>是</td><td>AZ 局部归因</td></tr>
+      <tr><td>rate-limit-throttling</td><td>市场推送把交易事务挤压</td><td>是</td><td>跨租户 noisy-neighbour</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>跑法：</p>
+  <pre><code># 离线（CI 默认）：3 条 fallback-friendly 跑，7 条 LLM-gated 跳过
+pytest tests/test_eval.py -m eval
+
+# 在线：连真 LLM，10 条全跑
+SRE_EVAL_REQUIRES_LLM=1 OLLAMA_BASE_URL=http://localhost:11434 \
+  pytest tests/test_eval.py -m eval
+
+# 漂移闸（CI 用）：mean_score 跌超 5% 直接挂
+sre-agent eval-drift                    # baseline 已在 git 里
+sre-agent eval-drift --update-baseline  # 改 prompt 后刷 baseline（要 PR review）
+</code></pre>
+
+  <h3>J1 / J2 — 把"为什么"写下来</h3>
+  <p><strong>ADR (Architecture Decision Records)</strong> 是 Michael Nygard 2011 年提出的格式——每个不可逆的技术决策写一篇 markdown，包括：</p>
+  <ol>
+    <li><strong>Context</strong>：当时面对什么问题</li>
+    <li><strong>Decision</strong>：选了什么</li>
+    <li><strong>Considered</strong>：还看过什么、为什么淘汰</li>
+    <li><strong>Consequences</strong>：好的 / 坏的 / 长远要付的代价</li>
+  </ol>
+
+  <p>这版写了 7 篇——<a href="../docs/adr/001-langgraph.md">001 LangGraph</a>、<a href="../docs/adr/002-sqlite-vs-postgres.md">002 SQLite vs Postgres</a>、<a href="../docs/adr/003-bm25-no-vector-db.md">003 BM25 不用向量库</a>、<a href="../docs/adr/004-fallback-chain.md">004 三层 fallback</a>、<a href="../docs/adr/005-synthetic-data.md">005 合成数据</a>、<a href="../docs/adr/006-no-auto-execute.md">006 不自动执行</a>、<a href="../docs/adr/007-ensemble-via-threads.md">007 集成走线程不走 async</a>。</p>
+
+  <p><a href="../docs/why-not.md">why-not.md</a> 是 ADR 的姊妹篇——把"已经被多次提议、团队认真评估后决定不做"的事情写下来，免得每来一个新人就要重新辩论一遍。</p>
+
+  <h3>K2 / K5 — 工程纪律</h3>
+  <p><strong>K2 pre-commit</strong>：装一次（<code>pre-commit install</code>），之后每次 git commit 自动跑 ruff format / lint + 快速 pytest 子集 + 文件卫生检查。把"代码风格 PR"和"明显的语法错误 PR"挡在 push 之前，不浪费 reviewer 时间。</p>
+
+  <p><strong>K5 CodeQL + Dependabot</strong>：</p>
+  <ul>
+    <li>CodeQL <code>security-and-quality</code> query pack：每个 PR + 每周扫一次。能抓到 SQL 注入、subprocess shell=True、XML XXE 等"语义级"漏洞，比 ruff 这种语法级强一档</li>
+    <li>Dependabot 分三类（pip / actions / docker）周更，<strong>分组提 PR</strong>——不分组的话一周能给你提 20 个 PR 没人看；分组后一周一个 rollup PR，大幅可读</li>
+  </ul>
+
+  <h3>串起来面试一句话</h3>
+  <p>这版的主线是<strong>"把上一版的'看得见 + 自我改进'撑成'真能上生产'"</strong>——D1/D4 接通真后端、G2 把准确率再推一档、E1 把评估面铺到 8 种故障形态、J 把决策成本写成文档让接手成本变低、K 把工程纪律自动化。每一项单独看都是<em>无聊</em>的，加在一起是项目跨过"demo→产品"边界的那把刀。</p>
+</section>
+
+<!-- ─────────────────────────────────── 15. CODE MAP -->
 <section id="code">
-  <h2><span class="num">14</span>代码地图<a class="anchor" href="#code">#</a></h2>
+  <h2><span class="num">15</span>代码地图<a class="anchor" href="#code">#</a></h2>
   <p class="lead">面试官说"打开你的项目我们看看代码"——你应该按这个路径走。</p>
 
   <div class="code">
@@ -2025,7 +2223,7 @@ docker compose up</pre>
 
 <!-- ─────────────────────────────────── 13. INTERVIEW -->
 <section id="interview">
-  <h2><span class="num">15</span>面试高频问答<a class="anchor" href="#interview">#</a></h2>
+  <h2><span class="num">16</span>面试高频问答<a class="anchor" href="#interview">#</a></h2>
   <p class="lead">10 道一定会被问的，把答案背下来。</p>
 
   <details class="faq">
@@ -2125,7 +2323,7 @@ docker compose up</pre>
 
 <!-- ─────────────────────────────────── 14. RUN -->
 <section id="run">
-  <h2><span class="num">16</span>动手跑一遍<a class="anchor" href="#run">#</a></h2>
+  <h2><span class="num">17</span>动手跑一遍<a class="anchor" href="#run">#</a></h2>
   <p class="lead">从 clone 到看到 burst 队列变化，5 分钟。</p>
 
   <h3>前置</h3>

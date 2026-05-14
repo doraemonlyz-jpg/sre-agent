@@ -1,0 +1,43 @@
+# Golden case: slow-database-query.
+#
+# Scenario: Feature flag flipped 19 min before alert turned on an N+1 SELECT path in analytics-api.
+#
+# Why we keep this:
+#   Tests that the agent recognises a config_change (feature flag) as a deploy-equivalent. LLM needed to articulate N+1.
+
+id: slow-database-query
+description: |
+  Feature flag flipped 19 min before alert turned on an N+1 SELECT path in analytics-api.
+
+requires_llm: true
+threshold: 0.66
+tags: [requires-llm]
+
+alert:
+  service: analytics-api
+  severity: SEV-2
+  description: 'analytics-api p99 > 8s; query queue saturated'
+  scenario_id: slow-database-query
+  tags: ["team:analytics", "env:prod"]
+
+expected:
+  phase: ['diagnosed']
+  must_not_phase: [failed]
+  must_cite_evidence: ['traces', 'deploys']
+  hypothesis_keywords_any:
+    - query
+    - n+1
+    - n-plus-one
+    - select
+    - database
+    - postgres
+    - feature flag
+    - flag
+  confidence_range: [0.4, 1.0]
+  remediation_action_titles_any:
+    - disable
+    - feature flag
+    - launchctl
+    - flag
+    - escalate
+    - rollback

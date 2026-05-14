@@ -1,0 +1,55 @@
+name: CodeQL
+
+# K5 — static analysis for security-grade Python issues (SQL injection,
+# subprocess shell=True, XML XXE, etc.). Runs on every push to main, on
+# PRs targeting main, and weekly via cron so newly-published rules get
+# applied to dormant code.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # 03:42 UTC every Tuesday — off-peak; doesn't collide with the L6
+    # crons (calibration runs Sun 04:00 UTC; winner runs Mon).
+    - cron: "42 3 * * 2"
+
+permissions: read-all
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      # CodeQL needs write access to push results to the Security tab.
+      security-events: write
+      contents: read
+      actions: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ["python"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          # `security-and-quality` includes the security-extended pack
+          # plus extra correctness queries. Worth the ~5min on a project
+          # this size.
+          queries: security-and-quality
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"

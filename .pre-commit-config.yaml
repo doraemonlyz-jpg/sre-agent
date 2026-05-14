@@ -1,0 +1,65 @@
+# Pre-commit hooks for sre-agent (K2).
+#
+# What runs on every commit:
+#   - basic file hygiene (trailing whitespace, EOL, large files, merge conflicts)
+#   - ruff format (in-place; --fix removes unused imports etc.)
+#   - ruff check (lint; same rule set as `tool.ruff` in pyproject.toml)
+#   - a fast pytest subset (skips eval / live-LLM / slow markers)
+#
+# What does NOT run on commit (kept for CI):
+#   - the full eval harness (`-m eval`) -- too slow for a per-commit hook
+#   - the L6 cron jobs / calibrator refits -- they need synthetic seed data
+#
+# Install once after cloning:
+#   pip install pre-commit && pre-commit install
+#
+# Run on demand:
+#   pre-commit run --all-files
+#
+# Skip a single hook for an unusual commit (use sparingly):
+#   SKIP=pytest-fast git commit -m "WIP"
+
+default_language_version:
+  python: python3.12
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+        args: ["--allow-multiple-documents"]
+      - id: check-added-large-files
+        args: ["--maxkb=512"]
+      - id: check-merge-conflict
+      - id: check-toml
+      - id: detect-private-key
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Pinned to match the ruff version sre-agent develops against.
+    rev: v0.6.9
+    hooks:
+      - id: ruff-format
+      - id: ruff
+        args: ["--fix", "--exit-non-zero-on-fix"]
+
+  # Local hook -- runs the fast unit-test subset so a regressing PR
+  # gets caught before it lands in CI. We deliberately do NOT include
+  # `-m eval` (that's the slow integration tier) and skip tests that
+  # require a live LLM or external network.
+  - repo: local
+    hooks:
+      - id: pytest-fast
+        name: pytest (fast subset)
+        entry: python -m pytest -x -q --no-header
+        language: system
+        types: [python]
+        pass_filenames: false
+        # Skip on docs-only / config-only commits.
+        files: '^(src/|tests/|dashboard/|scripts/|pyproject\.toml$)'
+        # Same env protections as tests/conftest.py uses.
+        env:
+          OLLAMA_BASE_URL: "http://127.0.0.1:1"
+          OPENAI_API_KEY: ""
+          ANTHROPIC_API_KEY: ""

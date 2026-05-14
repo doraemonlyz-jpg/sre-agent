@@ -1,0 +1,38 @@
+# Golden case: memory-leak-after-deploy.
+#
+# Scenario: PR #388 added a feature cache without eviction; mem grows to 8 GiB cgroup limit and OOMKills.
+#
+# Why we keep this:
+#   Memory leak diagnosis requires correlating slow mem growth with deploy time. Pure rule-based fallback can spot the deploy + OOM but won't articulate the leak; LLM does it cleanly.
+
+id: memory-leak-after-deploy
+description: |
+  PR #388 added a feature cache without eviction; mem grows to 8 GiB cgroup limit and OOMKills.
+
+requires_llm: true
+threshold: 0.66
+tags: [requires-llm]
+
+alert:
+  service: recommendation-svc
+  severity: SEV-2
+  description: 'recommendation-svc pods cycling; OOMKilled every 90s'
+  scenario_id: memory-leak-after-deploy
+  tags: ["team:ml-platform", "env:prod"]
+
+expected:
+  phase: ['diagnosed']
+  must_not_phase: [failed]
+  must_cite_evidence: ['logs', 'metrics', 'deploys']
+  hypothesis_keywords_any:
+    - oom
+    - memory
+    - leak
+    - cache
+    - deploy
+  confidence_range: [0.45, 1.0]
+  remediation_action_titles_any:
+    - rollout undo
+    - rollback
+    - revert
+    - escalate

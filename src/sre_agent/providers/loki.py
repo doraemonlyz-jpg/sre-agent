@@ -24,6 +24,11 @@ from typing import Any, ClassVar
 
 import httpx
 
+from sre_agent.providers._http import (
+    RetryingClient,
+    make_retrying_client,
+    probe_health,
+)
 from sre_agent.providers.base import DataProvider
 from sre_agent.schemas import (
     DeploysEvidence,
@@ -58,7 +63,7 @@ class LokiProvider(DataProvider):
         *,
         base_url: str | None = None,
         query_template: str | None = None,
-        client: httpx.Client | None = None,
+        client: httpx.Client | RetryingClient | None = None,
     ) -> None:
         self.base_url = (base_url or os.environ.get("LOKI_URL", "http://localhost:3100")).rstrip("/")
         self.query_template = (
@@ -67,7 +72,15 @@ class LokiProvider(DataProvider):
             or _DEFAULT_QUERY
         )
         timeout = float(os.environ.get("LOKI_HTTP_TIMEOUT_S", "10"))
-        self._client = client or httpx.Client(base_url=self.base_url, timeout=timeout)
+        if client is not None:
+            self._client = client
+        else:
+            self._client = make_retrying_client(
+                base_url=self.base_url,
+                timeout_s=timeout,
+                provider_name="loki",
+                auth_env_prefix="LOKI",
+            )
 
     # ── fetch_logs ────────────────────────────────────────────────────
 
@@ -181,6 +194,15 @@ class LokiProvider(DataProvider):
             result=EvidenceResult.NO_SIGNAL,
             interpretation="LokiProvider does not track deploys (use GitHub/CI events)",
         )
+
+    # ── health ────────────────────────────────────────────────────────
+    #
+    # Loki exposes `/ready` (k8s-style readiness) and `/metrics`. We hit
+    # `/ready` because it's the cheapest and matches the Helm chart's
+    # default probe. Returning 200 means the in-memory chunk indexer is
+    # ready -- which is exactly what we need before issuing query_range.
+    def health(self) -> dict[str, Any]:
+        return probe_health(self._client, path="/ready")
 
     def close(self) -> None:
         self._client.close()

@@ -45,7 +45,7 @@ from sre_agent.feedback import make_record as make_feedback_record
 from sre_agent.graph import build_graph
 from sre_agent.harness import RECORDER, bind_incident
 from sre_agent.logging import setup_logging
-from sre_agent.notifications import SlackNotifier
+from sre_agent.notifications import PagerDutyNotifier, SlackNotifier
 from sre_agent.observability import (
     EXPORTER as OBSERVABILITY_EXPORTER,
 )
@@ -342,6 +342,15 @@ def _run_pipeline(incident_id: str, alert: AlertIn) -> None:
             result=report.phase, duration_seconds=(finished_at - started_at) / 1000.0,
         )
         _persist(incident_id)
+        # D4: auto-page oncall when configured (gated by env so demos
+        # don't accidentally page real humans). Severity gate lives in
+        # PagerDutyNotifier itself.
+        try:
+            with INCIDENTS_LOCK:
+                snapshot_for_page = dict(INCIDENTS.get(incident_id) or {})
+            _maybe_auto_page(incident_id, snapshot_for_page)
+        except Exception:
+            logger.exception("auto-page hook failed for %s", incident_id)
         # Stash a compact snapshot in the response cache so identical
         # alerts in the next SRE_CACHE_TTL_SECONDS skip the full pipeline.
         # Failed runs intentionally don't go into the cache.
@@ -652,6 +661,131 @@ def api_post_slack(incident_id: str):
             "error": result.error,
             "preview": result.preview,
             "payload": result.payload,
+        }
+    )
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# PagerDuty paging (D4)
+# ──────────────────────────────────────────────────────────────────────────
+
+
+def _format_pd_summary(snapshot: dict) -> str:
+    """Build a one-line PD summary from an incident snapshot.
+
+    PagerDuty caps the summary at 1024 chars; we trim more aggressively
+    because the alert UI is mobile-friendly and ~120 chars fits without
+    wrap. Full details go in custom_details.
+    """
+    alert = snapshot.get("alert") or {}
+    hypo = snapshot.get("hypothesis") or {}
+    service = alert.get("service") or snapshot.get("service") or "?"
+    severity = alert.get("severity") or snapshot.get("severity") or "?"
+    cause = (
+        hypo.get("root_cause")
+        or hypo.get("summary")
+        or hypo.get("title")
+        or "(no hypothesis)"
+    )
+    return f"[{severity}] {service}: {str(cause)[:200]}"
+
+
+def _maybe_auto_page(incident_id: str, snapshot: dict) -> None:
+    """Auto-trigger PagerDuty if SRE_PAGERDUTY_AUTO_PAGE=on AND the
+    diagnosed incident clears the configured min severity. Failures
+    are logged and swallowed -- a page failure must never crash the
+    diagnosis pipeline."""
+    if os.environ.get("SRE_PAGERDUTY_AUTO_PAGE", "").lower() not in ("on", "true", "1"):
+        return
+    notifier = PagerDutyNotifier.from_env()
+    try:
+        alert = snapshot.get("alert") or {}
+        hypo = snapshot.get("hypothesis") or {}
+        notifier.trigger(
+            incident_id=incident_id,
+            service=alert.get("service") or "?",
+            severity=alert.get("severity") or "SEV-3",
+            summary=_format_pd_summary(snapshot),
+            details={
+                "incident_id": incident_id,
+                "phase": snapshot.get("phase"),
+                "diagnosis_ms": snapshot.get("diagnosis_ms"),
+                "hypothesis": hypo,
+                "remediation": snapshot.get("remediation"),
+                "dashboard_url": (
+                    f"{os.environ.get('SRE_DASHBOARD_PUBLIC_URL', 'http://localhost:5080').rstrip('/')}"
+                    f"/incidents/{incident_id}"
+                ),
+            },
+            source=os.environ.get("OTEL_SERVICE_NAME") or "sre-agent",
+        )
+    except Exception:
+        logger.exception("auto-page failed for %s", incident_id)
+    finally:
+        notifier.close()
+
+
+@app.route("/api/incidents/<incident_id>/page", methods=["POST"])
+def api_page_oncall(incident_id: str):
+    """Manually page oncall via PagerDuty.
+
+    Returns the (always-built) payload plus a `dry_run` flag so the
+    dashboard can show an exact preview when no routing key is set --
+    mirrors the Slack endpoint's behaviour."""
+    with INCIDENTS_LOCK:
+        inc = INCIDENTS.get(incident_id)
+        if not inc:
+            return jsonify({"error": "no such incident"}), 404
+        snapshot = dict(inc)
+
+    notifier = PagerDutyNotifier.from_env()
+    try:
+        alert = snapshot.get("alert") or {}
+        result = notifier.trigger(
+            incident_id=incident_id,
+            service=alert.get("service") or "?",
+            severity=alert.get("severity") or "SEV-3",
+            summary=_format_pd_summary(snapshot),
+            details={
+                "incident_id": incident_id,
+                "phase": snapshot.get("phase"),
+                "hypothesis": snapshot.get("hypothesis"),
+                "remediation": snapshot.get("remediation"),
+            },
+        )
+    finally:
+        notifier.close()
+
+    return jsonify(
+        {
+            "ok": result.sent or result.dry_run,
+            "sent": result.sent,
+            "dry_run": result.dry_run,
+            "status": result.status,
+            "error": result.error,
+            "event_action": result.event_action,
+            "dedup_key": result.dedup_key,
+            "payload": result.payload,
+            "pd_dedup_key_returned": result.pd_dedup_key_returned,
+        }
+    )
+
+
+@app.route("/api/incidents/<incident_id>/resolve-page", methods=["POST"])
+def api_resolve_page(incident_id: str):
+    """Resolve the PagerDuty page once oncall closes the incident."""
+    notifier = PagerDutyNotifier.from_env()
+    try:
+        result = notifier.resolve(incident_id=incident_id)
+    finally:
+        notifier.close()
+    return jsonify(
+        {
+            "ok": result.sent or result.dry_run,
+            "sent": result.sent,
+            "dry_run": result.dry_run,
+            "status": result.status,
+            "error": result.error,
         }
     )
 
