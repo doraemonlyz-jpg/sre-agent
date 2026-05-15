@@ -1,0 +1,33 @@
+{
+  "incident_id": "5b903d23a1",
+  "records": [
+    {
+      "id": "fb-4a918a3159",
+      "ts": 1778843213.4281933,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in ad-bidder, not what the agent said",
+      "correct_remediation": "disable feature flag svc.ad-bidder.new_path",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.75,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.4283066,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-4",
+    "description": "memory usage 98% on session-store -- OOM kill predicted in 27m",
+    "started_at": "2026-05-12T07:49:00.914925+00:00"
+  }
+}

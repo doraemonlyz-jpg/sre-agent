@@ -1,0 +1,35 @@
+{
+  "incident_id": "34cdae5307",
+  "records": [
+    {
+      "id": "fb-c8d2cc68bb",
+      "ts": 1778843213.605571,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream live-stream-edge timeout, not checkout-api",
+      "correct_remediation": "page the rate-limiter-edge oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778843213.605657,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on cdn-router",
+    "started_at": "2026-05-12T11:19:00.489084+00:00"
+  }
+}

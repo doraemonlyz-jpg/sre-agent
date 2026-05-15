@@ -1,0 +1,33 @@
+{
+  "incident_id": "8915df7f61",
+  "records": [
+    {
+      "id": "fb-39abfc9313",
+      "ts": 1778843214.123645,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for rate-limiter-edge was filling our partition",
+      "correct_remediation": "disable feature flag svc.ad-bidder.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.92,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843214.1237323,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-2",
+    "description": "5xx rate 23% sustained for 583s after deploy of #29676",
+    "started_at": "2026-05-13T22:02:07.878600+00:00"
+  }
+}

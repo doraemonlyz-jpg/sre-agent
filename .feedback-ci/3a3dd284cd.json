@@ -1,0 +1,33 @@
+{
+  "incident_id": "3a3dd284cd",
+  "records": [
+    {
+      "id": "fb-adf1be2514",
+      "ts": 1778843213.9685206,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the cart-service sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.9686058,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-2",
+    "description": "5xx rate 18% sustained for 136s after deploy of #69653",
+    "started_at": "2026-05-11T20:26:21.543416+00:00"
+  }
+}

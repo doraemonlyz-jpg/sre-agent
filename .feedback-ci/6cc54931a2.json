@@ -1,0 +1,33 @@
+{
+  "incident_id": "6cc54931a2",
+  "records": [
+    {
+      "id": "fb-57390b48e8",
+      "ts": 1778843214.1636784,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.89,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843214.1637633,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-4",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on notification-fanout",
+    "started_at": "2026-05-14T19:31:11.374023+00:00"
+  }
+}

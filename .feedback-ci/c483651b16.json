@@ -1,0 +1,33 @@
+{
+  "incident_id": "c483651b16",
+  "records": [
+    {
+      "id": "fb-74be649f43",
+      "ts": 1778843213.7024343,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "page the live-stream-edge oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.83,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.7025223,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-3",
+    "description": "5xx rate 13% sustained for 347s after deploy of #86630",
+    "started_at": "2026-05-15T06:56:38.032546+00:00"
+  }
+}

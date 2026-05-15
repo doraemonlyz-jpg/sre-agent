@@ -1,0 +1,35 @@
+{
+  "incident_id": "1ca6ecf14a",
+  "records": [
+    {
+      "id": "fb-744f2880e7",
+      "ts": 1778843214.0378413,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778843214.037928,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 728ms briefly, recovered in 12s",
+    "started_at": "2026-05-14T11:33:18.813610+00:00"
+  }
+}

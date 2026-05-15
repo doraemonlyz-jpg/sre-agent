@@ -1,0 +1,35 @@
+{
+  "incident_id": "b3d4918c84",
+  "records": [
+    {
+      "id": "fb-06d4246006",
+      "ts": 1778843213.7020378,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for user-profile was filling our partition",
+      "correct_remediation": "disable feature flag svc.price-cache.new_path",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778843213.7021265,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on comment-svc",
+    "started_at": "2026-05-15T05:25:12.632542+00:00"
+  }
+}

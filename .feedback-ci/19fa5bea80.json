@@ -1,0 +1,33 @@
+{
+  "incident_id": "19fa5bea80",
+  "records": [
+    {
+      "id": "fb-d7a9e7ae76",
+      "ts": 1778843213.3674462,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for image-thumbnail was filling our partition",
+      "correct_remediation": "page the cart-service oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.92,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.3675313,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-4",
+    "description": "downstream service notification-fanout returning 502 -- error budget burning at 10x",
+    "started_at": "2026-05-13T15:11:02.586496+00:00"
+  }
+}

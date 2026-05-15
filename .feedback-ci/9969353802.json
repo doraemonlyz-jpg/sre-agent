@@ -1,0 +1,33 @@
+{
+  "incident_id": "9969353802",
+  "records": [
+    {
+      "id": "fb-f152e0202b",
+      "ts": 1778843213.3233585,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the order-pipeline sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.3234432,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "downstream service inventory-sync returning 502 -- error budget burning at 15x",
+    "started_at": "2026-05-10T05:12:16.715676+00:00"
+  }
+}

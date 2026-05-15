@@ -1,0 +1,33 @@
+{
+  "incident_id": "e591ccd6ce",
+  "records": [
+    {
+      "id": "fb-e9bacb2619",
+      "ts": 1778843214.1708214,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the cdn-router sidecar",
+      "correct_remediation": "page the payments-gateway oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843214.170907,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-3",
+    "description": "p99 latency 2602ms spiking on /checkout, error rate 4%",
+    "started_at": "2026-05-10T02:17:20.218500+00:00"
+  }
+}

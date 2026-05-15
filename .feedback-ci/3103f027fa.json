@@ -1,0 +1,33 @@
+{
+  "incident_id": "3103f027fa",
+  "records": [
+    {
+      "id": "fb-03db312a6a",
+      "ts": 1778843213.682327,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.86,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.682413,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "downstream service ad-bidder returning 502 -- error budget burning at 19x",
+    "started_at": "2026-05-13T20:36:36.105655+00:00"
+  }
+}

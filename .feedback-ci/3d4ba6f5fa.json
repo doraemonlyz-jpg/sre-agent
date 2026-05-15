@@ -1,0 +1,33 @@
+{
+  "incident_id": "3d4ba6f5fa",
+  "records": [
+    {
+      "id": "fb-e824165817",
+      "ts": 1778843213.80201,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in order-pipeline, not what the agent said",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.8,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.8020964,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-4",
+    "description": "memory usage 98% on rate-limiter-edge -- OOM kill predicted in 7m",
+    "started_at": "2026-05-13T04:00:19.727419+00:00"
+  }
+}

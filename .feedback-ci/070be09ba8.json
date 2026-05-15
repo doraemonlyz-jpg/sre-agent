@@ -1,0 +1,33 @@
+{
+  "incident_id": "070be09ba8",
+  "records": [
+    {
+      "id": "fb-7a7503071b",
+      "ts": 1778843213.3731384,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cart-service was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.3732243,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "5xx rate 16% sustained for 206s after deploy of #57681",
+    "started_at": "2026-05-08T19:59:40.254134+00:00"
+  }
+}

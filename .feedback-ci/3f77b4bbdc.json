@@ -1,0 +1,33 @@
+{
+  "incident_id": "3f77b4bbdc",
+  "records": [
+    {
+      "id": "fb-69af3ec59e",
+      "ts": 1778843213.5984397,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for comment-svc was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.5985246,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-4",
+    "description": "5xx rate 21% sustained for 165s after deploy of #57520",
+    "started_at": "2026-05-09T12:10:30.972242+00:00"
+  }
+}

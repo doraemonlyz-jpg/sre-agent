@@ -1,0 +1,33 @@
+{
+  "incident_id": "8870978119",
+  "records": [
+    {
+      "id": "fb-f55a5d0f79",
+      "ts": 1778843213.8467293,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for user-profile was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.8,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.846813,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-4",
+    "description": "downstream service comment-svc returning 502 -- error budget burning at 17x",
+    "started_at": "2026-05-13T03:18:03.868361+00:00"
+  }
+}

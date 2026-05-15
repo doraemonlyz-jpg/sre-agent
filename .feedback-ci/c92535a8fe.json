@@ -1,0 +1,35 @@
+{
+  "incident_id": "c92535a8fe",
+  "records": [
+    {
+      "id": "fb-333a96bc6a",
+      "ts": 1778843213.3077714,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in comment-svc, not what the agent said",
+      "correct_remediation": "page the live-stream-edge oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778843213.307852,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 212ms briefly, recovered in 30s",
+    "started_at": "2026-05-12T17:54:50.749677+00:00"
+  }
+}

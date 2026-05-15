@@ -1,0 +1,33 @@
+{
+  "incident_id": "715bf91160",
+  "records": [
+    {
+      "id": "fb-946ff5a151",
+      "ts": 1778843213.5920103,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the live-stream-edge sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.5920963,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-2",
+    "description": "p99 latency 1804ms spiking on /checkout, error rate 9%",
+    "started_at": "2026-05-10T20:18:42.414387+00:00"
+  }
+}

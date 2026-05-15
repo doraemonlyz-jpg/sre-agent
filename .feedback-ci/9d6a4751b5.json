@@ -1,0 +1,33 @@
+{
+  "incident_id": "9d6a4751b5",
+  "records": [
+    {
+      "id": "fb-b9b06f7923",
+      "ts": 1778843213.88136,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the rate-limiter-edge sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.8814466,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-2",
+    "description": "memory usage 92% on promo-engine -- OOM kill predicted in 18m",
+    "started_at": "2026-05-13T07:33:12.122936+00:00"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "incident_id": "44dc9d90e6",
+  "records": [
+    {
+      "id": "fb-3f60e0050a",
+      "ts": 1778843213.721853,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the image-thumbnail sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778843213.7219388,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 769ms briefly, recovered in 24s",
+    "started_at": "2026-05-09T01:37:36.292922+00:00"
+  }
+}

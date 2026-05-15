@@ -1,0 +1,33 @@
+{
+  "incident_id": "9040ae2427",
+  "records": [
+    {
+      "id": "fb-120d6690ed",
+      "ts": 1778843214.1316996,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "page the cdn-router oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843214.1317844,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-4",
+    "description": "5xx rate 11% sustained for 530s after deploy of #70083",
+    "started_at": "2026-05-11T07:21:49.694732+00:00"
+  }
+}

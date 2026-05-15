@@ -1,0 +1,35 @@
+{
+  "incident_id": "d281b6a0c2",
+  "records": [
+    {
+      "id": "fb-db66699111",
+      "ts": 1778843213.5723028,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for inventory-sync was filling our partition",
+      "correct_remediation": "increase recommend-feed concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778843213.5723937,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 496ms briefly, recovered in 11s",
+    "started_at": "2026-05-10T14:57:08.622102+00:00"
+  }
+}

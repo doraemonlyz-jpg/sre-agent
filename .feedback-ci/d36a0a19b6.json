@@ -1,0 +1,33 @@
+{
+  "incident_id": "d36a0a19b6",
+  "records": [
+    {
+      "id": "fb-d0e27de047",
+      "ts": 1778843213.7119498,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in payments-gateway, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.7120352,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-4",
+    "description": "downstream service auth-service returning 502 -- error budget burning at 12x",
+    "started_at": "2026-05-12T22:29:33.852282+00:00"
+  }
+}

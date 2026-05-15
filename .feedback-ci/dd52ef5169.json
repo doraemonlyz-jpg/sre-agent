@@ -1,0 +1,33 @@
+{
+  "incident_id": "dd52ef5169",
+  "records": [
+    {
+      "id": "fb-cc66946057",
+      "ts": 1778843213.6052086,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream session-store timeout, not rate-limiter-edge",
+      "correct_remediation": "increase rate-limiter-edge concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.6053138,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-2",
+    "description": "p99 latency 3967ms spiking on /checkout, error rate 6%",
+    "started_at": "2026-05-10T17:46:16.634228+00:00"
+  }
+}

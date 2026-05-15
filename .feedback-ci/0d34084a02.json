@@ -1,0 +1,33 @@
+{
+  "incident_id": "0d34084a02",
+  "records": [
+    {
+      "id": "fb-354c23b082",
+      "ts": 1778843213.790574,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "queue head-of-line blocking in inventory-sync, not what the agent said",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.7906578,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "downstream service auth-service returning 502 -- error budget burning at 4x",
+    "started_at": "2026-05-09T10:12:13.614870+00:00"
+  }
+}

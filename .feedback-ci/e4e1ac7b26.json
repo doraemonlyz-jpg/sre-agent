@@ -1,0 +1,33 @@
+{
+  "incident_id": "e4e1ac7b26",
+  "records": [
+    {
+      "id": "fb-a6947ed014",
+      "ts": 1778843213.9556966,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for comment-svc was filling our partition",
+      "correct_remediation": "disable feature flag svc.live-stream-edge.new_path",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.9557831,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-2",
+    "description": "p99 latency 2928ms spiking on /checkout, error rate 13%",
+    "started_at": "2026-05-10T15:33:56.013449+00:00"
+  }
+}

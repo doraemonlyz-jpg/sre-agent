@@ -1,0 +1,33 @@
+{
+  "incident_id": "49f1ef0e17",
+  "records": [
+    {
+      "id": "fb-ec333cac91",
+      "ts": 1778843213.4222555,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "queue head-of-line blocking in session-store, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.63,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.4223795,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-4",
+    "description": "5xx rate 13% sustained for 483s after deploy of #84532",
+    "started_at": "2026-05-09T11:51:22.078373+00:00"
+  }
+}

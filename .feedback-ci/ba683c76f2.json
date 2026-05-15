@@ -1,0 +1,35 @@
+{
+  "incident_id": "ba683c76f2",
+  "records": [
+    {
+      "id": "fb-d39a6e987a",
+      "ts": 1778843213.3157728,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.video-encoder.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778843213.315856,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-4",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on search-suggest",
+    "started_at": "2026-05-14T14:06:28.979409+00:00"
+  }
+}

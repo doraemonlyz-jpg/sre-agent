@@ -1,0 +1,35 @@
+{
+  "incident_id": "0bd8a4adf6",
+  "records": [
+    {
+      "id": "fb-8df53decec",
+      "ts": 1778843213.8794615,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream order-pipeline timeout, not inventory-sync",
+      "correct_remediation": "increase inventory-sync concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778843213.8795488,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "p99 latency 3819ms spiking on /checkout, error rate 15%",
+    "started_at": "2026-05-08T18:52:55.554437+00:00"
+  }
+}

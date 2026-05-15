@@ -1,0 +1,33 @@
+{
+  "incident_id": "f8aa2cb77a",
+  "records": [
+    {
+      "id": "fb-e5a24cf6f7",
+      "ts": 1778843214.168626,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in cdn-router, not what the agent said",
+      "correct_remediation": "page the order-pipeline oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.88,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843214.168712,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-2",
+    "description": "memory usage 95% on ad-bidder -- OOM kill predicted in 25m",
+    "started_at": "2026-05-10T20:40:56.639494+00:00"
+  }
+}

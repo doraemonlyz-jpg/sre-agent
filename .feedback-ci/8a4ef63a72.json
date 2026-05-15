@@ -1,0 +1,33 @@
+{
+  "incident_id": "8a4ef63a72",
+  "records": [
+    {
+      "id": "fb-c8e14a0e37",
+      "ts": 1778843213.849108,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for notification-fanout was filling our partition",
+      "correct_remediation": "page the payments-gateway oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.86,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.8491921,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "p99 latency 2230ms spiking on /checkout, error rate 3%",
+    "started_at": "2026-05-11T07:36:12.222224+00:00"
+  }
+}

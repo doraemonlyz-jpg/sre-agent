@@ -1,0 +1,35 @@
+{
+  "incident_id": "adabf89ccb",
+  "records": [
+    {
+      "id": "fb-76c1866108",
+      "ts": 1778843214.114418,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream checkout-api timeout, not cart-service",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778843214.1145043,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on payments-gateway",
+    "started_at": "2026-05-12T21:50:39.882062+00:00"
+  }
+}

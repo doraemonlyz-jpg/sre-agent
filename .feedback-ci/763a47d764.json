@@ -1,0 +1,33 @@
+{
+  "incident_id": "763a47d764",
+  "records": [
+    {
+      "id": "fb-87fb2dedec",
+      "ts": 1778843213.5486414,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.checkout-api.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.5487263,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-3",
+    "description": "downstream service ad-bidder returning 502 -- error budget burning at 11x",
+    "started_at": "2026-05-08T12:22:57.315466+00:00"
+  }
+}

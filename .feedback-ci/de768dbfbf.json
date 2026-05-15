@@ -1,0 +1,33 @@
+{
+  "incident_id": "de768dbfbf",
+  "records": [
+    {
+      "id": "fb-a7899d9080",
+      "ts": 1778843213.6414824,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.6415672,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "downstream service order-pipeline returning 502 -- error budget burning at 6x",
+    "started_at": "2026-05-13T05:10:30.376944+00:00"
+  }
+}

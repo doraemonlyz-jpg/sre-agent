@@ -1,0 +1,35 @@
+{
+  "incident_id": "28fcb90a43",
+  "records": [
+    {
+      "id": "fb-4d172f612b",
+      "ts": 1778843213.7607262,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in cdn-router, not what the agent said",
+      "correct_remediation": "disable feature flag svc.cdn-router.new_path",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778843213.760809,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-1",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on order-pipeline",
+    "started_at": "2026-05-14T12:42:40.147695+00:00"
+  }
+}

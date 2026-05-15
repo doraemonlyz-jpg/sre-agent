@@ -1,0 +1,35 @@
+{
+  "incident_id": "f0da712785",
+  "records": [
+    {
+      "id": "fb-6893bd19d1",
+      "ts": 1778843213.9638588,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in ad-bidder, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778843213.9639456,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on search-suggest",
+    "started_at": "2026-05-10T22:56:53.768503+00:00"
+  }
+}

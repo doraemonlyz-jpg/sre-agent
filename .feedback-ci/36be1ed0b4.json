@@ -1,0 +1,33 @@
+{
+  "incident_id": "36be1ed0b4",
+  "records": [
+    {
+      "id": "fb-266e088683",
+      "ts": 1778843214.126336,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cart-service was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.65,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843214.1264257,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "memory usage 93% on checkout-api -- OOM kill predicted in 7m",
+    "started_at": "2026-05-11T01:38:53.902878+00:00"
+  }
+}

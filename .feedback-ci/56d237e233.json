@@ -1,0 +1,33 @@
+{
+  "incident_id": "56d237e233",
+  "records": [
+    {
+      "id": "fb-df2a4409f7",
+      "ts": 1778843213.9014502,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in notification-fanout, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.84,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.9015365,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "5xx rate 13% sustained for 425s after deploy of #81041",
+    "started_at": "2026-05-15T07:12:22.408128+00:00"
+  }
+}

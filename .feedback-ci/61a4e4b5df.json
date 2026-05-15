@@ -1,0 +1,33 @@
+{
+  "incident_id": "61a4e4b5df",
+  "records": [
+    {
+      "id": "fb-19b996adc3",
+      "ts": 1778843213.7767816,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "increase inventory-sync concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.776867,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "memory usage 91% on search-suggest -- OOM kill predicted in 21m",
+    "started_at": "2026-05-11T16:17:39.598576+00:00"
+  }
+}

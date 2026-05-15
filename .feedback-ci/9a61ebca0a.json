@@ -1,0 +1,33 @@
+{
+  "incident_id": "9a61ebca0a",
+  "records": [
+    {
+      "id": "fb-24cfcd4ef8",
+      "ts": 1778843213.5969398,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for checkout-api was filling our partition",
+      "correct_remediation": "page the recommend-feed oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.5970225,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-3",
+    "description": "5xx rate 12% sustained for 93s after deploy of #62174",
+    "started_at": "2026-05-13T08:15:44.119003+00:00"
+  }
+}

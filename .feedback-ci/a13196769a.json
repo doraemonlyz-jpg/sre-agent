@@ -1,0 +1,33 @@
+{
+  "incident_id": "a13196769a",
+  "records": [
+    {
+      "id": "fb-359b7e8cb2",
+      "ts": 1778843213.7703054,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for promo-engine was filling our partition",
+      "correct_remediation": "page the live-stream-edge oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.7703912,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-2",
+    "description": "memory usage 98% on price-cache -- OOM kill predicted in 8m",
+    "started_at": "2026-05-09T16:49:26.044940+00:00"
+  }
+}

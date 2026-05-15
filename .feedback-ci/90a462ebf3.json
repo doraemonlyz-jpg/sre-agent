@@ -1,0 +1,33 @@
+{
+  "incident_id": "90a462ebf3",
+  "records": [
+    {
+      "id": "fb-aad19037ff",
+      "ts": 1778843214.062537,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream search-suggest timeout, not auth-service",
+      "correct_remediation": "disable feature flag svc.auth-service.new_path",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.82,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843214.062622,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-4",
+    "description": "memory usage 94% on ad-bidder -- OOM kill predicted in 14m",
+    "started_at": "2026-05-11T17:54:20.576581+00:00"
+  }
+}

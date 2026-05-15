@@ -1,0 +1,33 @@
+{
+  "incident_id": "31c88b8046",
+  "records": [
+    {
+      "id": "fb-ff60288b60",
+      "ts": 1778843213.75133,
+      "verdict": "correct",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.89,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.7514262,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-2",
+    "description": "p99 latency 2437ms spiking on /checkout, error rate 11%",
+    "started_at": "2026-05-12T13:48:50.422710+00:00"
+  }
+}

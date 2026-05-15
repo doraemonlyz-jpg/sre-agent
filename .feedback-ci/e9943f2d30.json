@@ -1,0 +1,33 @@
+{
+  "incident_id": "e9943f2d30",
+  "records": [
+    {
+      "id": "fb-27916957d7",
+      "ts": 1778843213.5882483,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream cart-service timeout, not image-thumbnail",
+      "correct_remediation": "increase image-thumbnail concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.5883765,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-1",
+    "description": "memory usage 90% on cart-service -- OOM kill predicted in 20m",
+    "started_at": "2026-05-15T04:00:43.220223+00:00"
+  }
+}

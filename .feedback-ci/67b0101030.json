@@ -1,0 +1,33 @@
+{
+  "incident_id": "67b0101030",
+  "records": [
+    {
+      "id": "fb-33c2de9b35",
+      "ts": 1778843214.0222592,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in cart-service, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.94,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843214.0223677,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "memory usage 99% on order-pipeline -- OOM kill predicted in 3m",
+    "started_at": "2026-05-15T09:02:50.207325+00:00"
+  }
+}

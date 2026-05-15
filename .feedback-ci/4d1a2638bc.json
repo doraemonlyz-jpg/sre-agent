@@ -1,0 +1,33 @@
+{
+  "incident_id": "4d1a2638bc",
+  "records": [
+    {
+      "id": "fb-13f6133f7f",
+      "ts": 1778843213.6007762,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the cart-service sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.57,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.6008592,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "downstream service ad-bidder returning 502 -- error budget burning at 10x",
+    "started_at": "2026-05-14T19:43:27.086370+00:00"
+  }
+}

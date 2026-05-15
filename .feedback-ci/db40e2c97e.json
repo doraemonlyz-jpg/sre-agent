@@ -1,0 +1,33 @@
+{
+  "incident_id": "db40e2c97e",
+  "records": [
+    {
+      "id": "fb-f1a44106fc",
+      "ts": 1778843213.344122,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for live-stream-edge was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.3442056,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "p99 latency 1711ms spiking on /checkout, error rate 7%",
+    "started_at": "2026-05-13T04:36:47.608949+00:00"
+  }
+}

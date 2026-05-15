@@ -1,0 +1,33 @@
+{
+  "incident_id": "8fcd2a640f",
+  "records": [
+    {
+      "id": "fb-06b4ecd6b6",
+      "ts": 1778843213.657366,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream order-pipeline timeout, not rate-limiter-edge",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.6574538,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-3",
+    "description": "5xx rate 20% sustained for 221s after deploy of #65547",
+    "started_at": "2026-05-14T10:51:56.733829+00:00"
+  }
+}

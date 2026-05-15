@@ -1,0 +1,35 @@
+{
+  "incident_id": "9fc30b106d",
+  "records": [
+    {
+      "id": "fb-9bea43e33d",
+      "ts": 1778843213.5129085,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the search-suggest sidecar",
+      "correct_remediation": "page the live-stream-edge oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778843213.512996,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-4",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on promo-engine",
+    "started_at": "2026-05-12T17:12:32.508140+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "ab570aba8f",
+  "records": [
+    {
+      "id": "fb-75dc326592",
+      "ts": 1778843213.823099,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in session-store, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.94,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.8231828,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "p99 latency 2058ms spiking on /checkout, error rate 15%",
+    "started_at": "2026-05-12T20:16:14.482704+00:00"
+  }
+}

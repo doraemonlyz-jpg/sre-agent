@@ -1,0 +1,33 @@
+{
+  "incident_id": "315d05d805",
+  "records": [
+    {
+      "id": "fb-5354922c75",
+      "ts": 1778843213.7588704,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.93,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.758956,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-1",
+    "description": "memory usage 98% on comment-svc -- OOM kill predicted in 29m",
+    "started_at": "2026-05-13T08:52:56.859412+00:00"
+  }
+}

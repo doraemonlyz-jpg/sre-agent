@@ -1,0 +1,35 @@
+{
+  "incident_id": "a309074a4f",
+  "records": [
+    {
+      "id": "fb-c77fe30e3e",
+      "ts": 1778843214.0709832,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in auth-service, not what the agent said",
+      "correct_remediation": "increase auth-service concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778843214.0710692,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-4",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on notification-fanout",
+    "started_at": "2026-05-11T19:54:09.086763+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "8fb3c565c8",
+  "records": [
+    {
+      "id": "fb-d4f57cf70b",
+      "ts": 1778843213.7803533,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for user-profile was filling our partition",
+      "correct_remediation": "increase payments-gateway concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.7804406,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-2",
+    "description": "downstream service image-thumbnail returning 502 -- error budget burning at 12x",
+    "started_at": "2026-05-08T18:39:51.585469+00:00"
+  }
+}

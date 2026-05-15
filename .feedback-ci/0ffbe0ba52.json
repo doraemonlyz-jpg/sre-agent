@@ -1,0 +1,33 @@
+{
+  "incident_id": "0ffbe0ba52",
+  "records": [
+    {
+      "id": "fb-5c706843b3",
+      "ts": 1778843213.552375,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.85,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778843213.5524611,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-4",
+    "description": "downstream service user-profile returning 502 -- error budget burning at 19x",
+    "started_at": "2026-05-08T20:11:08.964449+00:00"
+  }
+}
