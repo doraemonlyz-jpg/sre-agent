@@ -1,0 +1,33 @@
+{
+  "incident_id": "a400449109",
+  "records": [
+    {
+      "id": "fb-be0e8608a9",
+      "ts": 1778920182.7145598,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "page the notification-fanout oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.79,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.7146502,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-1",
+    "description": "p99 latency 3923ms spiking on /checkout, error rate 14%",
+    "started_at": "2026-05-15T10:13:43.143357+00:00"
+  }
+}

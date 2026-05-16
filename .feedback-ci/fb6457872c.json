@@ -1,0 +1,33 @@
+{
+  "incident_id": "fb6457872c",
+  "records": [
+    {
+      "id": "fb-82ede5c41c",
+      "ts": 1778920183.2282207,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.price-cache.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.228296,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-3",
+    "description": "downstream service promo-engine returning 502 -- error budget burning at 19x",
+    "started_at": "2026-05-10T06:29:36.985545+00:00"
+  }
+}

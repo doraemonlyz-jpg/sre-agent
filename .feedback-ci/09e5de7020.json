@@ -1,0 +1,33 @@
+{
+  "incident_id": "09e5de7020",
+  "records": [
+    {
+      "id": "fb-e345bc39d6",
+      "ts": 1778920183.0370123,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for order-pipeline was filling our partition",
+      "correct_remediation": "page the auth-service oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.55,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.0370893,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-3",
+    "description": "p99 latency 1727ms spiking on /checkout, error rate 11%",
+    "started_at": "2026-05-14T09:33:59.331292+00:00"
+  }
+}

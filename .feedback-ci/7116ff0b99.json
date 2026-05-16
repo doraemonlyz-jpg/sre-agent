@@ -1,0 +1,33 @@
+{
+  "incident_id": "7116ff0b99",
+  "records": [
+    {
+      "id": "fb-15c1467526",
+      "ts": 1778920182.899393,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in user-profile, not what the agent said",
+      "correct_remediation": "page the recommend-feed oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.81,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.8994699,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-2",
+    "description": "memory usage 94% on cart-service -- OOM kill predicted in 23m",
+    "started_at": "2026-05-12T16:40:31.335437+00:00"
+  }
+}

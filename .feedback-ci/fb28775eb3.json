@@ -1,0 +1,35 @@
+{
+  "incident_id": "fb28775eb3",
+  "records": [
+    {
+      "id": "fb-45877a5f9c",
+      "ts": 1778920183.0047226,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the recommend-feed sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778920183.004806,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-4",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on inventory-sync",
+    "started_at": "2026-05-13T03:56:18.824436+00:00"
+  }
+}

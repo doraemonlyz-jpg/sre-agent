@@ -1,0 +1,35 @@
+{
+  "incident_id": "5976f993d4",
+  "records": [
+    {
+      "id": "fb-8cbf4727e4",
+      "ts": 1778920183.1029902,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in live-stream-edge, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778920183.103071,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-4",
+    "description": "downstream service image-thumbnail returning 502 -- error budget burning at 12x",
+    "started_at": "2026-05-15T14:15:14.075327+00:00"
+  }
+}

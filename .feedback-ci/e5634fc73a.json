@@ -1,0 +1,33 @@
+{
+  "incident_id": "e5634fc73a",
+  "records": [
+    {
+      "id": "fb-143086e3c5",
+      "ts": 1778920183.0748212,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream price-cache timeout, not payments-gateway",
+      "correct_remediation": "page the promo-engine oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.57,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.0748985,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-3",
+    "description": "memory usage 88% on notification-fanout -- OOM kill predicted in 11m",
+    "started_at": "2026-05-13T10:04:08.226638+00:00"
+  }
+}

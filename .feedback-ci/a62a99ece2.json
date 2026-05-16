@@ -1,0 +1,35 @@
+{
+  "incident_id": "a62a99ece2",
+  "records": [
+    {
+      "id": "fb-11e77b4050",
+      "ts": 1778920182.927822,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream order-pipeline timeout, not user-profile",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778920182.9278977,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 680ms briefly, recovered in 19s",
+    "started_at": "2026-05-12T07:41:48.929683+00:00"
+  }
+}

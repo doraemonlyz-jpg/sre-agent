@@ -1,0 +1,33 @@
+{
+  "incident_id": "1cb3ddd719",
+  "records": [
+    {
+      "id": "fb-28cfab9a10",
+      "ts": 1778920182.9070024,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.9070766,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-2",
+    "description": "memory usage 90% on session-store -- OOM kill predicted in 8m",
+    "started_at": "2026-05-09T15:32:06.227839+00:00"
+  }
+}

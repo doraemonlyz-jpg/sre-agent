@@ -1,0 +1,33 @@
+{
+  "incident_id": "245f8b4ca3",
+  "records": [
+    {
+      "id": "fb-ee90d377e5",
+      "ts": 1778920183.0211186,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for promo-engine was filling our partition",
+      "correct_remediation": "page the price-cache oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.0211947,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-3",
+    "description": "p99 latency 2081ms spiking on /checkout, error rate 9%",
+    "started_at": "2026-05-15T20:01:14.124184+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "5f1a42f757",
+  "records": [
+    {
+      "id": "fb-bd1b6f1608",
+      "ts": 1778920182.9261317,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.cart-service.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.76,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.9262102,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "5xx rate 20% sustained for 243s after deploy of #43471",
+    "started_at": "2026-05-15T23:36:40.978816+00:00"
+  }
+}

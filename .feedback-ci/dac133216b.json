@@ -1,0 +1,33 @@
+{
+  "incident_id": "dac133216b",
+  "records": [
+    {
+      "id": "fb-6d60aa3b2a",
+      "ts": 1778920183.4785004,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the cart-service sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.84,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.478592,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-1",
+    "description": "memory usage 89% on cdn-router -- OOM kill predicted in 30m",
+    "started_at": "2026-05-15T19:59:19.521867+00:00"
+  }
+}

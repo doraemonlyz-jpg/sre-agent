@@ -1,0 +1,35 @@
+{
+  "incident_id": "48542fe797",
+  "records": [
+    {
+      "id": "fb-dbd3e5308f",
+      "ts": 1778920183.0545557,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for comment-svc was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778920183.0546534,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 489ms briefly, recovered in 23s",
+    "started_at": "2026-05-14T23:40:21.422974+00:00"
+  }
+}

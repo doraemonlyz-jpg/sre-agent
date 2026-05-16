@@ -1,0 +1,33 @@
+{
+  "incident_id": "41e2ada654",
+  "records": [
+    {
+      "id": "fb-63b7a1f66a",
+      "ts": 1778920182.7163348,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the image-thumbnail sidecar",
+      "correct_remediation": "increase image-thumbnail concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.85,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.716407,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-2",
+    "description": "p99 latency 1865ms spiking on /checkout, error rate 14%",
+    "started_at": "2026-05-10T21:50:52.828653+00:00"
+  }
+}

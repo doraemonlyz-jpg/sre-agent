@@ -1,0 +1,33 @@
+{
+  "incident_id": "6cd8a6eadd",
+  "records": [
+    {
+      "id": "fb-3fe943c44b",
+      "ts": 1778920183.0380423,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the notification-fanout sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.0381193,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "5xx rate 10% sustained for 252s after deploy of #78612",
+    "started_at": "2026-05-11T10:28:46.676943+00:00"
+  }
+}

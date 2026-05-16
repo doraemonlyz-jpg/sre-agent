@@ -1,0 +1,33 @@
+{
+  "incident_id": "f95de32f43",
+  "records": [
+    {
+      "id": "fb-82a655817b",
+      "ts": 1778920183.4061232,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for payments-gateway was filling our partition",
+      "correct_remediation": "increase comment-svc concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.4062026,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-2",
+    "description": "memory usage 99% on live-stream-edge -- OOM kill predicted in 9m",
+    "started_at": "2026-05-12T00:43:43.385996+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "9f537c8930",
+  "records": [
+    {
+      "id": "fb-fc5d84a868",
+      "ts": 1778920182.7709563,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the user-profile sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.771033,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-4",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on payments-gateway",
+    "started_at": "2026-05-09T11:31:19.597800+00:00"
+  }
+}

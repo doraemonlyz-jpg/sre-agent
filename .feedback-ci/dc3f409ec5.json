@@ -1,0 +1,33 @@
+{
+  "incident_id": "dc3f409ec5",
+  "records": [
+    {
+      "id": "fb-c82b193625",
+      "ts": 1778920183.2117388,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in recommend-feed, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.79,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.211815,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "5xx rate 14% sustained for 81s after deploy of #55668",
+    "started_at": "2026-05-13T07:44:30.429401+00:00"
+  }
+}

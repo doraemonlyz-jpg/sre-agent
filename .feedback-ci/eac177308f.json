@@ -1,0 +1,33 @@
+{
+  "incident_id": "eac177308f",
+  "records": [
+    {
+      "id": "fb-949aec1741",
+      "ts": 1778920183.293318,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for image-thumbnail was filling our partition",
+      "correct_remediation": "increase order-pipeline concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.293395,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "5xx rate 8% sustained for 525s after deploy of #73373",
+    "started_at": "2026-05-11T13:36:19.479249+00:00"
+  }
+}

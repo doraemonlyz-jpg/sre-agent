@@ -1,0 +1,35 @@
+{
+  "incident_id": "edaba00694",
+  "records": [
+    {
+      "id": "fb-53e4e05cca",
+      "ts": 1778920182.775511,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream cart-service timeout, not comment-svc",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778920182.7756057,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 337ms briefly, recovered in 9s",
+    "started_at": "2026-05-13T14:10:17.403720+00:00"
+  }
+}

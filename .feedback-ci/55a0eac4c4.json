@@ -1,0 +1,33 @@
+{
+  "incident_id": "55a0eac4c4",
+  "records": [
+    {
+      "id": "fb-67f4deaedc",
+      "ts": 1778920182.6834025,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream comment-svc timeout, not notification-fanout",
+      "correct_remediation": "page the session-store oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.89,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.6834896,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "memory usage 95% on payments-gateway -- OOM kill predicted in 23m",
+    "started_at": "2026-05-15T16:38:54.345384+00:00"
+  }
+}

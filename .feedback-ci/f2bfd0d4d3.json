@@ -1,0 +1,33 @@
+{
+  "incident_id": "f2bfd0d4d3",
+  "records": [
+    {
+      "id": "fb-1063dc0d6f",
+      "ts": 1778920183.146545,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in inventory-sync, not what the agent said",
+      "correct_remediation": "increase inventory-sync concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.1466393,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "5xx rate 8% sustained for 110s after deploy of #76948",
+    "started_at": "2026-05-16T00:51:59.119841+00:00"
+  }
+}

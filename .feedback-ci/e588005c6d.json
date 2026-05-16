@@ -1,0 +1,33 @@
+{
+  "incident_id": "e588005c6d",
+  "records": [
+    {
+      "id": "fb-696c6ab453",
+      "ts": 1778920183.2209241,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream user-profile timeout, not image-thumbnail",
+      "correct_remediation": "disable feature flag svc.image-thumbnail.new_path",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.2209995,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-3",
+    "description": "memory usage 95% on promo-engine -- OOM kill predicted in 21m",
+    "started_at": "2026-05-12T21:12:53.602170+00:00"
+  }
+}

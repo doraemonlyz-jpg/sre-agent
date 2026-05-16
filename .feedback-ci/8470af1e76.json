@@ -1,0 +1,33 @@
+{
+  "incident_id": "8470af1e76",
+  "records": [
+    {
+      "id": "fb-faeae69554",
+      "ts": 1778920182.948124,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the auth-service sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.8,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.948198,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-2",
+    "description": "p99 latency 2818ms spiking on /checkout, error rate 14%",
+    "started_at": "2026-05-12T21:02:11.398161+00:00"
+  }
+}

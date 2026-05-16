@@ -1,0 +1,33 @@
+{
+  "incident_id": "83133ac5f3",
+  "records": [
+    {
+      "id": "fb-35507f3b6b",
+      "ts": 1778920183.046647,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the inventory-sync sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.75,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.0467274,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-2",
+    "description": "memory usage 87% on checkout-api -- OOM kill predicted in 6m",
+    "started_at": "2026-05-10T04:19:53.472189+00:00"
+  }
+}

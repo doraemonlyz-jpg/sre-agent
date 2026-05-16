@@ -1,0 +1,33 @@
+{
+  "incident_id": "1fadbfa288",
+  "records": [
+    {
+      "id": "fb-5971245669",
+      "ts": 1778920183.45177,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the ad-bidder sidecar",
+      "correct_remediation": "page the ad-bidder oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.451847,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "memory usage 86% on checkout-api -- OOM kill predicted in 16m",
+    "started_at": "2026-05-13T09:18:17.776927+00:00"
+  }
+}

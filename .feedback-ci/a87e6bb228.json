@@ -1,0 +1,33 @@
+{
+  "incident_id": "a87e6bb228",
+  "records": [
+    {
+      "id": "fb-6593228959",
+      "ts": 1778920182.929274,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the inventory-sync sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.9293513,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 245ms briefly, recovered in 26s",
+    "started_at": "2026-05-10T10:49:45.966752+00:00"
+  }
+}

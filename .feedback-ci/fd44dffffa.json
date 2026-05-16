@@ -1,0 +1,33 @@
+{
+  "incident_id": "fd44dffffa",
+  "records": [
+    {
+      "id": "fb-4f4dd7339d",
+      "ts": 1778920182.8612146,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not ad-bidder",
+      "correct_remediation": "page the video-encoder oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.88,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.8612914,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 639ms briefly, recovered in 21s",
+    "started_at": "2026-05-15T08:32:33.271779+00:00"
+  }
+}

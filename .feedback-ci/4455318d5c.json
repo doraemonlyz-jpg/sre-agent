@@ -1,0 +1,33 @@
+{
+  "incident_id": "4455318d5c",
+  "records": [
+    {
+      "id": "fb-f4b244bb75",
+      "ts": 1778920182.8727264,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the order-pipeline sidecar",
+      "correct_remediation": "increase order-pipeline concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.92,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.8728096,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "downstream service video-encoder returning 502 -- error budget burning at 16x",
+    "started_at": "2026-05-09T13:51:06.510411+00:00"
+  }
+}

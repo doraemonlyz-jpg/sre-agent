@@ -1,0 +1,33 @@
+{
+  "incident_id": "6c1349141b",
+  "records": [
+    {
+      "id": "fb-a9317f4f40",
+      "ts": 1778920182.8014312,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in image-thumbnail, not what the agent said",
+      "correct_remediation": "page the order-pipeline oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.83,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.8015044,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-3",
+    "description": "memory usage 97% on checkout-api -- OOM kill predicted in 11m",
+    "started_at": "2026-05-13T08:02:50.222608+00:00"
+  }
+}

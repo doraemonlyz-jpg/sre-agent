@@ -1,0 +1,35 @@
+{
+  "incident_id": "af6467fd53",
+  "records": [
+    {
+      "id": "fb-8c0e9772ca",
+      "ts": 1778920183.054103,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream ad-bidder timeout, not promo-engine",
+      "correct_remediation": "disable feature flag svc.promo-engine.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778920183.054178,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-4",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on promo-engine",
+    "started_at": "2026-05-16T01:06:46.021827+00:00"
+  }
+}

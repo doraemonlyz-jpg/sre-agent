@@ -1,0 +1,33 @@
+{
+  "incident_id": "71a291e596",
+  "records": [
+    {
+      "id": "fb-c88fa95bcf",
+      "ts": 1778920183.4015112,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "increase video-encoder concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.88,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.40161,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-4",
+    "description": "5xx rate 16% sustained for 136s after deploy of #60379",
+    "started_at": "2026-05-11T01:04:38.874609+00:00"
+  }
+}

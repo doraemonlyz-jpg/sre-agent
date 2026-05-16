@@ -1,0 +1,33 @@
+{
+  "incident_id": "de1edc3ba0",
+  "records": [
+    {
+      "id": "fb-909b99ee9c",
+      "ts": 1778920183.1362724,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream video-encoder timeout, not inventory-sync",
+      "correct_remediation": "page the user-profile oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.1363456,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "downstream service comment-svc returning 502 -- error budget burning at 20x",
+    "started_at": "2026-05-12T18:31:04.630033+00:00"
+  }
+}

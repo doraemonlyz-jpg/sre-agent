@@ -1,0 +1,33 @@
+{
+  "incident_id": "3f6530e36c",
+  "records": [
+    {
+      "id": "fb-d434158894",
+      "ts": 1778920182.9740634,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cdn-router was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.83,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.9741387,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-4",
+    "description": "p99 latency 1544ms spiking on /checkout, error rate 9%",
+    "started_at": "2026-05-13T03:06:09.633738+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "adb44f64ac",
+  "records": [
+    {
+      "id": "fb-c67e554991",
+      "ts": 1778920182.810181,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in rate-limiter-edge, not what the agent said",
+      "correct_remediation": "disable feature flag svc.rate-limiter-edge.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.62,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.8102531,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-3",
+    "description": "5xx rate 12% sustained for 275s after deploy of #84124",
+    "started_at": "2026-05-10T09:38:35.786186+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "bbb4900d53",
+  "records": [
+    {
+      "id": "fb-7ff8a0a7ca",
+      "ts": 1778920183.3100665,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the order-pipeline sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.8,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.3101413,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-2",
+    "description": "downstream service payments-gateway returning 502 -- error budget burning at 18x",
+    "started_at": "2026-05-12T09:56:42.420311+00:00"
+  }
+}

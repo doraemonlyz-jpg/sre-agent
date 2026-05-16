@@ -1,0 +1,33 @@
+{
+  "incident_id": "49d0a1f61c",
+  "records": [
+    {
+      "id": "fb-256dab6e87",
+      "ts": 1778920182.8600292,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream notification-fanout timeout, not live-stream-edge",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.85,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.8601048,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-4",
+    "description": "memory usage 99% on cdn-router -- OOM kill predicted in 20m",
+    "started_at": "2026-05-13T19:28:14.515631+00:00"
+  }
+}

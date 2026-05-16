@@ -1,0 +1,33 @@
+{
+  "incident_id": "0352581612",
+  "records": [
+    {
+      "id": "fb-478a805e2f",
+      "ts": 1778920183.0846486,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the image-thumbnail sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.0847516,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-3",
+    "description": "p99 latency 3600ms spiking on /checkout, error rate 12%",
+    "started_at": "2026-05-10T10:51:01.576226+00:00"
+  }
+}

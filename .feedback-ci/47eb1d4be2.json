@@ -1,0 +1,33 @@
+{
+  "incident_id": "47eb1d4be2",
+  "records": [
+    {
+      "id": "fb-7656f4f0ce",
+      "ts": 1778920182.9195318,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for recommend-feed was filling our partition",
+      "correct_remediation": "page the cart-service oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.9196248,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-4",
+    "description": "memory usage 89% on session-store -- OOM kill predicted in 7m",
+    "started_at": "2026-05-12T05:35:11.289257+00:00"
+  }
+}

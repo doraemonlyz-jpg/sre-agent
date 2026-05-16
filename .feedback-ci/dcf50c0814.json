@@ -1,0 +1,33 @@
+{
+  "incident_id": "dcf50c0814",
+  "records": [
+    {
+      "id": "fb-1aeab0f66a",
+      "ts": 1778920183.1159613,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the search-suggest sidecar",
+      "correct_remediation": "increase search-suggest concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.81,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.116036,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "downstream service inventory-sync returning 502 -- error budget burning at 4x",
+    "started_at": "2026-05-14T22:47:17.193355+00:00"
+  }
+}

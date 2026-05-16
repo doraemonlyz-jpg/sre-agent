@@ -1,0 +1,33 @@
+{
+  "incident_id": "b261c4a4c0",
+  "records": [
+    {
+      "id": "fb-f2dce93d5e",
+      "ts": 1778920183.334423,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream order-pipeline timeout, not cart-service",
+      "correct_remediation": "page the auth-service oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.3345013,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "5xx rate 14% sustained for 282s after deploy of #62168",
+    "started_at": "2026-05-15T13:17:47.808916+00:00"
+  }
+}

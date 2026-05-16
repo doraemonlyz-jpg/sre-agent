@@ -1,0 +1,35 @@
+{
+  "incident_id": "bb565e0cee",
+  "records": [
+    {
+      "id": "fb-8da58653b2",
+      "ts": 1778920183.3426075,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream checkout-api timeout, not checkout-api",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778920183.3426845,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 268ms briefly, recovered in 22s",
+    "started_at": "2026-05-15T20:03:35.538565+00:00"
+  }
+}

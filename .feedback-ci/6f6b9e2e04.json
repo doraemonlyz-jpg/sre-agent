@@ -1,0 +1,33 @@
+{
+  "incident_id": "6f6b9e2e04",
+  "records": [
+    {
+      "id": "fb-7781152a99",
+      "ts": 1778920183.1788216,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the comment-svc sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.64,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920183.1789,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-2",
+    "description": "downstream service notification-fanout returning 502 -- error budget burning at 9x",
+    "started_at": "2026-05-13T03:00:55.086938+00:00"
+  }
+}

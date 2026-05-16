@@ -1,0 +1,33 @@
+{
+  "incident_id": "7ecf923096",
+  "records": [
+    {
+      "id": "fb-3688506877",
+      "ts": 1778920182.948439,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the notification-fanout sidecar",
+      "correct_remediation": "increase notification-fanout concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.9485137,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "5xx rate 18% sustained for 105s after deploy of #29483",
+    "started_at": "2026-05-11T11:35:02.746248+00:00"
+  }
+}

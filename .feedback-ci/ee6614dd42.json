@@ -1,0 +1,35 @@
+{
+  "incident_id": "ee6614dd42",
+  "records": [
+    {
+      "id": "fb-63e2df5fa3",
+      "ts": 1778920182.9271204,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the live-stream-edge sidecar",
+      "correct_remediation": "page the promo-engine oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778920182.927194,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 317ms briefly, recovered in 23s",
+    "started_at": "2026-05-13T22:02:25.807550+00:00"
+  }
+}

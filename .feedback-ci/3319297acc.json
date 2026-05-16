@@ -1,0 +1,33 @@
+{
+  "incident_id": "3319297acc",
+  "records": [
+    {
+      "id": "fb-9fe1e1331f",
+      "ts": 1778920182.7962446,
+      "verdict": "correct",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.6,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.7963219,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-1",
+    "description": "downstream service recommend-feed returning 502 -- error budget burning at 15x",
+    "started_at": "2026-05-09T19:32:28.117050+00:00"
+  }
+}

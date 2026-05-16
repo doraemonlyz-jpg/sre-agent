@@ -1,0 +1,33 @@
+{
+  "incident_id": "17b73f22e3",
+  "records": [
+    {
+      "id": "fb-23552a775b",
+      "ts": 1778920182.7970202,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream user-profile timeout, not comment-svc",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.7970955,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-4",
+    "description": "downstream service cdn-router returning 502 -- error budget burning at 16x",
+    "started_at": "2026-05-13T11:40:06.131567+00:00"
+  }
+}

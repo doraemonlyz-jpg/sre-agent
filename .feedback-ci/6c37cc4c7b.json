@@ -1,0 +1,33 @@
+{
+  "incident_id": "6c37cc4c7b",
+  "records": [
+    {
+      "id": "fb-dca44b742a",
+      "ts": 1778920182.7570877,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the order-pipeline sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.75,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1778920182.7571628,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-4",
+    "description": "downstream service ad-bidder returning 502 -- error budget burning at 9x",
+    "started_at": "2026-05-15T01:25:38.225060+00:00"
+  }
+}

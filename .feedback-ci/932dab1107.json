@@ -1,0 +1,35 @@
+{
+  "incident_id": "932dab1107",
+  "records": [
+    {
+      "id": "fb-43451c6041",
+      "ts": 1778920183.3373702,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the video-encoder sidecar",
+      "correct_remediation": "page the rate-limiter-edge oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1778920183.3374443,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 338ms briefly, recovered in 27s",
+    "started_at": "2026-05-11T18:54:02.539270+00:00"
+  }
+}
