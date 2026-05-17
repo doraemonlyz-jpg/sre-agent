@@ -1,0 +1,33 @@
+{
+  "incident_id": "9cba2e976c",
+  "records": [
+    {
+      "id": "fb-b191a35cf9",
+      "ts": 1779009376.9389393,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream cart-service timeout, not price-cache",
+      "correct_remediation": "page the search-suggest oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.6,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779009376.9390168,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-4",
+    "description": "p99 latency 3871ms spiking on /checkout, error rate 14%",
+    "started_at": "2026-05-13T10:34:29.880014+00:00"
+  }
+}

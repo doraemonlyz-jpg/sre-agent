@@ -1,0 +1,33 @@
+{
+  "incident_id": "e292f08b41",
+  "records": [
+    {
+      "id": "fb-76d0bb133c",
+      "ts": 1779009377.259731,
+      "verdict": "correct",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.89,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779009377.2598052,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-2",
+    "description": "downstream service session-store returning 502 -- error budget burning at 16x",
+    "started_at": "2026-05-10T10:47:10.348079+00:00"
+  }
+}

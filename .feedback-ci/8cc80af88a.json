@@ -1,0 +1,33 @@
+{
+  "incident_id": "8cc80af88a",
+  "records": [
+    {
+      "id": "fb-f4864ea418",
+      "ts": 1779009377.1192963,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream video-encoder timeout, not session-store",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779009377.120164,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-3",
+    "description": "p99 latency 2236ms spiking on /checkout, error rate 6%",
+    "started_at": "2026-05-12T10:14:15.908500+00:00"
+  }
+}

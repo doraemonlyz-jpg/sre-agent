@@ -1,0 +1,33 @@
+{
+  "incident_id": "fa0a64d310",
+  "records": [
+    {
+      "id": "fb-3fd7ac89b0",
+      "ts": 1779009377.3154922,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.6,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779009377.3155668,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-4",
+    "description": "downstream service cdn-router returning 502 -- error budget burning at 11x",
+    "started_at": "2026-05-17T08:30:09.573449+00:00"
+  }
+}

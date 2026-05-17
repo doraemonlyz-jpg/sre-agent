@@ -1,0 +1,33 @@
+{
+  "incident_id": "7f81910aad",
+  "records": [
+    {
+      "id": "fb-c3dd3bd7ba",
+      "ts": 1779009377.0823195,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream ad-bidder timeout, not payments-gateway",
+      "correct_remediation": "page the notification-fanout oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779009377.0823982,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-4",
+    "description": "downstream service inventory-sync returning 502 -- error budget burning at 4x",
+    "started_at": "2026-05-11T17:19:47.815604+00:00"
+  }
+}
