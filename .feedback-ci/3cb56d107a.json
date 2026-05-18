@@ -1,0 +1,33 @@
+{
+  "incident_id": "3cb56d107a",
+  "records": [
+    {
+      "id": "fb-dcbd4493ba",
+      "ts": 1779115456.6643033,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream ad-bidder timeout, not search-suggest",
+      "correct_remediation": "page the cdn-router oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.79,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779115456.664407,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-1",
+    "description": "memory usage 96% on price-cache -- OOM kill predicted in 19m",
+    "started_at": "2026-05-12T09:24:21.878080+00:00"
+  }
+}

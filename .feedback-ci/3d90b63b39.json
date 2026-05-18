@@ -1,0 +1,33 @@
+{
+  "incident_id": "3d90b63b39",
+  "records": [
+    {
+      "id": "fb-27382fa5e2",
+      "ts": 1779115456.746865,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the promo-engine sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.65,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779115456.7469592,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-2",
+    "description": "downstream service price-cache returning 502 -- error budget burning at 4x",
+    "started_at": "2026-05-16T19:34:06.202208+00:00"
+  }
+}

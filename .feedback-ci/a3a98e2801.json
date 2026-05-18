@@ -1,0 +1,35 @@
+{
+  "incident_id": "a3a98e2801",
+  "records": [
+    {
+      "id": "fb-f97ac010cf",
+      "ts": 1779115456.8359232,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the search-suggest sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779115456.8360062,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 446ms briefly, recovered in 30s",
+    "started_at": "2026-05-12T17:12:26.120109+00:00"
+  }
+}

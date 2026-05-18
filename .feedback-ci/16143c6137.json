@@ -1,0 +1,35 @@
+{
+  "incident_id": "16143c6137",
+  "records": [
+    {
+      "id": "fb-0f34ab1c1e",
+      "ts": 1779115456.6860948,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream auth-service timeout, not price-cache",
+      "correct_remediation": "page the cdn-router oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779115456.6861777,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 492ms briefly, recovered in 22s",
+    "started_at": "2026-05-14T09:37:13.117804+00:00"
+  }
+}

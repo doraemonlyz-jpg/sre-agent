@@ -1,0 +1,33 @@
+{
+  "incident_id": "6372a6cf50",
+  "records": [
+    {
+      "id": "fb-b90b2d36b5",
+      "ts": 1779115456.5117157,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cart-service was filling our partition",
+      "correct_remediation": "increase recommend-feed concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.9,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779115456.5117972,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-1",
+    "description": "downstream service price-cache returning 502 -- error budget burning at 16x",
+    "started_at": "2026-05-13T20:00:12.462759+00:00"
+  }
+}

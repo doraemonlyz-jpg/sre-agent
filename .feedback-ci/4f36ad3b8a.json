@@ -1,0 +1,33 @@
+{
+  "incident_id": "4f36ad3b8a",
+  "records": [
+    {
+      "id": "fb-e45c1c738b",
+      "ts": 1779115456.688205,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for search-suggest was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779115456.6882865,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "downstream service payments-gateway returning 502 -- error budget burning at 15x",
+    "started_at": "2026-05-16T16:51:32.184895+00:00"
+  }
+}

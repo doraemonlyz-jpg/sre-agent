@@ -1,0 +1,35 @@
+{
+  "incident_id": "4251a128a1",
+  "records": [
+    {
+      "id": "fb-571e7b9500",
+      "ts": 1779115457.1393063,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the checkout-api sidecar",
+      "correct_remediation": "increase checkout-api concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779115457.1394205,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 242ms briefly, recovered in 7s",
+    "started_at": "2026-05-18T09:04:25.266914+00:00"
+  }
+}

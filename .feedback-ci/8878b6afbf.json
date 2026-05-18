@@ -1,0 +1,35 @@
+{
+  "incident_id": "8878b6afbf",
+  "records": [
+    {
+      "id": "fb-27e96e14ff",
+      "ts": 1779115456.6110764,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for recommend-feed was filling our partition",
+      "correct_remediation": "increase video-encoder concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779115456.6111596,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 764ms briefly, recovered in 23s",
+    "started_at": "2026-05-14T18:59:54.123072+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "351c534c2c",
+  "records": [
+    {
+      "id": "fb-29f6a52650",
+      "ts": 1779115456.7452037,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in cart-service, not what the agent said",
+      "correct_remediation": "increase cart-service concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779115456.7452874,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-1",
+    "description": "5xx rate 18% sustained for 339s after deploy of #10815",
+    "started_at": "2026-05-14T11:34:04.757092+00:00"
+  }
+}

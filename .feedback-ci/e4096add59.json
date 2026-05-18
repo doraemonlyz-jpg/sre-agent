@@ -1,0 +1,33 @@
+{
+  "incident_id": "e4096add59",
+  "records": [
+    {
+      "id": "fb-980260d13f",
+      "ts": 1779115456.785599,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in notification-fanout, not what the agent said",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779115456.7856824,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 338ms briefly, recovered in 26s",
+    "started_at": "2026-05-15T22:21:20.961170+00:00"
+  }
+}

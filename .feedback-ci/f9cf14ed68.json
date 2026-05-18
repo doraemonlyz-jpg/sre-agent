@@ -1,0 +1,33 @@
+{
+  "incident_id": "f9cf14ed68",
+  "records": [
+    {
+      "id": "fb-141bb23c6a",
+      "ts": 1779115456.5267947,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream session-store timeout, not auth-service",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779115456.526878,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-1",
+    "description": "downstream service comment-svc returning 502 -- error budget burning at 5x",
+    "started_at": "2026-05-13T20:05:14.774202+00:00"
+  }
+}

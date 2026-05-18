@@ -1,0 +1,35 @@
+{
+  "incident_id": "419112d82c",
+  "records": [
+    {
+      "id": "fb-6ed1fc9f9f",
+      "ts": 1779115457.0500865,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for recommend-feed was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779115457.050172,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 445ms briefly, recovered in 13s",
+    "started_at": "2026-05-17T20:33:58.679673+00:00"
+  }
+}

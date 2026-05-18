@@ -1,0 +1,33 @@
+{
+  "incident_id": "43c8e325d0",
+  "records": [
+    {
+      "id": "fb-e2dbabed18",
+      "ts": 1779115456.5966527,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream ad-bidder timeout, not notification-fanout",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779115456.5967355,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "downstream service order-pipeline returning 502 -- error budget burning at 11x",
+    "started_at": "2026-05-14T22:42:34.617278+00:00"
+  }
+}

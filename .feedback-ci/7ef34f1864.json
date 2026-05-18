@@ -1,0 +1,35 @@
+{
+  "incident_id": "7ef34f1864",
+  "records": [
+    {
+      "id": "fb-bb7c9e1c15",
+      "ts": 1779115457.0626063,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream auth-service timeout, not rate-limiter-edge",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779115457.0626905,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-4",
+    "description": "memory usage 94% on video-encoder -- OOM kill predicted in 15m",
+    "started_at": "2026-05-14T23:55:48.359317+00:00"
+  }
+}

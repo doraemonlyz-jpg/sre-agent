@@ -1,0 +1,33 @@
+{
+  "incident_id": "81336a12d9",
+  "records": [
+    {
+      "id": "fb-9c0cce7a61",
+      "ts": 1779115456.3697386,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream inventory-sync timeout, not recommend-feed",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.9,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779115456.3698158,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-2",
+    "description": "p99 latency 1629ms spiking on /checkout, error rate 4%",
+    "started_at": "2026-05-18T04:40:34.438915+00:00"
+  }
+}

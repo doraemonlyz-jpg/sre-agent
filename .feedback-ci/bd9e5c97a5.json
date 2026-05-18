@@ -1,0 +1,35 @@
+{
+  "incident_id": "bd9e5c97a5",
+  "records": [
+    {
+      "id": "fb-2f717bc02a",
+      "ts": 1779115457.1424756,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.search-suggest.new_path",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779115457.1425617,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 526ms briefly, recovered in 8s",
+    "started_at": "2026-05-12T18:25:15.180268+00:00"
+  }
+}
