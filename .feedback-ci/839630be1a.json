@@ -1,0 +1,35 @@
+{
+  "incident_id": "839630be1a",
+  "records": [
+    {
+      "id": "fb-7de65d44a5",
+      "ts": 1779122629.2181149,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "queue head-of-line blocking in order-pipeline, not what the agent said",
+      "correct_remediation": "increase order-pipeline concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779122629.218202,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 778ms briefly, recovered in 24s",
+    "started_at": "2026-05-13T12:49:48.049137+00:00"
+  }
+}

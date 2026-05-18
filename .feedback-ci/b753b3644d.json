@@ -1,0 +1,33 @@
+{
+  "incident_id": "b753b3644d",
+  "records": [
+    {
+      "id": "fb-2082e1c300",
+      "ts": 1779122629.32478,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for comment-svc was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.88,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779122629.3248663,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-4",
+    "description": "p99 latency 1504ms spiking on /checkout, error rate 5%",
+    "started_at": "2026-05-13T12:58:23.598111+00:00"
+  }
+}

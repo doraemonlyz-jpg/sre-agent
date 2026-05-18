@@ -1,0 +1,33 @@
+{
+  "incident_id": "b02e22d314",
+  "records": [
+    {
+      "id": "fb-fbb26dda43",
+      "ts": 1779122629.8503532,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream comment-svc timeout, not ad-bidder",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779122629.85044,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-4",
+    "description": "memory usage 91% on order-pipeline -- OOM kill predicted in 18m",
+    "started_at": "2026-05-18T05:38:59.296248+00:00"
+  }
+}

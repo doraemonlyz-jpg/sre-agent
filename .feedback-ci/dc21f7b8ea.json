@@ -1,0 +1,33 @@
+{
+  "incident_id": "dc21f7b8ea",
+  "records": [
+    {
+      "id": "fb-f68e972a9c",
+      "ts": 1779122629.4094207,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream order-pipeline timeout, not recommend-feed",
+      "correct_remediation": "increase recommend-feed concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779122629.409512,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "p99 latency 2747ms spiking on /checkout, error rate 14%",
+    "started_at": "2026-05-12T01:51:29.387407+00:00"
+  }
+}

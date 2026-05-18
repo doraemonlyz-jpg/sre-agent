@@ -1,0 +1,33 @@
+{
+  "incident_id": "695b2496e2",
+  "records": [
+    {
+      "id": "fb-8ed4a41e9a",
+      "ts": 1779122629.5302758,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream promo-engine timeout, not video-encoder",
+      "correct_remediation": "disable feature flag svc.video-encoder.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.89,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779122629.5303633,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-2",
+    "description": "downstream service order-pipeline returning 502 -- error budget burning at 15x",
+    "started_at": "2026-05-15T06:05:36.161754+00:00"
+  }
+}

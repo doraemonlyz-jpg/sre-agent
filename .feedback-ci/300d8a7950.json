@@ -1,0 +1,33 @@
+{
+  "incident_id": "300d8a7950",
+  "records": [
+    {
+      "id": "fb-e87b339c45",
+      "ts": 1779122629.1509788,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "actually a downstream comment-svc timeout, not notification-fanout",
+      "correct_remediation": "page the cart-service oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779122629.151085,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-4",
+    "description": "p99 latency 3679ms spiking on /checkout, error rate 7%",
+    "started_at": "2026-05-13T10:03:42.264710+00:00"
+  }
+}

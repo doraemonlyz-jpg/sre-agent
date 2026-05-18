@@ -1,0 +1,33 @@
+{
+  "incident_id": "f182bd2fe1",
+  "records": [
+    {
+      "id": "fb-72afac3499",
+      "ts": 1779122629.7952337,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for checkout-api was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.75,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779122629.7953207,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-2",
+    "description": "p99 latency 3594ms spiking on /checkout, error rate 7%",
+    "started_at": "2026-05-14T22:00:38.355026+00:00"
+  }
+}

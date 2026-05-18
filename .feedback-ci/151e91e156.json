@@ -1,0 +1,33 @@
+{
+  "incident_id": "151e91e156",
+  "records": [
+    {
+      "id": "fb-d8ad44b0a0",
+      "ts": 1779122629.4179068,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream comment-svc timeout, not payments-gateway",
+      "correct_remediation": "disable feature flag svc.payments-gateway.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779122629.4179914,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-2",
+    "description": "p99 latency 2086ms spiking on /checkout, error rate 9%",
+    "started_at": "2026-05-12T21:52:26.752237+00:00"
+  }
+}

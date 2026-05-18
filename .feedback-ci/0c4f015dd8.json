@@ -1,0 +1,33 @@
+{
+  "incident_id": "0c4f015dd8",
+  "records": [
+    {
+      "id": "fb-eaa0bf21d9",
+      "ts": 1779122629.2594419,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for checkout-api was filling our partition",
+      "correct_remediation": "increase recommend-feed concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.87,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779122629.259527,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-1",
+    "description": "p99 latency 3625ms spiking on /checkout, error rate 7%",
+    "started_at": "2026-05-16T12:50:02.680925+00:00"
+  }
+}

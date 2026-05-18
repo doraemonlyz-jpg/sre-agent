@@ -1,0 +1,33 @@
+{
+  "incident_id": "a72128465a",
+  "records": [
+    {
+      "id": "fb-e399f74230",
+      "ts": 1779122629.5744605,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for live-stream-edge was filling our partition",
+      "correct_remediation": "page the inventory-sync oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779122629.5745454,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-1",
+    "description": "memory usage 86% on user-profile -- OOM kill predicted in 17m",
+    "started_at": "2026-05-14T12:04:54.002414+00:00"
+  }
+}

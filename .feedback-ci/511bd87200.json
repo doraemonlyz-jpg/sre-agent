@@ -1,0 +1,35 @@
+{
+  "incident_id": "511bd87200",
+  "records": [
+    {
+      "id": "fb-117d943e96",
+      "ts": 1779122629.0154512,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in recommend-feed, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779122629.0155327,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-2",
+    "description": "p99 latency 1629ms spiking on /checkout, error rate 4%",
+    "started_at": "2026-05-13T02:50:54.518220+00:00"
+  }
+}

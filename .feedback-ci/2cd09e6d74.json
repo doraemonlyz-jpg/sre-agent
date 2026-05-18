@@ -1,0 +1,33 @@
+{
+  "incident_id": "2cd09e6d74",
+  "records": [
+    {
+      "id": "fb-95fad43443",
+      "ts": 1779122629.3500946,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream rate-limiter-edge timeout, not order-pipeline",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779122629.3501804,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-2",
+    "description": "downstream service ad-bidder returning 502 -- error budget burning at 9x",
+    "started_at": "2026-05-14T17:57:24.683603+00:00"
+  }
+}

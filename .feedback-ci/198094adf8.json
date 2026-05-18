@@ -1,0 +1,33 @@
+{
+  "incident_id": "198094adf8",
+  "records": [
+    {
+      "id": "fb-e39d6dbde5",
+      "ts": 1779122629.4456306,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream cdn-router timeout, not price-cache",
+      "correct_remediation": "increase price-cache concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779122629.4457157,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-2",
+    "description": "p99 latency 1775ms spiking on /checkout, error rate 10%",
+    "started_at": "2026-05-18T02:43:32.658541+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "0872fdf177",
+  "records": [
+    {
+      "id": "fb-f900c30486",
+      "ts": 1779122629.0034668,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in search-suggest, not what the agent said",
+      "correct_remediation": "increase search-suggest concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.61,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779122629.0035472,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-4",
+    "description": "downstream service live-stream-edge returning 502 -- error budget burning at 3x",
+    "started_at": "2026-05-13T23:55:35.532421+00:00"
+  }
+}

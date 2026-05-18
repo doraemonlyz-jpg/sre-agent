@@ -1,0 +1,33 @@
+{
+  "incident_id": "cb2d0e22b2",
+  "records": [
+    {
+      "id": "fb-af739f572e",
+      "ts": 1779122629.7468636,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for rate-limiter-edge was filling our partition",
+      "correct_remediation": "increase video-encoder concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.93,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779122629.7469585,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "p99 latency 3053ms spiking on /checkout, error rate 3%",
+    "started_at": "2026-05-14T19:22:59.592198+00:00"
+  }
+}

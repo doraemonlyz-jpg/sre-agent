@@ -1,0 +1,33 @@
+{
+  "incident_id": "32fe5b2ac8",
+  "records": [
+    {
+      "id": "fb-68fa816452",
+      "ts": 1779122629.5060058,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not comment-svc",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779122629.5061238,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-2",
+    "description": "downstream service rate-limiter-edge returning 502 -- error budget burning at 16x",
+    "started_at": "2026-05-17T05:53:26.547495+00:00"
+  }
+}

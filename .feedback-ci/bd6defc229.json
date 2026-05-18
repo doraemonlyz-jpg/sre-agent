@@ -1,0 +1,33 @@
+{
+  "incident_id": "bd6defc229",
+  "records": [
+    {
+      "id": "fb-14fcaf846f",
+      "ts": 1779122629.737904,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in payments-gateway, not what the agent said",
+      "correct_remediation": "disable feature flag svc.payments-gateway.new_path",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779122629.7379913,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-4",
+    "description": "p99 latency 2257ms spiking on /checkout, error rate 3%",
+    "started_at": "2026-05-14T01:00:06.880563+00:00"
+  }
+}
