@@ -1,0 +1,35 @@
+{
+  "incident_id": "bc16643c4d",
+  "records": [
+    {
+      "id": "fb-7944775ccc",
+      "ts": 1779193926.9776676,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in promo-engine, not what the agent said",
+      "correct_remediation": "disable feature flag svc.promo-engine.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779193926.9777286,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 479ms briefly, recovered in 9s",
+    "started_at": "2026-05-19T01:30:13.706460+00:00"
+  }
+}

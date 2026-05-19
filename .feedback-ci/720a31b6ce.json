@@ -1,0 +1,33 @@
+{
+  "incident_id": "720a31b6ce",
+  "records": [
+    {
+      "id": "fb-fc15663311",
+      "ts": 1779193927.2346597,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the recommend-feed sidecar",
+      "correct_remediation": "page the payments-gateway oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.84,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779193927.2347178,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-4",
+    "description": "downstream service recommend-feed returning 502 -- error budget burning at 12x",
+    "started_at": "2026-05-18T06:14:41.489434+00:00"
+  }
+}

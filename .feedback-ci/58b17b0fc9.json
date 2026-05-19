@@ -1,0 +1,33 @@
+{
+  "incident_id": "58b17b0fc9",
+  "records": [
+    {
+      "id": "fb-c60b10e1a9",
+      "ts": 1779193927.3787775,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the session-store sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779193927.378837,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-1",
+    "description": "p99 latency 1969ms spiking on /checkout, error rate 8%",
+    "started_at": "2026-05-17T18:05:42.940210+00:00"
+  }
+}

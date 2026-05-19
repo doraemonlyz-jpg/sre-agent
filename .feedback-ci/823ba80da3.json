@@ -1,0 +1,33 @@
+{
+  "incident_id": "823ba80da3",
+  "records": [
+    {
+      "id": "fb-388ffc2df0",
+      "ts": 1779193927.0582962,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "page the video-encoder oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.8,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779193927.0583525,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "p99 latency 2005ms spiking on /checkout, error rate 13%",
+    "started_at": "2026-05-15T12:51:31.036805+00:00"
+  }
+}

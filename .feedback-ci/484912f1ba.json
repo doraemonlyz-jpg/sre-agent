@@ -1,0 +1,33 @@
+{
+  "incident_id": "484912f1ba",
+  "records": [
+    {
+      "id": "fb-77a718d813",
+      "ts": 1779193926.9783154,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream video-encoder timeout, not session-store",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.87,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779193926.978373,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "downstream service payments-gateway returning 502 -- error budget burning at 4x",
+    "started_at": "2026-05-14T05:08:14.372610+00:00"
+  }
+}

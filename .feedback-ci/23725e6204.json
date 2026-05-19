@@ -1,0 +1,33 @@
+{
+  "incident_id": "23725e6204",
+  "records": [
+    {
+      "id": "fb-4812234cdd",
+      "ts": 1779193927.164959,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for auth-service was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779193927.165024,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-1",
+    "description": "memory usage 93% on payments-gateway -- OOM kill predicted in 24m",
+    "started_at": "2026-05-12T18:32:47.759706+00:00"
+  }
+}

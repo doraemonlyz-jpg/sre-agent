@@ -1,0 +1,35 @@
+{
+  "incident_id": "a26948d355",
+  "records": [
+    {
+      "id": "fb-6373b8f1d6",
+      "ts": 1779193926.932909,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.notification-fanout.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779193926.9329681,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 675ms briefly, recovered in 21s",
+    "started_at": "2026-05-17T11:56:17.189353+00:00"
+  }
+}
