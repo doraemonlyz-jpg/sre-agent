@@ -1,0 +1,33 @@
+{
+  "incident_id": "ead3f7b8c7",
+  "records": [
+    {
+      "id": "fb-78db97af64",
+      "ts": 1779278896.6791928,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "actually a downstream rate-limiter-edge timeout, not session-store",
+      "correct_remediation": "disable feature flag svc.session-store.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.89,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779278896.6792789,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-3",
+    "description": "downstream service ad-bidder returning 502 -- error budget burning at 12x",
+    "started_at": "2026-05-19T10:00:18.547150+00:00"
+  }
+}

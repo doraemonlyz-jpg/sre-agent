@@ -1,0 +1,33 @@
+{
+  "incident_id": "3c8c02f8b0",
+  "records": [
+    {
+      "id": "fb-6f43d68bf4",
+      "ts": 1779278896.574007,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the price-cache sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.94,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779278896.5740926,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-2",
+    "description": "downstream service checkout-api returning 502 -- error budget burning at 15x",
+    "started_at": "2026-05-14T00:17:17.654528+00:00"
+  }
+}

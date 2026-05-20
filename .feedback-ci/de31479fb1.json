@@ -1,0 +1,33 @@
+{
+  "incident_id": "de31479fb1",
+  "records": [
+    {
+      "id": "fb-2ebc43e57a",
+      "ts": 1779278896.9262452,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream comment-svc timeout, not cdn-router",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779278896.9263313,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-3",
+    "description": "5xx rate 8% sustained for 178s after deploy of #16482",
+    "started_at": "2026-05-14T12:58:17.080623+00:00"
+  }
+}

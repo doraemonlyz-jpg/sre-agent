@@ -1,0 +1,33 @@
+{
+  "incident_id": "52f8748956",
+  "records": [
+    {
+      "id": "fb-9be40e30bd",
+      "ts": 1779278897.2878072,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream cdn-router timeout, not payments-gateway",
+      "correct_remediation": "disable feature flag svc.payments-gateway.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779278897.287894,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-1",
+    "description": "5xx rate 12% sustained for 342s after deploy of #56123",
+    "started_at": "2026-05-18T14:03:56.071955+00:00"
+  }
+}

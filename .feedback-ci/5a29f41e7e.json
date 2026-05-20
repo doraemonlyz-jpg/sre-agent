@@ -1,0 +1,33 @@
+{
+  "incident_id": "5a29f41e7e",
+  "records": [
+    {
+      "id": "fb-1bb70a1b0c",
+      "ts": 1779278896.6547792,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "page the user-profile oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779278896.6548667,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-2",
+    "description": "downstream service payments-gateway returning 502 -- error budget burning at 7x",
+    "started_at": "2026-05-15T05:45:04.091138+00:00"
+  }
+}

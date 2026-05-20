@@ -1,0 +1,33 @@
+{
+  "incident_id": "bbc2a2a224",
+  "records": [
+    {
+      "id": "fb-73051ce0c0",
+      "ts": 1779278896.8278286,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cart-service was filling our partition",
+      "correct_remediation": "increase comment-svc concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779278896.8279178,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "downstream service price-cache returning 502 -- error budget burning at 20x",
+    "started_at": "2026-05-13T22:13:10.560556+00:00"
+  }
+}

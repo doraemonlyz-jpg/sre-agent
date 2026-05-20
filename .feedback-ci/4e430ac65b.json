@@ -1,0 +1,33 @@
+{
+  "incident_id": "4e430ac65b",
+  "records": [
+    {
+      "id": "fb-f141475d83",
+      "ts": 1779278896.6287632,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the payments-gateway sidecar",
+      "correct_remediation": "page the video-encoder oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.94,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779278896.6288507,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-2",
+    "description": "downstream service promo-engine returning 502 -- error budget burning at 17x",
+    "started_at": "2026-05-18T05:32:05.643142+00:00"
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "generated_at_ms": 1779278897548,
+  "alpha": 0.05,
+  "min_per_group": 50,
+  "min_delta_pp": 3.0,
+  "decisions": [
+    {
+      "agent": "deploy-historian",
+      "verdict": "hold",
+      "reason": "only one prompt variant has feedback -- A/B not running",
+      "winner_sha": "c4d3c986",
+      "runner_up_sha": null,
+      "delta_pp": 0.0,
+      "p_value": 1.0,
+      "z_stat": 0.0,
+      "groups": [
+        {
+          "agent": "deploy-historian",
+          "prompt_sha": "c4d3c986",
+          "n": 2252,
+          "positives": 1619,
+          "rate": 0.7189165186500888,
+          "ci_low": 0.6999893376377821,
+          "ci_high": 0.7370980890680645
+        }
+      ],
+      "baseline_sha": null
+    },
+    {
+      "agent": "hypothesis-gen",
+      "verdict": "promote",
+      "reason": "variant 9a4e2b73 beats 0c8f14d5 by +8.8pp at p=0.000 (n=584 vs 1668)",
+      "winner_sha": "9a4e2b73",
+      "runner_up_sha": "0c8f14d5",
+      "delta_pp": 8.820340987483988,
+      "p_value": 4.487474706871275e-05,
+      "z_stat": 4.080832181158732,
+      "groups": [
+        {
+          "agent": "hypothesis-gen",
+          "prompt_sha": "9a4e2b73",
+          "n": 584,
+          "positives": 458,
+          "rate": 0.7842465753424658,
+          "ci_low": 0.7490841350001168,
+          "ci_high": 0.81569385961612
+        },
+        {
+          "agent": "hypothesis-gen",
+          "prompt_sha": "0c8f14d5",
+          "n": 1668,
+          "positives": 1161,
+          "rate": 0.6960431654676259,
+          "ci_low": 0.6735394134365515,
+          "ci_high": 0.7176459715903554
+        }
+      ],
+      "baseline_sha": "0c8f14d5"
+    },
+    {
+      "agent": "log-detective",
+      "verdict": "hold",
+      "reason": "point-estimate delta +1.4pp below min_delta_pp 3.0pp",
+      "winner_sha": "31d7af44",
+      "runner_up_sha": "09c3b1aa",
+      "delta_pp": 1.4040631548279392,
+      "p_value": 0.5143270625853522,
+      "z_stat": 0.6521148846696917,
+      "groups": [
+        {
+          "agent": "log-detective",
+          "prompt_sha": "31d7af44",
+          "n": 591,
+          "positives": 431,
+          "rate": 0.7292724196277496,
+          "ci_low": 0.6920529644646028,
+          "ci_high": 0.7635305051515101
+        },
+        {
+          "agent": "log-detective",
+          "prompt_sha": "09c3b1aa",
+          "n": 1661,
+          "positives": 1188,
+          "rate": 0.7152317880794702,
+          "ci_low": 0.6930504792236094,
+          "ci_high": 0.736419807919624
+        }
+      ],
+      "baseline_sha": null
+    },
+    {
+      "agent": "metrics-analyst",
+      "verdict": "promote",
+      "reason": "variant 6ec88011 beats 7f2d4e10 by +7.0pp at p=0.001 (n=613 vs 1639)",
+      "winner_sha": "6ec88011",
+      "runner_up_sha": "7f2d4e10",
+      "delta_pp": 7.016672522436895,
+      "p_value": 0.0009774757110125876,
+      "z_stat": 3.296930829641627,
+      "groups": [
+        {
+          "agent": "metrics-analyst",
+          "prompt_sha": "6ec88011",
+          "n": 613,
+          "positives": 472,
+          "rate": 0.7699836867862969,
+          "ci_low": 0.7350481679661123,
+          "ci_high": 0.8015563671365789
+        },
+        {
+          "agent": "metrics-analyst",
+          "prompt_sha": "7f2d4e10",
+          "n": 1639,
+          "positives": 1147,
+          "rate": 0.699816961561928,
+          "ci_low": 0.6771810226765338,
+          "ci_high": 0.7215184015406273
+        }
+      ],
+      "baseline_sha": null
+    },
+    {
+      "agent": "remediation-sug",
+      "verdict": "promote",
+      "reason": "variant 812a99ee beats ad2b6e09 by +5.8pp at p=0.007 (n=1656 vs 596)",
+      "winner_sha": "812a99ee",
+      "runner_up_sha": "ad2b6e09",
+      "delta_pp": 5.81250202639173,
+      "p_value": 0.006791073963088534,
+      "z_stat": 2.706919415552395,
+      "groups": [
+        {
+          "agent": "remediation-sug",
+          "prompt_sha": "812a99ee",
+          "n": 1656,
+          "positives": 1216,
+          "rate": 0.7342995169082126,
+          "ci_low": 0.7125004932990283,
+          "ci_high": 0.7550139972403099
+        },
+        {
+          "agent": "remediation-sug",
+          "prompt_sha": "ad2b6e09",
+          "n": 596,
+          "positives": 403,
+          "rate": 0.6761744966442953,
+          "ci_low": 0.6375817298733993,
+          "ci_high": 0.7125106945266423
+        }
+      ],
+      "baseline_sha": null
+    },
+    {
+      "agent": "trace-reader",
+      "verdict": "hold",
+      "reason": "only one prompt variant has feedback -- A/B not running",
+      "winner_sha": "bb14c2c9",
+      "runner_up_sha": null,
+      "delta_pp": 0.0,
+      "p_value": 1.0,
+      "z_stat": 0.0,
+      "groups": [
+        {
+          "agent": "trace-reader",
+          "prompt_sha": "bb14c2c9",
+          "n": 2252,
+          "positives": 1619,
+          "rate": 0.7189165186500888,
+          "ci_low": 0.6999893376377821,
+          "ci_high": 0.7370980890680645
+        }
+      ],
+      "baseline_sha": null
+    }
+  ]
+}

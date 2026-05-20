@@ -1,0 +1,33 @@
+{
+  "incident_id": "7ae6f170fb",
+  "records": [
+    {
+      "id": "fb-7d2a675e7b",
+      "ts": 1779278897.2601674,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not inventory-sync",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779278897.2602522,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-2",
+    "description": "memory usage 87% on order-pipeline -- OOM kill predicted in 15m",
+    "started_at": "2026-05-15T04:10:12.479379+00:00"
+  }
+}

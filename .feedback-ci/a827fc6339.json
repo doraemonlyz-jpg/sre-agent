@@ -1,0 +1,35 @@
+{
+  "incident_id": "a827fc6339",
+  "records": [
+    {
+      "id": "fb-6aef4300ca",
+      "ts": 1779278897.4319258,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for auth-service was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779278897.4320128,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 789ms briefly, recovered in 10s",
+    "started_at": "2026-05-18T16:27:55.021004+00:00"
+  }
+}

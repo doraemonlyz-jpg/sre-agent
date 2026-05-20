@@ -1,0 +1,33 @@
+{
+  "incident_id": "3a1adf7738",
+  "records": [
+    {
+      "id": "fb-6c0b76d9f2",
+      "ts": 1779278897.409968,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not auth-service",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779278897.4100554,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "p99 latency 3343ms spiking on /checkout, error rate 8%",
+    "started_at": "2026-05-17T12:31:36.026370+00:00"
+  }
+}

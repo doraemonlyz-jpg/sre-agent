@@ -1,0 +1,35 @@
+{
+  "incident_id": "5b73c6d2f8",
+  "records": [
+    {
+      "id": "fb-1e4b052127",
+      "ts": 1779278897.1323643,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream payments-gateway timeout, not inventory-sync",
+      "correct_remediation": "page the inventory-sync oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779278897.1324499,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "p99 latency 3500ms spiking on /checkout, error rate 8%",
+    "started_at": "2026-05-13T16:34:18.042399+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "aef2085742",
+  "records": [
+    {
+      "id": "fb-5e730b01a5",
+      "ts": 1779278896.7470658,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the promo-engine sidecar",
+      "correct_remediation": "increase promo-engine concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.83,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779278896.7471511,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-1",
+    "description": "p99 latency 2015ms spiking on /checkout, error rate 5%",
+    "started_at": "2026-05-18T19:52:21.716882+00:00"
+  }
+}

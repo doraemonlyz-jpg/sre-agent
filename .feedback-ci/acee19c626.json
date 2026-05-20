@@ -1,0 +1,33 @@
+{
+  "incident_id": "acee19c626",
+  "records": [
+    {
+      "id": "fb-454e003691",
+      "ts": 1779278897.0808055,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream payments-gateway timeout, not search-suggest",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779278897.0808883,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "5xx rate 10% sustained for 169s after deploy of #91481",
+    "started_at": "2026-05-17T09:25:51.402387+00:00"
+  }
+}

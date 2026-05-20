@@ -1,0 +1,33 @@
+{
+  "incident_id": "4b7f4dd6bd",
+  "records": [
+    {
+      "id": "fb-8e7fae109a",
+      "ts": 1779278897.0658731,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.88,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779278897.0659602,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "p99 latency 2889ms spiking on /checkout, error rate 12%",
+    "started_at": "2026-05-13T16:06:44.833662+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "edb0334464",
+  "records": [
+    {
+      "id": "fb-f59b274aad",
+      "ts": 1779278896.676719,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "actually a downstream user-profile timeout, not checkout-api",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779278896.6768117,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-4",
+    "description": "p99 latency 3280ms spiking on /checkout, error rate 5%",
+    "started_at": "2026-05-14T20:55:20.874900+00:00"
+  }
+}
