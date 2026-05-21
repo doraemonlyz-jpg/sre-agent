@@ -1,0 +1,33 @@
+{
+  "incident_id": "25889d3a76",
+  "records": [
+    {
+      "id": "fb-94b120cec8",
+      "ts": 1779366975.3500478,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cart-service was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779366975.3501391,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-4",
+    "description": "p99 latency 3217ms spiking on /checkout, error rate 11%",
+    "started_at": "2026-05-17T09:24:33.335575+00:00"
+  }
+}

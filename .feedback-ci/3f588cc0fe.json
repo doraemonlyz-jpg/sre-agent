@@ -1,0 +1,35 @@
+{
+  "incident_id": "3f588cc0fe",
+  "records": [
+    {
+      "id": "fb-26056c3ea3",
+      "ts": 1779366975.4215875,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "increase promo-engine concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779366975.4216633,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 517ms briefly, recovered in 10s",
+    "started_at": "2026-05-20T20:41:27.131459+00:00"
+  }
+}

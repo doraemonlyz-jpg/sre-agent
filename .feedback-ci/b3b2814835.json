@@ -1,0 +1,35 @@
+{
+  "incident_id": "b3b2814835",
+  "records": [
+    {
+      "id": "fb-46f4f0a6dc",
+      "ts": 1779366975.390892,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.auth-service.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779366975.3909652,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 778ms briefly, recovered in 16s",
+    "started_at": "2026-05-19T16:08:45.184996+00:00"
+  }
+}

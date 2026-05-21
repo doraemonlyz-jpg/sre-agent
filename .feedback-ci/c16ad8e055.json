@@ -1,0 +1,33 @@
+{
+  "incident_id": "c16ad8e055",
+  "records": [
+    {
+      "id": "fb-cd90a95f2a",
+      "ts": 1779366975.291287,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in session-store, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.91,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779366975.2913623,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-1",
+    "description": "5xx rate 13% sustained for 558s after deploy of #80414",
+    "started_at": "2026-05-16T22:44:41.337771+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "1fc52b99c4",
+  "records": [
+    {
+      "id": "fb-4b01aa6664",
+      "ts": 1779366975.819927,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream cart-service timeout, not payments-gateway",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.82,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779366975.8200028,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-3",
+    "description": "memory usage 87% on search-suggest -- OOM kill predicted in 9m",
+    "started_at": "2026-05-20T14:36:25.027588+00:00"
+  }
+}
