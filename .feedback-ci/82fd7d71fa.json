@@ -1,0 +1,35 @@
+{
+  "incident_id": "82fd7d71fa",
+  "records": [
+    {
+      "id": "fb-b3bace5e29",
+      "ts": 1779451441.6818335,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for search-suggest was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779451441.6819346,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 549ms briefly, recovered in 8s",
+    "started_at": "2026-05-19T20:29:29.368504+00:00"
+  }
+}
