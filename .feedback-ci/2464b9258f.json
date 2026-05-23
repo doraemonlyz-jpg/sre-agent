@@ -1,0 +1,35 @@
+{
+  "incident_id": "2464b9258f",
+  "records": [
+    {
+      "id": "fb-26418f3823",
+      "ts": 1779527794.4297426,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream promo-engine timeout, not image-thumbnail",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779527794.429805,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-2",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on comment-svc",
+    "started_at": "2026-05-17T22:11:33.592120+00:00"
+  }
+}

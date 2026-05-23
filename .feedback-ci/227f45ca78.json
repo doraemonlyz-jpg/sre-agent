@@ -1,0 +1,35 @@
+{
+  "incident_id": "227f45ca78",
+  "records": [
+    {
+      "id": "fb-b746759ce0",
+      "ts": 1779527794.6641152,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the payments-gateway sidecar",
+      "correct_remediation": "disable feature flag svc.payments-gateway.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779527794.6641781,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 766ms briefly, recovered in 23s",
+    "started_at": "2026-05-21T22:55:28.551189+00:00"
+  }
+}
