@@ -1,0 +1,35 @@
+{
+  "incident_id": "a12d9147d0",
+  "records": [
+    {
+      "id": "fb-a4e4d62912",
+      "ts": 1779618087.749503,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in payments-gateway, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779618087.749613,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-2",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on live-stream-edge",
+    "started_at": "2026-05-17T14:36:09.059362+00:00"
+  }
+}

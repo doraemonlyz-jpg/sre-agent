@@ -1,0 +1,33 @@
+{
+  "incident_id": "f44e8b63d5",
+  "records": [
+    {
+      "id": "fb-7629525ba2",
+      "ts": 1779618087.1368678,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the rate-limiter-edge sidecar",
+      "correct_remediation": "disable feature flag svc.rate-limiter-edge.new_path",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779618087.1369529,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-3",
+    "description": "downstream service promo-engine returning 502 -- error budget burning at 5x",
+    "started_at": "2026-05-18T07:49:58.327027+00:00"
+  }
+}

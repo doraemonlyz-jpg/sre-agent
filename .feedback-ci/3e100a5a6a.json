@@ -1,0 +1,33 @@
+{
+  "incident_id": "3e100a5a6a",
+  "records": [
+    {
+      "id": "fb-51840054df",
+      "ts": 1779618087.491973,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the video-encoder sidecar",
+      "correct_remediation": "page the notification-fanout oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.89,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779618087.4920561,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "downstream service order-pipeline returning 502 -- error budget burning at 18x",
+    "started_at": "2026-05-17T17:05:45.310656+00:00"
+  }
+}

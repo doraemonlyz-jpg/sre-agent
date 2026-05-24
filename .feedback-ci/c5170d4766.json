@@ -1,0 +1,35 @@
+{
+  "incident_id": "c5170d4766",
+  "records": [
+    {
+      "id": "fb-a9b70efe5c",
+      "ts": 1779618086.9838424,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.recommend-feed.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779618086.9839277,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on image-thumbnail",
+    "started_at": "2026-05-20T07:49:40.940823+00:00"
+  }
+}

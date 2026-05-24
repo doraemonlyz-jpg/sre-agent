@@ -1,0 +1,33 @@
+{
+  "incident_id": "d668ad0fc3",
+  "records": [
+    {
+      "id": "fb-94cf382849",
+      "ts": 1779618087.4364934,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "increase session-store concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779618087.436602,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "downstream service promo-engine returning 502 -- error budget burning at 18x",
+    "started_at": "2026-05-18T13:04:33.968748+00:00"
+  }
+}

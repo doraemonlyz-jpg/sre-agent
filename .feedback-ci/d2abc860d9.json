@@ -1,0 +1,33 @@
+{
+  "incident_id": "d2abc860d9",
+  "records": [
+    {
+      "id": "fb-0865f1a242",
+      "ts": 1779618087.1452594,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream live-stream-edge timeout, not cdn-router",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779618087.1453438,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-3",
+    "description": "p99 latency 2114ms spiking on /checkout, error rate 13%",
+    "started_at": "2026-05-19T23:03:21.463320+00:00"
+  }
+}
