@@ -1,0 +1,35 @@
+{
+  "incident_id": "a6bd3c82d7",
+  "records": [
+    {
+      "id": "fb-557e345ea4",
+      "ts": 1779614965.1512227,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.session-store.new_path",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779614965.1513104,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-4",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on rate-limiter-edge",
+    "started_at": "2026-05-22T22:23:14.479193+00:00"
+  }
+}

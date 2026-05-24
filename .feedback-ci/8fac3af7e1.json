@@ -1,0 +1,35 @@
+{
+  "incident_id": "8fac3af7e1",
+  "records": [
+    {
+      "id": "fb-b72c34301c",
+      "ts": 1779614964.7898383,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream rate-limiter-edge timeout, not live-stream-edge",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779614964.7899244,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-4",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on promo-engine",
+    "started_at": "2026-05-23T17:50:32.584134+00:00"
+  }
+}

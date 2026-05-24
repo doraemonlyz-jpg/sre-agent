@@ -1,0 +1,35 @@
+{
+  "incident_id": "d71cf6cf51",
+  "records": [
+    {
+      "id": "fb-f4947f8ba8",
+      "ts": 1779614964.6127021,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for payments-gateway was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779614964.6127849,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 265ms briefly, recovered in 6s",
+    "started_at": "2026-05-18T09:05:14.628149+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "7732876203",
+  "records": [
+    {
+      "id": "fb-98316917d1",
+      "ts": 1779614964.7057924,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in user-profile, not what the agent said",
+      "correct_remediation": "disable feature flag svc.user-profile.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779614964.7058747,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "5xx rate 21% sustained for 485s after deploy of #32455",
+    "started_at": "2026-05-19T06:01:18.943537+00:00"
+  }
+}

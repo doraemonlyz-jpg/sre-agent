@@ -1,0 +1,35 @@
+{
+  "incident_id": "93061d8129",
+  "records": [
+    {
+      "id": "fb-c8b4827b6b",
+      "ts": 1779614964.6544073,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for comment-svc was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779614964.654491,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on notification-fanout",
+    "started_at": "2026-05-20T17:58:58.401037+00:00"
+  }
+}

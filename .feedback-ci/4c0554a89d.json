@@ -1,0 +1,35 @@
+{
+  "incident_id": "4c0554a89d",
+  "records": [
+    {
+      "id": "fb-8895f7f2fb",
+      "ts": 1779614965.1982865,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream rate-limiter-edge timeout, not auth-service",
+      "correct_remediation": "disable feature flag svc.auth-service.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779614965.1983747,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-2",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on checkout-api",
+    "started_at": "2026-05-19T23:31:11.371725+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "8d5845e2f8",
+  "records": [
+    {
+      "id": "fb-85f11b885e",
+      "ts": 1779614964.7801015,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in order-pipeline, not what the agent said",
+      "correct_remediation": "page the session-store oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779614964.7802076,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-4",
+    "description": "downstream service video-encoder returning 502 -- error budget burning at 7x",
+    "started_at": "2026-05-22T07:13:16.400810+00:00"
+  }
+}

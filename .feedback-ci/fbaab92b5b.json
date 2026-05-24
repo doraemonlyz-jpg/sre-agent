@@ -1,0 +1,33 @@
+{
+  "incident_id": "fbaab92b5b",
+  "records": [
+    {
+      "id": "fb-d8df9f18dc",
+      "ts": 1779614965.1797996,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for order-pipeline was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.85,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779614965.179884,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 251ms briefly, recovered in 27s",
+    "started_at": "2026-05-22T21:43:10.717771+00:00"
+  }
+}
