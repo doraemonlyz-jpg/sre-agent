@@ -1,0 +1,33 @@
+{
+  "incident_id": "6aa13c035b",
+  "records": [
+    {
+      "id": "fb-edd8136cd5",
+      "ts": 1779725213.1644566,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream checkout-api timeout, not live-stream-edge",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779725213.1645408,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-3",
+    "description": "memory usage 94% on order-pipeline -- OOM kill predicted in 16m",
+    "started_at": "2026-05-22T08:48:58.541732+00:00"
+  }
+}

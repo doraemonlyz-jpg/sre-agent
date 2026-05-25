@@ -1,0 +1,35 @@
+{
+  "incident_id": "39dd1c1303",
+  "records": [
+    {
+      "id": "fb-aa6ac00eb7",
+      "ts": 1779725213.2626069,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the recommend-feed sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779725213.2627115,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-1",
+    "description": "p99 latency 3625ms spiking on /checkout, error rate 7%",
+    "started_at": "2026-05-24T22:38:28.692093+00:00"
+  }
+}

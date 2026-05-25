@@ -1,0 +1,33 @@
+{
+  "incident_id": "c203481b01",
+  "records": [
+    {
+      "id": "fb-dd63417f4c",
+      "ts": 1779725213.8401663,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.86,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779725213.8402584,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "memory usage 86% on notification-fanout -- OOM kill predicted in 25m",
+    "started_at": "2026-05-24T07:41:36.557867+00:00"
+  }
+}

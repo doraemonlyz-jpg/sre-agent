@@ -1,0 +1,33 @@
+{
+  "incident_id": "51c22888f4",
+  "records": [
+    {
+      "id": "fb-9ad8778c78",
+      "ts": 1779725213.7448187,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream promo-engine timeout, not session-store",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.87,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779725213.744907,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-3",
+    "description": "p99 latency 2216ms spiking on /checkout, error rate 10%",
+    "started_at": "2026-05-21T14:57:53.478925+00:00"
+  }
+}

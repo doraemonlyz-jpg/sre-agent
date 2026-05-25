@@ -1,0 +1,35 @@
+{
+  "incident_id": "d5c7e16bdd",
+  "records": [
+    {
+      "id": "fb-0950679ce8",
+      "ts": 1779725213.469185,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for checkout-api was filling our partition",
+      "correct_remediation": "page the video-encoder oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779725213.469276,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 729ms briefly, recovered in 25s",
+    "started_at": "2026-05-24T00:48:40.602888+00:00"
+  }
+}

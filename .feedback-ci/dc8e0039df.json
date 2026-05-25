@@ -1,0 +1,33 @@
+{
+  "incident_id": "dc8e0039df",
+  "records": [
+    {
+      "id": "fb-06b36df62f",
+      "ts": 1779725213.043417,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream video-encoder timeout, not comment-svc",
+      "correct_remediation": "disable feature flag svc.comment-svc.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779725213.0434997,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-1",
+    "description": "p99 latency 3647ms spiking on /checkout, error rate 4%",
+    "started_at": "2026-05-22T13:37:35.839593+00:00"
+  }
+}

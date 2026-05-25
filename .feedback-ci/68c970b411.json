@@ -1,0 +1,35 @@
+{
+  "incident_id": "68c970b411",
+  "records": [
+    {
+      "id": "fb-54a154c2b7",
+      "ts": 1779725213.3855164,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "queue head-of-line blocking in order-pipeline, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779725213.3856015,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 540ms briefly, recovered in 5s",
+    "started_at": "2026-05-24T05:33:11.208428+00:00"
+  }
+}

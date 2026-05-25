@@ -1,0 +1,35 @@
+{
+  "incident_id": "9937b77017",
+  "records": [
+    {
+      "id": "fb-836443cdf4",
+      "ts": 1779725213.106675,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.recommend-feed.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779725213.1067832,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 391ms briefly, recovered in 17s",
+    "started_at": "2026-05-22T09:34:34.385872+00:00"
+  }
+}

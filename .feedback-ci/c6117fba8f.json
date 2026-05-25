@@ -1,0 +1,33 @@
+{
+  "incident_id": "c6117fba8f",
+  "records": [
+    {
+      "id": "fb-ab9414bafc",
+      "ts": 1779725213.264721,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the recommend-feed sidecar",
+      "correct_remediation": "disable feature flag svc.recommend-feed.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779725213.2648094,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-4",
+    "description": "downstream service search-suggest returning 502 -- error budget burning at 3x",
+    "started_at": "2026-05-24T09:19:08.022801+00:00"
+  }
+}

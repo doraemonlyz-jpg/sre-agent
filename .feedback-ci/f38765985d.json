@@ -1,0 +1,33 @@
+{
+  "incident_id": "f38765985d",
+  "records": [
+    {
+      "id": "fb-3d947b38b7",
+      "ts": 1779725213.7883987,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream notification-fanout timeout, not cart-service",
+      "correct_remediation": "increase cart-service concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.8,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779725213.7884848,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-2",
+    "description": "p99 latency 2175ms spiking on /checkout, error rate 5%",
+    "started_at": "2026-05-25T11:22:30.939069+00:00"
+  }
+}

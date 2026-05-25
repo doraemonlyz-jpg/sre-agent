@@ -1,0 +1,35 @@
+{
+  "incident_id": "a04aae061e",
+  "records": [
+    {
+      "id": "fb-c0f098a843",
+      "ts": 1779725213.2756603,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the session-store sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779725213.275779,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 424ms briefly, recovered in 7s",
+    "started_at": "2026-05-21T06:37:55.744626+00:00"
+  }
+}

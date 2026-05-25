@@ -1,0 +1,33 @@
+{
+  "incident_id": "8f5f38911e",
+  "records": [
+    {
+      "id": "fb-4387dcd3c9",
+      "ts": 1779725213.6609223,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in ad-bidder, not what the agent said",
+      "correct_remediation": "increase ad-bidder concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.91,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779725213.6610084,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-1",
+    "description": "5xx rate 16% sustained for 502s after deploy of #75151",
+    "started_at": "2026-05-18T19:22:35.446184+00:00"
+  }
+}
