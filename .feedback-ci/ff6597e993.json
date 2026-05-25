@@ -1,0 +1,33 @@
+{
+  "incident_id": "ff6597e993",
+  "records": [
+    {
+      "id": "fb-1c994ae821",
+      "ts": 1779717082.8327382,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream checkout-api timeout, not cart-service",
+      "correct_remediation": "page the price-cache oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779717082.8328235,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "downstream service ad-bidder returning 502 -- error budget burning at 5x",
+    "started_at": "2026-05-21T22:10:23.017523+00:00"
+  }
+}

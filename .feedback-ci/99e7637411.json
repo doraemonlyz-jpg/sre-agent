@@ -1,0 +1,35 @@
+{
+  "incident_id": "99e7637411",
+  "records": [
+    {
+      "id": "fb-04d96c61da",
+      "ts": 1779717082.8802357,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the search-suggest sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779717082.880321,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 622ms briefly, recovered in 19s",
+    "started_at": "2026-05-21T07:17:34.292423+00:00"
+  }
+}

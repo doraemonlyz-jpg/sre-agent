@@ -1,0 +1,33 @@
+{
+  "incident_id": "54b6df05d1",
+  "records": [
+    {
+      "id": "fb-b75da15e15",
+      "ts": 1779717082.9771125,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream notification-fanout timeout, not video-encoder",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779717082.9772017,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-2",
+    "description": "p99 latency 3463ms spiking on /checkout, error rate 6%",
+    "started_at": "2026-05-20T08:10:02.983572+00:00"
+  }
+}
