@@ -1,0 +1,33 @@
+{
+  "incident_id": "3c9d0e6d53",
+  "records": [
+    {
+      "id": "fb-705f6fd6b8",
+      "ts": 1779892519.6187956,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not notification-fanout",
+      "correct_remediation": "increase notification-fanout concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.94,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779892519.618886,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "p99 latency 3890ms spiking on /checkout, error rate 4%",
+    "started_at": "2026-05-23T03:57:18.331487+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "36c8cd8d7d",
+  "records": [
+    {
+      "id": "fb-5ce608a46f",
+      "ts": 1779892519.1748736,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream comment-svc timeout, not search-suggest",
+      "correct_remediation": "page the price-cache oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.65,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779892519.1749597,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "5xx rate 17% sustained for 93s after deploy of #31819",
+    "started_at": "2026-05-22T09:12:41.412052+00:00"
+  }
+}
