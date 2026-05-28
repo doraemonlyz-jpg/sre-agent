@@ -1,0 +1,33 @@
+{
+  "incident_id": "aa7e48ea39",
+  "records": [
+    {
+      "id": "fb-b89440b624",
+      "ts": 1779980062.9153445,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for notification-fanout was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779980062.9154346,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-1",
+    "description": "downstream service ad-bidder returning 502 -- error budget burning at 20x",
+    "started_at": "2026-05-27T19:40:02.883025+00:00"
+  }
+}

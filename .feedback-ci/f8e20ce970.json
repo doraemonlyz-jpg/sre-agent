@@ -1,0 +1,33 @@
+{
+  "incident_id": "f8e20ce970",
+  "records": [
+    {
+      "id": "fb-89bb975a61",
+      "ts": 1779980062.9079337,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in price-cache, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779980062.9080079,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-3",
+    "description": "p99 latency 3953ms spiking on /checkout, error rate 5%",
+    "started_at": "2026-05-26T07:42:24.670734+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "93bbcc6035",
+  "records": [
+    {
+      "id": "fb-1b5f88f407",
+      "ts": 1779980063.153878,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "actually a downstream cart-service timeout, not order-pipeline",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.57,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779980063.1539562,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-2",
+    "description": "5xx rate 23% sustained for 383s after deploy of #80826",
+    "started_at": "2026-05-27T13:18:48.033424+00:00"
+  }
+}

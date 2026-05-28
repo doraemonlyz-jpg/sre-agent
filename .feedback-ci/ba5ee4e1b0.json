@@ -1,0 +1,33 @@
+{
+  "incident_id": "ba5ee4e1b0",
+  "records": [
+    {
+      "id": "fb-0401904055",
+      "ts": 1779980063.478522,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in ad-bidder, not what the agent said",
+      "correct_remediation": "page the video-encoder oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.97,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779980063.4785988,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-1",
+    "description": "p99 latency 2349ms spiking on /checkout, error rate 5%",
+    "started_at": "2026-05-23T06:17:25.040189+00:00"
+  }
+}

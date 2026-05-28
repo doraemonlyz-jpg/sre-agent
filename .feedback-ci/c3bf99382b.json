@@ -1,0 +1,35 @@
+{
+  "incident_id": "c3bf99382b",
+  "records": [
+    {
+      "id": "fb-e92f254030",
+      "ts": 1779980063.227942,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream rate-limiter-edge timeout, not inventory-sync",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779980063.228016,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "downstream service ad-bidder returning 502 -- error budget burning at 17x",
+    "started_at": "2026-05-25T16:15:25.370343+00:00"
+  }
+}

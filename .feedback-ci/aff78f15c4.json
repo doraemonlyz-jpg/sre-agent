@@ -1,0 +1,35 @@
+{
+  "incident_id": "aff78f15c4",
+  "records": [
+    {
+      "id": "fb-de861125f1",
+      "ts": 1779980063.1449106,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for ad-bidder was filling our partition",
+      "correct_remediation": "disable feature flag svc.ad-bidder.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779980063.1449852,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-4",
+    "description": "memory usage 90% on auth-service -- OOM kill predicted in 24m",
+    "started_at": "2026-05-27T08:47:39.953538+00:00"
+  }
+}

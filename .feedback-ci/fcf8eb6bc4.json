@@ -1,0 +1,33 @@
+{
+  "incident_id": "fcf8eb6bc4",
+  "records": [
+    {
+      "id": "fb-5802113c1b",
+      "ts": 1779980063.370678,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for search-suggest was filling our partition",
+      "correct_remediation": "page the comment-svc oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779980063.370754,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-4",
+    "description": "memory usage 89% on search-suggest -- OOM kill predicted in 9m",
+    "started_at": "2026-05-25T13:41:11.736062+00:00"
+  }
+}

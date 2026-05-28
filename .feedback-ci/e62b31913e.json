@@ -1,0 +1,33 @@
+{
+  "incident_id": "e62b31913e",
+  "records": [
+    {
+      "id": "fb-233a349c93",
+      "ts": 1779980063.082191,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream cart-service timeout, not recommend-feed",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.76,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779980063.0822635,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-4",
+    "description": "5xx rate 9% sustained for 389s after deploy of #48786",
+    "started_at": "2026-05-25T20:14:57.069187+00:00"
+  }
+}

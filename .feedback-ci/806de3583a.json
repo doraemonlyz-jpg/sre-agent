@@ -1,0 +1,35 @@
+{
+  "incident_id": "806de3583a",
+  "records": [
+    {
+      "id": "fb-3d6a65811c",
+      "ts": 1779980063.2269588,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the auth-service sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779980063.2270336,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "memory usage 96% on cart-service -- OOM kill predicted in 5m",
+    "started_at": "2026-05-22T17:22:32.180783+00:00"
+  }
+}

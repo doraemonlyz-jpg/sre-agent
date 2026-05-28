@@ -1,0 +1,35 @@
+{
+  "incident_id": "2572e01a52",
+  "records": [
+    {
+      "id": "fb-faf7555565",
+      "ts": 1779980063.259043,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream cart-service timeout, not notification-fanout",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1779980063.259116,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 207ms briefly, recovered in 11s",
+    "started_at": "2026-05-25T18:07:39.616145+00:00"
+  }
+}

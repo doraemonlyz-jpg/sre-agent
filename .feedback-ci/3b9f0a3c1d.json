@@ -1,0 +1,33 @@
+{
+  "incident_id": "3b9f0a3c1d",
+  "records": [
+    {
+      "id": "fb-becdabe4bd",
+      "ts": 1779980063.242348,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.81,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779980063.2424448,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-4",
+    "description": "downstream service checkout-api returning 502 -- error budget burning at 20x",
+    "started_at": "2026-05-26T07:41:24.590706+00:00"
+  }
+}

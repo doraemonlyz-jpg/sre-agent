@@ -1,0 +1,33 @@
+{
+  "incident_id": "3fa8fc6a7f",
+  "records": [
+    {
+      "id": "fb-412b073af9",
+      "ts": 1779980063.316159,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for price-cache was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.92,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779980063.3162372,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "downstream service recommend-feed returning 502 -- error budget burning at 20x",
+    "started_at": "2026-05-28T02:46:22.088662+00:00"
+  }
+}

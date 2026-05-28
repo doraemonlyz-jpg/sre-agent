@@ -1,0 +1,33 @@
+{
+  "incident_id": "2375515c03",
+  "records": [
+    {
+      "id": "fb-e6c58e25a0",
+      "ts": 1779980063.0091548,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream user-profile timeout, not session-store",
+      "correct_remediation": "increase session-store concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.6,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779980063.0092325,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "memory usage 97% on cart-service -- OOM kill predicted in 15m",
+    "started_at": "2026-05-22T22:55:05.563140+00:00"
+  }
+}

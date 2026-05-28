@@ -1,0 +1,33 @@
+{
+  "incident_id": "02dbc6c164",
+  "records": [
+    {
+      "id": "fb-df2b20f033",
+      "ts": 1779980062.9950764,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream session-store timeout, not order-pipeline",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779980062.9951518,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "5xx rate 8% sustained for 301s after deploy of #37195",
+    "started_at": "2026-05-25T21:48:55.658949+00:00"
+  }
+}

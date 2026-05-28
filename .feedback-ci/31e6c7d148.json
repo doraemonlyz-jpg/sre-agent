@@ -1,0 +1,33 @@
+{
+  "incident_id": "31e6c7d148",
+  "records": [
+    {
+      "id": "fb-2fd01d1c14",
+      "ts": 1779980062.9891298,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in cart-service, not what the agent said",
+      "correct_remediation": "disable feature flag svc.cart-service.new_path",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779980062.9892054,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-2",
+    "description": "memory usage 92% on comment-svc -- OOM kill predicted in 13m",
+    "started_at": "2026-05-24T15:05:14.646760+00:00"
+  }
+}

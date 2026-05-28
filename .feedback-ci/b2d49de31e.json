@@ -1,0 +1,33 @@
+{
+  "incident_id": "b2d49de31e",
+  "records": [
+    {
+      "id": "fb-c722c5c48d",
+      "ts": 1779980063.5837498,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in order-pipeline, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1779980063.5838277,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-4",
+    "description": "5xx rate 10% sustained for 427s after deploy of #25187",
+    "started_at": "2026-05-24T14:13:04.333801+00:00"
+  }
+}
