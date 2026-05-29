@@ -1,0 +1,35 @@
+{
+  "incident_id": "471d09fba3",
+  "records": [
+    {
+      "id": "fb-5f7ab9322d",
+      "ts": 1780058250.3286643,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream order-pipeline timeout, not notification-fanout",
+      "correct_remediation": "increase notification-fanout concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780058250.32872,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-4",
+    "description": "downstream service auth-service returning 502 -- error budget burning at 19x",
+    "started_at": "2026-05-22T20:23:32.120473+00:00"
+  }
+}
