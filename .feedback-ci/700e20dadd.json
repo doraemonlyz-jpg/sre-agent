@@ -1,0 +1,35 @@
+{
+  "incident_id": "700e20dadd",
+  "records": [
+    {
+      "id": "fb-f8fddb69ea",
+      "ts": 1780133496.5205266,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in cdn-router, not what the agent said",
+      "correct_remediation": "disable feature flag svc.cdn-router.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780133496.5206387,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 657ms briefly, recovered in 17s",
+    "started_at": "2026-05-25T10:48:17.266813+00:00"
+  }
+}

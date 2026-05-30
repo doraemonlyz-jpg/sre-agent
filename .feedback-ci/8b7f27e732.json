@@ -1,0 +1,33 @@
+{
+  "incident_id": "8b7f27e732",
+  "records": [
+    {
+      "id": "fb-91525135f1",
+      "ts": 1780133496.2200859,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "queue head-of-line blocking in price-cache, not what the agent said",
+      "correct_remediation": "page the price-cache oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.9,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780133496.2201693,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-1",
+    "description": "downstream service rate-limiter-edge returning 502 -- error budget burning at 16x",
+    "started_at": "2026-05-24T12:26:28.178972+00:00"
+  }
+}

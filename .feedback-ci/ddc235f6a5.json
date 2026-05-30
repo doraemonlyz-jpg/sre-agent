@@ -1,0 +1,33 @@
+{
+  "incident_id": "ddc235f6a5",
+  "records": [
+    {
+      "id": "fb-0276eb3b4d",
+      "ts": 1780133496.279967,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not notification-fanout",
+      "correct_remediation": "page the cdn-router oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.85,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780133496.2800498,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 373ms briefly, recovered in 16s",
+    "started_at": "2026-05-27T13:11:48.710217+00:00"
+  }
+}
