@@ -1,0 +1,33 @@
+{
+  "incident_id": "42ba0035f8",
+  "records": [
+    {
+      "id": "fb-a12a0def31",
+      "ts": 1780225706.5391827,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not auth-service",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780225706.5392692,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "memory usage 88% on session-store -- OOM kill predicted in 11m",
+    "started_at": "2026-05-30T21:37:16.431109+00:00"
+  }
+}

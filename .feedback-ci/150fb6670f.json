@@ -1,0 +1,33 @@
+{
+  "incident_id": "150fb6670f",
+  "records": [
+    {
+      "id": "fb-1f3d8c3360",
+      "ts": 1780225706.9369414,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream notification-fanout timeout, not checkout-api",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.84,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780225706.9370277,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-3",
+    "description": "memory usage 87% on payments-gateway -- OOM kill predicted in 27m",
+    "started_at": "2026-05-25T19:00:56.284986+00:00"
+  }
+}
