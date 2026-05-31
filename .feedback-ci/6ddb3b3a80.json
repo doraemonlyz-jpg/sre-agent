@@ -1,0 +1,33 @@
+{
+  "incident_id": "6ddb3b3a80",
+  "records": [
+    {
+      "id": "fb-f565885cb3",
+      "ts": 1780223077.0179887,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream session-store timeout, not price-cache",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780223077.0180771,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-2",
+    "description": "memory usage 93% on comment-svc -- OOM kill predicted in 29m",
+    "started_at": "2026-05-24T12:37:31.073034+00:00"
+  }
+}

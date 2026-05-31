@@ -1,0 +1,33 @@
+{
+  "incident_id": "b1ff4377f3",
+  "records": [
+    {
+      "id": "fb-03cb12c2ef",
+      "ts": 1780223077.0175896,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "increase order-pipeline concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780223077.0176747,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-2",
+    "description": "5xx rate 22% sustained for 301s after deploy of #62780",
+    "started_at": "2026-05-24T18:07:13.214486+00:00"
+  }
+}

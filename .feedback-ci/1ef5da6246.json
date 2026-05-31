@@ -1,0 +1,35 @@
+{
+  "incident_id": "1ef5da6246",
+  "records": [
+    {
+      "id": "fb-5e8d3d6880",
+      "ts": 1780223077.3268723,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for ad-bidder was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780223077.326962,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "p99 latency 1915ms spiking on /checkout, error rate 10%",
+    "started_at": "2026-05-26T19:30:14.819992+00:00"
+  }
+}

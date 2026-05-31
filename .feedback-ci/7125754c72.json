@@ -1,0 +1,35 @@
+{
+  "incident_id": "7125754c72",
+  "records": [
+    {
+      "id": "fb-5a7eff601b",
+      "ts": 1780223077.6384206,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the comment-svc sidecar",
+      "correct_remediation": "disable feature flag svc.comment-svc.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780223077.6385076,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 565ms briefly, recovered in 22s",
+    "started_at": "2026-05-28T11:01:23.015063+00:00"
+  }
+}

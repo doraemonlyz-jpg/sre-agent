@@ -1,0 +1,33 @@
+{
+  "incident_id": "581fff2b72",
+  "records": [
+    {
+      "id": "fb-ef1e1dcaa1",
+      "ts": 1780223077.1459868,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for ad-bidder was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780223077.1460736,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-1",
+    "description": "memory usage 90% on cart-service -- OOM kill predicted in 20m",
+    "started_at": "2026-05-30T21:18:29.254119+00:00"
+  }
+}

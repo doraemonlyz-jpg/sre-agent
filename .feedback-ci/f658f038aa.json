@@ -1,0 +1,33 @@
+{
+  "incident_id": "f658f038aa",
+  "records": [
+    {
+      "id": "fb-e12d8be6d8",
+      "ts": 1780223077.3341951,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the order-pipeline sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.63,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780223077.3342814,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "memory usage 96% on price-cache -- OOM kill predicted in 28m",
+    "started_at": "2026-05-26T12:06:04.981956+00:00"
+  }
+}

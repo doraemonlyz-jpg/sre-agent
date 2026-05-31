@@ -1,0 +1,33 @@
+{
+  "incident_id": "72bd294e79",
+  "records": [
+    {
+      "id": "fb-ad714b9ec6",
+      "ts": 1780223076.8741982,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream inventory-sync timeout, not image-thumbnail",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780223076.8743403,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-4",
+    "description": "memory usage 86% on cart-service -- OOM kill predicted in 21m",
+    "started_at": "2026-05-26T11:01:12.574476+00:00"
+  }
+}

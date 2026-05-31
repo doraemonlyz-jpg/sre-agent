@@ -1,0 +1,35 @@
+{
+  "incident_id": "1472dcfa38",
+  "records": [
+    {
+      "id": "fb-14bb9b44da",
+      "ts": 1780223077.1162271,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for session-store was filling our partition",
+      "correct_remediation": "increase ad-bidder concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780223077.1163204,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on inventory-sync",
+    "started_at": "2026-05-29T07:09:13.938398+00:00"
+  }
+}

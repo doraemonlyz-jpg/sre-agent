@@ -1,0 +1,35 @@
+{
+  "incident_id": "c0baf7a164",
+  "records": [
+    {
+      "id": "fb-c3879d136c",
+      "ts": 1780223077.362315,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the promo-engine sidecar",
+      "correct_remediation": "disable feature flag svc.promo-engine.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780223077.362404,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-2",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on image-thumbnail",
+    "started_at": "2026-05-25T16:48:33.063493+00:00"
+  }
+}

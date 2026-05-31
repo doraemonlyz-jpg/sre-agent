@@ -1,0 +1,35 @@
+{
+  "incident_id": "c6059b4937",
+  "records": [
+    {
+      "id": "fb-749fef190f",
+      "ts": 1780223077.359922,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the rate-limiter-edge sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780223077.3600135,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 596ms briefly, recovered in 30s",
+    "started_at": "2026-05-30T04:13:18.368645+00:00"
+  }
+}
