@@ -1,0 +1,35 @@
+{
+  "incident_id": "94f1ccfe1c",
+  "records": [
+    {
+      "id": "fb-dd00dd6bd6",
+      "ts": 1780347826.2496161,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream rate-limiter-edge timeout, not auth-service",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780347826.2497046,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 679ms briefly, recovered in 20s",
+    "started_at": "2026-05-29T22:24:48.691331+00:00"
+  }
+}

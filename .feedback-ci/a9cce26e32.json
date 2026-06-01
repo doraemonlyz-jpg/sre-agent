@@ -1,0 +1,33 @@
+{
+  "incident_id": "a9cce26e32",
+  "records": [
+    {
+      "id": "fb-cfd39edd7f",
+      "ts": 1780347826.1052752,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream comment-svc timeout, not search-suggest",
+      "correct_remediation": "disable feature flag svc.search-suggest.new_path",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780347826.1053627,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "p99 latency 3419ms spiking on /checkout, error rate 10%",
+    "started_at": "2026-05-27T19:21:52.556849+00:00"
+  }
+}

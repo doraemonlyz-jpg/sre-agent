@@ -1,0 +1,33 @@
+{
+  "incident_id": "934a459579",
+  "records": [
+    {
+      "id": "fb-b2959056dd",
+      "ts": 1780347826.451568,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not video-encoder",
+      "correct_remediation": "increase video-encoder concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.94,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780347826.4516506,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 416ms briefly, recovered in 9s",
+    "started_at": "2026-05-28T10:25:45.200333+00:00"
+  }
+}

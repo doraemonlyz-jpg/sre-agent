@@ -1,0 +1,33 @@
+{
+  "incident_id": "a874f020a1",
+  "records": [
+    {
+      "id": "fb-a635e4e212",
+      "ts": 1780347826.5186825,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in cdn-router, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780347826.5187674,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-2",
+    "description": "p99 latency 3794ms spiking on /checkout, error rate 11%",
+    "started_at": "2026-05-26T09:30:25.267622+00:00"
+  }
+}

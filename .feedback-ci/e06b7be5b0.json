@@ -1,0 +1,35 @@
+{
+  "incident_id": "e06b7be5b0",
+  "records": [
+    {
+      "id": "fb-7a6a97f9a2",
+      "ts": 1780347826.384682,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the cart-service sidecar",
+      "correct_remediation": "page the image-thumbnail oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780347826.384766,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 260ms briefly, recovered in 26s",
+    "started_at": "2026-05-31T12:45:06.458556+00:00"
+  }
+}
