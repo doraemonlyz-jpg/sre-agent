@@ -1,0 +1,33 @@
+{
+  "incident_id": "3dc5629f2f",
+  "records": [
+    {
+      "id": "fb-32314c23d2",
+      "ts": 1780343979.0971916,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for ad-bidder was filling our partition",
+      "correct_remediation": "page the cdn-router oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780343979.097278,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-2",
+    "description": "5xx rate 12% sustained for 224s after deploy of #72225",
+    "started_at": "2026-05-31T12:45:04.094974+00:00"
+  }
+}

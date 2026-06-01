@@ -1,0 +1,33 @@
+{
+  "incident_id": "358bc84b7c",
+  "records": [
+    {
+      "id": "fb-918bc1cced",
+      "ts": 1780343978.9341013,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the recommend-feed sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780343978.9341788,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "downstream service video-encoder returning 502 -- error budget burning at 5x",
+    "started_at": "2026-05-26T12:13:11.075103+00:00"
+  }
+}

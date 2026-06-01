@@ -1,0 +1,33 @@
+{
+  "incident_id": "461595b8f4",
+  "records": [
+    {
+      "id": "fb-a7d47a11b7",
+      "ts": 1780343978.9726486,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for price-cache was filling our partition",
+      "correct_remediation": "disable feature flag svc.auth-service.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780343978.9727225,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-4",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on session-store",
+    "started_at": "2026-05-30T15:07:49.004687+00:00"
+  }
+}

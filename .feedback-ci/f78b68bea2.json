@@ -1,0 +1,33 @@
+{
+  "incident_id": "f78b68bea2",
+  "records": [
+    {
+      "id": "fb-cb3698ad5b",
+      "ts": 1780343979.4913595,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the payments-gateway sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.82,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780343979.4914348,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-1",
+    "description": "5xx rate 13% sustained for 399s after deploy of #83311",
+    "started_at": "2026-05-31T01:03:37.903236+00:00"
+  }
+}

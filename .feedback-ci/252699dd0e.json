@@ -1,0 +1,33 @@
+{
+  "incident_id": "252699dd0e",
+  "records": [
+    {
+      "id": "fb-68e76e48a0",
+      "ts": 1780343978.9144502,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in payments-gateway, not what the agent said",
+      "correct_remediation": "increase payments-gateway concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780343978.9145246,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-2",
+    "description": "5xx rate 19% sustained for 367s after deploy of #65898",
+    "started_at": "2026-05-30T14:47:45.261878+00:00"
+  }
+}

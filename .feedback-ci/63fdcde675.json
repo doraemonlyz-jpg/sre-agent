@@ -1,0 +1,33 @@
+{
+  "incident_id": "63fdcde675",
+  "records": [
+    {
+      "id": "fb-01f7c449da",
+      "ts": 1780343979.5550501,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not cdn-router",
+      "correct_remediation": "increase cdn-router concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780343979.5551279,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-4",
+    "description": "5xx rate 23% sustained for 344s after deploy of #19640",
+    "started_at": "2026-05-31T00:29:13.935949+00:00"
+  }
+}

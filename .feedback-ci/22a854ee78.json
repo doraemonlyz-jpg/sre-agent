@@ -1,0 +1,35 @@
+{
+  "incident_id": "22a854ee78",
+  "records": [
+    {
+      "id": "fb-92c7e60c3c",
+      "ts": 1780343979.5169384,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for order-pipeline was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780343979.5170317,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 487ms briefly, recovered in 30s",
+    "started_at": "2026-05-31T17:29:11.197176+00:00"
+  }
+}

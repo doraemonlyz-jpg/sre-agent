@@ -1,0 +1,33 @@
+{
+  "incident_id": "d0de0c5b57",
+  "records": [
+    {
+      "id": "fb-63db6774c8",
+      "ts": 1780343979.2446587,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for session-store was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.92,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780343979.2447338,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 355ms briefly, recovered in 9s",
+    "started_at": "2026-05-26T08:55:02.084791+00:00"
+  }
+}

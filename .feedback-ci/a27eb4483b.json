@@ -1,0 +1,33 @@
+{
+  "incident_id": "a27eb4483b",
+  "records": [
+    {
+      "id": "fb-ad3fb2ab7c",
+      "ts": 1780343979.5677679,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream live-stream-edge timeout, not comment-svc",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.91,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780343979.5678456,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-2",
+    "description": "5xx rate 20% sustained for 346s after deploy of #17031",
+    "started_at": "2026-05-27T11:05:54.919486+00:00"
+  }
+}

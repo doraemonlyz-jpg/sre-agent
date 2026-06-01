@@ -1,0 +1,33 @@
+{
+  "incident_id": "b89d18710e",
+  "records": [
+    {
+      "id": "fb-fa52391cfe",
+      "ts": 1780343978.8070736,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.auth-service.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780343978.8071492,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-1",
+    "description": "downstream service recommend-feed returning 502 -- error budget burning at 7x",
+    "started_at": "2026-05-31T12:41:10.673386+00:00"
+  }
+}

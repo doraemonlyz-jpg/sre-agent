@@ -1,0 +1,33 @@
+{
+  "incident_id": "19a142c160",
+  "records": [
+    {
+      "id": "fb-78a53e88a1",
+      "ts": 1780343978.8389318,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream inventory-sync timeout, not rate-limiter-edge",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780343978.8390222,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-3",
+    "description": "p99 latency 3839ms spiking on /checkout, error rate 6%",
+    "started_at": "2026-05-30T13:45:02.998893+00:00"
+  }
+}

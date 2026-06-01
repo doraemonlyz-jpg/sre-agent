@@ -1,0 +1,33 @@
+{
+  "incident_id": "29f53cb8a6",
+  "records": [
+    {
+      "id": "fb-8b73922ab0",
+      "ts": 1780343979.0656834,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for ad-bidder was filling our partition",
+      "correct_remediation": "increase cdn-router concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.85,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780343979.0657623,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-2",
+    "description": "memory usage 93% on promo-engine -- OOM kill predicted in 6m",
+    "started_at": "2026-05-28T19:09:49.389368+00:00"
+  }
+}

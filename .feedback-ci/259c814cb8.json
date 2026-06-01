@@ -1,0 +1,33 @@
+{
+  "incident_id": "259c814cb8",
+  "records": [
+    {
+      "id": "fb-f3433d40fe",
+      "ts": 1780343979.2287104,
+      "verdict": "correct",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780343979.2287867,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "downstream service rate-limiter-edge returning 502 -- error budget burning at 3x",
+    "started_at": "2026-05-31T14:09:08.986349+00:00"
+  }
+}

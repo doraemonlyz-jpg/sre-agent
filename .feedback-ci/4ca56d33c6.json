@@ -1,0 +1,35 @@
+{
+  "incident_id": "4ca56d33c6",
+  "records": [
+    {
+      "id": "fb-df2bffbbec",
+      "ts": 1780343978.80515,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream video-encoder timeout, not rate-limiter-edge",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780343978.805234,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-1",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on payments-gateway",
+    "started_at": "2026-05-30T08:12:07.483046+00:00"
+  }
+}

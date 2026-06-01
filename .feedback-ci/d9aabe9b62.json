@@ -1,0 +1,33 @@
+{
+  "incident_id": "d9aabe9b62",
+  "records": [
+    {
+      "id": "fb-fccb763da5",
+      "ts": 1780343979.08588,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream price-cache timeout, not session-store",
+      "correct_remediation": "increase session-store concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.79,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780343979.085952,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-4",
+    "description": "downstream service user-profile returning 502 -- error budget burning at 3x",
+    "started_at": "2026-05-29T06:24:30.392259+00:00"
+  }
+}
