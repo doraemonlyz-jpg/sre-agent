@@ -1,0 +1,33 @@
+{
+  "incident_id": "2c040093b4",
+  "records": [
+    {
+      "id": "fb-065fc3edea",
+      "ts": 1780422995.9536717,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not comment-svc",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.9537468,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 565ms briefly, recovered in 22s",
+    "started_at": "2026-05-29T20:58:38.491091+00:00"
+  }
+}

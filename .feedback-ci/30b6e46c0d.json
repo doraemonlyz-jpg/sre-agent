@@ -1,0 +1,33 @@
+{
+  "incident_id": "30b6e46c0d",
+  "records": [
+    {
+      "id": "fb-7d7a104a2b",
+      "ts": 1780422995.294161,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.search-suggest.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.81,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.294234,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-2",
+    "description": "memory usage 99% on cart-service -- OOM kill predicted in 13m",
+    "started_at": "2026-05-29T15:04:21.650676+00:00"
+  }
+}

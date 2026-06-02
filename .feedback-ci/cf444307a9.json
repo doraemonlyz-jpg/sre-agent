@@ -1,0 +1,33 @@
+{
+  "incident_id": "cf444307a9",
+  "records": [
+    {
+      "id": "fb-207b3bcb37",
+      "ts": 1780422995.5762157,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for comment-svc was filling our partition",
+      "correct_remediation": "page the ad-bidder oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.62,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.5762901,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "downstream service ad-bidder returning 502 -- error budget burning at 17x",
+    "started_at": "2026-06-01T13:07:39.323776+00:00"
+  }
+}

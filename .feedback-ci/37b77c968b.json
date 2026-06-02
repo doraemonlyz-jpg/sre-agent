@@ -1,0 +1,33 @@
+{
+  "incident_id": "37b77c968b",
+  "records": [
+    {
+      "id": "fb-f38cf3eff3",
+      "ts": 1780422995.3673851,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream price-cache timeout, not promo-engine",
+      "correct_remediation": "increase promo-engine concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.3674605,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-2",
+    "description": "5xx rate 25% sustained for 108s after deploy of #45576",
+    "started_at": "2026-05-27T14:10:25.702274+00:00"
+  }
+}

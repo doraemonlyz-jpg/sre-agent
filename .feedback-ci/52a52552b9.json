@@ -1,0 +1,33 @@
+{
+  "incident_id": "52a52552b9",
+  "records": [
+    {
+      "id": "fb-95eca77035",
+      "ts": 1780422995.783434,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the comment-svc sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.85,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.7835057,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "memory usage 92% on notification-fanout -- OOM kill predicted in 20m",
+    "started_at": "2026-05-30T20:43:49.760641+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "cc7f9b45a6",
+  "records": [
+    {
+      "id": "fb-74cccf90ff",
+      "ts": 1780422995.6295283,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the user-profile sidecar",
+      "correct_remediation": "disable feature flag svc.user-profile.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.82,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.629602,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "p99 latency 3003ms spiking on /checkout, error rate 14%",
+    "started_at": "2026-06-01T00:11:57.930842+00:00"
+  }
+}

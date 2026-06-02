@@ -1,0 +1,33 @@
+{
+  "incident_id": "c53a1de96e",
+  "records": [
+    {
+      "id": "fb-356d49403c",
+      "ts": 1780422995.7321212,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream comment-svc timeout, not payments-gateway",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.81,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.7321966,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-3",
+    "description": "memory usage 91% on price-cache -- OOM kill predicted in 10m",
+    "started_at": "2026-05-29T16:53:32.323849+00:00"
+  }
+}

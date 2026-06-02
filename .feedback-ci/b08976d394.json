@@ -1,0 +1,35 @@
+{
+  "incident_id": "b08976d394",
+  "records": [
+    {
+      "id": "fb-6b3c692e5d",
+      "ts": 1780422995.8508043,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for promo-engine was filling our partition",
+      "correct_remediation": "page the video-encoder oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780422995.850883,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 312ms briefly, recovered in 20s",
+    "started_at": "2026-05-31T17:10:03.746732+00:00"
+  }
+}

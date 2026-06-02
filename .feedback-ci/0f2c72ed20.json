@@ -1,0 +1,35 @@
+{
+  "incident_id": "0f2c72ed20",
+  "records": [
+    {
+      "id": "fb-2a1e4d6c53",
+      "ts": 1780422995.4924848,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream inventory-sync timeout, not checkout-api",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780422995.4925613,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 506ms briefly, recovered in 12s",
+    "started_at": "2026-05-28T03:30:47.212978+00:00"
+  }
+}

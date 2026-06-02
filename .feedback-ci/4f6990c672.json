@@ -1,0 +1,33 @@
+{
+  "incident_id": "4f6990c672",
+  "records": [
+    {
+      "id": "fb-01f1e9796c",
+      "ts": 1780422995.891726,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for recommend-feed was filling our partition",
+      "correct_remediation": "page the promo-engine oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.65,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.8918176,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-2",
+    "description": "downstream service notification-fanout returning 502 -- error budget burning at 12x",
+    "started_at": "2026-05-27T19:02:04.772213+00:00"
+  }
+}

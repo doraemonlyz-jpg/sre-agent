@@ -1,0 +1,33 @@
+{
+  "incident_id": "d987de44f4",
+  "records": [
+    {
+      "id": "fb-c62ea47bc7",
+      "ts": 1780422995.836586,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for payments-gateway was filling our partition",
+      "correct_remediation": "page the auth-service oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.87,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.8366601,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "downstream service session-store returning 502 -- error budget burning at 17x",
+    "started_at": "2026-06-02T12:37:17.624748+00:00"
+  }
+}

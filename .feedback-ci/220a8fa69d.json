@@ -1,0 +1,33 @@
+{
+  "incident_id": "220a8fa69d",
+  "records": [
+    {
+      "id": "fb-afb36c95b3",
+      "ts": 1780422995.9573507,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for user-profile was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.9574256,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "p99 latency 2802ms spiking on /checkout, error rate 15%",
+    "started_at": "2026-05-31T07:17:34.626739+00:00"
+  }
+}

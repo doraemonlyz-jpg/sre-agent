@@ -1,0 +1,35 @@
+{
+  "incident_id": "f089e0f5fc",
+  "records": [
+    {
+      "id": "fb-99226849cf",
+      "ts": 1780422995.3989577,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in notification-fanout, not what the agent said",
+      "correct_remediation": "increase notification-fanout concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780422995.3990357,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on live-stream-edge",
+    "started_at": "2026-05-31T07:42:28.790390+00:00"
+  }
+}

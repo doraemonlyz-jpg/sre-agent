@@ -1,0 +1,33 @@
+{
+  "incident_id": "0d02131a25",
+  "records": [
+    {
+      "id": "fb-ef54124828",
+      "ts": 1780422995.7341256,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for price-cache was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.92,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.7342005,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "5xx rate 18% sustained for 293s after deploy of #81115",
+    "started_at": "2026-05-29T20:02:41.459073+00:00"
+  }
+}

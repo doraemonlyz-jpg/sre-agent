@@ -1,0 +1,33 @@
+{
+  "incident_id": "9a6a419775",
+  "records": [
+    {
+      "id": "fb-c88308f301",
+      "ts": 1780422995.8569958,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the comment-svc sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.857074,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "p99 latency 3829ms spiking on /checkout, error rate 11%",
+    "started_at": "2026-06-02T16:12:13.113292+00:00"
+  }
+}

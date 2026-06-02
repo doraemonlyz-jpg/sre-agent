@@ -1,0 +1,33 @@
+{
+  "incident_id": "b191c50804",
+  "records": [
+    {
+      "id": "fb-810e267c6a",
+      "ts": 1780422995.4512706,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "page the cdn-router oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.451347,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "p99 latency 2467ms spiking on /checkout, error rate 9%",
+    "started_at": "2026-05-28T20:42:50.894376+00:00"
+  }
+}

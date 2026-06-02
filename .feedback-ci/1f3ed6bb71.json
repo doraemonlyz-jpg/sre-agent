@@ -1,0 +1,33 @@
+{
+  "incident_id": "1f3ed6bb71",
+  "records": [
+    {
+      "id": "fb-bd8155bc9b",
+      "ts": 1780422995.7497945,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not inventory-sync",
+      "correct_remediation": "increase inventory-sync concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.7498717,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "downstream service cdn-router returning 502 -- error budget burning at 12x",
+    "started_at": "2026-05-28T18:02:26.878738+00:00"
+  }
+}

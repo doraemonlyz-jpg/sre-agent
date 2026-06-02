@@ -1,0 +1,33 @@
+{
+  "incident_id": "55b90ddcbe",
+  "records": [
+    {
+      "id": "fb-a4bfe42a08",
+      "ts": 1780422995.7073436,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream payments-gateway timeout, not comment-svc",
+      "correct_remediation": "page the inventory-sync oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.87,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.7074168,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "memory usage 86% on image-thumbnail -- OOM kill predicted in 11m",
+    "started_at": "2026-05-27T19:22:13.265156+00:00"
+  }
+}

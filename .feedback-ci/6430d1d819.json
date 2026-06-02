@@ -1,0 +1,33 @@
+{
+  "incident_id": "6430d1d819",
+  "records": [
+    {
+      "id": "fb-1738c12f24",
+      "ts": 1780422995.3390992,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in auth-service, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.75,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.339173,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-1",
+    "description": "5xx rate 16% sustained for 204s after deploy of #35357",
+    "started_at": "2026-06-02T05:16:54.883709+00:00"
+  }
+}

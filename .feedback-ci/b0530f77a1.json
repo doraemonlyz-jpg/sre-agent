@@ -1,0 +1,33 @@
+{
+  "incident_id": "b0530f77a1",
+  "records": [
+    {
+      "id": "fb-c3e2ed89fa",
+      "ts": 1780422995.3065317,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the image-thumbnail sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.3066022,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-2",
+    "description": "5xx rate 23% sustained for 457s after deploy of #43361",
+    "started_at": "2026-06-01T01:37:58.867165+00:00"
+  }
+}

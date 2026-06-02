@@ -1,0 +1,33 @@
+{
+  "incident_id": "025e9f816f",
+  "records": [
+    {
+      "id": "fb-cd8735f1fa",
+      "ts": 1780422995.9986696,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the comment-svc sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.84,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.9987507,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-2",
+    "description": "memory usage 88% on video-encoder -- OOM kill predicted in 28m",
+    "started_at": "2026-05-27T01:17:50.797875+00:00"
+  }
+}

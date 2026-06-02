@@ -1,0 +1,33 @@
+{
+  "incident_id": "9cbb7b5508",
+  "records": [
+    {
+      "id": "fb-8fc4622f28",
+      "ts": 1780422995.7551072,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream search-suggest timeout, not ad-bidder",
+      "correct_remediation": "page the inventory-sync oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.755182,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-4",
+    "description": "5xx rate 8% sustained for 510s after deploy of #68401",
+    "started_at": "2026-06-01T06:23:47.699970+00:00"
+  }
+}

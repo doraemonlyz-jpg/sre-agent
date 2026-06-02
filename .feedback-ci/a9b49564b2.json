@@ -1,0 +1,33 @@
+{
+  "incident_id": "a9b49564b2",
+  "records": [
+    {
+      "id": "fb-1aa81d2ce8",
+      "ts": 1780422995.9853504,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for live-stream-edge was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.9854252,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-2",
+    "description": "memory usage 95% on price-cache -- OOM kill predicted in 18m",
+    "started_at": "2026-05-30T05:16:26.244951+00:00"
+  }
+}

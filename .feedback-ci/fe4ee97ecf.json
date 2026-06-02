@@ -1,0 +1,35 @@
+{
+  "incident_id": "fe4ee97ecf",
+  "records": [
+    {
+      "id": "fb-984a1e9b0f",
+      "ts": 1780422995.8323505,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "increase cart-service concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780422995.832426,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 547ms briefly, recovered in 12s",
+    "started_at": "2026-05-27T10:40:07.962870+00:00"
+  }
+}

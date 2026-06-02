@@ -1,0 +1,33 @@
+{
+  "incident_id": "c27b42bb82",
+  "records": [
+    {
+      "id": "fb-336376e977",
+      "ts": 1780422995.2886155,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for user-profile was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.56,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780422995.288694,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-2",
+    "description": "memory usage 99% on cart-service -- OOM kill predicted in 13m",
+    "started_at": "2026-05-31T00:48:40.809997+00:00"
+  }
+}
