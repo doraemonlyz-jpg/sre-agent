@@ -1,0 +1,33 @@
+{
+  "incident_id": "b600e1a354",
+  "records": [
+    {
+      "id": "fb-1ab741bbfd",
+      "ts": 1780511613.5985904,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream cart-service timeout, not payments-gateway",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.91,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780511613.598661,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-3",
+    "description": "5xx rate 22% sustained for 152s after deploy of #75622",
+    "started_at": "2026-06-02T14:35:22.364321+00:00"
+  }
+}

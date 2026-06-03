@@ -1,0 +1,33 @@
+{
+  "incident_id": "69bc9add68",
+  "records": [
+    {
+      "id": "fb-10536dcac7",
+      "ts": 1780511613.5995321,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for video-encoder was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.81,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780511613.5996044,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "downstream service session-store returning 502 -- error budget burning at 3x",
+    "started_at": "2026-05-29T06:51:43.220907+00:00"
+  }
+}

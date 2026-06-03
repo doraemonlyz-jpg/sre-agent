@@ -1,0 +1,33 @@
+{
+  "incident_id": "aba4e0c1c9",
+  "records": [
+    {
+      "id": "fb-9cef06f5e2",
+      "ts": 1780511614.058578,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the cart-service sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780511614.05865,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-4",
+    "description": "downstream service cart-service returning 502 -- error budget burning at 13x",
+    "started_at": "2026-06-02T01:57:33.486564+00:00"
+  }
+}

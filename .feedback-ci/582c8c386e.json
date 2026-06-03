@@ -1,0 +1,35 @@
+{
+  "incident_id": "582c8c386e",
+  "records": [
+    {
+      "id": "fb-6b083f82ca",
+      "ts": 1780511613.6470747,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream checkout-api timeout, not promo-engine",
+      "correct_remediation": "disable feature flag svc.promo-engine.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780511613.6471505,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 732ms briefly, recovered in 8s",
+    "started_at": "2026-05-28T00:07:41.560734+00:00"
+  }
+}

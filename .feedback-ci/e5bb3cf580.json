@@ -1,0 +1,35 @@
+{
+  "incident_id": "e5bb3cf580",
+  "records": [
+    {
+      "id": "fb-de8b69d0d6",
+      "ts": 1780511613.8424468,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream cart-service timeout, not search-suggest",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780511613.8425229,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 378ms briefly, recovered in 5s",
+    "started_at": "2026-06-01T19:11:02.019670+00:00"
+  }
+}

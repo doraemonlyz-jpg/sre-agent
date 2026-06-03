@@ -1,0 +1,35 @@
+{
+  "incident_id": "f9e9c9a676",
+  "records": [
+    {
+      "id": "fb-4f6c1c7d40",
+      "ts": 1780511613.7402785,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream auth-service timeout, not ad-bidder",
+      "correct_remediation": "page the cdn-router oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780511613.7403567,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 251ms briefly, recovered in 22s",
+    "started_at": "2026-06-01T17:50:21.972598+00:00"
+  }
+}
