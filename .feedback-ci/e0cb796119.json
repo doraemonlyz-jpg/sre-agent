@@ -1,0 +1,33 @@
+{
+  "incident_id": "e0cb796119",
+  "records": [
+    {
+      "id": "fb-111bbb4092",
+      "ts": 1780576443.6092746,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not video-encoder",
+      "correct_remediation": "increase video-encoder concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780576443.6093602,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "memory usage 87% on search-suggest -- OOM kill predicted in 16m",
+    "started_at": "2026-06-03T19:57:56.470267+00:00"
+  }
+}

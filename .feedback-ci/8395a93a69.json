@@ -1,0 +1,33 @@
+{
+  "incident_id": "8395a93a69",
+  "records": [
+    {
+      "id": "fb-722c8e817f",
+      "ts": 1780576443.8802738,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for search-suggest was filling our partition",
+      "correct_remediation": "increase live-stream-edge concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.92,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780576443.8803568,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-1",
+    "description": "memory usage 99% on auth-service -- OOM kill predicted in 6m",
+    "started_at": "2026-05-30T07:59:55.134340+00:00"
+  }
+}

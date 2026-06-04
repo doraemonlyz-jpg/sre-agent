@@ -1,0 +1,33 @@
+{
+  "incident_id": "64843bb45b",
+  "records": [
+    {
+      "id": "fb-dfb23a3d92",
+      "ts": 1780576443.973136,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in video-encoder, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780576443.9732215,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-1",
+    "description": "5xx rate 24% sustained for 131s after deploy of #92500",
+    "started_at": "2026-06-03T21:23:51.206792+00:00"
+  }
+}

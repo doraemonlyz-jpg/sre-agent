@@ -1,0 +1,33 @@
+{
+  "incident_id": "165bf8e97d",
+  "records": [
+    {
+      "id": "fb-8703028799",
+      "ts": 1780576443.2554266,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the promo-engine sidecar",
+      "correct_remediation": "disable feature flag svc.promo-engine.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.84,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780576443.2555087,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-1",
+    "description": "downstream service cdn-router returning 502 -- error budget burning at 17x",
+    "started_at": "2026-05-30T02:07:44.608313+00:00"
+  }
+}

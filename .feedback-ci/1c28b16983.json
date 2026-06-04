@@ -1,0 +1,33 @@
+{
+  "incident_id": "1c28b16983",
+  "records": [
+    {
+      "id": "fb-95f2e4ab45",
+      "ts": 1780576443.1820877,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in price-cache, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780576443.1821697,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-3",
+    "description": "memory usage 97% on live-stream-edge -- OOM kill predicted in 18m",
+    "started_at": "2026-06-02T16:28:40.898005+00:00"
+  }
+}

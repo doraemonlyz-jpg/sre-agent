@@ -1,0 +1,33 @@
+{
+  "incident_id": "a5a02e0499",
+  "records": [
+    {
+      "id": "fb-13af32fa11",
+      "ts": 1780576443.1473532,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream auth-service timeout, not promo-engine",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.9,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780576443.147433,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-4",
+    "description": "memory usage 92% on cdn-router -- OOM kill predicted in 18m",
+    "started_at": "2026-05-28T19:03:42.884540+00:00"
+  }
+}

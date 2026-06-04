@@ -1,0 +1,33 @@
+{
+  "incident_id": "f13d5ae6da",
+  "records": [
+    {
+      "id": "fb-61bcebaa68",
+      "ts": 1780576443.5908768,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780576443.590967,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "5xx rate 23% sustained for 350s after deploy of #80728",
+    "started_at": "2026-06-01T06:04:30.352328+00:00"
+  }
+}

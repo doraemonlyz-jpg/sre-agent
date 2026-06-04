@@ -1,0 +1,33 @@
+{
+  "incident_id": "54a9f784f7",
+  "records": [
+    {
+      "id": "fb-20d3b96f40",
+      "ts": 1780576443.341931,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in recommend-feed, not what the agent said",
+      "correct_remediation": "page the checkout-api oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.84,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780576443.3420162,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "downstream service live-stream-edge returning 502 -- error budget burning at 8x",
+    "started_at": "2026-06-02T23:42:47.667003+00:00"
+  }
+}

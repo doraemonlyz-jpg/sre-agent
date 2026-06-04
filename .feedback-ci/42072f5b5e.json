@@ -1,0 +1,33 @@
+{
+  "incident_id": "42072f5b5e",
+  "records": [
+    {
+      "id": "fb-8a3dab1d98",
+      "ts": 1780576443.409846,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "actually a downstream session-store timeout, not session-store",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.8,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780576443.4099772,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-1",
+    "description": "5xx rate 13% sustained for 558s after deploy of #80414",
+    "started_at": "2026-05-29T04:24:45.055921+00:00"
+  }
+}

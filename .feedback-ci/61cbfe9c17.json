@@ -1,0 +1,35 @@
+{
+  "incident_id": "61cbfe9c17",
+  "records": [
+    {
+      "id": "fb-a0985a4b9a",
+      "ts": 1780576443.6955013,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780576443.6955838,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 219ms briefly, recovered in 11s",
+    "started_at": "2026-06-01T11:41:12.560353+00:00"
+  }
+}

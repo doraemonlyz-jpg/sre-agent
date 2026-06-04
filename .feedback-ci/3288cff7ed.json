@@ -1,0 +1,35 @@
+{
+  "incident_id": "3288cff7ed",
+  "records": [
+    {
+      "id": "fb-6c9ae0fb02",
+      "ts": 1780576443.3271255,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the payments-gateway sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780576443.32721,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 235ms briefly, recovered in 19s",
+    "started_at": "2026-06-01T20:49:11.440196+00:00"
+  }
+}
