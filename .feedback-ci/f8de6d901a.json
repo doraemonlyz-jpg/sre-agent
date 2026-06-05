@@ -1,0 +1,33 @@
+{
+  "incident_id": "f8de6d901a",
+  "records": [
+    {
+      "id": "fb-53a5ee07f0",
+      "ts": 1780662475.3471756,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream inventory-sync timeout, not ad-bidder",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780662475.3472497,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-2",
+    "description": "p99 latency 1567ms spiking on /checkout, error rate 15%",
+    "started_at": "2026-06-02T09:26:16.671856+00:00"
+  }
+}

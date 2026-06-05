@@ -1,0 +1,33 @@
+{
+  "incident_id": "08e12c5fb7",
+  "records": [
+    {
+      "id": "fb-5438da6798",
+      "ts": 1780662474.7542431,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in inventory-sync, not what the agent said",
+      "correct_remediation": "disable feature flag svc.inventory-sync.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.75,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780662474.7543132,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "downstream service cart-service returning 502 -- error budget burning at 8x",
+    "started_at": "2026-05-29T19:05:28.705497+00:00"
+  }
+}

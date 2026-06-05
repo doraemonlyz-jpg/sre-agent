@@ -1,0 +1,33 @@
+{
+  "incident_id": "d26a399c79",
+  "records": [
+    {
+      "id": "fb-49446a9baa",
+      "ts": 1780662475.4470782,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream checkout-api timeout, not payments-gateway",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780662475.4471524,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-4",
+    "description": "downstream service search-suggest returning 502 -- error budget burning at 20x",
+    "started_at": "2026-06-04T07:43:37.038859+00:00"
+  }
+}
