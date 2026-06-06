@@ -1,0 +1,33 @@
+{
+  "incident_id": "9a63d27bb5",
+  "records": [
+    {
+      "id": "fb-0360af44ac",
+      "ts": 1780738590.4326694,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream promo-engine timeout, not live-stream-edge",
+      "correct_remediation": "disable feature flag svc.live-stream-edge.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780738590.4327335,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-2",
+    "description": "downstream service session-store returning 502 -- error budget burning at 13x",
+    "started_at": "2026-06-05T21:03:03.172639+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "a1e69185fc",
+  "records": [
+    {
+      "id": "fb-c93d6a3df7",
+      "ts": 1780738590.578988,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not cdn-router",
+      "correct_remediation": "disable feature flag svc.cdn-router.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780738590.5790513,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-3",
+    "description": "p99 latency 2742ms spiking on /checkout, error rate 9%",
+    "started_at": "2026-06-04T11:32:17.444924+00:00"
+  }
+}
