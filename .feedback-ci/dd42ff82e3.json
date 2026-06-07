@@ -1,0 +1,33 @@
+{
+  "incident_id": "dd42ff82e3",
+  "records": [
+    {
+      "id": "fb-ec379dddb9",
+      "ts": 1780831079.5241628,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream session-store timeout, not promo-engine",
+      "correct_remediation": "increase promo-engine concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.79,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780831079.5242627,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-3",
+    "description": "memory usage 86% on cdn-router -- OOM kill predicted in 21m",
+    "started_at": "2026-06-06T11:39:45.263443+00:00"
+  }
+}

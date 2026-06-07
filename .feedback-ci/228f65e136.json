@@ -1,0 +1,35 @@
+{
+  "incident_id": "228f65e136",
+  "records": [
+    {
+      "id": "fb-052e263d29",
+      "ts": 1780831079.9684622,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream order-pipeline timeout, not session-store",
+      "correct_remediation": "increase session-store concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780831079.9685426,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "5xx rate 14% sustained for 498s after deploy of #26812",
+    "started_at": "2026-05-31T19:04:01.766998+00:00"
+  }
+}

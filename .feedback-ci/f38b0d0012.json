@@ -1,0 +1,33 @@
+{
+  "incident_id": "f38b0d0012",
+  "records": [
+    {
+      "id": "fb-f7d803310f",
+      "ts": 1780831079.8139071,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the session-store sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780831079.8139796,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 391ms briefly, recovered in 10s",
+    "started_at": "2026-06-07T07:10:35.722321+00:00"
+  }
+}

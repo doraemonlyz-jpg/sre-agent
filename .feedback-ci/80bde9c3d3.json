@@ -1,0 +1,33 @@
+{
+  "incident_id": "80bde9c3d3",
+  "records": [
+    {
+      "id": "fb-c8bf1200ca",
+      "ts": 1780831079.6505752,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream promo-engine timeout, not promo-engine",
+      "correct_remediation": "page the order-pipeline oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780831079.6506457,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-3",
+    "description": "p99 latency 2796ms spiking on /checkout, error rate 11%",
+    "started_at": "2026-06-03T02:53:40.574606+00:00"
+  }
+}

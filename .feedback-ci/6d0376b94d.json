@@ -1,0 +1,33 @@
+{
+  "incident_id": "6d0376b94d",
+  "records": [
+    {
+      "id": "fb-04b110f57a",
+      "ts": 1780831079.731974,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the cart-service sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780831079.7320495,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-4",
+    "description": "5xx rate 15% sustained for 374s after deploy of #64313",
+    "started_at": "2026-06-07T06:52:50.572466+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "8fdb44cfba",
+  "records": [
+    {
+      "id": "fb-ed371f63f8",
+      "ts": 1780831080.1226776,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream checkout-api timeout, not video-encoder",
+      "correct_remediation": "increase video-encoder concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780831080.1227517,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "downstream service notification-fanout returning 502 -- error budget burning at 13x",
+    "started_at": "2026-06-02T04:48:19.240397+00:00"
+  }
+}

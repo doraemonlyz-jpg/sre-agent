@@ -1,0 +1,33 @@
+{
+  "incident_id": "a8f6daa7c5",
+  "records": [
+    {
+      "id": "fb-de4b4ea532",
+      "ts": 1780831079.953231,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream ad-bidder timeout, not notification-fanout",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780831079.9533086,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "5xx rate 16% sustained for 357s after deploy of #62520",
+    "started_at": "2026-06-02T07:29:56.161371+00:00"
+  }
+}

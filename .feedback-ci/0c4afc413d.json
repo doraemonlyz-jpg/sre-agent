@@ -1,0 +1,33 @@
+{
+  "incident_id": "0c4afc413d",
+  "records": [
+    {
+      "id": "fb-4807dfdeb5",
+      "ts": 1780831079.893545,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780831079.8936288,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-1",
+    "description": "downstream service search-suggest returning 502 -- error budget burning at 14x",
+    "started_at": "2026-06-07T00:40:41.402828+00:00"
+  }
+}

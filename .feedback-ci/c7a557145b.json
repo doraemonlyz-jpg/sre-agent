@@ -1,0 +1,33 @@
+{
+  "incident_id": "c7a557145b",
+  "records": [
+    {
+      "id": "fb-2a95acf932",
+      "ts": 1780831079.6131477,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the checkout-api sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.58,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780831079.6132395,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-2",
+    "description": "p99 latency 1879ms spiking on /checkout, error rate 12%",
+    "started_at": "2026-06-05T01:03:34.912811+00:00"
+  }
+}

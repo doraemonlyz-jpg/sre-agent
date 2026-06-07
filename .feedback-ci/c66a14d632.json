@@ -1,0 +1,33 @@
+{
+  "incident_id": "c66a14d632",
+  "records": [
+    {
+      "id": "fb-51659d1f89",
+      "ts": 1780831079.8839052,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream cdn-router timeout, not auth-service",
+      "correct_remediation": "increase auth-service concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.79,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780831079.883978,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "5xx rate 21% sustained for 192s after deploy of #85873",
+    "started_at": "2026-06-05T03:53:30.160178+00:00"
+  }
+}

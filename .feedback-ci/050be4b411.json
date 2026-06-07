@@ -1,0 +1,33 @@
+{
+  "incident_id": "050be4b411",
+  "records": [
+    {
+      "id": "fb-eb13e24fd0",
+      "ts": 1780831079.4881077,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in auth-service, not what the agent said",
+      "correct_remediation": "disable feature flag svc.auth-service.new_path",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780831079.4881847,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-4",
+    "description": "memory usage 95% on auth-service -- OOM kill predicted in 5m",
+    "started_at": "2026-06-05T07:20:10.798870+00:00"
+  }
+}
