@@ -1,0 +1,35 @@
+{
+  "incident_id": "83a8dc8b42",
+  "records": [
+    {
+      "id": "fb-66efdb98d7",
+      "ts": 1780940173.2964714,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the search-suggest sidecar",
+      "correct_remediation": "page the cdn-router oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780940173.2965598,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-4",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on recommend-feed",
+    "started_at": "2026-06-06T19:10:40.275607+00:00"
+  }
+}

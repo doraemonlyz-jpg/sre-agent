@@ -1,0 +1,35 @@
+{
+  "incident_id": "392b3a91aa",
+  "records": [
+    {
+      "id": "fb-87199afe9e",
+      "ts": 1780940172.8986592,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not user-profile",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780940172.8987432,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-2",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on video-encoder",
+    "started_at": "2026-06-01T19:53:13.858794+00:00"
+  }
+}

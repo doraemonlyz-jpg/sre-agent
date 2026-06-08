@@ -1,0 +1,35 @@
+{
+  "incident_id": "3608455b77",
+  "records": [
+    {
+      "id": "fb-9a688aabe9",
+      "ts": 1780940172.6416934,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for promo-engine was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780940172.6417816,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 716ms briefly, recovered in 29s",
+    "started_at": "2026-06-04T18:46:37.230541+00:00"
+  }
+}

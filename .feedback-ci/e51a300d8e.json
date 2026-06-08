@@ -1,0 +1,33 @@
+{
+  "incident_id": "e51a300d8e",
+  "records": [
+    {
+      "id": "fb-439d1a12cf",
+      "ts": 1780940172.5611148,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for user-profile was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.87,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780940172.5611944,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 338ms briefly, recovered in 17s",
+    "started_at": "2026-06-06T11:55:30.365374+00:00"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "incident_id": "ba227fd30a",
+  "records": [
+    {
+      "id": "fb-84220fe799",
+      "ts": 1780940173.3330517,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the inventory-sync sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780940173.333136,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 652ms briefly, recovered in 10s",
+    "started_at": "2026-06-07T17:51:20.644826+00:00"
+  }
+}

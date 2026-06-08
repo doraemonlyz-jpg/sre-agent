@@ -1,0 +1,33 @@
+{
+  "incident_id": "acebd181a1",
+  "records": [
+    {
+      "id": "fb-b105880c47",
+      "ts": 1780940173.029418,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in notification-fanout, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780940173.029508,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "memory usage 87% on checkout-api -- OOM kill predicted in 24m",
+    "started_at": "2026-06-05T10:14:08.423474+00:00"
+  }
+}

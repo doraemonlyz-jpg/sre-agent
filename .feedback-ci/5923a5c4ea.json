@@ -1,0 +1,33 @@
+{
+  "incident_id": "5923a5c4ea",
+  "records": [
+    {
+      "id": "fb-56003de9ad",
+      "ts": 1780940172.7385936,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream auth-service timeout, not ad-bidder",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.89,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780940172.7386777,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "memory usage 96% on video-encoder -- OOM kill predicted in 28m",
+    "started_at": "2026-06-05T14:27:02.933447+00:00"
+  }
+}

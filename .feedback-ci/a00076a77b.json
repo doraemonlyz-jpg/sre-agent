@@ -1,0 +1,33 @@
+{
+  "incident_id": "a00076a77b",
+  "records": [
+    {
+      "id": "fb-0872157f91",
+      "ts": 1780940172.6295586,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the video-encoder sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780940172.6296427,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-2",
+    "description": "downstream service promo-engine returning 502 -- error budget burning at 8x",
+    "started_at": "2026-06-06T22:09:40.770374+00:00"
+  }
+}

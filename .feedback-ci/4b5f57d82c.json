@@ -1,0 +1,35 @@
+{
+  "incident_id": "4b5f57d82c",
+  "records": [
+    {
+      "id": "fb-c109ee66cb",
+      "ts": 1780940172.6802392,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for notification-fanout was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780940172.6803207,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 427ms briefly, recovered in 21s",
+    "started_at": "2026-06-04T00:00:55.558897+00:00"
+  }
+}

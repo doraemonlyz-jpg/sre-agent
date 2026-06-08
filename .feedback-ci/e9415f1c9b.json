@@ -1,0 +1,33 @@
+{
+  "incident_id": "e9415f1c9b",
+  "records": [
+    {
+      "id": "fb-ef5ffb1605",
+      "ts": 1780940173.242206,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not promo-engine",
+      "correct_remediation": "increase promo-engine concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.97,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780940173.2422893,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-1",
+    "description": "p99 latency 2162ms spiking on /checkout, error rate 7%",
+    "started_at": "2026-06-04T06:58:11.960719+00:00"
+  }
+}

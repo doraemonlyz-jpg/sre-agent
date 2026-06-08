@@ -1,0 +1,33 @@
+{
+  "incident_id": "823a0a5cb1",
+  "records": [
+    {
+      "id": "fb-870a802002",
+      "ts": 1780940173.0434313,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the user-profile sidecar",
+      "correct_remediation": "increase user-profile concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.8,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780940173.0435202,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-1",
+    "description": "p99 latency 1797ms spiking on /checkout, error rate 8%",
+    "started_at": "2026-06-07T06:11:14.453613+00:00"
+  }
+}

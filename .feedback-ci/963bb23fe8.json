@@ -1,0 +1,33 @@
+{
+  "incident_id": "963bb23fe8",
+  "records": [
+    {
+      "id": "fb-de3d41b9c3",
+      "ts": 1780940172.5719879,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the session-store sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780940172.572069,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-3",
+    "description": "p99 latency 3691ms spiking on /checkout, error rate 15%",
+    "started_at": "2026-06-04T01:44:39.528480+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "f0fb063175",
+  "records": [
+    {
+      "id": "fb-d40d5463c7",
+      "ts": 1780940172.9368489,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream promo-engine timeout, not user-profile",
+      "correct_remediation": "page the notification-fanout oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.94,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780940172.936939,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "5xx rate 23% sustained for 144s after deploy of #76105",
+    "started_at": "2026-06-08T12:47:54.581662+00:00"
+  }
+}

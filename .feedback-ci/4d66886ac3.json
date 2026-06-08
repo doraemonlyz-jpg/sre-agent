@@ -1,0 +1,33 @@
+{
+  "incident_id": "4d66886ac3",
+  "records": [
+    {
+      "id": "fb-14dbd79225",
+      "ts": 1780940173.3923976,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not auth-service",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.65,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780940173.392497,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "5xx rate 11% sustained for 280s after deploy of #84364",
+    "started_at": "2026-06-06T13:48:02.983007+00:00"
+  }
+}

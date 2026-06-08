@@ -1,0 +1,33 @@
+{
+  "incident_id": "5930f2c91a",
+  "records": [
+    {
+      "id": "fb-613e861510",
+      "ts": 1780940172.5816162,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream promo-engine timeout, not ad-bidder",
+      "correct_remediation": "disable feature flag svc.ad-bidder.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.81,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780940172.5817008,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "downstream service order-pipeline returning 502 -- error budget burning at 3x",
+    "started_at": "2026-06-06T17:54:12.850216+00:00"
+  }
+}

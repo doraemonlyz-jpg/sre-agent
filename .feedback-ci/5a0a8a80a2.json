@@ -1,0 +1,33 @@
+{
+  "incident_id": "5a0a8a80a2",
+  "records": [
+    {
+      "id": "fb-ff9cbe2ac2",
+      "ts": 1780940173.1255064,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the user-profile sidecar",
+      "correct_remediation": "increase user-profile concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780940173.1256037,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-1",
+    "description": "downstream service image-thumbnail returning 502 -- error budget burning at 7x",
+    "started_at": "2026-06-05T06:18:01.407440+00:00"
+  }
+}

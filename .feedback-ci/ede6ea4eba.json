@@ -1,0 +1,35 @@
+{
+  "incident_id": "ede6ea4eba",
+  "records": [
+    {
+      "id": "fb-0654e1926c",
+      "ts": 1780940172.850641,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the cdn-router sidecar",
+      "correct_remediation": "page the rate-limiter-edge oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780940172.8507245,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on price-cache",
+    "started_at": "2026-06-03T09:09:59.041112+00:00"
+  }
+}

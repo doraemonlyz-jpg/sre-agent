@@ -1,0 +1,35 @@
+{
+  "incident_id": "ccf3bdad85",
+  "records": [
+    {
+      "id": "fb-479d8c9a7b",
+      "ts": 1780940172.8081324,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for price-cache was filling our partition",
+      "correct_remediation": "disable feature flag svc.recommend-feed.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780940172.808217,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-1",
+    "description": "p99 latency 3625ms spiking on /checkout, error rate 7%",
+    "started_at": "2026-06-04T12:47:44.059410+00:00"
+  }
+}

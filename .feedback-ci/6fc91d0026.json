@@ -1,0 +1,33 @@
+{
+  "incident_id": "6fc91d0026",
+  "records": [
+    {
+      "id": "fb-4cf15a72ad",
+      "ts": 1780940173.3238897,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for notification-fanout was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.92,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780940173.3239768,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "memory usage 99% on rate-limiter-edge -- OOM kill predicted in 27m",
+    "started_at": "2026-06-03T11:07:53.816505+00:00"
+  }
+}
