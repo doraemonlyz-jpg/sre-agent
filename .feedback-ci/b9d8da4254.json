@@ -1,0 +1,35 @@
+{
+  "incident_id": "b9d8da4254",
+  "records": [
+    {
+      "id": "fb-a5973f90b8",
+      "ts": 1780930866.359591,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream ad-bidder timeout, not payments-gateway",
+      "correct_remediation": "increase payments-gateway concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780930866.359654,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-2",
+    "description": "downstream service recommend-feed returning 502 -- error budget burning at 5x",
+    "started_at": "2026-06-06T18:15:00.821543+00:00"
+  }
+}

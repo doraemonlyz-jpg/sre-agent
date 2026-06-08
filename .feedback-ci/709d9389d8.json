@@ -1,0 +1,33 @@
+{
+  "incident_id": "709d9389d8",
+  "records": [
+    {
+      "id": "fb-dffd6f606f",
+      "ts": 1780930866.198702,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream comment-svc timeout, not notification-fanout",
+      "correct_remediation": "page the live-stream-edge oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.95,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780930866.1987882,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "p99 latency 2137ms spiking on /checkout, error rate 10%",
+    "started_at": "2026-06-05T20:20:53.618926+00:00"
+  }
+}

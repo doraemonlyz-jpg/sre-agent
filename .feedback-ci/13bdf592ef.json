@@ -1,0 +1,33 @@
+{
+  "incident_id": "13bdf592ef",
+  "records": [
+    {
+      "id": "fb-42d5a0f011",
+      "ts": 1780930866.6163902,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cdn-router was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.65,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780930866.6164532,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-2",
+    "description": "downstream service image-thumbnail returning 502 -- error budget burning at 12x",
+    "started_at": "2026-06-07T16:04:59.436916+00:00"
+  }
+}

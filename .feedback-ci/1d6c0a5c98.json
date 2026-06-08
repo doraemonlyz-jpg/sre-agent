@@ -1,0 +1,33 @@
+{
+  "incident_id": "1d6c0a5c98",
+  "records": [
+    {
+      "id": "fb-143ce8f62f",
+      "ts": 1780930866.5224044,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in notification-fanout, not what the agent said",
+      "correct_remediation": "increase notification-fanout concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780930866.5224679,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-1",
+    "description": "p99 latency 3981ms spiking on /checkout, error rate 8%",
+    "started_at": "2026-06-07T17:25:24.322287+00:00"
+  }
+}

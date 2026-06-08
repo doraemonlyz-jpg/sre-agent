@@ -1,0 +1,33 @@
+{
+  "incident_id": "bfdb5e7dd8",
+  "records": [
+    {
+      "id": "fb-a1fdc66860",
+      "ts": 1780930866.0747526,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream rate-limiter-edge timeout, not live-stream-edge",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780930866.0748432,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-4",
+    "description": "memory usage 88% on live-stream-edge -- OOM kill predicted in 25m",
+    "started_at": "2026-06-06T00:02:48.466340+00:00"
+  }
+}

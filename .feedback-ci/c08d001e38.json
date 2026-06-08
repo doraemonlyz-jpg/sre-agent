@@ -1,0 +1,33 @@
+{
+  "incident_id": "c08d001e38",
+  "records": [
+    {
+      "id": "fb-00054f0626",
+      "ts": 1780930866.2447107,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream session-store timeout, not user-profile",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780930866.2447898,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-4",
+    "description": "downstream service auth-service returning 502 -- error budget burning at 15x",
+    "started_at": "2026-06-04T15:07:22.909865+00:00"
+  }
+}

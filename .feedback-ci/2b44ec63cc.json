@@ -1,0 +1,33 @@
+{
+  "incident_id": "2b44ec63cc",
+  "records": [
+    {
+      "id": "fb-ae012dd57a",
+      "ts": 1780930866.6119087,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780930866.6119747,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "downstream service price-cache returning 502 -- error budget burning at 10x",
+    "started_at": "2026-06-06T01:19:24.477061+00:00"
+  }
+}

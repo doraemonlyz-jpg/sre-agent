@@ -1,0 +1,33 @@
+{
+  "incident_id": "e843b50657",
+  "records": [
+    {
+      "id": "fb-b9ed120df1",
+      "ts": 1780930866.5952902,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "actually a downstream cart-service timeout, not session-store",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.79,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780930866.595356,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-3",
+    "description": "memory usage 92% on ad-bidder -- OOM kill predicted in 9m",
+    "started_at": "2026-06-01T19:50:55.494989+00:00"
+  }
+}
