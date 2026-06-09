@@ -1,0 +1,35 @@
+{
+  "incident_id": "e698b3f9be",
+  "records": [
+    {
+      "id": "fb-c98815315f",
+      "ts": 1780985766.1999526,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "queue head-of-line blocking in recommend-feed, not what the agent said",
+      "correct_remediation": "disable feature flag svc.recommend-feed.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780985766.2000396,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-1",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on user-profile",
+    "started_at": "2026-06-07T09:58:33.203372+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "5aa03a36f9",
+  "records": [
+    {
+      "id": "fb-cbe22f1f9b",
+      "ts": 1780985766.3268487,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.82,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780985766.3269339,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-2",
+    "description": "downstream service price-cache returning 502 -- error budget burning at 3x",
+    "started_at": "2026-06-08T02:17:44.072033+00:00"
+  }
+}

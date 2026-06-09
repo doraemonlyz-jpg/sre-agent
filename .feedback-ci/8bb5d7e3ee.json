@@ -1,0 +1,35 @@
+{
+  "incident_id": "8bb5d7e3ee",
+  "records": [
+    {
+      "id": "fb-b1afff6442",
+      "ts": 1780985766.0782294,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the cdn-router sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1780985766.0783136,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-3",
+    "description": "5xx rate 20% sustained for 506s after deploy of #54170",
+    "started_at": "2026-06-04T16:51:09.080869+00:00"
+  }
+}

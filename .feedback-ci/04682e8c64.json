@@ -1,0 +1,33 @@
+{
+  "incident_id": "04682e8c64",
+  "records": [
+    {
+      "id": "fb-072ce412c0",
+      "ts": 1780985766.1391563,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in promo-engine, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780985766.1392407,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-3",
+    "description": "p99 latency 2411ms spiking on /checkout, error rate 13%",
+    "started_at": "2026-06-05T00:21:13.901331+00:00"
+  }
+}

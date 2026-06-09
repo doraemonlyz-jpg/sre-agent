@@ -1,0 +1,33 @@
+{
+  "incident_id": "92c13e6434",
+  "records": [
+    {
+      "id": "fb-07c77d5405",
+      "ts": 1780985766.4305992,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "page the ad-bidder oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.86,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780985766.4306874,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-4",
+    "description": "memory usage 95% on promo-engine -- OOM kill predicted in 19m",
+    "started_at": "2026-06-03T11:35:17.289388+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "fb5399a87e",
+  "records": [
+    {
+      "id": "fb-edb0765298",
+      "ts": 1780985765.7516763,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in comment-svc, not what the agent said",
+      "correct_remediation": "disable feature flag svc.comment-svc.new_path",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.83,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1780985765.751763,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-2",
+    "description": "memory usage 89% on comment-svc -- OOM kill predicted in 26m",
+    "started_at": "2026-06-02T15:07:31.364076+00:00"
+  }
+}
