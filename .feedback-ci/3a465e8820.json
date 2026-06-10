@@ -1,0 +1,33 @@
+{
+  "incident_id": "3a465e8820",
+  "records": [
+    {
+      "id": "fb-9d3ca40508",
+      "ts": 1781073503.1256568,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the price-cache sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.95,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781073503.1257389,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-4",
+    "description": "p99 latency 3104ms spiking on /checkout, error rate 8%",
+    "started_at": "2026-06-10T07:21:30.695509+00:00"
+  }
+}

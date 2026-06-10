@@ -1,0 +1,33 @@
+{
+  "incident_id": "0e3ab15227",
+  "records": [
+    {
+      "id": "fb-ce7aa2f883",
+      "ts": 1781073503.034647,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in search-suggest, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781073503.034733,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "downstream service session-store returning 502 -- error budget burning at 9x",
+    "started_at": "2026-06-07T15:42:26.123149+00:00"
+  }
+}

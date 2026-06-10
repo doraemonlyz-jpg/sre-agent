@@ -1,0 +1,33 @@
+{
+  "incident_id": "0e3fcb6384",
+  "records": [
+    {
+      "id": "fb-19a9fb0950",
+      "ts": 1781073503.0860991,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream cdn-router timeout, not cdn-router",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.85,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781073503.0862138,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-4",
+    "description": "5xx rate 8% sustained for 596s after deploy of #57555",
+    "started_at": "2026-06-05T11:31:46.519644+00:00"
+  }
+}

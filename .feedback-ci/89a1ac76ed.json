@@ -1,0 +1,33 @@
+{
+  "incident_id": "89a1ac76ed",
+  "records": [
+    {
+      "id": "fb-ed4506c016",
+      "ts": 1781073503.061035,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the cart-service sidecar",
+      "correct_remediation": "increase cart-service concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781073503.0611427,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-1",
+    "description": "5xx rate 25% sustained for 63s after deploy of #66264",
+    "started_at": "2026-06-09T17:03:16.392263+00:00"
+  }
+}

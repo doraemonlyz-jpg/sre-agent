@@ -1,0 +1,35 @@
+{
+  "incident_id": "61722ee8e1",
+  "records": [
+    {
+      "id": "fb-40122c3c37",
+      "ts": 1781073502.851442,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream payments-gateway timeout, not inventory-sync",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1781073502.851524,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "memory usage 92% on promo-engine -- OOM kill predicted in 15m",
+    "started_at": "2026-06-05T05:52:38.005032+00:00"
+  }
+}

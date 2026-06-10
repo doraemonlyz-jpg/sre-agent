@@ -1,0 +1,33 @@
+{
+  "incident_id": "d673f35d5e",
+  "records": [
+    {
+      "id": "fb-8a216ad5c4",
+      "ts": 1781073503.4172277,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream rate-limiter-edge timeout, not cdn-router",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781073503.4173155,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-3",
+    "description": "downstream service session-store returning 502 -- error budget burning at 10x",
+    "started_at": "2026-06-05T17:49:02.235972+00:00"
+  }
+}

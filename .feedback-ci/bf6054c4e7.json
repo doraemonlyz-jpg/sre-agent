@@ -1,0 +1,33 @@
+{
+  "incident_id": "bf6054c4e7",
+  "records": [
+    {
+      "id": "fb-ea1de27e8a",
+      "ts": 1781073503.235488,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the recommend-feed sidecar",
+      "correct_remediation": "page the ad-bidder oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.81,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781073503.2355714,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "memory usage 86% on auth-service -- OOM kill predicted in 3m",
+    "started_at": "2026-06-09T05:13:25.446921+00:00"
+  }
+}
