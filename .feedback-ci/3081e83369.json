@@ -1,0 +1,33 @@
+{
+  "incident_id": "3081e83369",
+  "records": [
+    {
+      "id": "fb-da139abaf3",
+      "ts": 1781161044.906169,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream auth-service timeout, not price-cache",
+      "correct_remediation": "disable feature flag svc.price-cache.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.8,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781161044.9062562,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-2",
+    "description": "downstream service image-thumbnail returning 502 -- error budget burning at 16x",
+    "started_at": "2026-06-09T08:31:42.198198+00:00"
+  }
+}

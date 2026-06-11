@@ -1,0 +1,33 @@
+{
+  "incident_id": "4047843cf6",
+  "records": [
+    {
+      "id": "fb-078d4ac5f9",
+      "ts": 1781161044.3394835,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the promo-engine sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781161044.3395684,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-4",
+    "description": "downstream service price-cache returning 502 -- error budget burning at 8x",
+    "started_at": "2026-06-05T09:17:27.306046+00:00"
+  }
+}

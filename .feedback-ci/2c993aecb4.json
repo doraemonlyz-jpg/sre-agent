@@ -1,0 +1,33 @@
+{
+  "incident_id": "2c993aecb4",
+  "records": [
+    {
+      "id": "fb-717b7d91d4",
+      "ts": 1781161044.1490924,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for price-cache was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.79,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781161044.149185,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-1",
+    "description": "p99 latency 3822ms spiking on /checkout, error rate 4%",
+    "started_at": "2026-06-10T23:26:48.449525+00:00"
+  }
+}
