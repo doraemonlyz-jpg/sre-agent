@@ -1,0 +1,33 @@
+{
+  "incident_id": "2d5c9b3cef",
+  "records": [
+    {
+      "id": "fb-02a7ebb0e4",
+      "ts": 1781331840.5161283,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for image-thumbnail was filling our partition",
+      "correct_remediation": "increase checkout-api concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781331840.5162058,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-4",
+    "description": "downstream service price-cache returning 502 -- error budget burning at 19x",
+    "started_at": "2026-06-13T04:35:30.066155+00:00"
+  }
+}
