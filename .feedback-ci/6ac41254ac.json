@@ -1,0 +1,35 @@
+{
+  "incident_id": "6ac41254ac",
+  "records": [
+    {
+      "id": "fb-f4c8a2dc21",
+      "ts": 1781419722.4231327,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1781419722.423217,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-1",
+    "description": "downstream service session-store returning 502 -- error budget burning at 7x",
+    "started_at": "2026-06-09T05:44:13.407292+00:00"
+  }
+}

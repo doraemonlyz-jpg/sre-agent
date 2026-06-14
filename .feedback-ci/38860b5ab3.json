@@ -1,0 +1,33 @@
+{
+  "incident_id": "38860b5ab3",
+  "records": [
+    {
+      "id": "fb-ecbba8d191",
+      "ts": 1781419722.1929572,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream video-encoder timeout, not auth-service",
+      "correct_remediation": "disable feature flag svc.auth-service.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781419722.1930428,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-4",
+    "description": "p99 latency 2019ms spiking on /checkout, error rate 3%",
+    "started_at": "2026-06-08T21:01:18.908982+00:00"
+  }
+}

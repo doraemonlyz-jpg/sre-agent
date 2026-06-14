@@ -1,0 +1,33 @@
+{
+  "incident_id": "b243b3a03f",
+  "records": [
+    {
+      "id": "fb-10f61cfda1",
+      "ts": 1781419722.9872823,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not rate-limiter-edge",
+      "correct_remediation": "disable feature flag svc.rate-limiter-edge.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.82,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781419722.9873693,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-4",
+    "description": "downstream service cdn-router returning 502 -- error budget burning at 12x",
+    "started_at": "2026-06-10T22:49:12.807289+00:00"
+  }
+}

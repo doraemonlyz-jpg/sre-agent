@@ -1,0 +1,33 @@
+{
+  "incident_id": "4a0edeb233",
+  "records": [
+    {
+      "id": "fb-6fcb34f800",
+      "ts": 1781419722.2299275,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "queue head-of-line blocking in cdn-router, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781419722.2300117,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-1",
+    "description": "5xx rate 17% sustained for 258s after deploy of #27688",
+    "started_at": "2026-06-08T19:02:10.135709+00:00"
+  }
+}

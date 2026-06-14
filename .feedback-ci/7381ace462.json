@@ -1,0 +1,33 @@
+{
+  "incident_id": "7381ace462",
+  "records": [
+    {
+      "id": "fb-4a5461bee9",
+      "ts": 1781419722.549342,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in image-thumbnail, not what the agent said",
+      "correct_remediation": "disable feature flag svc.image-thumbnail.new_path",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781419722.5494277,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-3",
+    "description": "memory usage 96% on inventory-sync -- OOM kill predicted in 28m",
+    "started_at": "2026-06-12T10:22:18.716121+00:00"
+  }
+}

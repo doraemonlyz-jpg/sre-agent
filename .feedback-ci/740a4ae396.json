@@ -1,0 +1,33 @@
+{
+  "incident_id": "740a4ae396",
+  "records": [
+    {
+      "id": "fb-038a282328",
+      "ts": 1781419722.312092,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in cart-service, not what the agent said",
+      "correct_remediation": "increase cart-service concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781419722.3121767,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-1",
+    "description": "p99 latency 1625ms spiking on /checkout, error rate 4%",
+    "started_at": "2026-06-08T07:13:06.963390+00:00"
+  }
+}

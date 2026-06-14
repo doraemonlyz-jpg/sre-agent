@@ -1,0 +1,33 @@
+{
+  "incident_id": "2132dc54dc",
+  "records": [
+    {
+      "id": "fb-3359a77cb0",
+      "ts": 1781419722.3463264,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for recommend-feed was filling our partition",
+      "correct_remediation": "page the inventory-sync oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.59,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781419722.3464115,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "5xx rate 13% sustained for 357s after deploy of #63575",
+    "started_at": "2026-06-11T17:36:21.009889+00:00"
+  }
+}

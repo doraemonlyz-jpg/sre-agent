@@ -1,0 +1,35 @@
+{
+  "incident_id": "03a926cdb5",
+  "records": [
+    {
+      "id": "fb-a9263e7c13",
+      "ts": 1781419722.8297057,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the rate-limiter-edge sidecar",
+      "correct_remediation": "page the live-stream-edge oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1781419722.8297915,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 690ms briefly, recovered in 19s",
+    "started_at": "2026-06-13T10:50:59.827257+00:00"
+  }
+}
