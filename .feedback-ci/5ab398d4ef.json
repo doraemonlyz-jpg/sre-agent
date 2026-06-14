@@ -1,0 +1,35 @@
+{
+  "incident_id": "5ab398d4ef",
+  "records": [
+    {
+      "id": "fb-411780cfdc",
+      "ts": 1781437609.6180518,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for session-store was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1781437609.618131,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 775ms briefly, recovered in 16s",
+    "started_at": "2026-06-12T11:43:20.765833+00:00"
+  }
+}
