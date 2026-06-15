@@ -1,0 +1,33 @@
+{
+  "incident_id": "346eeacd3a",
+  "records": [
+    {
+      "id": "fb-fe56e20789",
+      "ts": 1781508554.0154326,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in promo-engine, not what the agent said",
+      "correct_remediation": "disable feature flag svc.promo-engine.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781508554.015517,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-3",
+    "description": "downstream service recommend-feed returning 502 -- error budget burning at 8x",
+    "started_at": "2026-06-10T15:18:43.941830+00:00"
+  }
+}
