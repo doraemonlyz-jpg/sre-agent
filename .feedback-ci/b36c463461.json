@@ -1,0 +1,33 @@
+{
+  "incident_id": "b36c463461",
+  "records": [
+    {
+      "id": "fb-c06c2af1d3",
+      "ts": 1781523727.8817337,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781523727.8818195,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-2",
+    "description": "downstream service recommend-feed returning 502 -- error budget burning at 5x",
+    "started_at": "2026-06-11T08:32:21.631004+00:00"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "incident_id": "43a89d727f",
+  "records": [
+    {
+      "id": "fb-8a44b1d146",
+      "ts": 1781523728.2489486,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the cdn-router sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1781523728.2490344,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 422ms briefly, recovered in 18s",
+    "started_at": "2026-06-15T08:11:37.912250+00:00"
+  }
+}

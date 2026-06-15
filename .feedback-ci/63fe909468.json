@@ -1,0 +1,33 @@
+{
+  "incident_id": "63fe909468",
+  "records": [
+    {
+      "id": "fb-78116fe063",
+      "ts": 1781523728.1989508,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "actually a downstream live-stream-edge timeout, not payments-gateway",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781523728.1990335,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-1",
+    "description": "downstream service user-profile returning 502 -- error budget burning at 16x",
+    "started_at": "2026-06-12T23:04:40.686986+00:00"
+  }
+}

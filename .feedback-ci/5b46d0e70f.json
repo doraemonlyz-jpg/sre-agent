@@ -1,0 +1,33 @@
+{
+  "incident_id": "5b46d0e70f",
+  "records": [
+    {
+      "id": "fb-4f14f06ff0",
+      "ts": 1781523728.194975,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the user-profile sidecar",
+      "correct_remediation": "disable feature flag svc.user-profile.new_path",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781523728.1950607,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-2",
+    "description": "p99 latency 1575ms spiking on /checkout, error rate 6%",
+    "started_at": "2026-06-08T21:07:25.855401+00:00"
+  }
+}
