@@ -1,0 +1,33 @@
+{
+  "incident_id": "c9c387beab",
+  "records": [
+    {
+      "id": "fb-0658b1e9b8",
+      "ts": 1781595316.0215302,
+      "verdict": "correct",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781595316.021613,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-4",
+    "description": "downstream service auth-service returning 502 -- error budget burning at 16x",
+    "started_at": "2026-06-13T13:42:52.343854+00:00"
+  }
+}
