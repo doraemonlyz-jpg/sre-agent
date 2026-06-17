@@ -1,0 +1,35 @@
+{
+  "incident_id": "80189cfbb2",
+  "records": [
+    {
+      "id": "fb-34886cbef7",
+      "ts": 1781680864.0258949,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for payments-gateway was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1781680864.0259604,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-4",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on session-store",
+    "started_at": "2026-06-16T10:40:38.045401+00:00"
+  }
+}

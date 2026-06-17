@@ -1,0 +1,33 @@
+{
+  "incident_id": "90df450843",
+  "records": [
+    {
+      "id": "fb-120ec05378",
+      "ts": 1781680863.951172,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the notification-fanout sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.75,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781680863.9512305,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-1",
+    "description": "memory usage 91% on video-encoder -- OOM kill predicted in 29m",
+    "started_at": "2026-06-15T11:01:41.145628+00:00"
+  }
+}

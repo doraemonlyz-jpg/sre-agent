@@ -1,0 +1,33 @@
+{
+  "incident_id": "66ffd3ef7d",
+  "records": [
+    {
+      "id": "fb-5b813937de",
+      "ts": 1781680864.078048,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for search-suggest was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.81,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781680864.0781074,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-1",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on rate-limiter-edge",
+    "started_at": "2026-06-11T08:32:11.063889+00:00"
+  }
+}

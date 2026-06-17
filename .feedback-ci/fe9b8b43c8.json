@@ -1,0 +1,33 @@
+{
+  "incident_id": "fe9b8b43c8",
+  "records": [
+    {
+      "id": "fb-5a1fcffa05",
+      "ts": 1781680864.155348,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for user-profile was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.8,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781680864.155407,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "downstream service image-thumbnail returning 502 -- error budget burning at 16x",
+    "started_at": "2026-06-14T05:36:49.041332+00:00"
+  }
+}
