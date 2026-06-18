@@ -1,0 +1,33 @@
+{
+  "incident_id": "84e55d4c48",
+  "records": [
+    {
+      "id": "fb-7112303873",
+      "ts": 1781766004.4501128,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.92,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1781766004.4501696,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-2",
+    "description": "downstream service checkout-api returning 502 -- error budget burning at 12x",
+    "started_at": "2026-06-15T17:55:38.335179+00:00"
+  }
+}
