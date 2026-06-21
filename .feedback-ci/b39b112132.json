@@ -1,0 +1,33 @@
+{
+  "incident_id": "b39b112132",
+  "records": [
+    {
+      "id": "fb-a1eb6463af",
+      "ts": 1782031095.4801812,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream comment-svc timeout, not user-profile",
+      "correct_remediation": "disable feature flag svc.user-profile.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.76,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782031095.4802678,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-4",
+    "description": "p99 latency 3994ms spiking on /checkout, error rate 13%",
+    "started_at": "2026-06-15T02:05:56.123605+00:00"
+  }
+}
