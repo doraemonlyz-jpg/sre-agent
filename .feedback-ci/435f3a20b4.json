@@ -1,0 +1,33 @@
+{
+  "incident_id": "435f3a20b4",
+  "records": [
+    {
+      "id": "fb-c9f78435c8",
+      "ts": 1782025087.676494,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the recommend-feed sidecar",
+      "correct_remediation": "page the order-pipeline oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.96,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782025087.676581,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-1",
+    "description": "memory usage 86% on order-pipeline -- OOM kill predicted in 20m",
+    "started_at": "2026-06-20T17:52:35.200234+00:00"
+  }
+}

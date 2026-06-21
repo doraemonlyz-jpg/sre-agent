@@ -1,0 +1,33 @@
+{
+  "incident_id": "3a1140014e",
+  "records": [
+    {
+      "id": "fb-effc3ca485",
+      "ts": 1782025087.3665838,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for notification-fanout was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782025087.3666816,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "p99 latency 3805ms spiking on /checkout, error rate 15%",
+    "started_at": "2026-06-17T11:59:45.042507+00:00"
+  }
+}
