@@ -1,0 +1,33 @@
+{
+  "incident_id": "88f4bb10f1",
+  "records": [
+    {
+      "id": "fb-2228fc92f9",
+      "ts": 1782127829.5778806,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "actually a downstream comment-svc timeout, not video-encoder",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.76,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782127829.5779552,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "downstream service auth-service returning 502 -- error budget burning at 14x",
+    "started_at": "2026-06-18T04:14:11.805469+00:00"
+  }
+}

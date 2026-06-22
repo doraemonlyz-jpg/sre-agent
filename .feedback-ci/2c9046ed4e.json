@@ -1,0 +1,33 @@
+{
+  "incident_id": "2c9046ed4e",
+  "records": [
+    {
+      "id": "fb-5e2febeb3c",
+      "ts": 1782127829.3575296,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream notification-fanout timeout, not recommend-feed",
+      "correct_remediation": "increase recommend-feed concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782127829.357603,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-2",
+    "description": "memory usage 96% on auth-service -- OOM kill predicted in 17m",
+    "started_at": "2026-06-19T16:01:13.034515+00:00"
+  }
+}

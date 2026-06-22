@@ -1,0 +1,35 @@
+{
+  "incident_id": "8b14fe1b03",
+  "records": [
+    {
+      "id": "fb-12b11a5476",
+      "ts": 1782127829.4216158,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the promo-engine sidecar",
+      "correct_remediation": "increase promo-engine concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1782127829.4216971,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 272ms briefly, recovered in 30s",
+    "started_at": "2026-06-17T05:51:49.858311+00:00"
+  }
+}
