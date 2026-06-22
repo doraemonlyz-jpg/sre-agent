@@ -1,0 +1,33 @@
+{
+  "incident_id": "7a8bae0a63",
+  "records": [
+    {
+      "id": "fb-0ff9b0d820",
+      "ts": 1782113612.343023,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the promo-engine sidecar",
+      "correct_remediation": "increase promo-engine concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782113612.3431094,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-1",
+    "description": "5xx rate 16% sustained for 109s after deploy of #89027",
+    "started_at": "2026-06-20T08:02:39.331463+00:00"
+  }
+}

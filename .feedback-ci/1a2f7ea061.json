@@ -1,0 +1,33 @@
+{
+  "incident_id": "1a2f7ea061",
+  "records": [
+    {
+      "id": "fb-8e5e189b5e",
+      "ts": 1782113611.666416,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for live-stream-edge was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.6,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782113611.6665275,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "downstream service promo-engine returning 502 -- error budget burning at 7x",
+    "started_at": "2026-06-21T08:57:36.794284+00:00"
+  }
+}

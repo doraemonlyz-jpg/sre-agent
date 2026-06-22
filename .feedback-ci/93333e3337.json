@@ -1,0 +1,35 @@
+{
+  "incident_id": "93333e3337",
+  "records": [
+    {
+      "id": "fb-5f3e306e24",
+      "ts": 1782113612.450509,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for promo-engine was filling our partition",
+      "correct_remediation": "increase recommend-feed concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1782113612.4505966,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-2",
+    "description": "memory usage 94% on session-store -- OOM kill predicted in 14m",
+    "started_at": "2026-06-15T09:15:50.645463+00:00"
+  }
+}
