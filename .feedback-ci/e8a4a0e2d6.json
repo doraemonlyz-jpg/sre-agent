@@ -1,0 +1,33 @@
+{
+  "incident_id": "e8a4a0e2d6",
+  "records": [
+    {
+      "id": "fb-00d0abaee0",
+      "ts": 1782195317.0815861,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not cdn-router",
+      "correct_remediation": "increase cdn-router concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.93,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782195317.081669,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-3",
+    "description": "memory usage 97% on comment-svc -- OOM kill predicted in 9m",
+    "started_at": "2026-06-18T13:35:40.210061+00:00"
+  }
+}

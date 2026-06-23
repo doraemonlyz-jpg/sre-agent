@@ -1,0 +1,33 @@
+{
+  "incident_id": "f1666ffdbd",
+  "records": [
+    {
+      "id": "fb-a10aaef028",
+      "ts": 1782195317.667747,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "page the cdn-router oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782195317.667832,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-3",
+    "description": "memory usage 96% on payments-gateway -- OOM kill predicted in 19m",
+    "started_at": "2026-06-21T12:37:48.653478+00:00"
+  }
+}

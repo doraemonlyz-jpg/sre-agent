@@ -1,0 +1,33 @@
+{
+  "incident_id": "61a8b0a212",
+  "records": [
+    {
+      "id": "fb-09ee03428d",
+      "ts": 1782195317.655878,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "queue head-of-line blocking in price-cache, not what the agent said",
+      "correct_remediation": "page the user-profile oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782195317.655961,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-1",
+    "description": "p99 latency 1801ms spiking on /checkout, error rate 13%",
+    "started_at": "2026-06-20T06:40:44.247238+00:00"
+  }
+}

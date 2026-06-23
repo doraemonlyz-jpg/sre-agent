@@ -1,0 +1,33 @@
+{
+  "incident_id": "7af23eb8b8",
+  "records": [
+    {
+      "id": "fb-f3c210f276",
+      "ts": 1782195317.1112626,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.search-suggest.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.85,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782195317.1113467,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "memory usage 97% on video-encoder -- OOM kill predicted in 7m",
+    "started_at": "2026-06-19T08:21:11.849103+00:00"
+  }
+}
