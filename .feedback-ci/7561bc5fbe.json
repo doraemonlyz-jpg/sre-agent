@@ -1,0 +1,33 @@
+{
+  "incident_id": "7561bc5fbe",
+  "records": [
+    {
+      "id": "fb-08c6799e1d",
+      "ts": 1782281592.7008262,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream price-cache timeout, not cart-service",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782281592.7009099,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "memory usage 96% on image-thumbnail -- OOM kill predicted in 21m",
+    "started_at": "2026-06-23T10:10:44.802734+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "2f3b86fcb1",
+  "records": [
+    {
+      "id": "fb-d767f31dc0",
+      "ts": 1782281592.97197,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.83,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782281592.972054,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "5xx rate 17% sustained for 239s after deploy of #56664",
+    "started_at": "2026-06-18T07:08:08.381881+00:00"
+  }
+}

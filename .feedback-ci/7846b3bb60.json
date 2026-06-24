@@ -1,0 +1,33 @@
+{
+  "incident_id": "7846b3bb60",
+  "records": [
+    {
+      "id": "fb-15fa9041bf",
+      "ts": 1782281592.442734,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream cdn-router timeout, not image-thumbnail",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.85,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782281592.4428186,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-3",
+    "description": "p99 latency 2356ms spiking on /checkout, error rate 13%",
+    "started_at": "2026-06-19T11:06:35.924311+00:00"
+  }
+}
