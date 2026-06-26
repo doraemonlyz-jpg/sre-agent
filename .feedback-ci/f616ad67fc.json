@@ -1,0 +1,33 @@
+{
+  "incident_id": "f616ad67fc",
+  "records": [
+    {
+      "id": "fb-e55a704804",
+      "ts": 1782454652.7641022,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "increase search-suggest concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782454652.764179,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-2",
+    "description": "p99 latency 2552ms spiking on /checkout, error rate 8%",
+    "started_at": "2026-06-25T11:23:00.332085+00:00"
+  }
+}
