@@ -1,0 +1,33 @@
+{
+  "incident_id": "7cdf3d5197",
+  "records": [
+    {
+      "id": "fb-dc0b04f8db",
+      "ts": 1782539935.0821297,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the notification-fanout sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782539935.0821927,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "downstream service notification-fanout returning 502 -- error budget burning at 16x",
+    "started_at": "2026-06-25T01:23:47.382936+00:00"
+  }
+}

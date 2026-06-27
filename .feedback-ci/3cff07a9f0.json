@@ -1,0 +1,35 @@
+{
+  "incident_id": "3cff07a9f0",
+  "records": [
+    {
+      "id": "fb-3b56e4d785",
+      "ts": 1782539935.1307552,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not ad-bidder",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1782539935.130819,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 590ms briefly, recovered in 25s",
+    "started_at": "2026-06-23T08:38:57.568424+00:00"
+  }
+}
