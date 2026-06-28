@@ -1,0 +1,33 @@
+{
+  "incident_id": "fbdba7b9f5",
+  "records": [
+    {
+      "id": "fb-1c55ee41a2",
+      "ts": 1782633285.1752288,
+      "verdict": "correct",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782633285.1753137,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-4",
+    "description": "downstream service rate-limiter-edge returning 502 -- error budget burning at 14x",
+    "started_at": "2026-06-21T13:08:14.841790+00:00"
+  }
+}
