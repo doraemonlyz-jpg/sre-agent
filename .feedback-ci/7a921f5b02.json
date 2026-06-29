@@ -1,0 +1,33 @@
+{
+  "incident_id": "7a921f5b02",
+  "records": [
+    {
+      "id": "fb-e8b4750b17",
+      "ts": 1782728291.200539,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in inventory-sync, not what the agent said",
+      "correct_remediation": "increase inventory-sync concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.65,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782728291.200606,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-1",
+    "description": "memory usage 91% on promo-engine -- OOM kill predicted in 17m",
+    "started_at": "2026-06-23T08:34:13.187409+00:00"
+  }
+}

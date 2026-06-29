@@ -1,0 +1,35 @@
+{
+  "incident_id": "d5e914951b",
+  "records": [
+    {
+      "id": "fb-ea3ce4716d",
+      "ts": 1782728290.8756852,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not notification-fanout",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1782728290.8757484,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 390ms briefly, recovered in 6s",
+    "started_at": "2026-06-29T10:33:57.246466+00:00"
+  }
+}
