@@ -1,0 +1,33 @@
+{
+  "incident_id": "cd21110c0c",
+  "records": [
+    {
+      "id": "fb-637df438bc",
+      "ts": 1782716272.6921837,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the order-pipeline sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.55,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782716272.6922474,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "p99 latency 2501ms spiking on /checkout, error rate 10%",
+    "started_at": "2026-06-22T04:00:42.085809+00:00"
+  }
+}

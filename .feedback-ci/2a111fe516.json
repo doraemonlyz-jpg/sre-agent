@@ -1,0 +1,33 @@
+{
+  "incident_id": "2a111fe516",
+  "records": [
+    {
+      "id": "fb-b32336a884",
+      "ts": 1782716272.7646012,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream auth-service timeout, not inventory-sync",
+      "correct_remediation": "page the image-thumbnail oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.81,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782716272.7646646,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-1",
+    "description": "downstream service search-suggest returning 502 -- error budget burning at 4x",
+    "started_at": "2026-06-26T03:44:45.701384+00:00"
+  }
+}

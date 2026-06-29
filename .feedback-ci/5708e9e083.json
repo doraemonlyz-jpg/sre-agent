@@ -1,0 +1,35 @@
+{
+  "incident_id": "5708e9e083",
+  "records": [
+    {
+      "id": "fb-efc98600ed",
+      "ts": 1782716272.8009167,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in user-profile, not what the agent said",
+      "correct_remediation": "increase user-profile concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1782716272.8009794,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 250ms briefly, recovered in 16s",
+    "started_at": "2026-06-22T15:54:31.443519+00:00"
+  }
+}

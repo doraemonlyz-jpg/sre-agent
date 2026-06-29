@@ -1,0 +1,33 @@
+{
+  "incident_id": "241dbfcd8c",
+  "records": [
+    {
+      "id": "fb-102b5fdad7",
+      "ts": 1782716272.6989365,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the image-thumbnail sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782716272.698999,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-2",
+    "description": "memory usage 94% on search-suggest -- OOM kill predicted in 27m",
+    "started_at": "2026-06-28T20:38:12.586956+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "a28490a0eb",
+  "records": [
+    {
+      "id": "fb-67513aa3c6",
+      "ts": 1782716272.83714,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream inventory-sync timeout, not video-encoder",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782716272.8372016,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-2",
+    "description": "memory usage 94% on ad-bidder -- OOM kill predicted in 29m",
+    "started_at": "2026-06-26T09:54:49.328169+00:00"
+  }
+}
