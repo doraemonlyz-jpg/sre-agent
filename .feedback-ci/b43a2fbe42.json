@@ -1,0 +1,33 @@
+{
+  "incident_id": "b43a2fbe42",
+  "records": [
+    {
+      "id": "fb-bda068768a",
+      "ts": 1782800408.8235645,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream order-pipeline timeout, not order-pipeline",
+      "correct_remediation": "increase order-pipeline concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782800408.823647,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-2",
+    "description": "p99 latency 1958ms spiking on /checkout, error rate 12%",
+    "started_at": "2026-06-25T15:47:12.619183+00:00"
+  }
+}

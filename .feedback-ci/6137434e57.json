@@ -1,0 +1,33 @@
+{
+  "incident_id": "6137434e57",
+  "records": [
+    {
+      "id": "fb-e0916070e5",
+      "ts": 1782800408.8585086,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream ad-bidder timeout, not ad-bidder",
+      "correct_remediation": "disable feature flag svc.ad-bidder.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782800408.8585894,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "memory usage 97% on live-stream-edge -- OOM kill predicted in 30m",
+    "started_at": "2026-06-29T08:27:54.866462+00:00"
+  }
+}

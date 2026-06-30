@@ -1,0 +1,33 @@
+{
+  "incident_id": "602ef727c4",
+  "records": [
+    {
+      "id": "fb-3d320edaf5",
+      "ts": 1782800408.8316467,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream session-store timeout, not ad-bidder",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782800408.8317244,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "5xx rate 12% sustained for 305s after deploy of #83767",
+    "started_at": "2026-06-24T16:55:46.462432+00:00"
+  }
+}
