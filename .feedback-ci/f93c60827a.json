@@ -1,0 +1,33 @@
+{
+  "incident_id": "f93c60827a",
+  "records": [
+    {
+      "id": "fb-4f776914e7",
+      "ts": 1782888003.4734333,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream price-cache timeout, not rate-limiter-edge",
+      "correct_remediation": "page the session-store oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782888003.4735277,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-2",
+    "description": "memory usage 95% on comment-svc -- OOM kill predicted in 24m",
+    "started_at": "2026-06-26T14:14:04.867041+00:00"
+  }
+}
