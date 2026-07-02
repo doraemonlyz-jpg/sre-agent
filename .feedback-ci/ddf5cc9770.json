@@ -1,0 +1,33 @@
+{
+  "incident_id": "ddf5cc9770",
+  "records": [
+    {
+      "id": "fb-d14f3132b6",
+      "ts": 1782972375.8883123,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782972375.8883967,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-1",
+    "description": "memory usage 86% on order-pipeline -- OOM kill predicted in 20m",
+    "started_at": "2026-07-01T21:06:00.425527+00:00"
+  }
+}

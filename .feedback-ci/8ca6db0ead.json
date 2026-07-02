@@ -1,0 +1,33 @@
+{
+  "incident_id": "8ca6db0ead",
+  "records": [
+    {
+      "id": "fb-f6f3baa455",
+      "ts": 1782972375.5605092,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for auth-service was filling our partition",
+      "correct_remediation": "disable feature flag svc.session-store.new_path",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1782972375.5605955,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-4",
+    "description": "downstream service ad-bidder returning 502 -- error budget burning at 13x",
+    "started_at": "2026-06-28T15:37:17.983015+00:00"
+  }
+}
