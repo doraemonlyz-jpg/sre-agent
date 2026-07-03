@@ -1,0 +1,33 @@
+{
+  "incident_id": "c75e3142b7",
+  "records": [
+    {
+      "id": "fb-ef69683e3a",
+      "ts": 1783058417.941512,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream user-profile timeout, not recommend-feed",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1783058417.9415882,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-2",
+    "description": "5xx rate 9% sustained for 401s after deploy of #78114",
+    "started_at": "2026-06-29T05:44:20.229423+00:00"
+  }
+}
