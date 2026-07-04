@@ -1,0 +1,33 @@
+{
+  "incident_id": "d43007a30b",
+  "records": [
+    {
+      "id": "fb-7ea05f0f0c",
+      "ts": 1783144359.7673764,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not ad-bidder",
+      "correct_remediation": "page the promo-engine oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1783144359.7674613,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "p99 latency 2129ms spiking on /checkout, error rate 10%",
+    "started_at": "2026-06-27T04:04:10.303655+00:00"
+  }
+}

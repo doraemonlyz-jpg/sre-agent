@@ -1,0 +1,33 @@
+{
+  "incident_id": "6f6a60dfe1",
+  "records": [
+    {
+      "id": "fb-b276a41cb6",
+      "ts": 1783144359.6182756,
+      "verdict": "correct",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1783144359.6183608,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "downstream service session-store returning 502 -- error budget burning at 4x",
+    "started_at": "2026-07-02T16:09:48.652953+00:00"
+  }
+}
