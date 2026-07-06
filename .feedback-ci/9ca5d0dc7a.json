@@ -1,0 +1,35 @@
+{
+  "incident_id": "9ca5d0dc7a",
+  "records": [
+    {
+      "id": "fb-d3e1bd33f1",
+      "ts": 1783331510.721581,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream cdn-router timeout, not auth-service",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1783331510.7217054,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 432ms briefly, recovered in 12s",
+    "started_at": "2026-07-04T14:17:25.200026+00:00"
+  }
+}

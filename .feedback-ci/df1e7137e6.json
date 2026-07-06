@@ -1,0 +1,33 @@
+{
+  "incident_id": "df1e7137e6",
+  "records": [
+    {
+      "id": "fb-38308e4bcd",
+      "ts": 1783331510.5626502,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for inventory-sync was filling our partition",
+      "correct_remediation": "page the order-pipeline oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1783331510.5627298,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 449ms briefly, recovered in 19s",
+    "started_at": "2026-07-01T12:57:51.431181+00:00"
+  }
+}
