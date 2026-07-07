@@ -1,0 +1,35 @@
+{
+  "incident_id": "dfdb9b6898",
+  "records": [
+    {
+      "id": "fb-05d811e2b6",
+      "ts": 1783404946.9822702,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream notification-fanout timeout, not session-store",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1783404946.9823444,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 758ms briefly, recovered in 17s",
+    "started_at": "2026-06-30T17:13:33.495413+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "18ddc2a3f0",
+  "records": [
+    {
+      "id": "fb-d846f17758",
+      "ts": 1783404947.4240937,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for promo-engine was filling our partition",
+      "correct_remediation": "increase checkout-api concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.88,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1783404947.4241686,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-1",
+    "description": "5xx rate 17% sustained for 404s after deploy of #78623",
+    "started_at": "2026-07-03T01:50:32.988063+00:00"
+  }
+}

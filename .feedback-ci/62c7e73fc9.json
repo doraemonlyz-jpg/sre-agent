@@ -1,0 +1,33 @@
+{
+  "incident_id": "62c7e73fc9",
+  "records": [
+    {
+      "id": "fb-5efe66b7da",
+      "ts": 1783404946.9693801,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream checkout-api timeout, not auth-service",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1783404946.969458,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-4",
+    "description": "memory usage 88% on user-profile -- OOM kill predicted in 27m",
+    "started_at": "2026-07-04T21:53:23.104214+00:00"
+  }
+}
