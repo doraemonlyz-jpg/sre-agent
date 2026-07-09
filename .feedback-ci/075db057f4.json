@@ -1,0 +1,35 @@
+{
+  "incident_id": "075db057f4",
+  "records": [
+    {
+      "id": "fb-f4c2de9921",
+      "ts": 1783577540.6508315,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for live-stream-edge was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1783577540.6509182,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 467ms briefly, recovered in 25s",
+    "started_at": "2026-07-03T00:05:22.229577+00:00"
+  }
+}

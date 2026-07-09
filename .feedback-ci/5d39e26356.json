@@ -1,0 +1,33 @@
+{
+  "incident_id": "5d39e26356",
+  "records": [
+    {
+      "id": "fb-66d07a5c4f",
+      "ts": 1783577541.1131752,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream live-stream-edge timeout, not comment-svc",
+      "correct_remediation": "disable feature flag svc.comment-svc.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.81,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1783577541.1132588,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-1",
+    "description": "downstream service user-profile returning 502 -- error budget burning at 10x",
+    "started_at": "2026-07-04T15:13:17.512718+00:00"
+  }
+}

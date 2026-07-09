@@ -1,0 +1,35 @@
+{
+  "incident_id": "85134dad7e",
+  "records": [
+    {
+      "id": "fb-a6fc8b84ec",
+      "ts": 1783577541.2102466,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream rate-limiter-edge timeout, not recommend-feed",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1783577541.210333,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 508ms briefly, recovered in 27s",
+    "started_at": "2026-07-03T13:15:27.053580+00:00"
+  }
+}
