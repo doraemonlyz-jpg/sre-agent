@@ -1,0 +1,33 @@
+{
+  "incident_id": "1271ff8dbb",
+  "records": [
+    {
+      "id": "fb-e950aafa6e",
+      "ts": 1783747175.6109896,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the live-stream-edge sidecar",
+      "correct_remediation": "increase live-stream-edge concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.82,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1783747175.6110737,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-1",
+    "description": "5xx rate 13% sustained for 466s after deploy of #55129",
+    "started_at": "2026-07-10T12:01:21.518572+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "5e04a9a6b5",
+  "records": [
+    {
+      "id": "fb-a2ec43c954",
+      "ts": 1783747175.3612301,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1783747175.3613157,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-2",
+    "description": "downstream service live-stream-edge returning 502 -- error budget burning at 19x",
+    "started_at": "2026-07-06T18:08:12.630176+00:00"
+  }
+}

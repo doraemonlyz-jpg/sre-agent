@@ -1,0 +1,33 @@
+{
+  "incident_id": "7a54abbc3c",
+  "records": [
+    {
+      "id": "fb-5368e240ca",
+      "ts": 1783747175.382259,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream checkout-api timeout, not video-encoder",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1783747175.3823636,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "memory usage 90% on order-pipeline -- OOM kill predicted in 13m",
+    "started_at": "2026-07-08T20:57:11.248055+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "2f55c53f86",
+  "records": [
+    {
+      "id": "fb-d251265be2",
+      "ts": 1783747175.5016792,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for order-pipeline was filling our partition",
+      "correct_remediation": "increase payments-gateway concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.92,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1783747175.501797,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-4",
+    "description": "memory usage 93% on recommend-feed -- OOM kill predicted in 26m",
+    "started_at": "2026-07-07T19:42:56.733229+00:00"
+  }
+}
