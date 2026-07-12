@@ -1,0 +1,35 @@
+{
+  "incident_id": "1356e36998",
+  "records": [
+    {
+      "id": "fb-6f52626d65",
+      "ts": 1783834503.7010446,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the cart-service sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1783834503.7011263,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 558ms briefly, recovered in 16s",
+    "started_at": "2026-07-10T22:51:09.003754+00:00"
+  }
+}

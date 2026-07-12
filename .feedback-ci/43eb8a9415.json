@@ -1,0 +1,33 @@
+{
+  "incident_id": "43eb8a9415",
+  "records": [
+    {
+      "id": "fb-7b2fbe8167",
+      "ts": 1783834503.243492,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.6,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1783834503.2435665,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-2",
+    "description": "memory usage 88% on order-pipeline -- OOM kill predicted in 3m",
+    "started_at": "2026-07-11T20:49:24.735819+00:00"
+  }
+}

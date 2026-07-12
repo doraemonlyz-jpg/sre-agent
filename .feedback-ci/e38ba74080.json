@@ -1,0 +1,35 @@
+{
+  "incident_id": "e38ba74080",
+  "records": [
+    {
+      "id": "fb-318784c2cf",
+      "ts": 1783834503.2886398,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for image-thumbnail was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1783834503.2887146,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 741ms briefly, recovered in 18s",
+    "started_at": "2026-07-10T14:48:22.369318+00:00"
+  }
+}

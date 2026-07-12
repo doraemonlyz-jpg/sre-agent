@@ -1,0 +1,33 @@
+{
+  "incident_id": "be57e5dff9",
+  "records": [
+    {
+      "id": "fb-6f73aec9f4",
+      "ts": 1783834503.6517644,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in inventory-sync, not what the agent said",
+      "correct_remediation": "disable feature flag svc.inventory-sync.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1783834503.6518407,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "5xx rate 18% sustained for 397s after deploy of #12260",
+    "started_at": "2026-07-08T10:56:24.278903+00:00"
+  }
+}
