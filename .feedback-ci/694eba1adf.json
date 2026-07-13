@@ -1,0 +1,33 @@
+{
+  "incident_id": "694eba1adf",
+  "records": [
+    {
+      "id": "fb-02075e2bed",
+      "ts": 1783932207.921363,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.8,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1783932207.9214387,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 723ms briefly, recovered in 19s",
+    "started_at": "2026-07-10T07:22:25.913240+00:00"
+  }
+}
