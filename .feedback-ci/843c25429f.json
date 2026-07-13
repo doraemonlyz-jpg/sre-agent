@@ -1,0 +1,33 @@
+{
+  "incident_id": "843c25429f",
+  "records": [
+    {
+      "id": "fb-f8ddd4bb21",
+      "ts": 1783921521.837924,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream price-cache timeout, not promo-engine",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.89,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1783921521.8380103,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-4",
+    "description": "p99 latency 3343ms spiking on /checkout, error rate 8%",
+    "started_at": "2026-07-11T14:30:18.751151+00:00"
+  }
+}

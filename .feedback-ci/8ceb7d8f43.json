@@ -1,0 +1,33 @@
+{
+  "incident_id": "8ceb7d8f43",
+  "records": [
+    {
+      "id": "fb-b6977a7cb7",
+      "ts": 1783921521.9128623,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream cdn-router timeout, not order-pipeline",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.95,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1783921521.9129467,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "p99 latency 1898ms spiking on /checkout, error rate 5%",
+    "started_at": "2026-07-06T17:40:10.531885+00:00"
+  }
+}
