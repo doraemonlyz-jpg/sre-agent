@@ -1,0 +1,33 @@
+{
+  "incident_id": "b8a49e00aa",
+  "records": [
+    {
+      "id": "fb-0b5a2ecbc2",
+      "ts": 1784005019.8872042,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream notification-fanout timeout, not inventory-sync",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784005019.8872893,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "5xx rate 8% sustained for 259s after deploy of #76525",
+    "started_at": "2026-07-10T18:52:47.105644+00:00"
+  }
+}

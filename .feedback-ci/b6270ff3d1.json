@@ -1,0 +1,33 @@
+{
+  "incident_id": "b6270ff3d1",
+  "records": [
+    {
+      "id": "fb-164ce01998",
+      "ts": 1784005019.833733,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in video-encoder, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.86,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784005019.833817,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-4",
+    "description": "memory usage 97% on auth-service -- OOM kill predicted in 5m",
+    "started_at": "2026-07-08T00:22:49.488200+00:00"
+  }
+}

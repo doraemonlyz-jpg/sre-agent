@@ -1,0 +1,33 @@
+{
+  "incident_id": "8ea28cdaa9",
+  "records": [
+    {
+      "id": "fb-ce6153fb5b",
+      "ts": 1784005020.1201975,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for order-pipeline was filling our partition",
+      "correct_remediation": "page the order-pipeline oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784005020.1202815,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "downstream service live-stream-edge returning 502 -- error budget burning at 6x",
+    "started_at": "2026-07-08T19:34:18.393784+00:00"
+  }
+}
