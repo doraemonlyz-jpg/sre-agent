@@ -1,0 +1,33 @@
+{
+  "incident_id": "997d1fecac",
+  "records": [
+    {
+      "id": "fb-a692fc98ed",
+      "ts": 1784091429.7378297,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream order-pipeline timeout, not cart-service",
+      "correct_remediation": "disable feature flag svc.cart-service.new_path",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.75,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784091429.7378874,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "memory usage 95% on ad-bidder -- OOM kill predicted in 5m",
+    "started_at": "2026-07-11T11:29:44.707052+00:00"
+  }
+}

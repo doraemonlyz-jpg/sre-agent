@@ -1,0 +1,33 @@
+{
+  "incident_id": "ed3dc77e2e",
+  "records": [
+    {
+      "id": "fb-15083a945f",
+      "ts": 1784091429.7417145,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream ad-bidder timeout, not session-store",
+      "correct_remediation": "disable feature flag svc.session-store.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784091429.7417738,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-4",
+    "description": "memory usage 97% on recommend-feed -- OOM kill predicted in 23m",
+    "started_at": "2026-07-14T07:04:55.789966+00:00"
+  }
+}
