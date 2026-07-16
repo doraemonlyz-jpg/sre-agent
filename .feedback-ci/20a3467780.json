@@ -1,0 +1,33 @@
+{
+  "incident_id": "20a3467780",
+  "records": [
+    {
+      "id": "fb-8c905a5e01",
+      "ts": 1784179028.7043085,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream cdn-router timeout, not payments-gateway",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784179028.7043636,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-3",
+    "description": "downstream service cdn-router returning 502 -- error budget burning at 15x",
+    "started_at": "2026-07-15T21:55:34.557283+00:00"
+  }
+}

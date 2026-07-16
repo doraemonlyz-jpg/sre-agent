@@ -1,0 +1,33 @@
+{
+  "incident_id": "303e49583d",
+  "records": [
+    {
+      "id": "fb-94fe87d15f",
+      "ts": 1784179029.102566,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784179029.1026258,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-4",
+    "description": "downstream service promo-engine returning 502 -- error budget burning at 15x",
+    "started_at": "2026-07-15T11:54:24.777616+00:00"
+  }
+}

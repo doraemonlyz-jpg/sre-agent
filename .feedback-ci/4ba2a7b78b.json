@@ -1,0 +1,33 @@
+{
+  "incident_id": "4ba2a7b78b",
+  "records": [
+    {
+      "id": "fb-8398c1e790",
+      "ts": 1784179028.7398243,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream session-store timeout, not notification-fanout",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784179028.7398832,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "5xx rate 14% sustained for 509s after deploy of #64493",
+    "started_at": "2026-07-12T13:07:22.892875+00:00"
+  }
+}
