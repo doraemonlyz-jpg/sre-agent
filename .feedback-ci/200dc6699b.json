@@ -1,0 +1,33 @@
+{
+  "incident_id": "200dc6699b",
+  "records": [
+    {
+      "id": "fb-7912bd2d1d",
+      "ts": 1784265592.041752,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream user-profile timeout, not auth-service",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.76,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784265592.0418432,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-2",
+    "description": "5xx rate 11% sustained for 429s after deploy of #41226",
+    "started_at": "2026-07-13T12:08:38.768284+00:00"
+  }
+}
