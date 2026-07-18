@@ -1,0 +1,33 @@
+{
+  "incident_id": "ca7023953f",
+  "records": [
+    {
+      "id": "fb-e7787f66b3",
+      "ts": 1784350446.5996792,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for checkout-api was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.65,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784350446.5997388,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-1",
+    "description": "p99 latency 3790ms spiking on /checkout, error rate 3%",
+    "started_at": "2026-07-16T07:23:46.968188+00:00"
+  }
+}
