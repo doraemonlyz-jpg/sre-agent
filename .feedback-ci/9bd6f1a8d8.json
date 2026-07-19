@@ -1,0 +1,33 @@
+{
+  "incident_id": "9bd6f1a8d8",
+  "records": [
+    {
+      "id": "fb-f18d6f4839",
+      "ts": 1784438961.8344939,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.cart-service.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784438961.8345788,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-4",
+    "description": "downstream service inventory-sync returning 502 -- error budget burning at 3x",
+    "started_at": "2026-07-18T23:23:56.206665+00:00"
+  }
+}
