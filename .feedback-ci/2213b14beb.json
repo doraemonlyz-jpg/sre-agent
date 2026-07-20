@@ -1,0 +1,35 @@
+{
+  "incident_id": "2213b14beb",
+  "records": [
+    {
+      "id": "fb-4b7f325711",
+      "ts": 1784526387.8825076,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream payments-gateway timeout, not search-suggest",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1784526387.8825893,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "p99 latency 1895ms spiking on /checkout, error rate 15%",
+    "started_at": "2026-07-17T12:27:16.266551+00:00"
+  }
+}
