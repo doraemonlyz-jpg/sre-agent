@@ -1,0 +1,33 @@
+{
+  "incident_id": "55b38c3047",
+  "records": [
+    {
+      "id": "fb-7e05445a4e",
+      "ts": 1784536519.9012647,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream search-suggest timeout, not promo-engine",
+      "correct_remediation": "disable feature flag svc.promo-engine.new_path",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.76,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784536519.9013157,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 218ms briefly, recovered in 12s",
+    "started_at": "2026-07-14T08:41:16.948602+00:00"
+  }
+}

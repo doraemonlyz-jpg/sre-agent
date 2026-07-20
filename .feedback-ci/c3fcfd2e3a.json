@@ -1,0 +1,35 @@
+{
+  "incident_id": "c3fcfd2e3a",
+  "records": [
+    {
+      "id": "fb-9652b8b068",
+      "ts": 1784536519.8707469,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for checkout-api was filling our partition",
+      "correct_remediation": "increase promo-engine concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1784536519.8708174,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-2",
+    "description": "5xx rate 25% sustained for 358s after deploy of #31019",
+    "started_at": "2026-07-18T14:58:46.013384+00:00"
+  }
+}

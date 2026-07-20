@@ -1,0 +1,33 @@
+{
+  "incident_id": "19694d6e09",
+  "records": [
+    {
+      "id": "fb-46c23524de",
+      "ts": 1784536520.2807786,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "queue head-of-line blocking in inventory-sync, not what the agent said",
+      "correct_remediation": "disable feature flag svc.inventory-sync.new_path",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784536520.2808478,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "p99 latency 2248ms spiking on /checkout, error rate 12%",
+    "started_at": "2026-07-15T07:53:27.711002+00:00"
+  }
+}

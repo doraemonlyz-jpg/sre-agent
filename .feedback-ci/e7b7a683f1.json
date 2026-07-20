@@ -1,0 +1,33 @@
+{
+  "incident_id": "e7b7a683f1",
+  "records": [
+    {
+      "id": "fb-7da44ed38e",
+      "ts": 1784536520.1081748,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the user-profile sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.83,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784536520.1082282,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "memory usage 94% on ad-bidder -- OOM kill predicted in 15m",
+    "started_at": "2026-07-17T22:37:03.182184+00:00"
+  }
+}
