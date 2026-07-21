@@ -1,0 +1,33 @@
+{
+  "incident_id": "3917866468",
+  "records": [
+    {
+      "id": "fb-df3d10ccb7",
+      "ts": 1784611647.055514,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in image-thumbnail, not what the agent said",
+      "correct_remediation": "disable feature flag svc.image-thumbnail.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784611647.0555882,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-3",
+    "description": "p99 latency 2975ms spiking on /checkout, error rate 5%",
+    "started_at": "2026-07-18T10:51:13.846877+00:00"
+  }
+}

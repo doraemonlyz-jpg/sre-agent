@@ -1,0 +1,33 @@
+{
+  "incident_id": "96be6168fc",
+  "records": [
+    {
+      "id": "fb-2a9302ab5c",
+      "ts": 1784611647.5322998,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in auth-service, not what the agent said",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.88,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784611647.5323737,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "downstream service payments-gateway returning 502 -- error budget burning at 9x",
+    "started_at": "2026-07-15T12:20:33.444984+00:00"
+  }
+}

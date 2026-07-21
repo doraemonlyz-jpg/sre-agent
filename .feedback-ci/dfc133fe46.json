@@ -1,0 +1,35 @@
+{
+  "incident_id": "dfc133fe46",
+  "records": [
+    {
+      "id": "fb-362831f6ba",
+      "ts": 1784611647.2970672,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream video-encoder timeout, not inventory-sync",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1784611647.2971423,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 687ms briefly, recovered in 30s",
+    "started_at": "2026-07-17T18:42:29.101814+00:00"
+  }
+}

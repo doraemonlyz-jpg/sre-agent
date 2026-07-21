@@ -1,0 +1,33 @@
+{
+  "incident_id": "f645ab7246",
+  "records": [
+    {
+      "id": "fb-c7c7b112e0",
+      "ts": 1784611647.087941,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the cart-service sidecar",
+      "correct_remediation": "increase cart-service concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784611647.088015,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 460ms briefly, recovered in 15s",
+    "started_at": "2026-07-19T06:57:43.204180+00:00"
+  }
+}
