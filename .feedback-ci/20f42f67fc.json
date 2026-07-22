@@ -1,0 +1,33 @@
+{
+  "incident_id": "20f42f67fc",
+  "records": [
+    {
+      "id": "fb-6c721ac7d1",
+      "ts": 1784697966.4734921,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the cdn-router sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784697966.4735708,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-3",
+    "description": "5xx rate 20% sustained for 506s after deploy of #54170",
+    "started_at": "2026-07-16T17:56:43.252600+00:00"
+  }
+}

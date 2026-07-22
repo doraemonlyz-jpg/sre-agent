@@ -1,0 +1,33 @@
+{
+  "incident_id": "64253e0b94",
+  "records": [
+    {
+      "id": "fb-8322cdea8c",
+      "ts": 1784697966.8954298,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream session-store timeout, not notification-fanout",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.91,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784697966.8955107,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "memory usage 97% on video-encoder -- OOM kill predicted in 3m",
+    "started_at": "2026-07-19T20:05:57.246367+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "2ad9b5f94a",
+  "records": [
+    {
+      "id": "fb-bb35fb11d4",
+      "ts": 1784697966.493799,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream checkout-api timeout, not user-profile",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784697966.4938731,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 414ms briefly, recovered in 18s",
+    "started_at": "2026-07-19T21:03:42.623784+00:00"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "incident_id": "c75d21895a",
+  "records": [
+    {
+      "id": "fb-fe935b14ac",
+      "ts": 1784697966.5940819,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream promo-engine timeout, not ad-bidder",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1784697966.5941553,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "memory usage 95% on order-pipeline -- OOM kill predicted in 26m",
+    "started_at": "2026-07-15T17:22:26.112997+00:00"
+  }
+}

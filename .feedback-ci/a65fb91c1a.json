@@ -1,0 +1,33 @@
+{
+  "incident_id": "a65fb91c1a",
+  "records": [
+    {
+      "id": "fb-deb6fb02b4",
+      "ts": 1784697966.441154,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream cdn-router timeout, not rate-limiter-edge",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.81,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784697966.4412322,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-2",
+    "description": "memory usage 95% on comment-svc -- OOM kill predicted in 14m",
+    "started_at": "2026-07-20T18:17:40.793628+00:00"
+  }
+}

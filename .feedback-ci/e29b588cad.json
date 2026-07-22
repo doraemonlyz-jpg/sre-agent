@@ -1,0 +1,33 @@
+{
+  "incident_id": "e29b588cad",
+  "records": [
+    {
+      "id": "fb-cb0a751906",
+      "ts": 1784697966.26111,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.76,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784697966.2611842,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-1",
+    "description": "memory usage 99% on payments-gateway -- OOM kill predicted in 14m",
+    "started_at": "2026-07-19T01:42:11.627418+00:00"
+  }
+}

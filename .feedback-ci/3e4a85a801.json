@@ -1,0 +1,35 @@
+{
+  "incident_id": "3e4a85a801",
+  "records": [
+    {
+      "id": "fb-e34c769c88",
+      "ts": 1784697966.779477,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "actually a downstream session-store timeout, not order-pipeline",
+      "correct_remediation": "increase order-pipeline concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1784697966.779555,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 501ms briefly, recovered in 7s",
+    "started_at": "2026-07-16T08:44:10.364657+00:00"
+  }
+}
