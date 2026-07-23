@@ -1,0 +1,33 @@
+{
+  "incident_id": "0ead6c85ac",
+  "records": [
+    {
+      "id": "fb-543dd041bb",
+      "ts": 1784784699.719127,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream search-suggest timeout, not session-store",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.85,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784784699.7191675,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "5xx rate 24% sustained for 122s after deploy of #78459",
+    "started_at": "2026-07-21T09:20:01.634817+00:00"
+  }
+}

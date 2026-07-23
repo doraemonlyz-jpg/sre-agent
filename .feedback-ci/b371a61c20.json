@@ -1,0 +1,33 @@
+{
+  "incident_id": "b371a61c20",
+  "records": [
+    {
+      "id": "fb-4154bd85d4",
+      "ts": 1784784699.6365504,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the auth-service sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.86,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784784699.6365895,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-2",
+    "description": "downstream service rate-limiter-edge returning 502 -- error budget burning at 17x",
+    "started_at": "2026-07-19T22:48:13.661970+00:00"
+  }
+}

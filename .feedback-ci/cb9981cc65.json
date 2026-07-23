@@ -1,0 +1,33 @@
+{
+  "incident_id": "cb9981cc65",
+  "records": [
+    {
+      "id": "fb-33ca550067",
+      "ts": 1784784699.9971235,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in search-suggest, not what the agent said",
+      "correct_remediation": "disable feature flag svc.search-suggest.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.94,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784784699.997163,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-1",
+    "description": "memory usage 99% on search-suggest -- OOM kill predicted in 17m",
+    "started_at": "2026-07-16T19:01:28.670203+00:00"
+  }
+}
