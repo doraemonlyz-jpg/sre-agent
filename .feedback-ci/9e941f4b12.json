@@ -1,0 +1,33 @@
+{
+  "incident_id": "9e941f4b12",
+  "records": [
+    {
+      "id": "fb-b7084142ea",
+      "ts": 1784870837.4561436,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream ad-bidder timeout, not video-encoder",
+      "correct_remediation": "page the search-suggest oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784870837.456217,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "downstream service payments-gateway returning 502 -- error budget burning at 19x",
+    "started_at": "2026-07-21T05:00:36.998670+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "a71d308077",
+  "records": [
+    {
+      "id": "fb-1fabbab4ef",
+      "ts": 1784870837.6795402,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.94,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784870837.6796143,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-2",
+    "description": "downstream service cart-service returning 502 -- error budget burning at 3x",
+    "started_at": "2026-07-18T08:04:40.564176+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "c84aa1b64a",
+  "records": [
+    {
+      "id": "fb-b65bc4d7ef",
+      "ts": 1784870837.5302083,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "queue head-of-line blocking in promo-engine, not what the agent said",
+      "correct_remediation": "page the notification-fanout oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784870837.5303142,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-2",
+    "description": "p99 latency 2467ms spiking on /checkout, error rate 13%",
+    "started_at": "2026-07-21T00:33:22.024823+00:00"
+  }
+}

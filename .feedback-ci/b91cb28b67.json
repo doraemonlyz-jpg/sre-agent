@@ -1,0 +1,33 @@
+{
+  "incident_id": "b91cb28b67",
+  "records": [
+    {
+      "id": "fb-b8799a8ea5",
+      "ts": 1784870838.006914,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for video-encoder was filling our partition",
+      "correct_remediation": "disable feature flag svc.recommend-feed.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.61,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784870838.0069878,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-2",
+    "description": "downstream service user-profile returning 502 -- error budget burning at 8x",
+    "started_at": "2026-07-17T15:51:17.951623+00:00"
+  }
+}

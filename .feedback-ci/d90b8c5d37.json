@@ -1,0 +1,33 @@
+{
+  "incident_id": "d90b8c5d37",
+  "records": [
+    {
+      "id": "fb-e2bcebb85d",
+      "ts": 1784870837.63865,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in cart-service, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.95,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1784870837.6387239,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 549ms briefly, recovered in 19s",
+    "started_at": "2026-07-21T10:42:13.600197+00:00"
+  }
+}
