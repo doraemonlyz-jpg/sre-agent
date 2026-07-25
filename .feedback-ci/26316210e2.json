@@ -1,0 +1,35 @@
+{
+  "incident_id": "26316210e2",
+  "records": [
+    {
+      "id": "fb-33601301bf",
+      "ts": 1784956848.6992683,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in video-encoder, not what the agent said",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1784956848.6993563,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 557ms briefly, recovered in 10s",
+    "started_at": "2026-07-19T19:13:18.986616+00:00"
+  }
+}

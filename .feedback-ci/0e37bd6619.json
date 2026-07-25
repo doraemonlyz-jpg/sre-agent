@@ -1,0 +1,35 @@
+{
+  "incident_id": "0e37bd6619",
+  "records": [
+    {
+      "id": "fb-d0cda66e8b",
+      "ts": 1784956848.3823354,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream payments-gateway timeout, not user-profile",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1784956848.3824239,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 400ms briefly, recovered in 10s",
+    "started_at": "2026-07-18T07:59:44.681400+00:00"
+  }
+}
