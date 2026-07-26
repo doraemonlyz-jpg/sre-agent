@@ -1,0 +1,33 @@
+{
+  "incident_id": "aa07b1dea8",
+  "records": [
+    {
+      "id": "fb-49e1aaf6ce",
+      "ts": 1785044311.1531863,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream payments-gateway timeout, not video-encoder",
+      "correct_remediation": "disable feature flag svc.video-encoder.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.79,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785044311.1532624,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-4",
+    "description": "p99 latency 3488ms spiking on /checkout, error rate 4%",
+    "started_at": "2026-07-22T09:34:53.932038+00:00"
+  }
+}

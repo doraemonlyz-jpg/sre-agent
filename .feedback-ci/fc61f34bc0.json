@@ -1,0 +1,35 @@
+{
+  "incident_id": "fc61f34bc0",
+  "records": [
+    {
+      "id": "fb-befa46ce98",
+      "ts": 1785044311.2143927,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for promo-engine was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1785044311.2144713,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 298ms briefly, recovered in 11s",
+    "started_at": "2026-07-20T11:34:03.242862+00:00"
+  }
+}

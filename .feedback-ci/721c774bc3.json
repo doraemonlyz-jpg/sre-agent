@@ -1,0 +1,33 @@
+{
+  "incident_id": "721c774bc3",
+  "records": [
+    {
+      "id": "fb-f881a2c17a",
+      "ts": 1785044311.1075084,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream checkout-api timeout, not rate-limiter-edge",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785044311.107588,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-3",
+    "description": "p99 latency 1979ms spiking on /checkout, error rate 8%",
+    "started_at": "2026-07-25T09:50:42.620347+00:00"
+  }
+}
