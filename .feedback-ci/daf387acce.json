@@ -1,0 +1,33 @@
+{
+  "incident_id": "daf387acce",
+  "records": [
+    {
+      "id": "fb-8ba60efd8c",
+      "ts": 1785131850.6164596,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785131850.6166134,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-3",
+    "description": "p99 latency 3108ms spiking on /checkout, error rate 12%",
+    "started_at": "2026-07-25T09:49:30.869189+00:00"
+  }
+}

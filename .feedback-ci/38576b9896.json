@@ -1,0 +1,33 @@
+{
+  "incident_id": "38576b9896",
+  "records": [
+    {
+      "id": "fb-93495cb9f6",
+      "ts": 1785131849.9377203,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream user-profile timeout, not recommend-feed",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.79,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785131849.9378068,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "p99 latency 2803ms spiking on /checkout, error rate 15%",
+    "started_at": "2026-07-22T13:39:39.155338+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "c8d73201f9",
+  "records": [
+    {
+      "id": "fb-96e4cf897b",
+      "ts": 1785131850.3468683,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not price-cache",
+      "correct_remediation": "disable feature flag svc.price-cache.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785131850.3469584,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-3",
+    "description": "p99 latency 3791ms spiking on /checkout, error rate 15%",
+    "started_at": "2026-07-20T23:23:14.992163+00:00"
+  }
+}

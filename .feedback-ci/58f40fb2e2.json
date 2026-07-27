@@ -1,0 +1,33 @@
+{
+  "incident_id": "58f40fb2e2",
+  "records": [
+    {
+      "id": "fb-45a8417e52",
+      "ts": 1785131849.9204772,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for inventory-sync was filling our partition",
+      "correct_remediation": "increase checkout-api concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785131849.9205654,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-3",
+    "description": "downstream service price-cache returning 502 -- error budget burning at 3x",
+    "started_at": "2026-07-23T13:30:37.275219+00:00"
+  }
+}

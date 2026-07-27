@@ -1,0 +1,35 @@
+{
+  "incident_id": "bda83005e9",
+  "records": [
+    {
+      "id": "fb-d09d4c85a5",
+      "ts": 1785131850.4812827,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream notification-fanout timeout, not image-thumbnail",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1785131850.4814038,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-3",
+    "description": "5xx rate 11% sustained for 548s after deploy of #65103",
+    "started_at": "2026-07-21T02:04:09.458775+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "e6d6501a3f",
+  "records": [
+    {
+      "id": "fb-24863b2853",
+      "ts": 1785131850.2972562,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the cdn-router sidecar",
+      "correct_remediation": "disable feature flag svc.cdn-router.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785131850.2973657,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-3",
+    "description": "p99 latency 3027ms spiking on /checkout, error rate 8%",
+    "started_at": "2026-07-24T03:17:10.316900+00:00"
+  }
+}
