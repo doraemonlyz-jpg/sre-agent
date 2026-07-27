@@ -1,0 +1,33 @@
+{
+  "incident_id": "1234c17f76",
+  "records": [
+    {
+      "id": "fb-6772c4b1ac",
+      "ts": 1785144248.7589512,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for rate-limiter-edge was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.81,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785144248.759037,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-4",
+    "description": "p99 latency 3527ms spiking on /checkout, error rate 14%",
+    "started_at": "2026-07-20T12:47:56.442513+00:00"
+  }
+}

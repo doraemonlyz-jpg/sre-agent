@@ -1,0 +1,33 @@
+{
+  "incident_id": "ef0b371386",
+  "records": [
+    {
+      "id": "fb-90d75c7f26",
+      "ts": 1785144248.9729848,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream inventory-sync timeout, not recommend-feed",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785144248.9732106,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 491ms briefly, recovered in 14s",
+    "started_at": "2026-07-22T04:08:01.726073+00:00"
+  }
+}
