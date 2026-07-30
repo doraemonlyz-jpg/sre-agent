@@ -1,0 +1,33 @@
+{
+  "incident_id": "fe0d2f3f62",
+  "records": [
+    {
+      "id": "fb-be9f851721",
+      "ts": 1785388514.139962,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.8,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785388514.140047,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 549ms briefly, recovered in 11s",
+    "started_at": "2026-07-26T14:51:20.426575+00:00"
+  }
+}
