@@ -1,0 +1,35 @@
+{
+  "incident_id": "c2513aa5d4",
+  "records": [
+    {
+      "id": "fb-92803465a2",
+      "ts": 1785562418.435924,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.inventory-sync.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1785562418.436,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 302ms briefly, recovered in 27s",
+    "started_at": "2026-07-26T12:11:32.141418+00:00"
+  }
+}
