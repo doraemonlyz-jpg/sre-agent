@@ -1,0 +1,33 @@
+{
+  "incident_id": "96543d2b68",
+  "records": [
+    {
+      "id": "fb-a7abcd7c56",
+      "ts": 1785652734.7593272,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the auth-service sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.86,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785652734.759376,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-4",
+    "description": "downstream service price-cache returning 502 -- error budget burning at 16x",
+    "started_at": "2026-07-28T13:45:35.145696+00:00"
+  }
+}
