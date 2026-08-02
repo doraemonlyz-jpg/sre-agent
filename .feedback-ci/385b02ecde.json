@@ -1,0 +1,33 @@
+{
+  "incident_id": "385b02ecde",
+  "records": [
+    {
+      "id": "fb-20ef9a3af5",
+      "ts": 1785648856.628338,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "page the cart-service oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785648856.6284254,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "downstream service notification-fanout returning 502 -- error budget burning at 18x",
+    "started_at": "2026-08-01T13:30:20.675110+00:00"
+  }
+}
