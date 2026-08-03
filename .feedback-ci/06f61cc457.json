@@ -1,0 +1,33 @@
+{
+  "incident_id": "06f61cc457",
+  "records": [
+    {
+      "id": "fb-864c004a85",
+      "ts": 1785747478.3328605,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream session-store timeout, not image-thumbnail",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785747478.3329258,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-2",
+    "description": "memory usage 94% on rate-limiter-edge -- OOM kill predicted in 14m",
+    "started_at": "2026-07-31T09:25:06.572956+00:00"
+  }
+}
