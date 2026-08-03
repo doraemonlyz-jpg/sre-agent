@@ -1,0 +1,33 @@
+{
+  "incident_id": "b64aad1055",
+  "records": [
+    {
+      "id": "fb-0edfcf2a20",
+      "ts": 1785736190.6220658,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for search-suggest was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785736190.622148,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-2",
+    "description": "5xx rate 13% sustained for 418s after deploy of #23324",
+    "started_at": "2026-07-27T17:12:37.205147+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "86b425f63b",
+  "records": [
+    {
+      "id": "fb-4c10ccb897",
+      "ts": 1785736190.7380652,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the order-pipeline sidecar",
+      "correct_remediation": "disable feature flag svc.order-pipeline.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.8,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785736190.7381487,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-4",
+    "description": "downstream service cdn-router returning 502 -- error budget burning at 19x",
+    "started_at": "2026-07-30T10:20:21.512827+00:00"
+  }
+}

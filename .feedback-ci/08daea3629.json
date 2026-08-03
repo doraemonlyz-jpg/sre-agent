@@ -1,0 +1,33 @@
+{
+  "incident_id": "08daea3629",
+  "records": [
+    {
+      "id": "fb-0663de9e46",
+      "ts": 1785736190.3103452,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the session-store sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.82,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785736190.310437,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 367ms briefly, recovered in 9s",
+    "started_at": "2026-08-01T03:01:22.145148+00:00"
+  }
+}

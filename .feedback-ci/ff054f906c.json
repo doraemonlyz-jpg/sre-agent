@@ -1,0 +1,33 @@
+{
+  "incident_id": "ff054f906c",
+  "records": [
+    {
+      "id": "fb-71051ee7d7",
+      "ts": 1785736190.0324078,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for order-pipeline was filling our partition",
+      "correct_remediation": "disable feature flag svc.promo-engine.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.98,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785736190.0324929,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-1",
+    "description": "downstream service user-profile returning 502 -- error budget burning at 18x",
+    "started_at": "2026-07-31T12:13:25.132742+00:00"
+  }
+}

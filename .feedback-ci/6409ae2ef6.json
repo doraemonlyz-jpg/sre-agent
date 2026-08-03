@@ -1,0 +1,33 @@
+{
+  "incident_id": "6409ae2ef6",
+  "records": [
+    {
+      "id": "fb-52f02e6dc1",
+      "ts": 1785736190.052597,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for comment-svc was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785736190.0526795,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "p99 latency 2763ms spiking on /checkout, error rate 12%",
+    "started_at": "2026-08-02T03:34:29.289892+00:00"
+  }
+}

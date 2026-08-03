@@ -1,0 +1,35 @@
+{
+  "incident_id": "878d305f33",
+  "records": [
+    {
+      "id": "fb-544dcc1abf",
+      "ts": 1785736190.3017366,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream promo-engine timeout, not cart-service",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1785736190.3018336,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 685ms briefly, recovered in 30s",
+    "started_at": "2026-07-27T17:46:09.785405+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "6bd677686b",
+  "records": [
+    {
+      "id": "fb-d453f20aa6",
+      "ts": 1785736189.9734788,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785736189.973565,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-2",
+    "description": "downstream service session-store returning 502 -- error budget burning at 15x",
+    "started_at": "2026-08-01T02:37:28.190297+00:00"
+  }
+}
