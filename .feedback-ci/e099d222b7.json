@@ -1,0 +1,33 @@
+{
+  "incident_id": "e099d222b7",
+  "records": [
+    {
+      "id": "fb-38452605de",
+      "ts": 1785820880.2305713,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not live-stream-edge",
+      "correct_remediation": "increase live-stream-edge concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.84,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785820880.2306328,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-3",
+    "description": "downstream service search-suggest returning 502 -- error budget burning at 17x",
+    "started_at": "2026-08-03T11:04:59.180157+00:00"
+  }
+}

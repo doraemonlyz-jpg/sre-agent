@@ -1,0 +1,35 @@
+{
+  "incident_id": "52d124acc3",
+  "records": [
+    {
+      "id": "fb-8cc7363f79",
+      "ts": 1785820879.7115493,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1785820879.7116072,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 284ms briefly, recovered in 15s",
+    "started_at": "2026-07-31T14:02:28.356661+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "a70ef5d12f",
+  "records": [
+    {
+      "id": "fb-21e28173f9",
+      "ts": 1785820879.7427273,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.62,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785820879.742784,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-4",
+    "description": "memory usage 86% on user-profile -- OOM kill predicted in 26m",
+    "started_at": "2026-08-03T03:25:53.925126+00:00"
+  }
+}
