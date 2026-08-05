@@ -1,0 +1,33 @@
+{
+  "incident_id": "61345eab4e",
+  "records": [
+    {
+      "id": "fb-01509e17f6",
+      "ts": 1785907269.3850632,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the inventory-sync sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785907269.3851583,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "memory usage 92% on search-suggest -- OOM kill predicted in 7m",
+    "started_at": "2026-07-29T21:32:13.405010+00:00"
+  }
+}

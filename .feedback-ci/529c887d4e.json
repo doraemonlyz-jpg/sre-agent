@@ -1,0 +1,33 @@
+{
+  "incident_id": "529c887d4e",
+  "records": [
+    {
+      "id": "fb-406cd4a8b3",
+      "ts": 1785907269.5945504,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the inventory-sync sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.62,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785907269.5946338,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-2",
+    "description": "5xx rate 25% sustained for 481s after deploy of #99040",
+    "started_at": "2026-07-29T09:23:57.188329+00:00"
+  }
+}

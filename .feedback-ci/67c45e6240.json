@@ -1,0 +1,33 @@
+{
+  "incident_id": "67c45e6240",
+  "records": [
+    {
+      "id": "fb-4bb03b24ad",
+      "ts": 1785907269.8894513,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in inventory-sync, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.76,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785907269.8895955,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-2",
+    "description": "downstream service price-cache returning 502 -- error budget burning at 3x",
+    "started_at": "2026-08-04T19:33:55.772896+00:00"
+  }
+}

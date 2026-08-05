@@ -1,0 +1,33 @@
+{
+  "incident_id": "f5188bcd2a",
+  "records": [
+    {
+      "id": "fb-d432522fe6",
+      "ts": 1785907269.6914368,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for image-thumbnail was filling our partition",
+      "correct_remediation": "increase cdn-router concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.83,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785907269.6915207,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-3",
+    "description": "downstream service recommend-feed returning 502 -- error budget burning at 6x",
+    "started_at": "2026-07-29T07:30:24.758344+00:00"
+  }
+}
