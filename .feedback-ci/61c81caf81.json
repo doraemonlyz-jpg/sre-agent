@@ -1,0 +1,33 @@
+{
+  "incident_id": "61c81caf81",
+  "records": [
+    {
+      "id": "fb-f35138dc01",
+      "ts": 1785993794.1250887,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream rate-limiter-edge timeout, not order-pipeline",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.81,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785993794.1251462,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-4",
+    "description": "downstream service comment-svc returning 502 -- error budget burning at 11x",
+    "started_at": "2026-08-04T10:36:16.577195+00:00"
+  }
+}

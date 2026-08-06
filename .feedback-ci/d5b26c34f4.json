@@ -1,0 +1,33 @@
+{
+  "incident_id": "d5b26c34f4",
+  "records": [
+    {
+      "id": "fb-8e4ce7d7ba",
+      "ts": 1785993794.094403,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream payments-gateway timeout, not order-pipeline",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785993794.0944564,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-4",
+    "description": "p99 latency 2553ms spiking on /checkout, error rate 10%",
+    "started_at": "2026-08-05T09:35:00.950851+00:00"
+  }
+}

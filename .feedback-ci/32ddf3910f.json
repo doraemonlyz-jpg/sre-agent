@@ -1,0 +1,33 @@
+{
+  "incident_id": "32ddf3910f",
+  "records": [
+    {
+      "id": "fb-498ed10d54",
+      "ts": 1785993794.4685705,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the user-profile sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.65,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1785993794.4686294,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-4",
+    "description": "downstream service video-encoder returning 502 -- error budget burning at 4x",
+    "started_at": "2026-08-05T17:00:05.199167+00:00"
+  }
+}
