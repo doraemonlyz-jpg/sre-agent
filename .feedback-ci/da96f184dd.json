@@ -1,0 +1,33 @@
+{
+  "incident_id": "da96f184dd",
+  "records": [
+    {
+      "id": "fb-c048d4db98",
+      "ts": 1786077026.0989854,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.65,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786077026.0990717,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-4",
+    "description": "memory usage 94% on rate-limiter-edge -- OOM kill predicted in 24m",
+    "started_at": "2026-07-31T10:02:45.777034+00:00"
+  }
+}
