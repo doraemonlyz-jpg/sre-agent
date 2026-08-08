@@ -1,0 +1,35 @@
+{
+  "incident_id": "543db47454",
+  "records": [
+    {
+      "id": "fb-0e3325f839",
+      "ts": 1786160365.620123,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream inventory-sync timeout, not live-stream-edge",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786160365.62021,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 464ms briefly, recovered in 26s",
+    "started_at": "2026-08-07T18:24:38.513849+00:00"
+  }
+}

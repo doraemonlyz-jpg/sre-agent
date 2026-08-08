@@ -1,0 +1,33 @@
+{
+  "incident_id": "e16505aa0d",
+  "records": [
+    {
+      "id": "fb-20310fbde8",
+      "ts": 1786160365.4286826,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "actually a downstream order-pipeline timeout, not comment-svc",
+      "correct_remediation": "increase comment-svc concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786160365.4287677,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "p99 latency 3202ms spiking on /checkout, error rate 11%",
+    "started_at": "2026-08-03T21:15:59.755820+00:00"
+  }
+}

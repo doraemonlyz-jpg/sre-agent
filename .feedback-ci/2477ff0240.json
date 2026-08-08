@@ -1,0 +1,33 @@
+{
+  "incident_id": "2477ff0240",
+  "records": [
+    {
+      "id": "fb-f676c2fd18",
+      "ts": 1786160365.4403274,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for rate-limiter-edge was filling our partition",
+      "correct_remediation": "increase promo-engine concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.82,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786160365.440414,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-3",
+    "description": "downstream service user-profile returning 502 -- error budget burning at 13x",
+    "started_at": "2026-08-04T01:03:16.481400+00:00"
+  }
+}

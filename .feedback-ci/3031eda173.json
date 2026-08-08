@@ -1,0 +1,35 @@
+{
+  "incident_id": "3031eda173",
+  "records": [
+    {
+      "id": "fb-76fd76ea96",
+      "ts": 1786160365.6846359,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream payments-gateway timeout, not cart-service",
+      "correct_remediation": "page the inventory-sync oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786160365.6847236,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-2",
+    "description": "downstream service price-cache returning 502 -- error budget burning at 19x",
+    "started_at": "2026-08-01T08:05:26.705423+00:00"
+  }
+}

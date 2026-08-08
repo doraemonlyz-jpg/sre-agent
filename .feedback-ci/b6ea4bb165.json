@@ -1,0 +1,33 @@
+{
+  "incident_id": "b6ea4bb165",
+  "records": [
+    {
+      "id": "fb-27839d0b6e",
+      "ts": 1786160365.4007883,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the notification-fanout sidecar",
+      "correct_remediation": "page the inventory-sync oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.75,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786160365.4008775,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-1",
+    "description": "memory usage 96% on rate-limiter-edge -- OOM kill predicted in 9m",
+    "started_at": "2026-08-06T13:34:20.204210+00:00"
+  }
+}

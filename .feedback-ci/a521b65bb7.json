@@ -1,0 +1,33 @@
+{
+  "incident_id": "a521b65bb7",
+  "records": [
+    {
+      "id": "fb-fd11ac4177",
+      "ts": 1786160365.2543988,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786160365.2544835,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-2",
+    "description": "downstream service rate-limiter-edge returning 502 -- error budget burning at 7x",
+    "started_at": "2026-08-04T21:32:03.548874+00:00"
+  }
+}
