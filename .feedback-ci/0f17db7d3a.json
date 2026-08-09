@@ -1,0 +1,33 @@
+{
+  "incident_id": "0f17db7d3a",
+  "records": [
+    {
+      "id": "fb-27c9c4c9bc",
+      "ts": 1786247304.1217322,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "queue head-of-line blocking in recommend-feed, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.81,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786247304.1218243,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-1",
+    "description": "p99 latency 3303ms spiking on /checkout, error rate 4%",
+    "started_at": "2026-08-02T17:08:46.851281+00:00"
+  }
+}

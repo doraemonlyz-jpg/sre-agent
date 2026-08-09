@@ -1,0 +1,33 @@
+{
+  "incident_id": "2a9910d649",
+  "records": [
+    {
+      "id": "fb-0f61090c57",
+      "ts": 1786247304.0374684,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for inventory-sync was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.85,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786247304.0375528,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-1",
+    "description": "memory usage 93% on video-encoder -- OOM kill predicted in 3m",
+    "started_at": "2026-08-08T03:22:34.572335+00:00"
+  }
+}

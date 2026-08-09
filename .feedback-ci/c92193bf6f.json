@@ -1,0 +1,35 @@
+{
+  "incident_id": "c92193bf6f",
+  "records": [
+    {
+      "id": "fb-ecc88d2466",
+      "ts": 1786247303.8905275,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for inventory-sync was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786247303.8906114,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 466ms briefly, recovered in 9s",
+    "started_at": "2026-08-07T18:29:52.354198+00:00"
+  }
+}

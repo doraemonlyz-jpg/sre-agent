@@ -1,0 +1,35 @@
+{
+  "incident_id": "b176f42ffd",
+  "records": [
+    {
+      "id": "fb-c10bb9bd6a",
+      "ts": 1786247304.4137695,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream rate-limiter-edge timeout, not user-profile",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786247304.4138646,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 605ms briefly, recovered in 30s",
+    "started_at": "2026-08-03T11:50:23.497509+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "fff42c23ec",
+  "records": [
+    {
+      "id": "fb-ff1244c43f",
+      "ts": 1786247304.0237606,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the inventory-sync sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786247304.0238607,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 469ms briefly, recovered in 22s",
+    "started_at": "2026-08-05T08:46:01.436059+00:00"
+  }
+}
