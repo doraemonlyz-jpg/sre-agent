@@ -1,0 +1,33 @@
+{
+  "incident_id": "6925a2f808",
+  "records": [
+    {
+      "id": "fb-baa4d413ed",
+      "ts": 1786252286.674876,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "actually a downstream search-suggest timeout, not session-store",
+      "correct_remediation": "page the notification-fanout oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.87,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786252286.6749594,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-3",
+    "description": "memory usage 93% on live-stream-edge -- OOM kill predicted in 27m",
+    "started_at": "2026-08-06T23:37:20.421821+00:00"
+  }
+}

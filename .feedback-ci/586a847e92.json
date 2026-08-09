@@ -1,0 +1,33 @@
+{
+  "incident_id": "586a847e92",
+  "records": [
+    {
+      "id": "fb-476c7c6fed",
+      "ts": 1786252286.9385042,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the search-suggest sidecar",
+      "correct_remediation": "increase search-suggest concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.56,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786252286.9386134,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-1",
+    "description": "5xx rate 18% sustained for 212s after deploy of #41270",
+    "started_at": "2026-08-03T08:43:33.553416+00:00"
+  }
+}
