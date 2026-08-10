@@ -1,0 +1,33 @@
+{
+  "incident_id": "8aeb9a09b2",
+  "records": [
+    {
+      "id": "fb-c19793de27",
+      "ts": 1786334545.4372826,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for comment-svc was filling our partition",
+      "correct_remediation": "increase auth-service concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786334545.4373686,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-4",
+    "description": "5xx rate 13% sustained for 509s after deploy of #92752",
+    "started_at": "2026-08-10T06:27:26.856224+00:00"
+  }
+}

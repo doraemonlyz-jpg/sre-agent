@@ -1,0 +1,33 @@
+{
+  "incident_id": "9b6448d4d8",
+  "records": [
+    {
+      "id": "fb-480ad6527a",
+      "ts": 1786334545.5689683,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in ad-bidder, not what the agent said",
+      "correct_remediation": "disable feature flag svc.ad-bidder.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.88,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786334545.5690527,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-2",
+    "description": "downstream service user-profile returning 502 -- error budget burning at 9x",
+    "started_at": "2026-08-07T00:20:05.118847+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "b64bb8b787",
+  "records": [
+    {
+      "id": "fb-bc05f580cf",
+      "ts": 1786334545.4258962,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for live-stream-edge was filling our partition",
+      "correct_remediation": "page the recommend-feed oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786334545.4259784,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-1",
+    "description": "5xx rate 19% sustained for 219s after deploy of #21247",
+    "started_at": "2026-08-09T01:55:57.693613+00:00"
+  }
+}

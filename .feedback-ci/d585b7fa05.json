@@ -1,0 +1,35 @@
+{
+  "incident_id": "d585b7fa05",
+  "records": [
+    {
+      "id": "fb-4991eaa9d8",
+      "ts": 1786334545.6024766,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream cdn-router timeout, not checkout-api",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786334545.6025627,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 474ms briefly, recovered in 29s",
+    "started_at": "2026-08-07T12:23:33.969524+00:00"
+  }
+}

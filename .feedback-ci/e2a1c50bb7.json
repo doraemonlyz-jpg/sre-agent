@@ -1,0 +1,35 @@
+{
+  "incident_id": "e2a1c50bb7",
+  "records": [
+    {
+      "id": "fb-56a7c7024a",
+      "ts": 1786334545.4072833,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the session-store sidecar",
+      "correct_remediation": "page the recommend-feed oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786334545.4073665,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 422ms briefly, recovered in 20s",
+    "started_at": "2026-08-09T21:23:46.916502+00:00"
+  }
+}
