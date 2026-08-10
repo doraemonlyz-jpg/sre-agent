@@ -1,0 +1,33 @@
+{
+  "incident_id": "d239c82fb1",
+  "records": [
+    {
+      "id": "fb-2d94d546cd",
+      "ts": 1786345550.6969454,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "actually a downstream inventory-sync timeout, not price-cache",
+      "correct_remediation": "disable feature flag svc.price-cache.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786345550.6970358,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-3",
+    "description": "5xx rate 17% sustained for 254s after deploy of #55899",
+    "started_at": "2026-08-06T15:59:13.462801+00:00"
+  }
+}

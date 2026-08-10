@@ -1,0 +1,33 @@
+{
+  "incident_id": "82be626ecb",
+  "records": [
+    {
+      "id": "fb-e1a3488bb0",
+      "ts": 1786345550.493309,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "actually a downstream promo-engine timeout, not auth-service",
+      "correct_remediation": "disable feature flag svc.auth-service.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786345550.493396,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "downstream service checkout-api returning 502 -- error budget burning at 8x",
+    "started_at": "2026-08-08T21:24:38.989113+00:00"
+  }
+}
