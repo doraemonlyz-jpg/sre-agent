@@ -1,0 +1,35 @@
+{
+  "incident_id": "79382e1c80",
+  "records": [
+    {
+      "id": "fb-375c6ac48c",
+      "ts": 1786420202.5217643,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in inventory-sync, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786420202.52185,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on recommend-feed",
+    "started_at": "2026-08-06T07:09:03.911369+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "3fc4ec0dc9",
+  "records": [
+    {
+      "id": "fb-c9e84d9536",
+      "ts": 1786420202.7786214,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream cdn-router timeout, not order-pipeline",
+      "correct_remediation": "increase order-pipeline concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.58,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786420202.7787073,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "p99 latency 3608ms spiking on /checkout, error rate 9%",
+    "started_at": "2026-08-06T00:19:46.993276+00:00"
+  }
+}

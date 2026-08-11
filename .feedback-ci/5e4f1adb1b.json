@@ -1,0 +1,33 @@
+{
+  "incident_id": "5e4f1adb1b",
+  "records": [
+    {
+      "id": "fb-292f818cbc",
+      "ts": 1786420202.575109,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786420202.5752249,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-4",
+    "description": "5xx rate 11% sustained for 403s after deploy of #91635",
+    "started_at": "2026-08-07T12:00:23.090561+00:00"
+  }
+}

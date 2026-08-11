@@ -1,0 +1,33 @@
+{
+  "incident_id": "47a6191454",
+  "records": [
+    {
+      "id": "fb-3cda3c70df",
+      "ts": 1786420202.280597,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.price-cache.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786420202.2806804,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-3",
+    "description": "downstream service auth-service returning 502 -- error budget burning at 13x",
+    "started_at": "2026-08-04T20:17:55.355611+00:00"
+  }
+}

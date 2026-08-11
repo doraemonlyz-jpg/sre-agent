@@ -1,0 +1,33 @@
+{
+  "incident_id": "83f2ee6dfb",
+  "records": [
+    {
+      "id": "fb-45c25b6d4b",
+      "ts": 1786420202.535971,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.91,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786420202.536055,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "downstream service video-encoder returning 502 -- error budget burning at 14x",
+    "started_at": "2026-08-09T21:30:36.963706+00:00"
+  }
+}
