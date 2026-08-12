@@ -1,0 +1,35 @@
+{
+  "incident_id": "40aee5718c",
+  "records": [
+    {
+      "id": "fb-79d970c458",
+      "ts": 1786507980.2477057,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not session-store",
+      "correct_remediation": "disable feature flag svc.session-store.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786507980.2477963,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 486ms briefly, recovered in 12s",
+    "started_at": "2026-08-11T17:07:43.011806+00:00"
+  }
+}

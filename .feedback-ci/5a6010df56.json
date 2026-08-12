@@ -1,0 +1,35 @@
+{
+  "incident_id": "5a6010df56",
+  "records": [
+    {
+      "id": "fb-aa9e782213",
+      "ts": 1786507980.048217,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not image-thumbnail",
+      "correct_remediation": "disable feature flag svc.image-thumbnail.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786507980.0483027,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 641ms briefly, recovered in 16s",
+    "started_at": "2026-08-06T00:06:46.395078+00:00"
+  }
+}

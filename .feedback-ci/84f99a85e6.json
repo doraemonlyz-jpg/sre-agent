@@ -1,0 +1,33 @@
+{
+  "incident_id": "84f99a85e6",
+  "records": [
+    {
+      "id": "fb-d815938520",
+      "ts": 1786507980.5008318,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream ad-bidder timeout, not video-encoder",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.65,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786507980.5009203,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "p99 latency 1947ms spiking on /checkout, error rate 12%",
+    "started_at": "2026-08-10T06:42:40.633113+00:00"
+  }
+}

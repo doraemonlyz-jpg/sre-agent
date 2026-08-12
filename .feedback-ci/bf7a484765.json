@@ -1,0 +1,33 @@
+{
+  "incident_id": "bf7a484765",
+  "records": [
+    {
+      "id": "fb-fa56cd5008",
+      "ts": 1786507980.0443835,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream session-store timeout, not recommend-feed",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786507980.0444677,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-2",
+    "description": "memory usage 99% on promo-engine -- OOM kill predicted in 17m",
+    "started_at": "2026-08-08T12:03:14.084175+00:00"
+  }
+}
