@@ -1,0 +1,35 @@
+{
+  "incident_id": "1eb0c0737c",
+  "records": [
+    {
+      "id": "fb-ba2c0accee",
+      "ts": 1786594672.4049506,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for comment-svc was filling our partition",
+      "correct_remediation": "increase cart-service concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786594672.4050272,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-4",
+    "description": "downstream service rate-limiter-edge returning 502 -- error budget burning at 18x",
+    "started_at": "2026-08-08T17:20:19.387544+00:00"
+  }
+}

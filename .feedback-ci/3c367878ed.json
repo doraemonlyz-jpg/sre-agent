@@ -1,0 +1,33 @@
+{
+  "incident_id": "3c367878ed",
+  "records": [
+    {
+      "id": "fb-f6d166003f",
+      "ts": 1786594672.1314938,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for auth-service was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786594672.131565,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-4",
+    "description": "p99 latency 1933ms spiking on /checkout, error rate 8%",
+    "started_at": "2026-08-09T07:07:27.520854+00:00"
+  }
+}

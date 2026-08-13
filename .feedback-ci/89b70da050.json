@@ -1,0 +1,35 @@
+{
+  "incident_id": "89b70da050",
+  "records": [
+    {
+      "id": "fb-71ddb256cb",
+      "ts": 1786594672.6599257,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream cart-service timeout, not notification-fanout",
+      "correct_remediation": "disable feature flag svc.notification-fanout.new_path",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786594672.6600044,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 262ms briefly, recovered in 26s",
+    "started_at": "2026-08-12T18:28:39.967198+00:00"
+  }
+}

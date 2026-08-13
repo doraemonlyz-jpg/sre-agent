@@ -1,0 +1,33 @@
+{
+  "incident_id": "ddf603335f",
+  "records": [
+    {
+      "id": "fb-a71a51cbe6",
+      "ts": 1786594671.9057977,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the search-suggest sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.91,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786594671.905869,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-4",
+    "description": "downstream service notification-fanout returning 502 -- error budget burning at 7x",
+    "started_at": "2026-08-08T17:54:57.532104+00:00"
+  }
+}
