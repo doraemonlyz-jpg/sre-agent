@@ -1,0 +1,35 @@
+{
+  "incident_id": "b7e36b6edc",
+  "records": [
+    {
+      "id": "fb-3f9f1af2be",
+      "ts": 1786680875.7837594,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for image-thumbnail was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786680875.7838118,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 761ms briefly, recovered in 15s",
+    "started_at": "2026-08-11T07:04:39.243877+00:00"
+  }
+}
