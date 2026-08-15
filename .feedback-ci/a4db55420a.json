@@ -1,0 +1,33 @@
+{
+  "incident_id": "a4db55420a",
+  "records": [
+    {
+      "id": "fb-d59d81295f",
+      "ts": 1786762660.564965,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "page the rate-limiter-edge oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.82,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786762660.565049,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "p99 latency 2811ms spiking on /checkout, error rate 12%",
+    "started_at": "2026-08-13T23:18:47.704877+00:00"
+  }
+}

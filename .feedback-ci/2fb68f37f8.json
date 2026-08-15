@@ -1,0 +1,35 @@
+{
+  "incident_id": "2fb68f37f8",
+  "records": [
+    {
+      "id": "fb-759574f981",
+      "ts": 1786762659.8684163,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "actually a downstream live-stream-edge timeout, not user-profile",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786762659.8685012,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-4",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on rate-limiter-edge",
+    "started_at": "2026-08-11T03:58:05.444184+00:00"
+  }
+}

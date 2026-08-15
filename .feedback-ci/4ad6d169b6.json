@@ -1,0 +1,35 @@
+{
+  "incident_id": "4ad6d169b6",
+  "records": [
+    {
+      "id": "fb-f3845a7e45",
+      "ts": 1786762660.5370438,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the user-profile sidecar",
+      "correct_remediation": "increase user-profile concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786762660.537131,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 598ms briefly, recovered in 15s",
+    "started_at": "2026-08-09T01:48:05.630785+00:00"
+  }
+}

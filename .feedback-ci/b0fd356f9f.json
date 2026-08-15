@@ -1,0 +1,35 @@
+{
+  "incident_id": "b0fd356f9f",
+  "records": [
+    {
+      "id": "fb-127cde1d2b",
+      "ts": 1786762660.5297558,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in payments-gateway, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786762660.5298479,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 269ms briefly, recovered in 9s",
+    "started_at": "2026-08-14T23:09:51.360329+00:00"
+  }
+}

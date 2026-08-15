@@ -1,0 +1,33 @@
+{
+  "incident_id": "1b7455b977",
+  "records": [
+    {
+      "id": "fb-d9dae9f764",
+      "ts": 1786762660.2497203,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cdn-router was filling our partition",
+      "correct_remediation": "page the user-profile oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786762660.2498157,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-3",
+    "description": "downstream service search-suggest returning 502 -- error budget burning at 4x",
+    "started_at": "2026-08-10T03:22:40.985235+00:00"
+  }
+}

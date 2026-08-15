@@ -1,0 +1,35 @@
+{
+  "incident_id": "9466c8180c",
+  "records": [
+    {
+      "id": "fb-b34a953f5d",
+      "ts": 1786762660.1281197,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the user-profile sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786762660.1282048,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 741ms briefly, recovered in 25s",
+    "started_at": "2026-08-12T08:33:55.423965+00:00"
+  }
+}

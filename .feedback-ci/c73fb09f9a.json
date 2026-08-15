@@ -1,0 +1,33 @@
+{
+  "incident_id": "c73fb09f9a",
+  "records": [
+    {
+      "id": "fb-bda3051ad2",
+      "ts": 1786762660.5901077,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the rate-limiter-edge sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.56,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786762660.590195,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-4",
+    "description": "memory usage 99% on ad-bidder -- OOM kill predicted in 11m",
+    "started_at": "2026-08-10T18:15:34.591654+00:00"
+  }
+}
