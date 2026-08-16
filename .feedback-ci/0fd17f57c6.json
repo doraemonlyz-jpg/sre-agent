@@ -1,0 +1,35 @@
+{
+  "incident_id": "0fd17f57c6",
+  "records": [
+    {
+      "id": "fb-be77e7bb55",
+      "ts": 1786849593.6843107,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in ad-bidder, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786849593.6843946,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 238ms briefly, recovered in 24s",
+    "started_at": "2026-08-14T19:10:48.378811+00:00"
+  }
+}

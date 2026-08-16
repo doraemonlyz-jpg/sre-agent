@@ -1,0 +1,33 @@
+{
+  "incident_id": "b936186f5a",
+  "records": [
+    {
+      "id": "fb-6c90067714",
+      "ts": 1786849593.2590983,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.76,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786849593.259187,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-4",
+    "description": "downstream service session-store returning 502 -- error budget burning at 5x",
+    "started_at": "2026-08-14T01:26:15.778239+00:00"
+  }
+}

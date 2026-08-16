@@ -1,0 +1,35 @@
+{
+  "incident_id": "9644249a66",
+  "records": [
+    {
+      "id": "fb-fb939f5627",
+      "ts": 1786849593.440225,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the order-pipeline sidecar",
+      "correct_remediation": "page the notification-fanout oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786849593.4403105,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 364ms briefly, recovered in 28s",
+    "started_at": "2026-08-09T04:13:09.798964+00:00"
+  }
+}
