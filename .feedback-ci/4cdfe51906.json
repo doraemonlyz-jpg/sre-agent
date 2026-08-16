@@ -1,0 +1,35 @@
+{
+  "incident_id": "4cdfe51906",
+  "records": [
+    {
+      "id": "fb-b1f90e210e",
+      "ts": 1786855287.2436733,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the video-encoder sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786855287.2437334,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 235ms briefly, recovered in 13s",
+    "started_at": "2026-08-10T20:03:18.590915+00:00"
+  }
+}

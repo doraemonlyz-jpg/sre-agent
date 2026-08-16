@@ -1,0 +1,33 @@
+{
+  "incident_id": "f2927f403e",
+  "records": [
+    {
+      "id": "fb-25b9d9cc94",
+      "ts": 1786855287.4348714,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the session-store sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786855287.4349334,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "downstream service session-store returning 502 -- error budget burning at 11x",
+    "started_at": "2026-08-10T15:02:32.729429+00:00"
+  }
+}

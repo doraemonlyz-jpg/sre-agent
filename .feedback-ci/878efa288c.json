@@ -1,0 +1,35 @@
+{
+  "incident_id": "878efa288c",
+  "records": [
+    {
+      "id": "fb-512b63c2c5",
+      "ts": 1786855286.9696069,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream auth-service timeout, not ad-bidder",
+      "correct_remediation": "increase ad-bidder concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786855286.9696615,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 788ms briefly, recovered in 12s",
+    "started_at": "2026-08-10T08:07:38.139447+00:00"
+  }
+}

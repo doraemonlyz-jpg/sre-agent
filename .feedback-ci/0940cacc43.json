@@ -1,0 +1,35 @@
+{
+  "incident_id": "0940cacc43",
+  "records": [
+    {
+      "id": "fb-0b835ef168",
+      "ts": 1786855287.394236,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786855287.394293,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-1",
+    "description": "downstream service cart-service returning 502 -- error budget burning at 10x",
+    "started_at": "2026-08-16T05:01:06.084411+00:00"
+  }
+}

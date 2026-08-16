@@ -1,0 +1,33 @@
+{
+  "incident_id": "9c663ed5b9",
+  "records": [
+    {
+      "id": "fb-fbea95f29c",
+      "ts": 1786855287.1762836,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream cdn-router timeout, not notification-fanout",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786855287.1763415,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-4",
+    "description": "memory usage 97% on search-suggest -- OOM kill predicted in 17m",
+    "started_at": "2026-08-15T16:04:35.313266+00:00"
+  }
+}

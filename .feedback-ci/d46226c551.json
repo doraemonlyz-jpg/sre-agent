@@ -1,0 +1,33 @@
+{
+  "incident_id": "d46226c551",
+  "records": [
+    {
+      "id": "fb-9a5cbc720c",
+      "ts": 1786855287.2108676,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream inventory-sync timeout, not recommend-feed",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786855287.2109287,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "memory usage 87% on ad-bidder -- OOM kill predicted in 13m",
+    "started_at": "2026-08-09T16:34:27.250793+00:00"
+  }
+}
