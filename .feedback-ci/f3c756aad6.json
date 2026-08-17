@@ -1,0 +1,33 @@
+{
+  "incident_id": "f3c756aad6",
+  "records": [
+    {
+      "id": "fb-2f4e70e3e8",
+      "ts": 1786935989.8638325,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for payments-gateway was filling our partition",
+      "correct_remediation": "increase inventory-sync concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.95,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786935989.8638701,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-4",
+    "description": "downstream service search-suggest returning 502 -- error budget burning at 12x",
+    "started_at": "2026-08-14T19:22:11.379027+00:00"
+  }
+}

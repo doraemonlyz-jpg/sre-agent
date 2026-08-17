@@ -1,0 +1,33 @@
+{
+  "incident_id": "48f41600ba",
+  "records": [
+    {
+      "id": "fb-acc933c6c3",
+      "ts": 1786935989.603608,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream notification-fanout timeout, not recommend-feed",
+      "correct_remediation": "page the image-thumbnail oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786935989.603645,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "downstream service cart-service returning 502 -- error budget burning at 9x",
+    "started_at": "2026-08-16T16:30:19.912378+00:00"
+  }
+}
