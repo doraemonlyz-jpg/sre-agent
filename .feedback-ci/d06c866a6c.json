@@ -1,0 +1,33 @@
+{
+  "incident_id": "d06c866a6c",
+  "records": [
+    {
+      "id": "fb-5449495ec2",
+      "ts": 1786948163.8422284,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for ad-bidder was filling our partition",
+      "correct_remediation": "page the search-suggest oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.89,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786948163.8423083,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "5xx rate 13% sustained for 166s after deploy of #15593",
+    "started_at": "2026-08-12T15:31:30.428925+00:00"
+  }
+}

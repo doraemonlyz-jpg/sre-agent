@@ -1,0 +1,33 @@
+{
+  "incident_id": "10efe6e098",
+  "records": [
+    {
+      "id": "fb-41c9abcf4b",
+      "ts": 1786948163.8691838,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "actually a downstream cdn-router timeout, not checkout-api",
+      "correct_remediation": "disable feature flag svc.checkout-api.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.86,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786948163.8692613,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-2",
+    "description": "5xx rate 12% sustained for 145s after deploy of #35830",
+    "started_at": "2026-08-12T19:31:13.355140+00:00"
+  }
+}

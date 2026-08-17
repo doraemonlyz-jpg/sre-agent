@@ -1,0 +1,33 @@
+{
+  "incident_id": "785837c4ea",
+  "records": [
+    {
+      "id": "fb-659ae15d3a",
+      "ts": 1786948163.5194247,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in cart-service, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786948163.5194983,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-4",
+    "description": "memory usage 92% on ad-bidder -- OOM kill predicted in 12m",
+    "started_at": "2026-08-12T23:07:22.918148+00:00"
+  }
+}

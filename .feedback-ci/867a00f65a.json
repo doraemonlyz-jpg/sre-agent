@@ -1,0 +1,35 @@
+{
+  "incident_id": "867a00f65a",
+  "records": [
+    {
+      "id": "fb-bec64a95e9",
+      "ts": 1786948163.5664117,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the video-encoder sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786948163.5664935,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 448ms briefly, recovered in 22s",
+    "started_at": "2026-08-15T01:37:09.726677+00:00"
+  }
+}

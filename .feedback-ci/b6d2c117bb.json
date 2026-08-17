@@ -1,0 +1,35 @@
+{
+  "incident_id": "b6d2c117bb",
+  "records": [
+    {
+      "id": "fb-2a0d1ba94b",
+      "ts": 1786948163.5496874,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream promo-engine timeout, not live-stream-edge",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1786948163.5497625,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 520ms briefly, recovered in 6s",
+    "started_at": "2026-08-15T14:48:42.254431+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "162abf5e2f",
+  "records": [
+    {
+      "id": "fb-d77ce40cb7",
+      "ts": 1786948163.588859,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in search-suggest, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1786948163.5889623,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "memory usage 91% on checkout-api -- OOM kill predicted in 9m",
+    "started_at": "2026-08-14T01:53:08.316493+00:00"
+  }
+}
