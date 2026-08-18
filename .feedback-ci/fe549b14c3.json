@@ -1,0 +1,35 @@
+{
+  "incident_id": "fe549b14c3",
+  "records": [
+    {
+      "id": "fb-f259737eab",
+      "ts": 1787022118.2796497,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the video-encoder sidecar",
+      "correct_remediation": "disable feature flag svc.video-encoder.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1787022118.2797642,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 404ms briefly, recovered in 20s",
+    "started_at": "2026-08-14T07:09:34.437009+00:00"
+  }
+}

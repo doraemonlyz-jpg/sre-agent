@@ -1,0 +1,35 @@
+{
+  "incident_id": "e6f34cb50d",
+  "records": [
+    {
+      "id": "fb-651720bf32",
+      "ts": 1787022118.2128258,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream notification-fanout timeout, not search-suggest",
+      "correct_remediation": "page the checkout-api oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1787022118.212904,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 333ms briefly, recovered in 19s",
+    "started_at": "2026-08-17T19:13:04.924867+00:00"
+  }
+}

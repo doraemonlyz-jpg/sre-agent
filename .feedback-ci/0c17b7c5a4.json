@@ -1,0 +1,33 @@
+{
+  "incident_id": "0c17b7c5a4",
+  "records": [
+    {
+      "id": "fb-3bce80fa11",
+      "ts": 1787022118.313299,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787022118.31341,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-4",
+    "description": "downstream service payments-gateway returning 502 -- error budget burning at 9x",
+    "started_at": "2026-08-13T23:05:17.156113+00:00"
+  }
+}
