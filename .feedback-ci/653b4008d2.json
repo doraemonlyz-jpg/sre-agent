@@ -1,0 +1,35 @@
+{
+  "incident_id": "653b4008d2",
+  "records": [
+    {
+      "id": "fb-8ebf9ad9f4",
+      "ts": 1787108648.4224916,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for price-cache was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1787108648.4225676,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 319ms briefly, recovered in 18s",
+    "started_at": "2026-08-18T08:52:45.715936+00:00"
+  }
+}
