@@ -1,0 +1,33 @@
+{
+  "incident_id": "6106f0f7ca",
+  "records": [
+    {
+      "id": "fb-aa20deb67a",
+      "ts": 1787195022.2458642,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream user-profile timeout, not search-suggest",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787195022.2459395,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "5xx rate 16% sustained for 582s after deploy of #67284",
+    "started_at": "2026-08-13T23:04:40.796635+00:00"
+  }
+}

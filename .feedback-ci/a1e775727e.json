@@ -1,0 +1,33 @@
+{
+  "incident_id": "a1e775727e",
+  "records": [
+    {
+      "id": "fb-794d3325f4",
+      "ts": 1787195022.1821728,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the inventory-sync sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787195022.182248,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-4",
+    "description": "downstream service recommend-feed returning 502 -- error budget burning at 12x",
+    "started_at": "2026-08-14T04:57:26.078390+00:00"
+  }
+}
