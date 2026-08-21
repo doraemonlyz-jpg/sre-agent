@@ -1,0 +1,33 @@
+{
+  "incident_id": "57ba5d742f",
+  "records": [
+    {
+      "id": "fb-bce95100f3",
+      "ts": 1787281780.449022,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in session-store, not what the agent said",
+      "correct_remediation": "increase session-store concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.83,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787281780.4490976,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-4",
+    "description": "downstream service live-stream-edge returning 502 -- error budget burning at 12x",
+    "started_at": "2026-08-14T06:42:28.140634+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "340970acd2",
+  "records": [
+    {
+      "id": "fb-ed9b572d8a",
+      "ts": 1787281780.4073713,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for price-cache was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.87,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787281780.4074464,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-4",
+    "description": "memory usage 94% on promo-engine -- OOM kill predicted in 25m",
+    "started_at": "2026-08-14T07:38:01.730678+00:00"
+  }
+}

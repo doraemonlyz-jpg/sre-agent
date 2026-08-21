@@ -1,0 +1,33 @@
+{
+  "incident_id": "1af5e78b20",
+  "records": [
+    {
+      "id": "fb-992d054869",
+      "ts": 1787281780.9280543,
+      "verdict": "correct",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787281780.928133,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-3",
+    "description": "downstream service comment-svc returning 502 -- error budget burning at 19x",
+    "started_at": "2026-08-21T05:18:42.445851+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "dd0375e617",
+  "records": [
+    {
+      "id": "fb-fc8b0f5979",
+      "ts": 1787281780.336869,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for checkout-api was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787281780.3369477,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "5xx rate 24% sustained for 567s after deploy of #59107",
+    "started_at": "2026-08-19T23:49:51.259866+00:00"
+  }
+}
