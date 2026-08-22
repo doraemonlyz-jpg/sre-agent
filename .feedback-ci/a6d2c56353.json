@@ -1,0 +1,33 @@
+{
+  "incident_id": "a6d2c56353",
+  "records": [
+    {
+      "id": "fb-9900496e54",
+      "ts": 1787367621.5590568,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream cart-service timeout, not cdn-router",
+      "correct_remediation": "disable feature flag svc.cdn-router.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787367621.5591452,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-3",
+    "description": "p99 latency 2319ms spiking on /checkout, error rate 14%",
+    "started_at": "2026-08-21T21:01:10.631760+00:00"
+  }
+}
