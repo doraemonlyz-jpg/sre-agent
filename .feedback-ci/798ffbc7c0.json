@@ -1,0 +1,33 @@
+{
+  "incident_id": "798ffbc7c0",
+  "records": [
+    {
+      "id": "fb-62e4c93c35",
+      "ts": 1787460204.0930076,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in auth-service, not what the agent said",
+      "correct_remediation": "page the cart-service oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787460204.0930655,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "downstream service order-pipeline returning 502 -- error budget burning at 8x",
+    "started_at": "2026-08-20T06:50:16.953925+00:00"
+  }
+}

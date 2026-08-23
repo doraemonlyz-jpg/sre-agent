@@ -1,0 +1,33 @@
+{
+  "incident_id": "bc17bdb4c6",
+  "records": [
+    {
+      "id": "fb-73d1e1f489",
+      "ts": 1787460204.1170893,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in notification-fanout, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.95,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787460204.1171458,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-4",
+    "description": "memory usage 97% on search-suggest -- OOM kill predicted in 17m",
+    "started_at": "2026-08-20T09:58:20.084950+00:00"
+  }
+}

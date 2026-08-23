@@ -1,0 +1,35 @@
+{
+  "incident_id": "c80d3c515c",
+  "records": [
+    {
+      "id": "fb-14c5cc193b",
+      "ts": 1787460204.1683488,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "page the checkout-api oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1787460204.168406,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-1",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on order-pipeline",
+    "started_at": "2026-08-16T12:32:45.392949+00:00"
+  }
+}

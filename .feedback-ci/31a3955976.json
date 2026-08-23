@@ -1,0 +1,33 @@
+{
+  "incident_id": "31a3955976",
+  "records": [
+    {
+      "id": "fb-826857c8d8",
+      "ts": 1787460203.7625954,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in price-cache, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.87,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787460203.7627115,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-3",
+    "description": "downstream service order-pipeline returning 502 -- error budget burning at 14x",
+    "started_at": "2026-08-17T08:33:35.604624+00:00"
+  }
+}

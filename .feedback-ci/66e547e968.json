@@ -1,0 +1,33 @@
+{
+  "incident_id": "66e547e968",
+  "records": [
+    {
+      "id": "fb-2c517a11a4",
+      "ts": 1787460203.8990169,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the checkout-api sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787460203.8990755,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-4",
+    "description": "5xx rate 21% sustained for 150s after deploy of #18399",
+    "started_at": "2026-08-18T03:04:33.441498+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "efa60073be",
+  "records": [
+    {
+      "id": "fb-716614732b",
+      "ts": 1787460204.2615764,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787460204.2616339,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 531ms briefly, recovered in 20s",
+    "started_at": "2026-08-19T09:18:02.670328+00:00"
+  }
+}

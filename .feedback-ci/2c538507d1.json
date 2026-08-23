@@ -1,0 +1,33 @@
+{
+  "incident_id": "2c538507d1",
+  "records": [
+    {
+      "id": "fb-1b6a5eff59",
+      "ts": 1787460203.9128804,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787460203.9129353,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-2",
+    "description": "5xx rate 14% sustained for 598s after deploy of #79742",
+    "started_at": "2026-08-23T00:42:41.543513+00:00"
+  }
+}

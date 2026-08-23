@@ -1,0 +1,33 @@
+{
+  "incident_id": "0b81746db1",
+  "records": [
+    {
+      "id": "fb-b3fc321123",
+      "ts": 1787460204.1675806,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream payments-gateway timeout, not cart-service",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.84,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787460204.1676366,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "memory usage 98% on rate-limiter-edge -- OOM kill predicted in 26m",
+    "started_at": "2026-08-16T20:39:36.995621+00:00"
+  }
+}

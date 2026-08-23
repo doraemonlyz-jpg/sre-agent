@@ -1,0 +1,33 @@
+{
+  "incident_id": "ff5ad5004e",
+  "records": [
+    {
+      "id": "fb-7ebf4e2ae8",
+      "ts": 1787460204.468165,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not price-cache",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787460204.4682353,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-4",
+    "description": "5xx rate 16% sustained for 452s after deploy of #28325",
+    "started_at": "2026-08-17T10:03:58.424215+00:00"
+  }
+}
