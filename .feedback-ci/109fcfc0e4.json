@@ -1,0 +1,35 @@
+{
+  "incident_id": "109fcfc0e4",
+  "records": [
+    {
+      "id": "fb-de50af686b",
+      "ts": 1787454583.388482,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.comment-svc.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1787454583.388557,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 295ms briefly, recovered in 12s",
+    "started_at": "2026-08-21T11:19:55.195553+00:00"
+  }
+}

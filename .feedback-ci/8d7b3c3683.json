@@ -1,0 +1,33 @@
+{
+  "incident_id": "8d7b3c3683",
+  "records": [
+    {
+      "id": "fb-8c5091a6c4",
+      "ts": 1787454583.1656759,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream checkout-api timeout, not notification-fanout",
+      "correct_remediation": "disable feature flag svc.notification-fanout.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787454583.1657548,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-1",
+    "description": "5xx rate 23% sustained for 70s after deploy of #34986",
+    "started_at": "2026-08-22T01:42:27.075935+00:00"
+  }
+}

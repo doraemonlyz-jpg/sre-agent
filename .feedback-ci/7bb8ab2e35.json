@@ -1,0 +1,35 @@
+{
+  "incident_id": "7bb8ab2e35",
+  "records": [
+    {
+      "id": "fb-d66701bbfe",
+      "ts": 1787454582.7244332,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in cart-service, not what the agent said",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1787454582.7245092,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 288ms briefly, recovered in 27s",
+    "started_at": "2026-08-16T20:34:41.569676+00:00"
+  }
+}

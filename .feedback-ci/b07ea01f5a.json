@@ -1,0 +1,33 @@
+{
+  "incident_id": "b07ea01f5a",
+  "records": [
+    {
+      "id": "fb-e2c7afa13c",
+      "ts": 1787454583.213121,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not search-suggest",
+      "correct_remediation": "disable feature flag svc.search-suggest.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.79,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787454583.2131977,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-1",
+    "description": "p99 latency 2359ms spiking on /checkout, error rate 9%",
+    "started_at": "2026-08-22T00:51:29.413880+00:00"
+  }
+}

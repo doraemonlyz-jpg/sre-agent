@@ -1,0 +1,35 @@
+{
+  "incident_id": "ae6c6cde1c",
+  "records": [
+    {
+      "id": "fb-c6e8616420",
+      "ts": 1787454583.1454794,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream cdn-router timeout, not price-cache",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1787454583.1455548,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 583ms briefly, recovered in 24s",
+    "started_at": "2026-08-20T13:10:50.743225+00:00"
+  }
+}

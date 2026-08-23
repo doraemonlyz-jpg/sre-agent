@@ -1,0 +1,35 @@
+{
+  "incident_id": "b427e6dc2d",
+  "records": [
+    {
+      "id": "fb-7a5db76e00",
+      "ts": 1787454582.6962547,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream price-cache timeout, not ad-bidder",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1787454582.696334,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 242ms briefly, recovered in 15s",
+    "started_at": "2026-08-22T09:37:36.621532+00:00"
+  }
+}

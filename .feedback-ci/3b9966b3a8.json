@@ -1,0 +1,33 @@
+{
+  "incident_id": "3b9966b3a8",
+  "records": [
+    {
+      "id": "fb-53e179a271",
+      "ts": 1787454582.9627283,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in cart-service, not what the agent said",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.81,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787454582.9628284,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-4",
+    "description": "downstream service image-thumbnail returning 502 -- error budget burning at 16x",
+    "started_at": "2026-08-16T01:58:57.414624+00:00"
+  }
+}

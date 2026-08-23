@@ -1,0 +1,33 @@
+{
+  "incident_id": "9a0a4a8e5b",
+  "records": [
+    {
+      "id": "fb-d41907c2c3",
+      "ts": 1787454583.2806087,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream session-store timeout, not inventory-sync",
+      "correct_remediation": "increase inventory-sync concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787454583.2806826,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-4",
+    "description": "5xx rate 22% sustained for 414s after deploy of #14757",
+    "started_at": "2026-08-17T13:56:41.049997+00:00"
+  }
+}
