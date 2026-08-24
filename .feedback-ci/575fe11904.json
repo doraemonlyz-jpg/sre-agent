@@ -1,0 +1,33 @@
+{
+  "incident_id": "575fe11904",
+  "records": [
+    {
+      "id": "fb-9e1f1be3b1",
+      "ts": 1787541006.1478631,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "increase live-stream-edge concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787541006.1479387,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-3",
+    "description": "downstream service ad-bidder returning 502 -- error budget burning at 5x",
+    "started_at": "2026-08-20T17:38:55.714620+00:00"
+  }
+}

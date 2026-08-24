@@ -1,0 +1,35 @@
+{
+  "incident_id": "e0890e82bf",
+  "records": [
+    {
+      "id": "fb-e4ed92df63",
+      "ts": 1787541005.4995806,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in image-thumbnail, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1787541005.4996645,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-2",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on comment-svc",
+    "started_at": "2026-08-23T01:22:30.751292+00:00"
+  }
+}

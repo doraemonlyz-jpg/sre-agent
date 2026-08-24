@@ -1,0 +1,33 @@
+{
+  "incident_id": "bf68e54c6d",
+  "records": [
+    {
+      "id": "fb-f8e58029ca",
+      "ts": 1787541005.3712573,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream notification-fanout timeout, not price-cache",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787541005.3713493,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-2",
+    "description": "5xx rate 12% sustained for 267s after deploy of #10463",
+    "started_at": "2026-08-23T18:32:52.603643+00:00"
+  }
+}

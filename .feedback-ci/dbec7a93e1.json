@@ -1,0 +1,33 @@
+{
+  "incident_id": "dbec7a93e1",
+  "records": [
+    {
+      "id": "fb-ca9722b4af",
+      "ts": 1787541005.6406949,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream user-profile timeout, not payments-gateway",
+      "correct_remediation": "disable feature flag svc.payments-gateway.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787541005.6407685,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-1",
+    "description": "downstream service session-store returning 502 -- error budget burning at 14x",
+    "started_at": "2026-08-21T06:59:53.420158+00:00"
+  }
+}

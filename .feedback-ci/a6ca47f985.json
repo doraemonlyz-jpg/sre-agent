@@ -1,0 +1,33 @@
+{
+  "incident_id": "a6ca47f985",
+  "records": [
+    {
+      "id": "fb-c9dc5abb58",
+      "ts": 1787541005.8293426,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "actually a downstream checkout-api timeout, not ad-bidder",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.94,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787541005.8294253,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-4",
+    "description": "downstream service inventory-sync returning 502 -- error budget burning at 10x",
+    "started_at": "2026-08-19T00:43:02.579916+00:00"
+  }
+}

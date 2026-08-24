@@ -1,0 +1,33 @@
+{
+  "incident_id": "328646c727",
+  "records": [
+    {
+      "id": "fb-24ddfa30ca",
+      "ts": 1787541005.428788,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787541005.4288647,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "memory usage 98% on cart-service -- OOM kill predicted in 22m",
+    "started_at": "2026-08-17T03:37:40.459341+00:00"
+  }
+}

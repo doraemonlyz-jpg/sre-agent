@@ -1,0 +1,35 @@
+{
+  "incident_id": "7118fdd703",
+  "records": [
+    {
+      "id": "fb-b81832234d",
+      "ts": 1787541005.6980858,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the session-store sidecar",
+      "correct_remediation": "page the session-store oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1787541005.6981633,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on price-cache",
+    "started_at": "2026-08-17T15:03:34.293628+00:00"
+  }
+}

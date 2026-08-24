@@ -1,0 +1,33 @@
+{
+  "incident_id": "b6e1400c5a",
+  "records": [
+    {
+      "id": "fb-979d764f59",
+      "ts": 1787541005.6954432,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream video-encoder timeout, not image-thumbnail",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787541005.6955278,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-3",
+    "description": "p99 latency 1867ms spiking on /checkout, error rate 4%",
+    "started_at": "2026-08-23T09:23:32.012576+00:00"
+  }
+}

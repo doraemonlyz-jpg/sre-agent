@@ -1,0 +1,33 @@
+{
+  "incident_id": "0fe34dc744",
+  "records": [
+    {
+      "id": "fb-a9a152196f",
+      "ts": 1787541005.7586489,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream rate-limiter-edge timeout, not user-profile",
+      "correct_remediation": "disable feature flag svc.user-profile.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.56,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787541005.7587266,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "5xx rate 12% sustained for 521s after deploy of #41793",
+    "started_at": "2026-08-17T10:48:36.330173+00:00"
+  }
+}

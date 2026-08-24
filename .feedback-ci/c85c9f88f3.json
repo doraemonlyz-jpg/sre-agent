@@ -1,0 +1,33 @@
+{
+  "incident_id": "c85c9f88f3",
+  "records": [
+    {
+      "id": "fb-01d160b98f",
+      "ts": 1787541005.5555644,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the auth-service sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787541005.5556474,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "downstream service cdn-router returning 502 -- error budget burning at 7x",
+    "started_at": "2026-08-22T00:13:40.615603+00:00"
+  }
+}

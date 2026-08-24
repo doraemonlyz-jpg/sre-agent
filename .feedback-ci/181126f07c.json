@@ -1,0 +1,33 @@
+{
+  "incident_id": "181126f07c",
+  "records": [
+    {
+      "id": "fb-6d5ce0e44e",
+      "ts": 1787541005.8477173,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in order-pipeline, not what the agent said",
+      "correct_remediation": "disable feature flag svc.order-pipeline.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787541005.8477964,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "5xx rate 20% sustained for 213s after deploy of #98166",
+    "started_at": "2026-08-24T01:17:26.566319+00:00"
+  }
+}

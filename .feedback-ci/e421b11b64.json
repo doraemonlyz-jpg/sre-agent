@@ -1,0 +1,33 @@
+{
+  "incident_id": "e421b11b64",
+  "records": [
+    {
+      "id": "fb-105b3a8033",
+      "ts": 1787541006.0195084,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in auth-service, not what the agent said",
+      "correct_remediation": "increase auth-service concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787541006.0195863,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "downstream service order-pipeline returning 502 -- error budget burning at 3x",
+    "started_at": "2026-08-23T21:01:41.339513+00:00"
+  }
+}

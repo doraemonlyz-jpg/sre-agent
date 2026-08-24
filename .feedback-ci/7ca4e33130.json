@@ -1,0 +1,35 @@
+{
+  "incident_id": "7ca4e33130",
+  "records": [
+    {
+      "id": "fb-a635821a46",
+      "ts": 1787541005.6209576,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the notification-fanout sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1787541005.6210349,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 578ms briefly, recovered in 30s",
+    "started_at": "2026-08-21T05:44:40.562161+00:00"
+  }
+}
