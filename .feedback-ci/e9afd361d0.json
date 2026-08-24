@@ -1,0 +1,33 @@
+{
+  "incident_id": "e9afd361d0",
+  "records": [
+    {
+      "id": "fb-b4fbf89455",
+      "ts": 1787553187.5566397,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream session-store timeout, not price-cache",
+      "correct_remediation": "disable feature flag svc.price-cache.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.8,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787553187.5567284,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-4",
+    "description": "p99 latency 2530ms spiking on /checkout, error rate 10%",
+    "started_at": "2026-08-19T14:02:11.671979+00:00"
+  }
+}

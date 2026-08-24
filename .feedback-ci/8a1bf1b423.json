@@ -1,0 +1,35 @@
+{
+  "incident_id": "8a1bf1b423",
+  "records": [
+    {
+      "id": "fb-17eda20038",
+      "ts": 1787553187.9408073,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cdn-router was filling our partition",
+      "correct_remediation": "page the video-encoder oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1787553187.940894,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 301ms briefly, recovered in 14s",
+    "started_at": "2026-08-18T22:49:12.857283+00:00"
+  }
+}

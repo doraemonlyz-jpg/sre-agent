@@ -1,0 +1,33 @@
+{
+  "incident_id": "bc92025395",
+  "records": [
+    {
+      "id": "fb-308445bf8c",
+      "ts": 1787553187.8224435,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cdn-router was filling our partition",
+      "correct_remediation": "disable feature flag svc.cart-service.new_path",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.9,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787553187.8225358,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-1",
+    "description": "memory usage 91% on price-cache -- OOM kill predicted in 16m",
+    "started_at": "2026-08-20T07:13:25.250772+00:00"
+  }
+}
