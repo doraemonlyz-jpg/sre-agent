@@ -1,0 +1,33 @@
+{
+  "incident_id": "58d6e2e433",
+  "records": [
+    {
+      "id": "fb-9b47018c70",
+      "ts": 1787627150.8894796,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream video-encoder timeout, not recommend-feed",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787627150.889537,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-2",
+    "description": "5xx rate 14% sustained for 208s after deploy of #11627",
+    "started_at": "2026-08-21T16:01:21.265683+00:00"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "incident_id": "e4f57c8bf4",
+  "records": [
+    {
+      "id": "fb-019e9c970c",
+      "ts": 1787627151.1672742,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream video-encoder timeout, not cdn-router",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1787627151.1673265,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 543ms briefly, recovered in 12s",
+    "started_at": "2026-08-22T08:29:18.477847+00:00"
+  }
+}

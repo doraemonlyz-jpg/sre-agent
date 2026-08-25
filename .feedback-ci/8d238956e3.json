@@ -1,0 +1,33 @@
+{
+  "incident_id": "8d238956e3",
+  "records": [
+    {
+      "id": "fb-ee2e69f27e",
+      "ts": 1787627151.4195533,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the recommend-feed sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787627151.4196074,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "memory usage 95% on checkout-api -- OOM kill predicted in 11m",
+    "started_at": "2026-08-20T17:55:38.418041+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "23f33f829d",
+  "records": [
+    {
+      "id": "fb-87db4a9fd5",
+      "ts": 1787627150.882742,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cdn-router was filling our partition",
+      "correct_remediation": "disable feature flag svc.inventory-sync.new_path",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.89,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787627150.8827958,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-4",
+    "description": "memory usage 89% on payments-gateway -- OOM kill predicted in 18m",
+    "started_at": "2026-08-21T09:22:52.366747+00:00"
+  }
+}

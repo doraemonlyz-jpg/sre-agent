@@ -1,0 +1,33 @@
+{
+  "incident_id": "54cbecc59e",
+  "records": [
+    {
+      "id": "fb-03134c5a03",
+      "ts": 1787627151.0694284,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream search-suggest timeout, not inventory-sync",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787627151.0694845,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "5xx rate 11% sustained for 264s after deploy of #69782",
+    "started_at": "2026-08-19T04:47:03.091452+00:00"
+  }
+}
