@@ -1,0 +1,33 @@
+{
+  "incident_id": "a14b1ca678",
+  "records": [
+    {
+      "id": "fb-7bf6bcc5a6",
+      "ts": 1787713932.2120306,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the price-cache sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787713932.2121131,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-2",
+    "description": "p99 latency 2244ms spiking on /checkout, error rate 12%",
+    "started_at": "2026-08-22T08:09:49.600743+00:00"
+  }
+}

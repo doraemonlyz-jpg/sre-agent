@@ -1,0 +1,33 @@
+{
+  "incident_id": "bebe6d9bb5",
+  "records": [
+    {
+      "id": "fb-07b7e29c96",
+      "ts": 1787713932.5103223,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in search-suggest, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787713932.5104148,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-2",
+    "description": "downstream service notification-fanout returning 502 -- error budget burning at 3x",
+    "started_at": "2026-08-21T02:04:08.639572+00:00"
+  }
+}

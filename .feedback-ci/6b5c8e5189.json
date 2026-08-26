@@ -1,0 +1,35 @@
+{
+  "incident_id": "6b5c8e5189",
+  "records": [
+    {
+      "id": "fb-da6b797ae6",
+      "ts": 1787713932.5473394,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream live-stream-edge timeout, not search-suggest",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1787713932.5474277,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 725ms briefly, recovered in 12s",
+    "started_at": "2026-08-19T19:41:00.504832+00:00"
+  }
+}

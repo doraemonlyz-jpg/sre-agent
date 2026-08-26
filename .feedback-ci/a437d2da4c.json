@@ -1,0 +1,33 @@
+{
+  "incident_id": "a437d2da4c",
+  "records": [
+    {
+      "id": "fb-de78e75b08",
+      "ts": 1787713932.278059,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream live-stream-edge timeout, not search-suggest",
+      "correct_remediation": "disable feature flag svc.search-suggest.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787713932.2781446,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "downstream service image-thumbnail returning 502 -- error budget burning at 7x",
+    "started_at": "2026-08-20T14:08:32.614966+00:00"
+  }
+}

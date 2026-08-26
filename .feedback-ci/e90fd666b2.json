@@ -1,0 +1,33 @@
+{
+  "incident_id": "e90fd666b2",
+  "records": [
+    {
+      "id": "fb-31b8bb79e2",
+      "ts": 1787713932.8044221,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the cart-service sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787713932.804509,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-2",
+    "description": "p99 latency 1858ms spiking on /checkout, error rate 4%",
+    "started_at": "2026-08-21T04:58:15.341129+00:00"
+  }
+}
