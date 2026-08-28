@@ -1,0 +1,33 @@
+{
+  "incident_id": "f3c41af5b3",
+  "records": [
+    {
+      "id": "fb-f7c8e44857",
+      "ts": 1787926501.2750235,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream ad-bidder timeout, not session-store",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.58,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787926501.2751102,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-1",
+    "description": "memory usage 94% on recommend-feed -- OOM kill predicted in 22m",
+    "started_at": "2026-08-27T20:12:03.649700+00:00"
+  }
+}

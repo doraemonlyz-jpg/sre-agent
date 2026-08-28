@@ -1,0 +1,35 @@
+{
+  "incident_id": "eb57b2e54d",
+  "records": [
+    {
+      "id": "fb-e6c7e17456",
+      "ts": 1787926501.2200177,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the ad-bidder sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1787926501.2201352,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 602ms briefly, recovered in 12s",
+    "started_at": "2026-08-23T11:17:55.326140+00:00"
+  }
+}

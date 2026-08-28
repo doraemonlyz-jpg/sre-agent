@@ -1,0 +1,33 @@
+{
+  "incident_id": "e04dbc49eb",
+  "records": [
+    {
+      "id": "fb-aafe1ad32f",
+      "ts": 1787926501.8589468,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream search-suggest timeout, not promo-engine",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787926501.85902,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-3",
+    "description": "downstream service cart-service returning 502 -- error budget burning at 15x",
+    "started_at": "2026-08-24T17:57:39.347698+00:00"
+  }
+}

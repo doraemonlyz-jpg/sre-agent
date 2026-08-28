@@ -1,0 +1,35 @@
+{
+  "incident_id": "d2650d6b20",
+  "records": [
+    {
+      "id": "fb-8d8b925fa0",
+      "ts": 1787926501.3658538,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for inventory-sync was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1787926501.3659308,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 436ms briefly, recovered in 10s",
+    "started_at": "2026-08-23T01:21:35.623035+00:00"
+  }
+}
