@@ -1,0 +1,33 @@
+{
+  "incident_id": "6effafe358",
+  "records": [
+    {
+      "id": "fb-f06c926078",
+      "ts": 1787993644.6234963,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for notification-fanout was filling our partition",
+      "correct_remediation": "increase payments-gateway concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.58,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787993644.6235747,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-2",
+    "description": "p99 latency 3560ms spiking on /checkout, error rate 13%",
+    "started_at": "2026-08-23T18:20:01.899244+00:00"
+  }
+}

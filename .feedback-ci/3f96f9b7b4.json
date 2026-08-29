@@ -1,0 +1,33 @@
+{
+  "incident_id": "3f96f9b7b4",
+  "records": [
+    {
+      "id": "fb-b77ba52d98",
+      "ts": 1787993644.4238605,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the ad-bidder sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787993644.4239542,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "5xx rate 21% sustained for 269s after deploy of #15234",
+    "started_at": "2026-08-22T11:55:41.235716+00:00"
+  }
+}

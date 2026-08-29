@@ -1,0 +1,33 @@
+{
+  "incident_id": "a8a80af932",
+  "records": [
+    {
+      "id": "fb-ec8124b3ce",
+      "ts": 1787993644.5596473,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in promo-engine, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.87,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787993644.5597236,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-3",
+    "description": "memory usage 92% on video-encoder -- OOM kill predicted in 7m",
+    "started_at": "2026-08-22T09:29:52.007045+00:00"
+  }
+}

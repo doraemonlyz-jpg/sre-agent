@@ -1,0 +1,33 @@
+{
+  "incident_id": "1c02f14ac5",
+  "records": [
+    {
+      "id": "fb-0d71ba175f",
+      "ts": 1787993644.7272706,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream auth-service timeout, not cart-service",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787993644.727345,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "memory usage 92% on cart-service -- OOM kill predicted in 6m",
+    "started_at": "2026-08-22T21:13:07.112127+00:00"
+  }
+}

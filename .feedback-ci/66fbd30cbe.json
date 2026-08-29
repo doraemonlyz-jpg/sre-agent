@@ -1,0 +1,35 @@
+{
+  "incident_id": "66fbd30cbe",
+  "records": [
+    {
+      "id": "fb-79de910f21",
+      "ts": 1787993645.0832393,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the ad-bidder sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1787993645.0833147,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 419ms briefly, recovered in 15s",
+    "started_at": "2026-08-24T21:25:43.904385+00:00"
+  }
+}

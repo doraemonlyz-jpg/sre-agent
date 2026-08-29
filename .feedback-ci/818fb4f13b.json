@@ -1,0 +1,33 @@
+{
+  "incident_id": "818fb4f13b",
+  "records": [
+    {
+      "id": "fb-9a23548306",
+      "ts": 1787993645.1549776,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in comment-svc, not what the agent said",
+      "correct_remediation": "page the ad-bidder oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.8,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1787993645.1550567,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "downstream service search-suggest returning 502 -- error budget burning at 3x",
+    "started_at": "2026-08-29T08:10:05.092601+00:00"
+  }
+}
