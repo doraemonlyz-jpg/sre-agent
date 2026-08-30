@@ -1,0 +1,33 @@
+{
+  "incident_id": "c90bfcca4d",
+  "records": [
+    {
+      "id": "fb-18d09b75ca",
+      "ts": 1788083525.0669205,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.82,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788083525.066981,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "memory usage 95% on cdn-router -- OOM kill predicted in 6m",
+    "started_at": "2026-08-25T20:32:06.953576+00:00"
+  }
+}
