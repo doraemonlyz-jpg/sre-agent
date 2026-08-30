@@ -1,0 +1,33 @@
+{
+  "incident_id": "52bfff7615",
+  "records": [
+    {
+      "id": "fb-3465cb3646",
+      "ts": 1788077505.4252665,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.ad-bidder.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.9,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788077505.4253118,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 401ms briefly, recovered in 10s",
+    "started_at": "2026-08-26T02:32:42.055671+00:00"
+  }
+}

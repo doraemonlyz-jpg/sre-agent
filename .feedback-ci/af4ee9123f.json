@@ -1,0 +1,33 @@
+{
+  "incident_id": "af4ee9123f",
+  "records": [
+    {
+      "id": "fb-f566310e71",
+      "ts": 1788077505.5042608,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not rate-limiter-edge",
+      "correct_remediation": "increase rate-limiter-edge concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.94,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788077505.5043082,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 336ms briefly, recovered in 12s",
+    "started_at": "2026-08-25T21:33:44.560478+00:00"
+  }
+}
