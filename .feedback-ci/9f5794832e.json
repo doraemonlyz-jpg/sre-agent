@@ -1,0 +1,35 @@
+{
+  "incident_id": "9f5794832e",
+  "records": [
+    {
+      "id": "fb-6ad6d82e58",
+      "ts": 1788165113.786707,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream payments-gateway timeout, not promo-engine",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1788165113.7867997,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 564ms briefly, recovered in 10s",
+    "started_at": "2026-08-30T07:11:40.133111+00:00"
+  }
+}

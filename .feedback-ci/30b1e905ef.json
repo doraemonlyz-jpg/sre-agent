@@ -1,0 +1,35 @@
+{
+  "incident_id": "30b1e905ef",
+  "records": [
+    {
+      "id": "fb-80860ae15a",
+      "ts": 1788165114.0379553,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream notification-fanout timeout, not price-cache",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1788165114.0380425,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 334ms briefly, recovered in 21s",
+    "started_at": "2026-08-30T04:17:42.751816+00:00"
+  }
+}

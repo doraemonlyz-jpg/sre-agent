@@ -1,0 +1,33 @@
+{
+  "incident_id": "f4e5a7dded",
+  "records": [
+    {
+      "id": "fb-a265d7e6f8",
+      "ts": 1788165113.9516656,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788165113.9517536,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-1",
+    "description": "p99 latency 3942ms spiking on /checkout, error rate 13%",
+    "started_at": "2026-08-29T12:38:30.012426+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "73c1117249",
+  "records": [
+    {
+      "id": "fb-aad3eab50b",
+      "ts": 1788165114.3753161,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the cdn-router sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.84,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788165114.3754008,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-4",
+    "description": "5xx rate 14% sustained for 370s after deploy of #76920",
+    "started_at": "2026-08-31T08:25:07.116429+00:00"
+  }
+}

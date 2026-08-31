@@ -1,0 +1,33 @@
+{
+  "incident_id": "d198a01c54",
+  "records": [
+    {
+      "id": "fb-2759a57abe",
+      "ts": 1788165113.807683,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for promo-engine was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788165113.8077667,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-1",
+    "description": "memory usage 94% on cdn-router -- OOM kill predicted in 16m",
+    "started_at": "2026-08-29T13:01:16.097826+00:00"
+  }
+}
