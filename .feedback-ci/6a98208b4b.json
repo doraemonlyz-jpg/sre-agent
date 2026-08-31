@@ -1,0 +1,35 @@
+{
+  "incident_id": "6a98208b4b",
+  "records": [
+    {
+      "id": "fb-0570a4b643",
+      "ts": 1788177628.7838256,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in price-cache, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1788177628.783915,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 719ms briefly, recovered in 8s",
+    "started_at": "2026-08-28T07:12:29.181137+00:00"
+  }
+}
