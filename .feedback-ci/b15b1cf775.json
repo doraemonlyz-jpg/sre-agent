@@ -1,0 +1,33 @@
+{
+  "incident_id": "b15b1cf775",
+  "records": [
+    {
+      "id": "fb-f26ab1d48a",
+      "ts": 1788248317.766171,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788248317.7662594,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "downstream service cart-service returning 502 -- error budget burning at 19x",
+    "started_at": "2026-08-25T18:55:37.693687+00:00"
+  }
+}
