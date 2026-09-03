@@ -1,0 +1,33 @@
+{
+  "incident_id": "a73ba64d97",
+  "records": [
+    {
+      "id": "fb-3b8e5cb38f",
+      "ts": 1788419097.145424,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the cdn-router sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.9,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788419097.1454792,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-2",
+    "description": "downstream service cdn-router returning 502 -- error budget burning at 11x",
+    "started_at": "2026-09-01T09:34:40.541743+00:00"
+  }
+}

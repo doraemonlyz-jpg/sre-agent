@@ -1,0 +1,33 @@
+{
+  "incident_id": "cfd2bb4052",
+  "records": [
+    {
+      "id": "fb-9ef404bf38",
+      "ts": 1788419097.1853068,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in price-cache, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788419097.185366,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-4",
+    "description": "downstream service auth-service returning 502 -- error budget burning at 8x",
+    "started_at": "2026-09-01T06:56:15.408215+00:00"
+  }
+}
