@@ -1,0 +1,33 @@
+{
+  "incident_id": "ea8fb3e8e8",
+  "records": [
+    {
+      "id": "fb-46d68f844a",
+      "ts": 1788505734.2684667,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for notification-fanout was filling our partition",
+      "correct_remediation": "disable feature flag svc.session-store.new_path",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.93,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788505734.2685542,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-4",
+    "description": "downstream service user-profile returning 502 -- error budget burning at 7x",
+    "started_at": "2026-09-03T07:10:09.538364+00:00"
+  }
+}
