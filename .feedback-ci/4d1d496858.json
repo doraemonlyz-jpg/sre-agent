@@ -1,0 +1,33 @@
+{
+  "incident_id": "4d1d496858",
+  "records": [
+    {
+      "id": "fb-2181ce59f2",
+      "ts": 1788591132.7055147,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for user-profile was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.84,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788591132.7056417,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-2",
+    "description": "memory usage 85% on comment-svc -- OOM kill predicted in 11m",
+    "started_at": "2026-09-04T00:04:05.945669+00:00"
+  }
+}

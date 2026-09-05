@@ -1,0 +1,35 @@
+{
+  "incident_id": "9fc5b4282d",
+  "records": [
+    {
+      "id": "fb-78bf2fa594",
+      "ts": 1788591133.0264018,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not recommend-feed",
+      "correct_remediation": "page the video-encoder oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1788591133.0264866,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 287ms briefly, recovered in 27s",
+    "started_at": "2026-09-04T14:58:30.706739+00:00"
+  }
+}

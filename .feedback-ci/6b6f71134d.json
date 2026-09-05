@@ -1,0 +1,33 @@
+{
+  "incident_id": "6b6f71134d",
+  "records": [
+    {
+      "id": "fb-f164f3203a",
+      "ts": 1788591133.0503645,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream ad-bidder timeout, not image-thumbnail",
+      "correct_remediation": "increase image-thumbnail concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.85,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788591133.050447,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-3",
+    "description": "memory usage 91% on cart-service -- OOM kill predicted in 15m",
+    "started_at": "2026-09-02T12:45:21.095140+00:00"
+  }
+}

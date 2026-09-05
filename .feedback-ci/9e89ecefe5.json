@@ -1,0 +1,33 @@
+{
+  "incident_id": "9e89ecefe5",
+  "records": [
+    {
+      "id": "fb-9664f72b44",
+      "ts": 1788591133.2255828,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cdn-router was filling our partition",
+      "correct_remediation": "page the auth-service oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788591133.2256703,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-4",
+    "description": "p99 latency 3848ms spiking on /checkout, error rate 5%",
+    "started_at": "2026-09-02T16:06:52.064540+00:00"
+  }
+}

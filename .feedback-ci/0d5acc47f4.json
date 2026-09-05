@@ -1,0 +1,33 @@
+{
+  "incident_id": "0d5acc47f4",
+  "records": [
+    {
+      "id": "fb-982b62610b",
+      "ts": 1788591133.062817,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in auth-service, not what the agent said",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788591133.062899,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "p99 latency 1672ms spiking on /checkout, error rate 6%",
+    "started_at": "2026-08-29T21:46:26.890001+00:00"
+  }
+}
