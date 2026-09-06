@@ -1,0 +1,33 @@
+{
+  "incident_id": "fee9ba8fcc",
+  "records": [
+    {
+      "id": "fb-6227e178d4",
+      "ts": 1788678172.9868817,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for live-stream-edge was filling our partition",
+      "correct_remediation": "page the notification-fanout oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788678172.9869394,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-4",
+    "description": "p99 latency 2783ms spiking on /checkout, error rate 14%",
+    "started_at": "2026-09-02T07:03:04.957182+00:00"
+  }
+}
