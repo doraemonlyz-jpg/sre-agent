@@ -1,0 +1,35 @@
+{
+  "incident_id": "c0453defc0",
+  "records": [
+    {
+      "id": "fb-2a41e6edab",
+      "ts": 1788683638.7459912,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in promo-engine, not what the agent said",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1788683638.7460594,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 638ms briefly, recovered in 6s",
+    "started_at": "2026-09-06T02:16:27.884993+00:00"
+  }
+}

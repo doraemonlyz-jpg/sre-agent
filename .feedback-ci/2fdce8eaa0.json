@@ -1,0 +1,33 @@
+{
+  "incident_id": "2fdce8eaa0",
+  "records": [
+    {
+      "id": "fb-9e8e50db5c",
+      "ts": 1788683638.5314014,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in cdn-router, not what the agent said",
+      "correct_remediation": "disable feature flag svc.cdn-router.new_path",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788683638.5314617,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-1",
+    "description": "memory usage 86% on auth-service -- OOM kill predicted in 19m",
+    "started_at": "2026-08-31T08:03:48.572199+00:00"
+  }
+}
