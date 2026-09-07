@@ -1,0 +1,33 @@
+{
+  "incident_id": "59a0706c48",
+  "records": [
+    {
+      "id": "fb-cf90157f05",
+      "ts": 1788778496.4222302,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not rate-limiter-edge",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788778496.4222946,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-3",
+    "description": "memory usage 92% on live-stream-edge -- OOM kill predicted in 8m",
+    "started_at": "2026-09-01T17:37:02.868972+00:00"
+  }
+}
