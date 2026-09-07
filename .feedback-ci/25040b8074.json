@@ -1,0 +1,35 @@
+{
+  "incident_id": "25040b8074",
+  "records": [
+    {
+      "id": "fb-ea73f60688",
+      "ts": 1788765272.429087,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in order-pipeline, not what the agent said",
+      "correct_remediation": "increase order-pipeline concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1788765272.4291286,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-4",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on price-cache",
+    "started_at": "2026-09-02T23:32:17.753619+00:00"
+  }
+}

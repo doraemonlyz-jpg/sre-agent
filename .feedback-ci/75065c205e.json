@@ -1,0 +1,33 @@
+{
+  "incident_id": "75065c205e",
+  "records": [
+    {
+      "id": "fb-a15f186483",
+      "ts": 1788765272.6049972,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for recommend-feed was filling our partition",
+      "correct_remediation": "page the comment-svc oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.75,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788765272.6050367,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-2",
+    "description": "memory usage 87% on order-pipeline -- OOM kill predicted in 10m",
+    "started_at": "2026-09-03T21:25:50.066722+00:00"
+  }
+}
