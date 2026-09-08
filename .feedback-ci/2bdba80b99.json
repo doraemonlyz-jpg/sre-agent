@@ -1,0 +1,33 @@
+{
+  "incident_id": "2bdba80b99",
+  "records": [
+    {
+      "id": "fb-51b734d476",
+      "ts": 1788851387.179393,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in user-profile, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1788851387.179477,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "memory usage 93% on rate-limiter-edge -- OOM kill predicted in 10m",
+    "started_at": "2026-09-06T03:01:08.295647+00:00"
+  }
+}
