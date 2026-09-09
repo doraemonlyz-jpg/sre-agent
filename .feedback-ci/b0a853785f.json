@@ -1,0 +1,35 @@
+{
+  "incident_id": "b0a853785f",
+  "records": [
+    {
+      "id": "fb-4575d97cd4",
+      "ts": 1788938212.7873974,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the price-cache sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1788938212.787485,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 380ms briefly, recovered in 13s",
+    "started_at": "2026-09-09T04:49:25.791836+00:00"
+  }
+}
