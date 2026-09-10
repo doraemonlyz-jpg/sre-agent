@@ -1,0 +1,33 @@
+{
+  "incident_id": "751de23c81",
+  "records": [
+    {
+      "id": "fb-c2fb32df3f",
+      "ts": 1789024378.2060041,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in inventory-sync, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.88,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789024378.206055,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-1",
+    "description": "downstream service order-pipeline returning 502 -- error budget burning at 18x",
+    "started_at": "2026-09-06T12:15:38.508416+00:00"
+  }
+}
