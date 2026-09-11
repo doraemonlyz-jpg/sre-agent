@@ -1,0 +1,33 @@
+{
+  "incident_id": "7eb6c6079b",
+  "records": [
+    {
+      "id": "fb-cdcf90e204",
+      "ts": 1789110733.4990892,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the promo-engine sidecar",
+      "correct_remediation": "disable feature flag svc.promo-engine.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789110733.499174,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-2",
+    "description": "p99 latency 3391ms spiking on /checkout, error rate 8%",
+    "started_at": "2026-09-10T19:39:50.769544+00:00"
+  }
+}

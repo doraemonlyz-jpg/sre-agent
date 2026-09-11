@@ -1,0 +1,35 @@
+{
+  "incident_id": "0eccb1ff1e",
+  "records": [
+    {
+      "id": "fb-9b116e8d6f",
+      "ts": 1789110734.2419782,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream inventory-sync timeout, not session-store",
+      "correct_remediation": "page the comment-svc oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1789110734.2420654,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 526ms briefly, recovered in 14s",
+    "started_at": "2026-09-10T09:24:11.645399+00:00"
+  }
+}
