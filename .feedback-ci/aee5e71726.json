@@ -1,0 +1,33 @@
+{
+  "incident_id": "aee5e71726",
+  "records": [
+    {
+      "id": "fb-c3ed5c1ff3",
+      "ts": 1789196644.293602,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream order-pipeline timeout, not promo-engine",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789196644.2936885,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-2",
+    "description": "memory usage 96% on cdn-router -- OOM kill predicted in 26m",
+    "started_at": "2026-09-09T20:55:29.096313+00:00"
+  }
+}

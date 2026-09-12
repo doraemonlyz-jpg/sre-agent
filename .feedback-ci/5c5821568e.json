@@ -1,0 +1,33 @@
+{
+  "incident_id": "5c5821568e",
+  "records": [
+    {
+      "id": "fb-347a237219",
+      "ts": 1789196644.406862,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in rate-limiter-edge, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.65,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789196644.4069474,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-2",
+    "description": "downstream service inventory-sync returning 502 -- error budget burning at 10x",
+    "started_at": "2026-09-05T21:48:20.218647+00:00"
+  }
+}

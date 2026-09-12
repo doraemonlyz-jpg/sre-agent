@@ -1,0 +1,33 @@
+{
+  "incident_id": "aadf858101",
+  "records": [
+    {
+      "id": "fb-551553ede9",
+      "ts": 1789196644.7847998,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.88,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789196644.7848873,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 578ms briefly, recovered in 30s",
+    "started_at": "2026-09-05T13:39:18.712510+00:00"
+  }
+}
