@@ -1,0 +1,33 @@
+{
+  "incident_id": "8d9ed295c4",
+  "records": [
+    {
+      "id": "fb-87c9720de8",
+      "ts": 1789291486.803221,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream promo-engine timeout, not notification-fanout",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.93,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789291486.803334,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 303ms briefly, recovered in 17s",
+    "started_at": "2026-09-10T12:40:39.845074+00:00"
+  }
+}

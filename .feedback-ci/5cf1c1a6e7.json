@@ -1,0 +1,35 @@
+{
+  "incident_id": "5cf1c1a6e7",
+  "records": [
+    {
+      "id": "fb-839d83f1d4",
+      "ts": 1789291487.22354,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for recommend-feed was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1789291487.2236261,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 771ms briefly, recovered in 27s",
+    "started_at": "2026-09-07T21:13:24.478184+00:00"
+  }
+}
