@@ -1,0 +1,33 @@
+{
+  "incident_id": "bf702aa9e0",
+  "records": [
+    {
+      "id": "fb-b86c671930",
+      "ts": 1789284196.9377384,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream price-cache timeout, not image-thumbnail",
+      "correct_remediation": "increase image-thumbnail concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789284196.9377995,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-2",
+    "description": "downstream service notification-fanout returning 502 -- error budget burning at 18x",
+    "started_at": "2026-09-09T18:06:34.350786+00:00"
+  }
+}
