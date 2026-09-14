@@ -1,0 +1,35 @@
+{
+  "incident_id": "0b7689a35c",
+  "records": [
+    {
+      "id": "fb-78b51c4ab6",
+      "ts": 1789384048.3532953,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream auth-service timeout, not payments-gateway",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1789384048.3533804,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-3",
+    "description": "memory usage 91% on image-thumbnail -- OOM kill predicted in 23m",
+    "started_at": "2026-09-08T08:20:39.249630+00:00"
+  }
+}

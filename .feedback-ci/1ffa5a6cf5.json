@@ -1,0 +1,35 @@
+{
+  "incident_id": "1ffa5a6cf5",
+  "records": [
+    {
+      "id": "fb-17f5b97c05",
+      "ts": 1789384048.1523502,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream cdn-router timeout, not video-encoder",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1789384048.1524367,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on ad-bidder",
+    "started_at": "2026-09-08T18:23:14.236972+00:00"
+  }
+}
