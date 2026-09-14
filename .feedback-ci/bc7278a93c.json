@@ -1,0 +1,33 @@
+{
+  "incident_id": "bc7278a93c",
+  "records": [
+    {
+      "id": "fb-7dd74825dc",
+      "ts": 1789372095.2679746,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not payments-gateway",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789372095.2680583,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 500ms briefly, recovered in 26s",
+    "started_at": "2026-09-12T11:24:24.665948+00:00"
+  }
+}

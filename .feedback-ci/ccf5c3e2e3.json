@@ -1,0 +1,33 @@
+{
+  "incident_id": "ccf5c3e2e3",
+  "records": [
+    {
+      "id": "fb-1095604014",
+      "ts": 1789372095.6458213,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for video-encoder was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.75,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789372095.6459117,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "p99 latency 3853ms spiking on /checkout, error rate 10%",
+    "started_at": "2026-09-09T04:45:34.297880+00:00"
+  }
+}

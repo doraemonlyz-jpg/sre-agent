@@ -1,0 +1,33 @@
+{
+  "incident_id": "61dbb8b1fe",
+  "records": [
+    {
+      "id": "fb-d2b46ef8c3",
+      "ts": 1789372095.4068544,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the promo-engine sidecar",
+      "correct_remediation": "page the order-pipeline oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789372095.406944,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-3",
+    "description": "5xx rate 12% sustained for 557s after deploy of #35764",
+    "started_at": "2026-09-11T05:53:17.734571+00:00"
+  }
+}

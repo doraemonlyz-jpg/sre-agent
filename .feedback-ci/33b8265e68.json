@@ -1,0 +1,33 @@
+{
+  "incident_id": "33b8265e68",
+  "records": [
+    {
+      "id": "fb-0713bf01e5",
+      "ts": 1789372095.6161115,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.91,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789372095.6161973,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-4",
+    "description": "downstream service promo-engine returning 502 -- error budget burning at 16x",
+    "started_at": "2026-09-08T06:06:05.280292+00:00"
+  }
+}

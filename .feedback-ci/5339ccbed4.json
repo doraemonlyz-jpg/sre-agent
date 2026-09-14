@@ -1,0 +1,35 @@
+{
+  "incident_id": "5339ccbed4",
+  "records": [
+    {
+      "id": "fb-6f924cd882",
+      "ts": 1789372096.0462158,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream promo-engine timeout, not live-stream-edge",
+      "correct_remediation": "increase live-stream-edge concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1789372096.046303,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-2",
+    "description": "p99 latency 1773ms spiking on /checkout, error rate 7%",
+    "started_at": "2026-09-13T04:22:07.709481+00:00"
+  }
+}

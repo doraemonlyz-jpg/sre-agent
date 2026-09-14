@@ -1,0 +1,33 @@
+{
+  "incident_id": "774cca3f96",
+  "records": [
+    {
+      "id": "fb-25095a784e",
+      "ts": 1789372095.476535,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the user-profile sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789372095.4766245,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "5xx rate 16% sustained for 122s after deploy of #30683",
+    "started_at": "2026-09-08T10:08:18.514519+00:00"
+  }
+}

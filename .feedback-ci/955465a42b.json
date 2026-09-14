@@ -1,0 +1,33 @@
+{
+  "incident_id": "955465a42b",
+  "records": [
+    {
+      "id": "fb-078cfa504c",
+      "ts": 1789372095.6589289,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream inventory-sync timeout, not live-stream-edge",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789372095.659014,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-3",
+    "description": "memory usage 89% on search-suggest -- OOM kill predicted in 30m",
+    "started_at": "2026-09-13T12:57:08.857744+00:00"
+  }
+}

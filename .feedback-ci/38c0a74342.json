@@ -1,0 +1,33 @@
+{
+  "incident_id": "38c0a74342",
+  "records": [
+    {
+      "id": "fb-1d5b36df4e",
+      "ts": 1789372095.7400079,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream comment-svc timeout, not order-pipeline",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789372095.7400925,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "5xx rate 10% sustained for 585s after deploy of #81156",
+    "started_at": "2026-09-07T12:38:50.316514+00:00"
+  }
+}

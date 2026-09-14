@@ -1,0 +1,33 @@
+{
+  "incident_id": "6dbf68aedc",
+  "records": [
+    {
+      "id": "fb-7ad57ad1ad",
+      "ts": 1789372095.972916,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cdn-router was filling our partition",
+      "correct_remediation": "increase image-thumbnail concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789372095.9730027,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-2",
+    "description": "downstream service live-stream-edge returning 502 -- error budget burning at 13x",
+    "started_at": "2026-09-09T18:26:36.114369+00:00"
+  }
+}

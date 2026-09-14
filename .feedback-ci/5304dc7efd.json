@@ -1,0 +1,33 @@
+{
+  "incident_id": "5304dc7efd",
+  "records": [
+    {
+      "id": "fb-8bd24bfaf4",
+      "ts": 1789372095.4266105,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the promo-engine sidecar",
+      "correct_remediation": "disable feature flag svc.promo-engine.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789372095.4266975,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-2",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on checkout-api",
+    "started_at": "2026-09-13T10:15:43.604268+00:00"
+  }
+}
