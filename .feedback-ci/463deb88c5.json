@@ -1,0 +1,33 @@
+{
+  "incident_id": "463deb88c5",
+  "records": [
+    {
+      "id": "fb-d1e851b64f",
+      "ts": 1789543953.151494,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream video-encoder timeout, not notification-fanout",
+      "correct_remediation": "disable feature flag svc.notification-fanout.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789543953.1515746,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "5xx rate 23% sustained for 85s after deploy of #91205",
+    "started_at": "2026-09-13T07:36:23.437685+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "5fc87fa4d8",
+  "records": [
+    {
+      "id": "fb-48cc59d5f4",
+      "ts": 1789543953.2988539,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for promo-engine was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789543953.298937,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-2",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on promo-engine",
+    "started_at": "2026-09-14T12:01:55.541769+00:00"
+  }
+}

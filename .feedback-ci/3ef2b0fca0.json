@@ -1,0 +1,33 @@
+{
+  "incident_id": "3ef2b0fca0",
+  "records": [
+    {
+      "id": "fb-163f3bbe06",
+      "ts": 1789543953.8811607,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the promo-engine sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.93,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789543953.8812535,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-3",
+    "description": "5xx rate 21% sustained for 230s after deploy of #20226",
+    "started_at": "2026-09-11T11:52:03.196901+00:00"
+  }
+}
