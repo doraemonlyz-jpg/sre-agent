@@ -1,0 +1,33 @@
+{
+  "incident_id": "bd62e2377a",
+  "records": [
+    {
+      "id": "fb-653022ddb3",
+      "ts": 1789630158.108081,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream session-store timeout, not promo-engine",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789630158.108167,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-2",
+    "description": "memory usage 85% on rate-limiter-edge -- OOM kill predicted in 4m",
+    "started_at": "2026-09-11T18:04:55.687639+00:00"
+  }
+}

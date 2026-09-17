@@ -1,0 +1,33 @@
+{
+  "incident_id": "88904ae66c",
+  "records": [
+    {
+      "id": "fb-3f410e4453",
+      "ts": 1789630158.0920386,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not checkout-api",
+      "correct_remediation": "increase checkout-api concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.94,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789630158.0921261,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-4",
+    "description": "5xx rate 13% sustained for 511s after deploy of #29536",
+    "started_at": "2026-09-12T20:51:16.835893+00:00"
+  }
+}

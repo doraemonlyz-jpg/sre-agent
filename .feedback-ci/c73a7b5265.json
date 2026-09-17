@@ -1,0 +1,33 @@
+{
+  "incident_id": "c73a7b5265",
+  "records": [
+    {
+      "id": "fb-96f292c3ff",
+      "ts": 1789630158.215124,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream auth-service timeout, not comment-svc",
+      "correct_remediation": "disable feature flag svc.comment-svc.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789630158.2152083,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "downstream service notification-fanout returning 502 -- error budget burning at 19x",
+    "started_at": "2026-09-10T21:00:38.171148+00:00"
+  }
+}
