@@ -1,0 +1,33 @@
+{
+  "incident_id": "a0c340afe9",
+  "records": [
+    {
+      "id": "fb-8fdb5a5d17",
+      "ts": 1789715889.4570217,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream user-profile timeout, not ad-bidder",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.65,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789715889.4570775,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-2",
+    "description": "memory usage 98% on notification-fanout -- OOM kill predicted in 30m",
+    "started_at": "2026-09-14T08:21:40.463134+00:00"
+  }
+}
