@@ -1,0 +1,33 @@
+{
+  "incident_id": "93ce6c40c0",
+  "records": [
+    {
+      "id": "fb-30e78924f0",
+      "ts": 1789895525.0013316,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream user-profile timeout, not search-suggest",
+      "correct_remediation": "disable feature flag svc.search-suggest.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789895525.0014079,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 308ms briefly, recovered in 10s",
+    "started_at": "2026-09-16T11:50:52.832481+00:00"
+  }
+}

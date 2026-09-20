@@ -1,0 +1,33 @@
+{
+  "incident_id": "b37ede60b4",
+  "records": [
+    {
+      "id": "fb-2f84a8a6c0",
+      "ts": 1789895525.4359157,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for live-stream-edge was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789895525.4359918,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 253ms briefly, recovered in 19s",
+    "started_at": "2026-09-14T12:00:53.565685+00:00"
+  }
+}
