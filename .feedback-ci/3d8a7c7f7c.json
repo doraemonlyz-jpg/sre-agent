@@ -1,0 +1,33 @@
+{
+  "incident_id": "3d8a7c7f7c",
+  "records": [
+    {
+      "id": "fb-351c29d4b5",
+      "ts": 1789989437.678912,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream promo-engine timeout, not live-stream-edge",
+      "correct_remediation": "disable feature flag svc.live-stream-edge.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789989437.6790195,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-3",
+    "description": "5xx rate 16% sustained for 387s after deploy of #39214",
+    "started_at": "2026-09-19T09:08:46.053625+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "6ba48eccb3",
+  "records": [
+    {
+      "id": "fb-f7feca9864",
+      "ts": 1789989437.1735256,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for order-pipeline was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.83,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789989437.1736038,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-1",
+    "description": "downstream service rate-limiter-edge returning 502 -- error budget burning at 16x",
+    "started_at": "2026-09-17T10:14:50.507328+00:00"
+  }
+}
