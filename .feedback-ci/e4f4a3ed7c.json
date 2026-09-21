@@ -1,0 +1,33 @@
+{
+  "incident_id": "e4f4a3ed7c",
+  "records": [
+    {
+      "id": "fb-35d3be1906",
+      "ts": 1789977133.9699302,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream user-profile timeout, not inventory-sync",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.91,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1789977133.9699767,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "p99 latency 3090ms spiking on /checkout, error rate 6%",
+    "started_at": "2026-09-17T18:51:28.427570+00:00"
+  }
+}
