@@ -1,0 +1,35 @@
+{
+  "incident_id": "30bb13e6e6",
+  "records": [
+    {
+      "id": "fb-bae81f034b",
+      "ts": 1790062576.962847,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not comment-svc",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1790062576.9629207,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 469ms briefly, recovered in 22s",
+    "started_at": "2026-09-16T18:44:26.230169+00:00"
+  }
+}
