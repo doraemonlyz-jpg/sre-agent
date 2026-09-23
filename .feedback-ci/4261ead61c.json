@@ -1,0 +1,33 @@
+{
+  "incident_id": "4261ead61c",
+  "records": [
+    {
+      "id": "fb-d2d873bed9",
+      "ts": 1790149098.51249,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.recommend-feed.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1790149098.5125399,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 338ms briefly, recovered in 11s",
+    "started_at": "2026-09-20T09:26:56.583581+00:00"
+  }
+}
