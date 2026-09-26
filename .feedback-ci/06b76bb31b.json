@@ -1,0 +1,35 @@
+{
+  "incident_id": "06b76bb31b",
+  "records": [
+    {
+      "id": "fb-64ce2ce4f9",
+      "ts": 1790407573.8529,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not image-thumbnail",
+      "correct_remediation": "disable feature flag svc.image-thumbnail.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1790407573.8529851,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 238ms briefly, recovered in 25s",
+    "started_at": "2026-09-24T02:42:24.853981+00:00"
+  }
+}

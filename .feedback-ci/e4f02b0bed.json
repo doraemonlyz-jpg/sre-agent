@@ -1,0 +1,33 @@
+{
+  "incident_id": "e4f02b0bed",
+  "records": [
+    {
+      "id": "fb-ee710a0996",
+      "ts": 1790407573.914168,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the order-pipeline sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1790407573.9142559,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "p99 latency 1918ms spiking on /checkout, error rate 9%",
+    "started_at": "2026-09-22T18:13:27.962040+00:00"
+  }
+}
