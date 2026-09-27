@@ -1,0 +1,33 @@
+{
+  "incident_id": "99c0a19b36",
+  "records": [
+    {
+      "id": "fb-902908c38b",
+      "ts": 1790495832.7496922,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream notification-fanout timeout, not cdn-router",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1790495832.7497852,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-3",
+    "description": "memory usage 92% on payments-gateway -- OOM kill predicted in 5m",
+    "started_at": "2026-09-26T21:57:16.658270+00:00"
+  }
+}

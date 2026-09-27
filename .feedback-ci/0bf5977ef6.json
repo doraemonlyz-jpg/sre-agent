@@ -1,0 +1,33 @@
+{
+  "incident_id": "0bf5977ef6",
+  "records": [
+    {
+      "id": "fb-bd5d1436ce",
+      "ts": 1790495832.977898,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the cart-service sidecar",
+      "correct_remediation": "page the live-stream-edge oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.62,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1790495832.9779856,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-4",
+    "description": "memory usage 94% on cart-service -- OOM kill predicted in 5m",
+    "started_at": "2026-09-21T14:25:04.716067+00:00"
+  }
+}

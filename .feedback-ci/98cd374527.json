@@ -1,0 +1,35 @@
+{
+  "incident_id": "98cd374527",
+  "records": [
+    {
+      "id": "fb-258f0d1e2e",
+      "ts": 1790495833.329945,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1790495833.3300319,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on session-store",
+    "started_at": "2026-09-24T10:33:26.482720+00:00"
+  }
+}

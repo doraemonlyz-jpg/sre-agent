@@ -1,0 +1,35 @@
+{
+  "incident_id": "b5d3bcb176",
+  "records": [
+    {
+      "id": "fb-2224ba83c1",
+      "ts": 1790495832.916048,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the notification-fanout sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1790495832.916135,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 481ms briefly, recovered in 24s",
+    "started_at": "2026-09-24T15:12:35.491764+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "d6df4fcfa1",
+  "records": [
+    {
+      "id": "fb-d9d1a94b1d",
+      "ts": 1790495833.3455148,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for live-stream-edge was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1790495833.3456075,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "5xx rate 16% sustained for 190s after deploy of #62377",
+    "started_at": "2026-09-25T10:08:10.864659+00:00"
+  }
+}

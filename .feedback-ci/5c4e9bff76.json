@@ -1,0 +1,33 @@
+{
+  "incident_id": "5c4e9bff76",
+  "records": [
+    {
+      "id": "fb-533f64b486",
+      "ts": 1790495832.8470504,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the search-suggest sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.95,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1790495832.8471365,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-2",
+    "description": "memory usage 89% on user-profile -- OOM kill predicted in 3m",
+    "started_at": "2026-09-27T08:40:20.437720+00:00"
+  }
+}

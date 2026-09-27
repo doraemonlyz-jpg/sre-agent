@@ -1,0 +1,33 @@
+{
+  "incident_id": "578f6831ff",
+  "records": [
+    {
+      "id": "fb-2187f832d2",
+      "ts": 1790495832.7142966,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1790495832.7143836,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "5xx rate 19% sustained for 478s after deploy of #68254",
+    "started_at": "2026-09-20T22:05:47.284748+00:00"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "incident_id": "ec3f9ab0c1",
+  "records": [
+    {
+      "id": "fb-c6f8349188",
+      "ts": 1790495833.4054217,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream session-store timeout, not live-stream-edge",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1790495833.40554,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 631ms briefly, recovered in 25s",
+    "started_at": "2026-09-27T01:19:10.344265+00:00"
+  }
+}

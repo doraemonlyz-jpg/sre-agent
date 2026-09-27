@@ -1,0 +1,33 @@
+{
+  "incident_id": "808d4bbaf5",
+  "records": [
+    {
+      "id": "fb-cc67f50c88",
+      "ts": 1790495833.0611224,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the search-suggest sidecar",
+      "correct_remediation": "disable feature flag svc.search-suggest.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.84,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1790495833.0612085,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-1",
+    "description": "5xx rate 8% sustained for 280s after deploy of #68192",
+    "started_at": "2026-09-23T13:50:47.500970+00:00"
+  }
+}

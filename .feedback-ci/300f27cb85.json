@@ -1,0 +1,33 @@
+{
+  "incident_id": "300f27cb85",
+  "records": [
+    {
+      "id": "fb-6a4ec0b349",
+      "ts": 1790495832.7584825,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the payments-gateway sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.85,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1790495832.758573,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-4",
+    "description": "downstream service checkout-api returning 502 -- error budget burning at 18x",
+    "started_at": "2026-09-25T15:26:53.955877+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "02bf6746a5",
+  "records": [
+    {
+      "id": "fb-f8e91bd96d",
+      "ts": 1790495833.049601,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for rate-limiter-edge was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1790495833.0497015,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "memory usage 99% on ad-bidder -- OOM kill predicted in 16m",
+    "started_at": "2026-09-23T07:56:10.192450+00:00"
+  }
+}

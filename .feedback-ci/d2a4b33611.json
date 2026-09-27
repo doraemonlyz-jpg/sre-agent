@@ -1,0 +1,33 @@
+{
+  "incident_id": "d2a4b33611",
+  "records": [
+    {
+      "id": "fb-81ec0ff61b",
+      "ts": 1790495832.871396,
+      "verdict": "correct",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.92,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1790495832.8714826,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "memory usage 94% on promo-engine -- OOM kill predicted in 19m",
+    "started_at": "2026-09-23T01:58:00.019142+00:00"
+  }
+}

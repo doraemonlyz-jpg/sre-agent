@@ -1,0 +1,35 @@
+{
+  "incident_id": "936bf69d0f",
+  "records": [
+    {
+      "id": "fb-f014fb3c9f",
+      "ts": 1790495833.274703,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream order-pipeline timeout, not checkout-api",
+      "correct_remediation": "disable feature flag svc.checkout-api.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1790495833.2747948,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on image-thumbnail",
+    "started_at": "2026-09-23T07:14:35.888979+00:00"
+  }
+}

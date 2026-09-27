@@ -1,0 +1,35 @@
+{
+  "incident_id": "7272cada61",
+  "records": [
+    {
+      "id": "fb-ad5b2b7bd5",
+      "ts": 1790495833.4071794,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in recommend-feed, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1790495833.4072678,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-2",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on video-encoder",
+    "started_at": "2026-09-20T08:53:13.414907+00:00"
+  }
+}
