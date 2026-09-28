@@ -1,0 +1,33 @@
+{
+  "incident_id": "668c4033d0",
+  "records": [
+    {
+      "id": "fb-14f6019db1",
+      "ts": 1790584377.9889755,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream checkout-api timeout, not cdn-router",
+      "correct_remediation": "increase cdn-router concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.87,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1790584377.9890475,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-3",
+    "description": "5xx rate 14% sustained for 242s after deploy of #45228",
+    "started_at": "2026-09-21T12:41:36.271711+00:00"
+  }
+}
