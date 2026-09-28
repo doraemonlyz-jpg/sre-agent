@@ -1,0 +1,33 @@
+{
+  "incident_id": "2cd34cca5d",
+  "records": [
+    {
+      "id": "fb-9c5c823d91",
+      "ts": 1790597566.1834483,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1790597566.1835144,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-1",
+    "description": "downstream service cart-service returning 502 -- error budget burning at 4x",
+    "started_at": "2026-09-23T19:32:48.383045+00:00"
+  }
+}

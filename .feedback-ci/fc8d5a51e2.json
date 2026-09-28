@@ -1,0 +1,35 @@
+{
+  "incident_id": "fc8d5a51e2",
+  "records": [
+    {
+      "id": "fb-3f66ebc52f",
+      "ts": 1790597566.5054111,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in inventory-sync, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1790597566.505474,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 432ms briefly, recovered in 8s",
+    "started_at": "2026-09-28T05:59:10.402029+00:00"
+  }
+}

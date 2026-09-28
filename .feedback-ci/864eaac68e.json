@@ -1,0 +1,35 @@
+{
+  "incident_id": "864eaac68e",
+  "records": [
+    {
+      "id": "fb-6b9c36ec04",
+      "ts": 1790597566.1248813,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in promo-engine, not what the agent said",
+      "correct_remediation": "increase promo-engine concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1790597566.1249447,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 440ms briefly, recovered in 26s",
+    "started_at": "2026-09-22T00:21:26.563092+00:00"
+  }
+}

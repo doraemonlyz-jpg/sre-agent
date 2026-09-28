@@ -1,0 +1,33 @@
+{
+  "incident_id": "0d9ab51ab3",
+  "records": [
+    {
+      "id": "fb-7f507c10f1",
+      "ts": 1790597566.2944374,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream search-suggest timeout, not checkout-api",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.58,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1790597566.2945,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-1",
+    "description": "memory usage 97% on comment-svc -- OOM kill predicted in 7m",
+    "started_at": "2026-09-26T17:22:46.095514+00:00"
+  }
+}
