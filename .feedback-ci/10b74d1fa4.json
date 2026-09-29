@@ -1,0 +1,33 @@
+{
+  "incident_id": "10b74d1fa4",
+  "records": [
+    {
+      "id": "fb-b9c76e4b28",
+      "ts": 1790669777.1534326,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in checkout-api, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1790669777.153475,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-2",
+    "description": "downstream service cart-service returning 502 -- error budget burning at 18x",
+    "started_at": "2026-09-26T20:03:51.859028+00:00"
+  }
+}

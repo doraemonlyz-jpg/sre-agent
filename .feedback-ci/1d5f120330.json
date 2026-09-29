@@ -1,0 +1,33 @@
+{
+  "incident_id": "1d5f120330",
+  "records": [
+    {
+      "id": "fb-0d22f20eb2",
+      "ts": 1790669777.1493666,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the user-profile sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1790669777.1494095,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-2",
+    "description": "p99 latency 1558ms spiking on /checkout, error rate 10%",
+    "started_at": "2026-09-28T00:40:42.523492+00:00"
+  }
+}
