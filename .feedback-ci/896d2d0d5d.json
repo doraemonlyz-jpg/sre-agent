@@ -1,0 +1,33 @@
+{
+  "incident_id": "896d2d0d5d",
+  "records": [
+    {
+      "id": "fb-85e4c6c68d",
+      "ts": 1790756218.6312764,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream cdn-router timeout, not checkout-api",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.85,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1790756218.631318,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-2",
+    "description": "memory usage 97% on user-profile -- OOM kill predicted in 22m",
+    "started_at": "2026-09-25T13:10:22.267142+00:00"
+  }
+}

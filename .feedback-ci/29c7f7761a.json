@@ -1,0 +1,33 @@
+{
+  "incident_id": "29c7f7761a",
+  "records": [
+    {
+      "id": "fb-7d0cf29f20",
+      "ts": 1790756218.7829032,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cart-service was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1790756218.782945,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-2",
+    "description": "downstream service promo-engine returning 502 -- error budget burning at 12x",
+    "started_at": "2026-09-23T09:11:19.600782+00:00"
+  }
+}
