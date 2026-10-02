@@ -1,0 +1,35 @@
+{
+  "incident_id": "9047c310b2",
+  "records": [
+    {
+      "id": "fb-59249ff5e3",
+      "ts": 1790929076.2440042,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in search-suggest, not what the agent said",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1790929076.2440717,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 362ms briefly, recovered in 15s",
+    "started_at": "2026-09-26T19:13:03.964463+00:00"
+  }
+}
