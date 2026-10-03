@@ -1,0 +1,33 @@
+{
+  "incident_id": "c673bc6451",
+  "records": [
+    {
+      "id": "fb-76f6fde36d",
+      "ts": 1791014061.1421404,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for user-profile was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.87,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791014061.142203,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 679ms briefly, recovered in 26s",
+    "started_at": "2026-09-28T06:22:25.571356+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "2974bb8148",
+  "records": [
+    {
+      "id": "fb-d18b9cfa85",
+      "ts": 1791014061.5596206,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not image-thumbnail",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791014061.5596855,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-2",
+    "description": "p99 latency 2031ms spiking on /checkout, error rate 11%",
+    "started_at": "2026-10-02T16:56:55.629375+00:00"
+  }
+}

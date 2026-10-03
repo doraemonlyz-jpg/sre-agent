@@ -1,0 +1,33 @@
+{
+  "incident_id": "cc7ac21f9e",
+  "records": [
+    {
+      "id": "fb-f5ff72b09a",
+      "ts": 1791014061.4217715,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the video-encoder sidecar",
+      "correct_remediation": "disable feature flag svc.video-encoder.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791014061.4218369,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-2",
+    "description": "downstream service recommend-feed returning 502 -- error budget burning at 9x",
+    "started_at": "2026-10-02T22:05:16.025676+00:00"
+  }
+}
