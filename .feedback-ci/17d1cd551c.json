@@ -1,0 +1,35 @@
+{
+  "incident_id": "17d1cd551c",
+  "records": [
+    {
+      "id": "fb-8d58f783e9",
+      "ts": 1791101801.6753883,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the promo-engine sidecar",
+      "correct_remediation": "page the search-suggest oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1791101801.6754308,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 460ms briefly, recovered in 18s",
+    "started_at": "2026-09-29T03:00:21.526286+00:00"
+  }
+}
