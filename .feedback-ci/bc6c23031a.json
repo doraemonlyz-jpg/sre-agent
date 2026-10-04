@@ -1,0 +1,33 @@
+{
+  "incident_id": "bc6c23031a",
+  "records": [
+    {
+      "id": "fb-ca6a71463b",
+      "ts": 1791109806.5888457,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for ad-bidder was filling our partition",
+      "correct_remediation": "disable feature flag svc.price-cache.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.79,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791109806.588934,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-2",
+    "description": "downstream service search-suggest returning 502 -- error budget burning at 8x",
+    "started_at": "2026-10-03T02:51:47.979278+00:00"
+  }
+}
