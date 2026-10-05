@@ -1,0 +1,35 @@
+{
+  "incident_id": "99fb3ec794",
+  "records": [
+    {
+      "id": "fb-20f23d41f1",
+      "ts": 1791204764.5005057,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream cart-service timeout, not comment-svc",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1791204764.5005462,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "memory usage 86% on cart-service -- OOM kill predicted in 6m",
+    "started_at": "2026-10-03T13:30:12.735802+00:00"
+  }
+}

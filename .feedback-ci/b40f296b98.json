@@ -1,0 +1,35 @@
+{
+  "incident_id": "b40f296b98",
+  "records": [
+    {
+      "id": "fb-a1fc80a346",
+      "ts": 1791204764.5103014,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cdn-router was filling our partition",
+      "correct_remediation": "page the rate-limiter-edge oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1791204764.5103407,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 231ms briefly, recovered in 24s",
+    "started_at": "2026-09-30T10:15:25.626258+00:00"
+  }
+}

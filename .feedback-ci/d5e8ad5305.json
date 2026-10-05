@@ -1,0 +1,33 @@
+{
+  "incident_id": "d5e8ad5305",
+  "records": [
+    {
+      "id": "fb-aca0b1d383",
+      "ts": 1791204764.7635992,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not checkout-api",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791204764.76364,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 242ms briefly, recovered in 7s",
+    "started_at": "2026-10-02T13:16:03.904604+00:00"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "incident_id": "f563702780",
+  "records": [
+    {
+      "id": "fb-19d133c91b",
+      "ts": 1791204764.5816429,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the payments-gateway sidecar",
+      "correct_remediation": "page the promo-engine oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1791204764.5816827,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 504ms briefly, recovered in 28s",
+    "started_at": "2026-10-03T08:43:08.541972+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "a633284803",
+  "records": [
+    {
+      "id": "fb-5fd9425648",
+      "ts": 1791204764.759741,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for session-store was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.62,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791204764.7597811,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-3",
+    "description": "downstream service cart-service returning 502 -- error budget burning at 14x",
+    "started_at": "2026-10-02T13:54:51.284714+00:00"
+  }
+}
