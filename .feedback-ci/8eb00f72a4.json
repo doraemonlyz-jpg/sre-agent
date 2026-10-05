@@ -1,0 +1,35 @@
+{
+  "incident_id": "8eb00f72a4",
+  "records": [
+    {
+      "id": "fb-ac741901f2",
+      "ts": 1791190063.9738877,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in notification-fanout, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1791190063.9739919,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 361ms briefly, recovered in 13s",
+    "started_at": "2026-10-04T19:50:51.907634+00:00"
+  }
+}
