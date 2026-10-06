@@ -1,0 +1,33 @@
+{
+  "incident_id": "b4adecd7d1",
+  "records": [
+    {
+      "id": "fb-000ffb63a4",
+      "ts": 1791276622.6561759,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in rate-limiter-edge, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.86,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791276622.656259,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-2",
+    "description": "memory usage 91% on auth-service -- OOM kill predicted in 18m",
+    "started_at": "2026-10-02T08:35:59.557976+00:00"
+  }
+}

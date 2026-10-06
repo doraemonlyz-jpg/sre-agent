@@ -1,0 +1,33 @@
+{
+  "incident_id": "d899c696b8",
+  "records": [
+    {
+      "id": "fb-9843b71500",
+      "ts": 1791276622.1255786,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream order-pipeline timeout, not price-cache",
+      "correct_remediation": "increase price-cache concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.88,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791276622.1256616,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-1",
+    "description": "downstream service cdn-router returning 502 -- error budget burning at 12x",
+    "started_at": "2026-10-01T13:58:14.228913+00:00"
+  }
+}

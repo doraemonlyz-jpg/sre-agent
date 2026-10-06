@@ -1,0 +1,33 @@
+{
+  "incident_id": "10ff1ea94a",
+  "records": [
+    {
+      "id": "fb-140b8031f0",
+      "ts": 1791276622.133326,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for rate-limiter-edge was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791276622.1334093,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 496ms briefly, recovered in 26s",
+    "started_at": "2026-09-30T08:35:53.020917+00:00"
+  }
+}

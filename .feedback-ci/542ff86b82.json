@@ -1,0 +1,33 @@
+{
+  "incident_id": "542ff86b82",
+  "records": [
+    {
+      "id": "fb-3826bd4ac0",
+      "ts": 1791276622.5647078,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream cdn-router timeout, not ad-bidder",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791276622.5647926,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "downstream service user-profile returning 502 -- error budget burning at 6x",
+    "started_at": "2026-10-03T16:25:51.232706+00:00"
+  }
+}

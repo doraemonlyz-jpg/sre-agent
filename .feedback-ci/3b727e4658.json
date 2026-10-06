@@ -1,0 +1,33 @@
+{
+  "incident_id": "3b727e4658",
+  "records": [
+    {
+      "id": "fb-67b5e5384e",
+      "ts": 1791276622.2454505,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the ad-bidder sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791276622.2455337,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-4",
+    "description": "downstream service cart-service returning 502 -- error budget burning at 9x",
+    "started_at": "2026-10-02T00:18:35.382054+00:00"
+  }
+}

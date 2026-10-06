@@ -1,0 +1,33 @@
+{
+  "incident_id": "c4b4d01379",
+  "records": [
+    {
+      "id": "fb-088bacbe1b",
+      "ts": 1791276622.525647,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for promo-engine was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.86,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791276622.5257363,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-4",
+    "description": "memory usage 91% on search-suggest -- OOM kill predicted in 28m",
+    "started_at": "2026-10-02T10:01:17.943667+00:00"
+  }
+}
