@@ -1,0 +1,33 @@
+{
+  "incident_id": "31d1d5c2b6",
+  "records": [
+    {
+      "id": "fb-56ec9f8386",
+      "ts": 1791449084.530649,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "page the search-suggest oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.9,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791449084.5307343,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-1",
+    "description": "memory usage 99% on rate-limiter-edge -- OOM kill predicted in 4m",
+    "started_at": "2026-10-07T05:11:21.081302+00:00"
+  }
+}
