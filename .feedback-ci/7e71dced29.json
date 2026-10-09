@@ -1,0 +1,33 @@
+{
+  "incident_id": "7e71dced29",
+  "records": [
+    {
+      "id": "fb-ebc79ea958",
+      "ts": 1791535722.0712163,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in user-profile, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.91,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791535722.0713267,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "p99 latency 2159ms spiking on /checkout, error rate 10%",
+    "started_at": "2026-10-03T11:42:28.351328+00:00"
+  }
+}

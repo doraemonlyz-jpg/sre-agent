@@ -1,0 +1,33 @@
+{
+  "incident_id": "c2c8866199",
+  "records": [
+    {
+      "id": "fb-5a05da6d41",
+      "ts": 1791535721.7795026,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "queue head-of-line blocking in ad-bidder, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.82,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791535721.779589,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-2",
+    "description": "downstream service auth-service returning 502 -- error budget burning at 11x",
+    "started_at": "2026-10-07T00:50:16.329646+00:00"
+  }
+}

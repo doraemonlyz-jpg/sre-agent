@@ -1,0 +1,33 @@
+{
+  "incident_id": "6d8993011c",
+  "records": [
+    {
+      "id": "fb-23e33d4444",
+      "ts": 1791535721.5269432,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.79,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791535721.5270786,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "downstream service image-thumbnail returning 502 -- error budget burning at 15x",
+    "started_at": "2026-10-07T12:54:59.727294+00:00"
+  }
+}
