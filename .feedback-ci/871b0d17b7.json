@@ -1,0 +1,33 @@
+{
+  "incident_id": "871b0d17b7",
+  "records": [
+    {
+      "id": "fb-fdecbe2523",
+      "ts": 1791620447.013553,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for inventory-sync was filling our partition",
+      "correct_remediation": "increase inventory-sync concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.81,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791620447.0136096,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-2",
+    "description": "p99 latency 2766ms spiking on /checkout, error rate 13%",
+    "started_at": "2026-10-08T14:48:12.672584+00:00"
+  }
+}

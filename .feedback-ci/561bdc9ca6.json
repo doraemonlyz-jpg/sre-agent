@@ -1,0 +1,33 @@
+{
+  "incident_id": "561bdc9ca6",
+  "records": [
+    {
+      "id": "fb-4f8baeaff4",
+      "ts": 1791620446.980694,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "actually a downstream cart-service timeout, not rate-limiter-edge",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.58,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791620446.9807537,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-4",
+    "description": "memory usage 99% on live-stream-edge -- OOM kill predicted in 16m",
+    "started_at": "2026-10-08T07:09:41.616971+00:00"
+  }
+}

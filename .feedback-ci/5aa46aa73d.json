@@ -1,0 +1,33 @@
+{
+  "incident_id": "5aa46aa73d",
+  "records": [
+    {
+      "id": "fb-19a7f9e685",
+      "ts": 1791620446.6753302,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the video-encoder sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791620446.6753926,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-2",
+    "description": "downstream service rate-limiter-edge returning 502 -- error budget burning at 7x",
+    "started_at": "2026-10-05T11:11:31.201813+00:00"
+  }
+}
