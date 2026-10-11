@@ -1,0 +1,33 @@
+{
+  "incident_id": "e3c69311c6",
+  "records": [
+    {
+      "id": "fb-bc4119fba4",
+      "ts": 1791715385.7893426,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream search-suggest timeout, not live-stream-edge",
+      "correct_remediation": "disable feature flag svc.live-stream-edge.new_path",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.76,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791715385.7894192,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-3",
+    "description": "p99 latency 3750ms spiking on /checkout, error rate 4%",
+    "started_at": "2026-10-05T10:49:02.763349+00:00"
+  }
+}

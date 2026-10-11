@@ -1,0 +1,33 @@
+{
+  "incident_id": "5c86b9748f",
+  "records": [
+    {
+      "id": "fb-8d45c2d1b6",
+      "ts": 1791715385.607337,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream notification-fanout timeout, not checkout-api",
+      "correct_remediation": "increase checkout-api concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791715385.60741,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-3",
+    "description": "downstream service rate-limiter-edge returning 502 -- error budget burning at 9x",
+    "started_at": "2026-10-05T22:58:27.418670+00:00"
+  }
+}
