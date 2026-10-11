@@ -1,0 +1,35 @@
+{
+  "incident_id": "f83d278f97",
+  "records": [
+    {
+      "id": "fb-2ea6dc8408",
+      "ts": 1791707840.97087,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the cdn-router sidecar",
+      "correct_remediation": "disable feature flag svc.cdn-router.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1791707840.9709578,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 348ms briefly, recovered in 18s",
+    "started_at": "2026-10-04T23:41:18.990422+00:00"
+  }
+}
