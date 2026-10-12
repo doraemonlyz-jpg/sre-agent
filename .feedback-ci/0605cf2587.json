@@ -1,0 +1,33 @@
+{
+  "incident_id": "0605cf2587",
+  "records": [
+    {
+      "id": "fb-ca3754cf23",
+      "ts": 1791812646.3923514,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for payments-gateway was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.78,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791812646.3924277,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-4",
+    "description": "5xx rate 12% sustained for 374s after deploy of #21420",
+    "started_at": "2026-10-08T15:33:47.675412+00:00"
+  }
+}

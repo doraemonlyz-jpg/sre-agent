@@ -1,0 +1,33 @@
+{
+  "incident_id": "6ed09042c6",
+  "records": [
+    {
+      "id": "fb-4ea476be47",
+      "ts": 1791812646.385944,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the session-store sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791812646.3860364,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-3",
+    "description": "memory usage 95% on search-suggest -- OOM kill predicted in 6m",
+    "started_at": "2026-10-06T21:11:01.809654+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "3a4ca91efd",
+  "records": [
+    {
+      "id": "fb-e6647a8f03",
+      "ts": 1791812646.5372286,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream checkout-api timeout, not promo-engine",
+      "correct_remediation": "page the price-cache oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791812646.5373034,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-4",
+    "description": "memory usage 85% on payments-gateway -- OOM kill predicted in 17m",
+    "started_at": "2026-10-12T01:55:06.428023+00:00"
+  }
+}

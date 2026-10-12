@@ -1,0 +1,33 @@
+{
+  "incident_id": "fac2b79e64",
+  "records": [
+    {
+      "id": "fb-937beb2119",
+      "ts": 1791812646.1681147,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "page the live-stream-edge oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791812646.1681967,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "5xx rate 23% sustained for 324s after deploy of #23537",
+    "started_at": "2026-10-11T06:41:02.252808+00:00"
+  }
+}

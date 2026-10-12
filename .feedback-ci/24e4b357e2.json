@@ -1,0 +1,35 @@
+{
+  "incident_id": "24e4b357e2",
+  "records": [
+    {
+      "id": "fb-d3df794a53",
+      "ts": 1791812646.6504793,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in notification-fanout, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1791812646.6505592,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on search-suggest",
+    "started_at": "2026-10-08T01:13:28.965369+00:00"
+  }
+}

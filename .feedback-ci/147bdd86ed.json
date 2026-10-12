@@ -1,0 +1,33 @@
+{
+  "incident_id": "147bdd86ed",
+  "records": [
+    {
+      "id": "fb-71baee738c",
+      "ts": 1791812646.5064807,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for search-suggest was filling our partition",
+      "correct_remediation": "page the comment-svc oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791812646.506555,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-1",
+    "description": "memory usage 93% on notification-fanout -- OOM kill predicted in 23m",
+    "started_at": "2026-10-08T09:56:42.044015+00:00"
+  }
+}

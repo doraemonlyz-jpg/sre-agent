@@ -1,0 +1,33 @@
+{
+  "incident_id": "becee9323e",
+  "records": [
+    {
+      "id": "fb-1a03d12710",
+      "ts": 1791812646.6326003,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the video-encoder sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.86,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791812646.6326787,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "memory usage 93% on promo-engine -- OOM kill predicted in 29m",
+    "started_at": "2026-10-06T02:09:07.047836+00:00"
+  }
+}

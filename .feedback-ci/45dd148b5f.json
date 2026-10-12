@@ -1,0 +1,33 @@
+{
+  "incident_id": "45dd148b5f",
+  "records": [
+    {
+      "id": "fb-79b887a93e",
+      "ts": 1791812646.6171956,
+      "verdict": "correct",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.62,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791812646.6172712,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-4",
+    "description": "5xx rate 25% sustained for 517s after deploy of #21429",
+    "started_at": "2026-10-12T08:48:40.757337+00:00"
+  }
+}

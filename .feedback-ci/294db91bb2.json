@@ -1,0 +1,35 @@
+{
+  "incident_id": "294db91bb2",
+  "records": [
+    {
+      "id": "fb-8266c9b584",
+      "ts": 1791812646.2854402,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cart-service was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1791812646.285518,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-4",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on payments-gateway",
+    "started_at": "2026-10-10T21:49:34.468680+00:00"
+  }
+}

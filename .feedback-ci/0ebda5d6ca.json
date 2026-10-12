@@ -1,0 +1,35 @@
+{
+  "incident_id": "0ebda5d6ca",
+  "records": [
+    {
+      "id": "fb-42fefd4154",
+      "ts": 1791812646.2933,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream auth-service timeout, not image-thumbnail",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1791812646.293375,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on notification-fanout",
+    "started_at": "2026-10-05T19:18:22.574339+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "d9220bfaf6",
+  "records": [
+    {
+      "id": "fb-732b170eba",
+      "ts": 1791812646.5450249,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for image-thumbnail was filling our partition",
+      "correct_remediation": "disable feature flag svc.session-store.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791812646.5451057,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-4",
+    "description": "5xx rate 11% sustained for 329s after deploy of #27011",
+    "started_at": "2026-10-09T02:20:13.253758+00:00"
+  }
+}

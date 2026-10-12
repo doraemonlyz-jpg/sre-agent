@@ -1,0 +1,33 @@
+{
+  "incident_id": "7fcc486d5e",
+  "records": [
+    {
+      "id": "fb-fc98e41038",
+      "ts": 1791812646.3136325,
+      "verdict": "correct",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.93,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791812646.3137083,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "memory usage 88% on auth-service -- OOM kill predicted in 7m",
+    "started_at": "2026-10-08T19:35:42.914937+00:00"
+  }
+}

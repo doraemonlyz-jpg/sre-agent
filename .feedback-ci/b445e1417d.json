@@ -1,0 +1,35 @@
+{
+  "incident_id": "b445e1417d",
+  "records": [
+    {
+      "id": "fb-0b39cb1698",
+      "ts": 1791812646.478877,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for price-cache was filling our partition",
+      "correct_remediation": "disable feature flag svc.session-store.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1791812646.4789548,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on inventory-sync",
+    "started_at": "2026-10-09T21:02:58.667795+00:00"
+  }
+}

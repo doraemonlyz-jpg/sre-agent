@@ -1,0 +1,33 @@
+{
+  "incident_id": "b1e2285763",
+  "records": [
+    {
+      "id": "fb-37b1de8ce3",
+      "ts": 1791812646.4467058,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "page the notification-fanout oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.76,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791812646.4467807,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-4",
+    "description": "5xx rate 14% sustained for 197s after deploy of #47773",
+    "started_at": "2026-10-07T21:55:48.467869+00:00"
+  }
+}

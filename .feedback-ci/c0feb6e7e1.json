@@ -1,0 +1,33 @@
+{
+  "incident_id": "c0feb6e7e1",
+  "records": [
+    {
+      "id": "fb-46331e027a",
+      "ts": 1791812646.6609936,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream inventory-sync timeout, not user-profile",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791812646.6610968,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-4",
+    "description": "downstream service payments-gateway returning 502 -- error budget burning at 5x",
+    "started_at": "2026-10-11T06:32:47.737065+00:00"
+  }
+}

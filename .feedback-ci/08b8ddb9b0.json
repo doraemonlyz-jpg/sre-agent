@@ -1,0 +1,33 @@
+{
+  "incident_id": "08b8ddb9b0",
+  "records": [
+    {
+      "id": "fb-3f16cf6740",
+      "ts": 1791812646.4897742,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream session-store timeout, not order-pipeline",
+      "correct_remediation": "disable feature flag svc.order-pipeline.new_path",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791812646.4898517,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-2",
+    "description": "p99 latency 3507ms spiking on /checkout, error rate 14%",
+    "started_at": "2026-10-10T03:44:59.177796+00:00"
+  }
+}

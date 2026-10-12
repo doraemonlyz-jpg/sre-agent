@@ -1,0 +1,33 @@
+{
+  "incident_id": "9369f8941d",
+  "records": [
+    {
+      "id": "fb-d752a2cd86",
+      "ts": 1791812646.400454,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in cart-service, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.83,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791812646.400532,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-2",
+    "description": "memory usage 87% on image-thumbnail -- OOM kill predicted in 19m",
+    "started_at": "2026-10-10T13:43:58.697359+00:00"
+  }
+}

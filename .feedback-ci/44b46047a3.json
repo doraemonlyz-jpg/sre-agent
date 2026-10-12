@@ -1,0 +1,35 @@
+{
+  "incident_id": "44b46047a3",
+  "records": [
+    {
+      "id": "fb-23ae51379e",
+      "ts": 1791812646.6921573,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "page the video-encoder oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1791812646.6922379,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-3",
+    "description": "downstream service cdn-router returning 502 -- error budget burning at 20x",
+    "started_at": "2026-10-09T09:25:43.169055+00:00"
+  }
+}

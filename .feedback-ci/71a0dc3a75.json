@@ -1,0 +1,33 @@
+{
+  "incident_id": "71a0dc3a75",
+  "records": [
+    {
+      "id": "fb-a1c7b4b35b",
+      "ts": 1791812646.4413452,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the session-store sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.85,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791812646.441423,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "5xx rate 15% sustained for 570s after deploy of #57504",
+    "started_at": "2026-10-08T17:36:58.947813+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "eec20df7ab",
+  "records": [
+    {
+      "id": "fb-acd801eb19",
+      "ts": 1791812646.7862713,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for rate-limiter-edge was filling our partition",
+      "correct_remediation": "page the notification-fanout oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.84,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791812646.786347,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on recommend-feed",
+    "started_at": "2026-10-07T17:20:12.262765+00:00"
+  }
+}
