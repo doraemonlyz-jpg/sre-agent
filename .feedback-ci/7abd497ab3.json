@@ -1,0 +1,33 @@
+{
+  "incident_id": "7abd497ab3",
+  "records": [
+    {
+      "id": "fb-0acd706686",
+      "ts": 1791795555.4550984,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not notification-fanout",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.8,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1791795555.4551742,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "5xx rate 25% sustained for 405s after deploy of #37344",
+    "started_at": "2026-10-07T23:51:01.493768+00:00"
+  }
+}
