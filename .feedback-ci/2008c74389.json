@@ -1,0 +1,35 @@
+{
+  "incident_id": "2008c74389",
+  "records": [
+    {
+      "id": "fb-800f39a218",
+      "ts": 1791962672.7091892,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in comment-svc, not what the agent said",
+      "correct_remediation": "increase comment-svc concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1791962672.7092578,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 507ms briefly, recovered in 18s",
+    "started_at": "2026-10-11T23:42:46.057272+00:00"
+  }
+}
