@@ -1,0 +1,33 @@
+{
+  "incident_id": "70e8b6ed25",
+  "records": [
+    {
+      "id": "fb-9156b86a50",
+      "ts": 1792048522.442639,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792048522.4427261,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-1",
+    "description": "p99 latency 2460ms spiking on /checkout, error rate 5%",
+    "started_at": "2026-10-12T17:30:46.215354+00:00"
+  }
+}

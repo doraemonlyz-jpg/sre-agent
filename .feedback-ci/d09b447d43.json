@@ -1,0 +1,33 @@
+{
+  "incident_id": "d09b447d43",
+  "records": [
+    {
+      "id": "fb-eee49b152f",
+      "ts": 1792048521.9866617,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream live-stream-edge timeout, not payments-gateway",
+      "correct_remediation": "page the rate-limiter-edge oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792048521.98675,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-2",
+    "description": "memory usage 91% on checkout-api -- OOM kill predicted in 21m",
+    "started_at": "2026-10-11T00:26:35.121815+00:00"
+  }
+}
