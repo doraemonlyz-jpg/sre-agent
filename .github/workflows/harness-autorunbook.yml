@@ -153,7 +153,7 @@ jobs:
 
       - name: Open runbook-draft PR
         if: steps.drafter.outputs.draft == 'true'
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: |

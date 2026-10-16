@@ -233,7 +233,7 @@ jobs:
 
       - name: Open promotion PR
         if: steps.winner.outputs.promote == 'true'
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           # A dedicated bot token would be cleaner in real prod (so
           # the PR comes from `sre-bot` not `github-actions`), but
