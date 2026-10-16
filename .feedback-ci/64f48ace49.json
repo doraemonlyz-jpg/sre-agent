@@ -1,0 +1,33 @@
+{
+  "incident_id": "64f48ace49",
+  "records": [
+    {
+      "id": "fb-689062e4ea",
+      "ts": 1792133916.736597,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream cdn-router timeout, not payments-gateway",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792133916.7366562,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-4",
+    "description": "memory usage 85% on cdn-router -- OOM kill predicted in 11m",
+    "started_at": "2026-10-11T19:01:53.001618+00:00"
+  }
+}

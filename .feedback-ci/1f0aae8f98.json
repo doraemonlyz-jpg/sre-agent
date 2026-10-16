@@ -1,0 +1,33 @@
+{
+  "incident_id": "1f0aae8f98",
+  "records": [
+    {
+      "id": "fb-d981f04ad6",
+      "ts": 1792133916.4498324,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream rate-limiter-edge timeout, not auth-service",
+      "correct_remediation": "page the live-stream-edge oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792133916.449889,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-1",
+    "description": "5xx rate 19% sustained for 479s after deploy of #55097",
+    "started_at": "2026-10-12T20:56:11.045735+00:00"
+  }
+}
