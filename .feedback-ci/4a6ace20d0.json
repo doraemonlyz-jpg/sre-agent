@@ -1,0 +1,33 @@
+{
+  "incident_id": "4a6ace20d0",
+  "records": [
+    {
+      "id": "fb-9638a5a9bf",
+      "ts": 1792219735.4038076,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for promo-engine was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792219735.4038954,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "p99 latency 2233ms spiking on /checkout, error rate 10%",
+    "started_at": "2026-10-11T19:23:33.696836+00:00"
+  }
+}

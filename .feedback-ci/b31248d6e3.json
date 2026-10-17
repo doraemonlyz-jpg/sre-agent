@@ -1,0 +1,33 @@
+{
+  "incident_id": "b31248d6e3",
+  "records": [
+    {
+      "id": "fb-7a9f2ca012",
+      "ts": 1792219736.0869277,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream order-pipeline timeout, not payments-gateway",
+      "correct_remediation": "disable feature flag svc.payments-gateway.new_path",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.8,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792219736.0870154,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-1",
+    "description": "memory usage 87% on image-thumbnail -- OOM kill predicted in 10m",
+    "started_at": "2026-10-14T04:31:51.254906+00:00"
+  }
+}
