@@ -1,0 +1,33 @@
+{
+  "incident_id": "e2cf2bdeb4",
+  "records": [
+    {
+      "id": "fb-70b45b82e3",
+      "ts": 1792313113.1476204,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream video-encoder timeout, not recommend-feed",
+      "correct_remediation": "page the order-pipeline oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.65,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792313113.1477096,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-4",
+    "description": "p99 latency 3100ms spiking on /checkout, error rate 12%",
+    "started_at": "2026-10-13T14:04:07.053358+00:00"
+  }
+}

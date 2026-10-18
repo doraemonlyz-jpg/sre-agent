@@ -1,0 +1,33 @@
+{
+  "incident_id": "33540c3c10",
+  "records": [
+    {
+      "id": "fb-200add5871",
+      "ts": 1792313113.3720307,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in notification-fanout, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.62,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792313113.3721144,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-4",
+    "description": "5xx rate 13% sustained for 354s after deploy of #47556",
+    "started_at": "2026-10-17T14:09:18.726387+00:00"
+  }
+}

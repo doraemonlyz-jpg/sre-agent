@@ -1,0 +1,33 @@
+{
+  "incident_id": "bdb5b9aae8",
+  "records": [
+    {
+      "id": "fb-08065eca9c",
+      "ts": 1792313113.4316194,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for image-thumbnail was filling our partition",
+      "correct_remediation": "disable feature flag svc.price-cache.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792313113.431705,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-4",
+    "description": "p99 latency 1609ms spiking on /checkout, error rate 5%",
+    "started_at": "2026-10-12T19:36:15.610373+00:00"
+  }
+}

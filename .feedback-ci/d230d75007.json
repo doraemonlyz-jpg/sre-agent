@@ -1,0 +1,33 @@
+{
+  "incident_id": "d230d75007",
+  "records": [
+    {
+      "id": "fb-db721a7228",
+      "ts": 1792313112.7860482,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream rate-limiter-edge timeout, not comment-svc",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792313112.7861333,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-4",
+    "description": "memory usage 99% on rate-limiter-edge -- OOM kill predicted in 30m",
+    "started_at": "2026-10-13T20:51:54.170703+00:00"
+  }
+}

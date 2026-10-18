@@ -1,0 +1,35 @@
+{
+  "incident_id": "fff486ed55",
+  "records": [
+    {
+      "id": "fb-ae3938599e",
+      "ts": 1792313113.5445206,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for promo-engine was filling our partition",
+      "correct_remediation": "increase session-store concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1792313113.5446074,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-2",
+    "description": "downstream service order-pipeline returning 502 -- error budget burning at 19x",
+    "started_at": "2026-10-11T10:27:31.720842+00:00"
+  }
+}

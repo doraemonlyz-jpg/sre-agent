@@ -1,0 +1,33 @@
+{
+  "incident_id": "557ba3439a",
+  "records": [
+    {
+      "id": "fb-5f00d57080",
+      "ts": 1792313113.411058,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "queue head-of-line blocking in inventory-sync, not what the agent said",
+      "correct_remediation": "page the live-stream-edge oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.88,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792313113.4111457,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "5xx rate 22% sustained for 575s after deploy of #70079",
+    "started_at": "2026-10-13T03:45:23.811491+00:00"
+  }
+}

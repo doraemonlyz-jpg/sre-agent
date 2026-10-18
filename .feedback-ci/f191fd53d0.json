@@ -1,0 +1,33 @@
+{
+  "incident_id": "f191fd53d0",
+  "records": [
+    {
+      "id": "fb-1b27cf937e",
+      "ts": 1792313112.9520087,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in price-cache, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792313112.952092,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-4",
+    "description": "downstream service promo-engine returning 502 -- error budget burning at 4x",
+    "started_at": "2026-10-15T18:13:22.544412+00:00"
+  }
+}

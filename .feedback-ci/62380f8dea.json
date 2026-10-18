@@ -1,0 +1,33 @@
+{
+  "incident_id": "62380f8dea",
+  "records": [
+    {
+      "id": "fb-573ccd3aa0",
+      "ts": 1792313113.482907,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792313113.4829962,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-3",
+    "description": "p99 latency 2458ms spiking on /checkout, error rate 3%",
+    "started_at": "2026-10-14T14:34:32.486711+00:00"
+  }
+}

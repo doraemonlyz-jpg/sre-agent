@@ -1,0 +1,33 @@
+{
+  "incident_id": "10b4a318e2",
+  "records": [
+    {
+      "id": "fb-0218adf599",
+      "ts": 1792313112.7585146,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.89,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792313112.7586005,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-3",
+    "description": "memory usage 99% on inventory-sync -- OOM kill predicted in 20m",
+    "started_at": "2026-10-17T12:32:48.755346+00:00"
+  }
+}

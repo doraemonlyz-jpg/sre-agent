@@ -1,0 +1,33 @@
+{
+  "incident_id": "80a4fdac6d",
+  "records": [
+    {
+      "id": "fb-24e75e2405",
+      "ts": 1792313112.8288727,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in ad-bidder, not what the agent said",
+      "correct_remediation": "page the search-suggest oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.92,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792313112.8289561,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-2",
+    "description": "5xx rate 25% sustained for 261s after deploy of #99802",
+    "started_at": "2026-10-17T16:11:55.536288+00:00"
+  }
+}
