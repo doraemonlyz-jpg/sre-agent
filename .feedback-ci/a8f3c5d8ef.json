@@ -1,0 +1,33 @@
+{
+  "incident_id": "a8f3c5d8ef",
+  "records": [
+    {
+      "id": "fb-ce18e7986e",
+      "ts": 1792307329.325116,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the cart-service sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792307329.3251812,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-4",
+    "description": "downstream service search-suggest returning 502 -- error budget burning at 8x",
+    "started_at": "2026-10-16T04:01:17.287606+00:00"
+  }
+}

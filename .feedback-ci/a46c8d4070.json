@@ -1,0 +1,35 @@
+{
+  "incident_id": "a46c8d4070",
+  "records": [
+    {
+      "id": "fb-bbba58da32",
+      "ts": 1792307329.3834074,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "DNS resolution lag in the cart-service sidecar",
+      "correct_remediation": "increase cart-service concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1792307329.383471,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 517ms briefly, recovered in 10s",
+    "started_at": "2026-10-12T08:33:00.079656+00:00"
+  }
+}
