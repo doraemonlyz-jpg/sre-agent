@@ -1,0 +1,33 @@
+{
+  "incident_id": "d1a6b1adb2",
+  "records": [
+    {
+      "id": "fb-0d0ac8cbe3",
+      "ts": 1792395359.324796,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the order-pipeline sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792395359.324914,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "downstream service cdn-router returning 502 -- error budget burning at 16x",
+    "started_at": "2026-10-13T03:36:08.893756+00:00"
+  }
+}

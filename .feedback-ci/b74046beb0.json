@@ -1,0 +1,33 @@
+{
+  "incident_id": "b74046beb0",
+  "records": [
+    {
+      "id": "fb-cc1e2e7c75",
+      "ts": 1792395359.4519835,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for order-pipeline was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.82,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792395359.452072,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-4",
+    "description": "memory usage 98% on promo-engine -- OOM kill predicted in 4m",
+    "started_at": "2026-10-12T19:00:54.304635+00:00"
+  }
+}

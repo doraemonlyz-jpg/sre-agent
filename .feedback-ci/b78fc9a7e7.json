@@ -1,0 +1,33 @@
+{
+  "incident_id": "b78fc9a7e7",
+  "records": [
+    {
+      "id": "fb-789adf148b",
+      "ts": 1792395359.028639,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in user-profile, not what the agent said",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792395359.0287263,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-2",
+    "description": "memory usage 89% on rate-limiter-edge -- OOM kill predicted in 8m",
+    "started_at": "2026-10-13T11:38:06.952352+00:00"
+  }
+}

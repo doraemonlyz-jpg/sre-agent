@@ -1,0 +1,33 @@
+{
+  "incident_id": "de059502d9",
+  "records": [
+    {
+      "id": "fb-5f7308b212",
+      "ts": 1792395359.0816557,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in image-thumbnail, not what the agent said",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792395359.081742,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-3",
+    "description": "memory usage 93% on cdn-router -- OOM kill predicted in 11m",
+    "started_at": "2026-10-17T08:37:03.487729+00:00"
+  }
+}

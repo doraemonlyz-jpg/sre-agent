@@ -1,0 +1,35 @@
+{
+  "incident_id": "46a241eb8c",
+  "records": [
+    {
+      "id": "fb-7952197bc7",
+      "ts": 1792395359.3002574,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for comment-svc was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1792395359.300344,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-4",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on ad-bidder",
+    "started_at": "2026-10-14T22:52:11.769107+00:00"
+  }
+}

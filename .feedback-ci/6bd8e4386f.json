@@ -1,0 +1,35 @@
+{
+  "incident_id": "6bd8e4386f",
+  "records": [
+    {
+      "id": "fb-0b0ce502bd",
+      "ts": 1792395359.2593427,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream video-encoder timeout, not session-store",
+      "correct_remediation": "page the order-pipeline oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1792395359.259431,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 456ms briefly, recovered in 19s",
+    "started_at": "2026-10-16T12:13:54.680245+00:00"
+  }
+}

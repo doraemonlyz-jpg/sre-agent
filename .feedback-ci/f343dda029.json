@@ -1,0 +1,35 @@
+{
+  "incident_id": "f343dda029",
+  "records": [
+    {
+      "id": "fb-31210a9991",
+      "ts": 1792395359.280184,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "page the ad-bidder oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1792395359.2802765,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 550ms briefly, recovered in 20s",
+    "started_at": "2026-10-14T17:04:45.412112+00:00"
+  }
+}

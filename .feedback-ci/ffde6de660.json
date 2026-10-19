@@ -1,0 +1,35 @@
+{
+  "incident_id": "ffde6de660",
+  "records": [
+    {
+      "id": "fb-405e25069a",
+      "ts": 1792395358.8081439,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream promo-engine timeout, not price-cache",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1792395358.8082402,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on inventory-sync",
+    "started_at": "2026-10-15T01:56:44.204932+00:00"
+  }
+}

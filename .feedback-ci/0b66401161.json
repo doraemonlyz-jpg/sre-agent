@@ -1,0 +1,33 @@
+{
+  "incident_id": "0b66401161",
+  "records": [
+    {
+      "id": "fb-461205233d",
+      "ts": 1792395359.6657112,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the auth-service sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.85,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792395359.6657987,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-1",
+    "description": "noisy probe alert: p99 435ms briefly, recovered in 17s",
+    "started_at": "2026-10-17T22:12:39.785672+00:00"
+  }
+}
