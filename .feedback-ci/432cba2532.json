@@ -1,0 +1,33 @@
+{
+  "incident_id": "432cba2532",
+  "records": [
+    {
+      "id": "fb-d417646baf",
+      "ts": 1792409143.8565829,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in cdn-router, not what the agent said",
+      "correct_remediation": "disable feature flag svc.cdn-router.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.82,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792409143.8566263,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-4",
+    "description": "downstream service session-store returning 502 -- error budget burning at 3x",
+    "started_at": "2026-10-17T17:28:21.468013+00:00"
+  }
+}

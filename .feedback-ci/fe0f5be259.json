@@ -1,0 +1,33 @@
+{
+  "incident_id": "fe0f5be259",
+  "records": [
+    {
+      "id": "fb-0df245d14e",
+      "ts": 1792409143.806737,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for notification-fanout was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792409143.8067772,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "downstream service cart-service returning 502 -- error budget burning at 6x",
+    "started_at": "2026-10-12T20:45:37.976060+00:00"
+  }
+}
