@@ -1,0 +1,35 @@
+{
+  "incident_id": "20e91d9a0c",
+  "records": [
+    {
+      "id": "fb-bbbce0029b",
+      "ts": 1792480983.9811506,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream price-cache timeout, not order-pipeline",
+      "correct_remediation": "disable feature flag svc.order-pipeline.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1792480983.98121,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-2",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on recommend-feed",
+    "started_at": "2026-10-14T10:08:57.252814+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "afd09b3703",
+  "records": [
+    {
+      "id": "fb-83e1f48414",
+      "ts": 1792480984.0319908,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in video-encoder, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792480984.0320723,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "p99 latency 3112ms spiking on /checkout, error rate 13%",
+    "started_at": "2026-10-17T18:45:44.261149+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "ba87bf5661",
+  "records": [
+    {
+      "id": "fb-76a7611cf2",
+      "ts": 1792480984.1431394,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.order-pipeline.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.9,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792480984.143198,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-4",
+    "description": "memory usage 99% on cdn-router -- OOM kill predicted in 10m",
+    "started_at": "2026-10-16T01:44:00.562578+00:00"
+  }
+}
