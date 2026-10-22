@@ -1,0 +1,33 @@
+{
+  "incident_id": "3c4f697fec",
+  "records": [
+    {
+      "id": "fb-0f89cc6a33",
+      "ts": 1792653866.8294625,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the order-pipeline sidecar",
+      "correct_remediation": "increase order-pipeline concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792653866.8295472,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-4",
+    "description": "downstream service payments-gateway returning 502 -- error budget burning at 19x",
+    "started_at": "2026-10-16T10:12:16.517362+00:00"
+  }
+}

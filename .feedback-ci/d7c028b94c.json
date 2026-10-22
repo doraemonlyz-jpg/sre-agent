@@ -1,0 +1,33 @@
+{
+  "incident_id": "d7c028b94c",
+  "records": [
+    {
+      "id": "fb-7c3578d368",
+      "ts": 1792653866.7571821,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the comment-svc sidecar",
+      "correct_remediation": "disable feature flag svc.comment-svc.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.79,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792653866.7572665,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-4",
+    "description": "p99 latency 3270ms spiking on /checkout, error rate 5%",
+    "started_at": "2026-10-15T16:03:38.812976+00:00"
+  }
+}
