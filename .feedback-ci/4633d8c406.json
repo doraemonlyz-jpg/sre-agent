@@ -1,0 +1,33 @@
+{
+  "incident_id": "4633d8c406",
+  "records": [
+    {
+      "id": "fb-8ced834c3e",
+      "ts": 1792739910.4638422,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "increase notification-fanout concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.65,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792739910.4639297,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-4",
+    "description": "p99 latency 2065ms spiking on /checkout, error rate 8%",
+    "started_at": "2026-10-19T08:01:52.187767+00:00"
+  }
+}

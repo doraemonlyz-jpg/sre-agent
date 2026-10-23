@@ -1,0 +1,33 @@
+{
+  "incident_id": "a32a09115e",
+  "records": [
+    {
+      "id": "fb-c8aaeaf1a2",
+      "ts": 1792739910.507762,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not payments-gateway",
+      "correct_remediation": "page the video-encoder oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.88,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792739910.507849,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-3",
+    "description": "downstream service live-stream-edge returning 502 -- error budget burning at 10x",
+    "started_at": "2026-10-22T07:21:20.884796+00:00"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "incident_id": "cd70b21a09",
+  "records": [
+    {
+      "id": "fb-d945ceb9f7",
+      "ts": 1792739910.3256288,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream comment-svc timeout, not cdn-router",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1792739910.3257124,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 628ms briefly, recovered in 8s",
+    "started_at": "2026-10-20T08:36:07.143273+00:00"
+  }
+}
