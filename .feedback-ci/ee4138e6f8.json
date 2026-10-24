@@ -1,0 +1,33 @@
+{
+  "incident_id": "ee4138e6f8",
+  "records": [
+    {
+      "id": "fb-3edc5bd3a4",
+      "ts": 1792825637.881745,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream comment-svc timeout, not order-pipeline",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792825637.8818269,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-2",
+    "description": "downstream service comment-svc returning 502 -- error budget burning at 14x",
+    "started_at": "2026-10-18T11:46:19.824520+00:00"
+  }
+}
