@@ -1,0 +1,33 @@
+{
+  "incident_id": "914f817b19",
+  "records": [
+    {
+      "id": "fb-066f7e7f30",
+      "ts": 1792918985.3979607,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream ad-bidder timeout, not payments-gateway",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792918985.3980458,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-4",
+    "description": "5xx rate 17% sustained for 306s after deploy of #16115",
+    "started_at": "2026-10-23T13:53:15.973278+00:00"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "incident_id": "943dd72731",
+  "records": [
+    {
+      "id": "fb-74a12dd694",
+      "ts": 1792918985.5009801,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for promo-engine was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1792918985.5010662,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-4",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on user-profile",
+    "started_at": "2026-10-22T02:44:40.941123+00:00"
+  }
+}

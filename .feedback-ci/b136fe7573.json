@@ -1,0 +1,33 @@
+{
+  "incident_id": "b136fe7573",
+  "records": [
+    {
+      "id": "fb-b086e3d7cd",
+      "ts": 1792918985.7187366,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in price-cache, not what the agent said",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.75,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792918985.7188208,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on notification-fanout",
+    "started_at": "2026-10-24T23:20:33.987571+00:00"
+  }
+}

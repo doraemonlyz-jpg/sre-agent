@@ -1,0 +1,33 @@
+{
+  "incident_id": "698454ca47",
+  "records": [
+    {
+      "id": "fb-7635814356",
+      "ts": 1792918985.2115533,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream session-store timeout, not payments-gateway",
+      "correct_remediation": "disable feature flag svc.payments-gateway.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.94,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792918985.211638,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-4",
+    "description": "downstream service video-encoder returning 502 -- error budget burning at 6x",
+    "started_at": "2026-10-18T13:37:39.075635+00:00"
+  }
+}

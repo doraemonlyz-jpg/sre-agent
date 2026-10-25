@@ -1,0 +1,33 @@
+{
+  "incident_id": "b0b937edd0",
+  "records": [
+    {
+      "id": "fb-09cc2a00b5",
+      "ts": 1792918985.7937906,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in ad-bidder, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792918985.7938745,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "memory usage 97% on cdn-router -- OOM kill predicted in 5m",
+    "started_at": "2026-10-22T21:50:17.369224+00:00"
+  }
+}

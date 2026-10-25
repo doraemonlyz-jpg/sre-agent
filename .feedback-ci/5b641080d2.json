@@ -1,0 +1,33 @@
+{
+  "incident_id": "5b641080d2",
+  "records": [
+    {
+      "id": "fb-609349dd4e",
+      "ts": 1792918985.37687,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the price-cache sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.87,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792918985.3769565,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-3",
+    "description": "5xx rate 9% sustained for 255s after deploy of #19914",
+    "started_at": "2026-10-23T18:25:35.576086+00:00"
+  }
+}
