@@ -1,0 +1,33 @@
+{
+  "incident_id": "8fcb639992",
+  "records": [
+    {
+      "id": "fb-4e6d796491",
+      "ts": 1792913384.5525033,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream comment-svc timeout, not inventory-sync",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792913384.5526161,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on promo-engine",
+    "started_at": "2026-10-18T12:20:19.090973+00:00"
+  }
+}

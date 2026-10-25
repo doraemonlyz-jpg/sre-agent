@@ -1,0 +1,33 @@
+{
+  "incident_id": "3a2f547b11",
+  "records": [
+    {
+      "id": "fb-c26a546e5c",
+      "ts": 1792913384.6300251,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the auth-service sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792913384.6301107,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "memory usage 97% on cart-service -- OOM kill predicted in 19m",
+    "started_at": "2026-10-20T16:48:59.127109+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "a2c11424c7",
+  "records": [
+    {
+      "id": "fb-624fdfc0bf",
+      "ts": 1792913384.1698294,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream price-cache timeout, not rate-limiter-edge",
+      "correct_remediation": "page the cdn-router oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.83,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792913384.169913,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-1",
+    "description": "downstream service cart-service returning 502 -- error budget burning at 16x",
+    "started_at": "2026-10-21T02:07:34.298912+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "4bfc8b7d77",
+  "records": [
+    {
+      "id": "fb-3ce9c4a2c3",
+      "ts": 1792913384.2040486,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream notification-fanout timeout, not search-suggest",
+      "correct_remediation": "disable feature flag svc.search-suggest.new_path",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1792913384.2041328,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-2",
+    "description": "5xx rate 19% sustained for 459s after deploy of #45620",
+    "started_at": "2026-10-22T09:08:41.173372+00:00"
+  }
+}
