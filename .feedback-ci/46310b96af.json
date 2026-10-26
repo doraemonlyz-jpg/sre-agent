@@ -1,0 +1,33 @@
+{
+  "incident_id": "46310b96af",
+  "records": [
+    {
+      "id": "fb-f5fb0c27ac",
+      "ts": 1793000410.0587978,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the video-encoder sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793000410.058884,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-4",
+    "description": "p99 latency 2519ms spiking on /checkout, error rate 6%",
+    "started_at": "2026-10-26T03:18:44.856067+00:00"
+  }
+}

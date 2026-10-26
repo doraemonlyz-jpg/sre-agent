@@ -1,0 +1,35 @@
+{
+  "incident_id": "7342ccbb7f",
+  "records": [
+    {
+      "id": "fb-bc7e978f9f",
+      "ts": 1793000410.16305,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in video-encoder, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1793000410.1631584,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 652ms briefly, recovered in 17s",
+    "started_at": "2026-10-21T01:07:19.795814+00:00"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "incident_id": "dd5439dcfc",
+  "records": [
+    {
+      "id": "fb-500f1a5f7c",
+      "ts": 1793000410.5864825,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream auth-service timeout, not order-pipeline",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1793000410.5865877,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-2",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on image-thumbnail",
+    "started_at": "2026-10-19T20:33:33.685369+00:00"
+  }
+}
