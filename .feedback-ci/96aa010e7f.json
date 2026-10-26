@@ -1,0 +1,33 @@
+{
+  "incident_id": "96aa010e7f",
+  "records": [
+    {
+      "id": "fb-4aef617612",
+      "ts": 1793015062.9896865,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the auth-service sidecar",
+      "correct_remediation": "page the order-pipeline oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793015062.9897714,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-1",
+    "description": "memory usage 93% on checkout-api -- OOM kill predicted in 16m",
+    "started_at": "2026-10-20T11:13:00.243321+00:00"
+  }
+}

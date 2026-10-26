@@ -1,0 +1,35 @@
+{
+  "incident_id": "7e4d6f0f83",
+  "records": [
+    {
+      "id": "fb-8d53909683",
+      "ts": 1793015062.7849882,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the notification-fanout sidecar",
+      "correct_remediation": "increase notification-fanout concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1793015062.7850792,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 350ms briefly, recovered in 20s",
+    "started_at": "2026-10-22T09:32:23.462979+00:00"
+  }
+}

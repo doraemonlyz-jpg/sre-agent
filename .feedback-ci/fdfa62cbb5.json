@@ -1,0 +1,33 @@
+{
+  "incident_id": "fdfa62cbb5",
+  "records": [
+    {
+      "id": "fb-4637da7abf",
+      "ts": 1793015063.0944028,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for recommend-feed was filling our partition",
+      "correct_remediation": "page the checkout-api oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.94,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793015063.0944881,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-4",
+    "description": "downstream service cart-service returning 502 -- error budget burning at 15x",
+    "started_at": "2026-10-24T01:19:27.921868+00:00"
+  }
+}

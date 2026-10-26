@@ -1,0 +1,33 @@
+{
+  "incident_id": "cf356b81b3",
+  "records": [
+    {
+      "id": "fb-2dfb3201ee",
+      "ts": 1793015063.0468383,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream comment-svc timeout, not price-cache",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.69,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793015063.0469527,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-4",
+    "description": "memory usage 90% on cdn-router -- OOM kill predicted in 19m",
+    "started_at": "2026-10-22T10:28:33.922940+00:00"
+  }
+}

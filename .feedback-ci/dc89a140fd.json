@@ -1,0 +1,35 @@
+{
+  "incident_id": "dc89a140fd",
+  "records": [
+    {
+      "id": "fb-0571db9adb",
+      "ts": 1793015063.2396948,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream notification-fanout timeout, not comment-svc",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1793015063.2397826,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 264ms briefly, recovered in 7s",
+    "started_at": "2026-10-24T13:14:03.681028+00:00"
+  }
+}

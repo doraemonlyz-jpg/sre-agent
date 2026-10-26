@@ -1,0 +1,33 @@
+{
+  "incident_id": "0206974e44",
+  "records": [
+    {
+      "id": "fb-32026c1ea9",
+      "ts": 1793015062.9966404,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for price-cache was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793015062.996723,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 731ms briefly, recovered in 11s",
+    "started_at": "2026-10-23T18:22:30.906176+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "a6f5bba796",
+  "records": [
+    {
+      "id": "fb-5fc4e98905",
+      "ts": 1793015062.9419074,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in notification-fanout, not what the agent said",
+      "correct_remediation": "increase notification-fanout concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793015062.9420247,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "downstream service cdn-router returning 502 -- error budget burning at 17x",
+    "started_at": "2026-10-23T12:27:27.669520+00:00"
+  }
+}

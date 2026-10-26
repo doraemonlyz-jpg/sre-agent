@@ -1,0 +1,35 @@
+{
+  "incident_id": "26ca2015f6",
+  "records": [
+    {
+      "id": "fb-f99547e68d",
+      "ts": 1793015063.2374756,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cdn-router was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1793015063.237566,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 561ms briefly, recovered in 23s",
+    "started_at": "2026-10-19T23:20:53.392903+00:00"
+  }
+}

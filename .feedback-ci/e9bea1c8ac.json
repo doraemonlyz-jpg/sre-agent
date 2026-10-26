@@ -1,0 +1,33 @@
+{
+  "incident_id": "e9bea1c8ac",
+  "records": [
+    {
+      "id": "fb-bb4b9451a2",
+      "ts": 1793015063.021215,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream auth-service timeout, not checkout-api",
+      "correct_remediation": "disable feature flag svc.checkout-api.new_path",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.79,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793015063.0213013,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-3",
+    "description": "p99 latency 2289ms spiking on /checkout, error rate 3%",
+    "started_at": "2026-10-23T13:07:45.092338+00:00"
+  }
+}

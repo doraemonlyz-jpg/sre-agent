@@ -1,0 +1,33 @@
+{
+  "incident_id": "a6805b1e08",
+  "records": [
+    {
+      "id": "fb-39d3e3ecbd",
+      "ts": 1793015063.565962,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the price-cache sidecar",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.91,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793015063.5660503,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 364ms briefly, recovered in 28s",
+    "started_at": "2026-10-23T16:37:52.699851+00:00"
+  }
+}

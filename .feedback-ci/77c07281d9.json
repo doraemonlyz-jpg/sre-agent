@@ -1,0 +1,33 @@
+{
+  "incident_id": "77c07281d9",
+  "records": [
+    {
+      "id": "fb-31bf8a6dee",
+      "ts": 1793015063.2271442,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream rate-limiter-edge timeout, not notification-fanout",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793015063.227231,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-4",
+    "description": "p99 latency 2626ms spiking on /checkout, error rate 3%",
+    "started_at": "2026-10-23T16:09:03.106618+00:00"
+  }
+}
