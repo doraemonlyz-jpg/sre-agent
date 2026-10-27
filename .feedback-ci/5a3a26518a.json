@@ -1,0 +1,33 @@
+{
+  "incident_id": "5a3a26518a",
+  "records": [
+    {
+      "id": "fb-f606cc4be9",
+      "ts": 1793086652.5691833,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream video-encoder timeout, not video-encoder",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.6,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793086652.5692708,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "memory usage 87% on cdn-router -- OOM kill predicted in 22m",
+    "started_at": "2026-10-20T09:11:18.935188+00:00"
+  }
+}

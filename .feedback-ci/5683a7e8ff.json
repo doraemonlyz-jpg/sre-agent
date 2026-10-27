@@ -1,0 +1,35 @@
+{
+  "incident_id": "5683a7e8ff",
+  "records": [
+    {
+      "id": "fb-9a41220cce",
+      "ts": 1793086652.5824196,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "actually a downstream rate-limiter-edge timeout, not user-profile",
+      "correct_remediation": "increase user-profile concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1793086652.5825381,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 229ms briefly, recovered in 23s",
+    "started_at": "2026-10-21T01:24:29.478657+00:00"
+  }
+}

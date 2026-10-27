@@ -1,0 +1,33 @@
+{
+  "incident_id": "9c63a01948",
+  "records": [
+    {
+      "id": "fb-735cd9bff4",
+      "ts": 1793086652.6120453,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.price-cache.new_path",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793086652.6121325,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-2",
+    "description": "5xx rate 16% sustained for 232s after deploy of #93855",
+    "started_at": "2026-10-21T07:39:37.135938+00:00"
+  }
+}
