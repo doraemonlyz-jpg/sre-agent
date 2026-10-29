@@ -1,0 +1,33 @@
+{
+  "incident_id": "4593f21785",
+  "records": [
+    {
+      "id": "fb-ae1cb003c7",
+      "ts": 1793261897.2172263,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in video-encoder, not what the agent said",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.88,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793261897.2172892,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-1",
+    "description": "p99 latency 1649ms spiking on /checkout, error rate 3%",
+    "started_at": "2026-10-25T14:07:36.586615+00:00"
+  }
+}
