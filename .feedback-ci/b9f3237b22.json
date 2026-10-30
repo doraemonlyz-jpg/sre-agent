@@ -1,0 +1,33 @@
+{
+  "incident_id": "b9f3237b22",
+  "records": [
+    {
+      "id": "fb-268011ec48",
+      "ts": 1793348765.5913806,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream checkout-api timeout, not cart-service",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.84,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793348765.5914283,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-1",
+    "description": "p99 latency 3046ms spiking on /checkout, error rate 11%",
+    "started_at": "2026-10-30T08:53:34.715221+00:00"
+  }
+}
