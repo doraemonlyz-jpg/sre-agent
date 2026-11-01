@@ -1,0 +1,33 @@
+{
+  "incident_id": "b9093ad3d7",
+  "records": [
+    {
+      "id": "fb-5dffd14f65",
+      "ts": 1793523595.6107926,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "queue head-of-line blocking in checkout-api, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.63,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793523595.610855,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-2",
+    "description": "5xx rate 13% sustained for 483s after deploy of #84532",
+    "started_at": "2026-10-26T12:37:37.299990+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "f20ab5c000",
+  "records": [
+    {
+      "id": "fb-02f2221dab",
+      "ts": 1793523596.097467,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for order-pipeline was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.85,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793523596.097526,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-3",
+    "description": "p99 latency 2024ms spiking on /checkout, error rate 8%",
+    "started_at": "2026-10-30T21:13:41.739138+00:00"
+  }
+}

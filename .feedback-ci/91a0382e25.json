@@ -1,0 +1,33 @@
+{
+  "incident_id": "91a0382e25",
+  "records": [
+    {
+      "id": "fb-a12710aa46",
+      "ts": 1793523595.833331,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in comment-svc, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.8,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793523595.8333912,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 622ms briefly, recovered in 19s",
+    "started_at": "2026-11-01T02:37:59.885217+00:00"
+  }
+}

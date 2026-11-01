@@ -1,0 +1,33 @@
+{
+  "incident_id": "d060c8e908",
+  "records": [
+    {
+      "id": "fb-fa60d58696",
+      "ts": 1793523595.6347673,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream cart-service timeout, not promo-engine",
+      "correct_remediation": "increase promo-engine concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793523595.634831,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-3",
+    "description": "p99 latency 1555ms spiking on /checkout, error rate 3%",
+    "started_at": "2026-10-26T07:41:32.212514+00:00"
+  }
+}

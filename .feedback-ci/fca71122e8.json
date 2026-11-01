@@ -1,0 +1,33 @@
+{
+  "incident_id": "fca71122e8",
+  "records": [
+    {
+      "id": "fb-c283a87f04",
+      "ts": 1793523596.007375,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in live-stream-edge, not what the agent said",
+      "correct_remediation": "increase live-stream-edge concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793523596.0074327,
+  "alert": {
+    "service": "live-stream-edge",
+    "severity": "SEV-3",
+    "description": "memory usage 92% on live-stream-edge -- OOM kill predicted in 22m",
+    "started_at": "2026-10-26T04:53:12.655268+00:00"
+  }
+}
