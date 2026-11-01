@@ -1,0 +1,33 @@
+{
+  "incident_id": "1a7ff95593",
+  "records": [
+    {
+      "id": "fb-1a79b0be0b",
+      "ts": 1793531385.2150207,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793531385.2151065,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-3",
+    "description": "memory usage 88% on cdn-router -- OOM kill predicted in 20m",
+    "started_at": "2026-10-27T23:04:29.846174+00:00"
+  }
+}

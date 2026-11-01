@@ -1,0 +1,33 @@
+{
+  "incident_id": "fd5c9c94e5",
+  "records": [
+    {
+      "id": "fb-a356eab240",
+      "ts": 1793531384.5202327,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for recommend-feed was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.75,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793531384.5203156,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-2",
+    "description": "downstream service checkout-api returning 502 -- error budget burning at 15x",
+    "started_at": "2026-10-31T02:27:56.567160+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "af1a781224",
+  "records": [
+    {
+      "id": "fb-7ccbd6cd2c",
+      "ts": 1793531385.370543,
+      "verdict": "correct",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.68,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793531385.370631,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-4",
+    "description": "downstream service order-pipeline returning 502 -- error budget burning at 19x",
+    "started_at": "2026-10-28T04:21:03.144990+00:00"
+  }
+}
