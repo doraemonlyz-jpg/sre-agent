@@ -1,0 +1,33 @@
+{
+  "incident_id": "b8aae1fea7",
+  "records": [
+    {
+      "id": "fb-4d3cbeac2b",
+      "ts": 1793628040.5211248,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.65,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793628040.5211866,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-4",
+    "description": "downstream service price-cache returning 502 -- error budget burning at 4x",
+    "started_at": "2026-10-26T18:04:50.673611+00:00"
+  }
+}

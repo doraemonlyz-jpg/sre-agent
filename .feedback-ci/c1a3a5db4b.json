@@ -1,0 +1,33 @@
+{
+  "incident_id": "c1a3a5db4b",
+  "records": [
+    {
+      "id": "fb-ccc79c089b",
+      "ts": 1793628040.6678507,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "queue head-of-line blocking in auth-service, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793628040.6679091,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-2",
+    "description": "memory usage 99% on session-store -- OOM kill predicted in 4m",
+    "started_at": "2026-11-01T07:43:54.707163+00:00"
+  }
+}

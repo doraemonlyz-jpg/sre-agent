@@ -1,0 +1,35 @@
+{
+  "incident_id": "e8d1839b8f",
+  "records": [
+    {
+      "id": "fb-8cc5cda634",
+      "ts": 1793628040.4854631,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for auth-service was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1793628040.4855232,
+  "alert": {
+    "service": "inventory-sync",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 329ms briefly, recovered in 6s",
+    "started_at": "2026-10-31T03:59:55.053166+00:00"
+  }
+}

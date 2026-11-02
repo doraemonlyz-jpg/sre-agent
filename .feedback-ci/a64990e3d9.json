@@ -1,0 +1,35 @@
+{
+  "incident_id": "a64990e3d9",
+  "records": [
+    {
+      "id": "fb-cc349318dc",
+      "ts": 1793628040.481562,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream promo-engine timeout, not search-suggest",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1793628040.4816203,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-2",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on order-pipeline",
+    "started_at": "2026-10-27T16:48:26.315870+00:00"
+  }
+}

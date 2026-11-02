@@ -1,0 +1,33 @@
+{
+  "incident_id": "329455bc75",
+  "records": [
+    {
+      "id": "fb-32180a0be8",
+      "ts": 1793628040.5763037,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in price-cache, not what the agent said",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.75,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793628040.5763633,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-2",
+    "description": "p99 latency 1696ms spiking on /checkout, error rate 3%",
+    "started_at": "2026-11-02T04:18:09.042203+00:00"
+  }
+}
