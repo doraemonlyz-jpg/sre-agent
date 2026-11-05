@@ -1,0 +1,33 @@
+{
+  "incident_id": "f59a7891b4",
+  "records": [
+    {
+      "id": "fb-d324d6d759",
+      "ts": 1793870256.683787,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.9,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793870256.6838753,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-2",
+    "description": "downstream service user-profile returning 502 -- error budget burning at 9x",
+    "started_at": "2026-11-03T00:36:41.336360+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "a0d758ee84",
+  "records": [
+    {
+      "id": "fb-2c2f23abcc",
+      "ts": 1793870255.8840387,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream video-encoder timeout, not order-pipeline",
+      "correct_remediation": "increase order-pipeline concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.6,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793870255.8841228,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-1",
+    "description": "memory usage 87% on search-suggest -- OOM kill predicted in 28m",
+    "started_at": "2026-11-03T13:25:18.067815+00:00"
+  }
+}
