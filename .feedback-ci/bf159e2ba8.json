@@ -1,0 +1,33 @@
+{
+  "incident_id": "bf159e2ba8",
+  "records": [
+    {
+      "id": "fb-e60c8a1a7e",
+      "ts": 1793956267.5646465,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream recommend-feed timeout, not user-profile",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793956267.5646827,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 205ms briefly, recovered in 22s",
+    "started_at": "2026-11-04T12:47:16.914228+00:00"
+  }
+}

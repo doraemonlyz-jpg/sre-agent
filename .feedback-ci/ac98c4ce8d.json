@@ -1,0 +1,33 @@
+{
+  "incident_id": "ac98c4ce8d",
+  "records": [
+    {
+      "id": "fb-a06aac765c",
+      "ts": 1793956267.5653572,
+      "verdict": "incorrect",
+      "submitter": "oncall-bob",
+      "rating": 5,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cart-service was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1793956267.565396,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-2",
+    "description": "5xx rate 14% sustained for 346s after deploy of #33373",
+    "started_at": "2026-11-02T10:55:06.666443+00:00"
+  }
+}
