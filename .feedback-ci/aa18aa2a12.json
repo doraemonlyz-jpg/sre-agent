@@ -1,0 +1,33 @@
+{
+  "incident_id": "aa18aa2a12",
+  "records": [
+    {
+      "id": "fb-5787d085c9",
+      "ts": 1794040643.6306355,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream ad-bidder timeout, not notification-fanout",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794040643.630722,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "downstream service ad-bidder returning 502 -- error budget burning at 13x",
+    "started_at": "2026-11-01T11:38:52.316620+00:00"
+  }
+}
