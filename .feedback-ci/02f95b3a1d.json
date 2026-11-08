@@ -1,0 +1,33 @@
+{
+  "incident_id": "02f95b3a1d",
+  "records": [
+    {
+      "id": "fb-61ca4a4d26",
+      "ts": 1794127803.459894,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the user-profile sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794127803.4599378,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-3",
+    "description": "p99 latency 3401ms spiking on /checkout, error rate 15%",
+    "started_at": "2026-11-06T19:14:18.756890+00:00"
+  }
+}
