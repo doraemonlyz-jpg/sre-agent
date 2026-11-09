@@ -1,0 +1,33 @@
+{
+  "incident_id": "b9d11ffdc4",
+  "records": [
+    {
+      "id": "fb-b0aa04b0a0",
+      "ts": 1794216804.2023149,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in cdn-router, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.61,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794216804.2023983,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-1",
+    "description": "p99 latency 3112ms spiking on /checkout, error rate 13%",
+    "started_at": "2026-11-06T16:02:03.940907+00:00"
+  }
+}
