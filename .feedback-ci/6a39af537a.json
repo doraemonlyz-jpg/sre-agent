@@ -1,0 +1,33 @@
+{
+  "incident_id": "6a39af537a",
+  "records": [
+    {
+      "id": "fb-1ef31ef47a",
+      "ts": 1794234810.1946273,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream comment-svc timeout, not notification-fanout",
+      "correct_remediation": "page the cart-service oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794234810.194675,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-2",
+    "description": "downstream service rate-limiter-edge returning 502 -- error budget burning at 14x",
+    "started_at": "2026-11-03T09:38:58.610131+00:00"
+  }
+}

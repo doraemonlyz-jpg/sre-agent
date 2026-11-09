@@ -1,0 +1,33 @@
+{
+  "incident_id": "e8f3765d13",
+  "records": [
+    {
+      "id": "fb-3e88e454d3",
+      "ts": 1794234810.2066433,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for ad-bidder was filling our partition",
+      "correct_remediation": "increase ad-bidder concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794234810.2066894,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-3",
+    "description": "downstream service cart-service returning 502 -- error budget burning at 10x",
+    "started_at": "2026-11-06T10:45:00.272178+00:00"
+  }
+}

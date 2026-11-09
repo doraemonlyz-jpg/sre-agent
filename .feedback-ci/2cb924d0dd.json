@@ -1,0 +1,35 @@
+{
+  "incident_id": "2cb924d0dd",
+  "records": [
+    {
+      "id": "fb-6d5575d1c5",
+      "ts": 1794234810.2443373,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the comment-svc sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1794234810.2443805,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on cart-service",
+    "started_at": "2026-11-08T21:37:47.140567+00:00"
+  }
+}

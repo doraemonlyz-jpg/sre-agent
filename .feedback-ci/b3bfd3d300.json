@@ -1,0 +1,33 @@
+{
+  "incident_id": "b3bfd3d300",
+  "records": [
+    {
+      "id": "fb-540bd2fba5",
+      "ts": 1794234810.2462518,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "queue head-of-line blocking in price-cache, not what the agent said",
+      "correct_remediation": "increase price-cache concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.56,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794234810.2462947,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-4",
+    "description": "5xx rate 13% sustained for 586s after deploy of #51942",
+    "started_at": "2026-11-03T15:03:56.117545+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "e264180c9b",
+  "records": [
+    {
+      "id": "fb-69517e6be1",
+      "ts": 1794234810.1971238,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cart-service was filling our partition",
+      "correct_remediation": "increase rate-limiter-edge concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794234810.1971643,
+  "alert": {
+    "service": "rate-limiter-edge",
+    "severity": "SEV-3",
+    "description": "5xx rate 23% sustained for 551s after deploy of #91714",
+    "started_at": "2026-11-05T19:32:45.706238+00:00"
+  }
+}
