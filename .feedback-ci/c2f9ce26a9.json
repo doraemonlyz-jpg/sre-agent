@@ -1,0 +1,35 @@
+{
+  "incident_id": "c2f9ce26a9",
+  "records": [
+    {
+      "id": "fb-ad9d77b028",
+      "ts": 1794303243.3811939,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream auth-service timeout, not cdn-router",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1794303243.3812547,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-2",
+    "description": "noisy probe alert: p99 401ms briefly, recovered in 29s",
+    "started_at": "2026-11-08T09:42:36.731394+00:00"
+  }
+}
