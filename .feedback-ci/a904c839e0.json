@@ -1,0 +1,33 @@
+{
+  "incident_id": "a904c839e0",
+  "records": [
+    {
+      "id": "fb-5495429528",
+      "ts": 1794476231.8942144,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream inventory-sync timeout, not cdn-router",
+      "correct_remediation": "disable feature flag svc.cdn-router.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794476231.8943038,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-4",
+    "description": "downstream service video-encoder returning 502 -- error budget burning at 16x",
+    "started_at": "2026-11-09T02:20:06.362371+00:00"
+  }
+}

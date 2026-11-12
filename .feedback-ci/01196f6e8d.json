@@ -1,0 +1,35 @@
+{
+  "incident_id": "01196f6e8d",
+  "records": [
+    {
+      "id": "fb-415e7d2517",
+      "ts": 1794476231.8888824,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": null,
+      "correct_root_cause": "actually a downstream video-encoder timeout, not auth-service",
+      "correct_remediation": "page the live-stream-edge oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1794476231.8889709,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "synthetic-monitor flap: 3 consecutive failed checks on inventory-sync",
+    "started_at": "2026-11-11T21:45:16.720732+00:00"
+  }
+}

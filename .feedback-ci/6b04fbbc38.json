@@ -1,0 +1,33 @@
+{
+  "incident_id": "6b04fbbc38",
+  "records": [
+    {
+      "id": "fb-b65f4252a9",
+      "ts": 1794476231.5481231,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in payments-gateway, not what the agent said",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794476231.5482078,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-4",
+    "description": "memory usage 95% on live-stream-edge -- OOM kill predicted in 29m",
+    "started_at": "2026-11-12T09:23:26.546113+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "9ce8e709ae",
+  "records": [
+    {
+      "id": "fb-6677d8e3cc",
+      "ts": 1794476232.0911853,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream price-cache timeout, not auth-service",
+      "correct_remediation": "page the payments-gateway oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.77,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794476232.0912726,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "5xx rate 10% sustained for 542s after deploy of #36884",
+    "started_at": "2026-11-07T08:14:07.558569+00:00"
+  }
+}

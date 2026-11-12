@@ -1,0 +1,33 @@
+{
+  "incident_id": "861cd1034f",
+  "records": [
+    {
+      "id": "fb-251271a128",
+      "ts": 1794476232.1194303,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for checkout-api was filling our partition",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794476232.119566,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "downstream service session-store returning 502 -- error budget burning at 12x",
+    "started_at": "2026-11-08T19:11:56.499959+00:00"
+  }
+}
