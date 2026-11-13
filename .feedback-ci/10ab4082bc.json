@@ -1,0 +1,33 @@
+{
+  "incident_id": "10ab4082bc",
+  "records": [
+    {
+      "id": "fb-64d1a6f5ee",
+      "ts": 1794561734.8876827,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "actually a downstream order-pipeline timeout, not image-thumbnail",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.86,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794561734.8877683,
+  "alert": {
+    "service": "image-thumbnail",
+    "severity": "SEV-1",
+    "description": "downstream service payments-gateway returning 502 -- error budget burning at 14x",
+    "started_at": "2026-11-08T07:48:45.081831+00:00"
+  }
+}
