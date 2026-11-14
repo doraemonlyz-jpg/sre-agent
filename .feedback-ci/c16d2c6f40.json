@@ -1,0 +1,35 @@
+{
+  "incident_id": "c16d2c6f40",
+  "records": [
+    {
+      "id": "fb-4415769f4f",
+      "ts": 1794646226.113755,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the order-pipeline sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1794646226.11386,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 261ms briefly, recovered in 10s",
+    "started_at": "2026-11-12T04:14:36.537970+00:00"
+  }
+}

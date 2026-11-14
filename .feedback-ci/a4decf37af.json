@@ -1,0 +1,33 @@
+{
+  "incident_id": "a4decf37af",
+  "records": [
+    {
+      "id": "fb-3ecfb2b7fe",
+      "ts": 1794646226.5932705,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream live-stream-edge timeout, not promo-engine",
+      "correct_remediation": "increase promo-engine concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.94,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794646226.5933304,
+  "alert": {
+    "service": "promo-engine",
+    "severity": "SEV-1",
+    "description": "downstream service cdn-router returning 502 -- error budget burning at 16x",
+    "started_at": "2026-11-11T19:18:55.011059+00:00"
+  }
+}
