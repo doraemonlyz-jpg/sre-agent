@@ -1,0 +1,33 @@
+{
+  "incident_id": "92c6ed4138",
+  "records": [
+    {
+      "id": "fb-f772ffa9dd",
+      "ts": 1794743478.9174309,
+      "verdict": "incorrect",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the video-encoder sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.73,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794743478.9174886,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-2",
+    "description": "downstream service video-encoder returning 502 -- error budget burning at 20x",
+    "started_at": "2026-11-10T13:12:50.040929+00:00"
+  }
+}

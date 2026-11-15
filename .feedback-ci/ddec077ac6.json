@@ -1,0 +1,35 @@
+{
+  "incident_id": "ddec077ac6",
+  "records": [
+    {
+      "id": "fb-78ffcaf676",
+      "ts": 1794743479.1111956,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the auth-service sidecar",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1794743479.111256,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 463ms briefly, recovered in 9s",
+    "started_at": "2026-11-09T14:19:28.529904+00:00"
+  }
+}
