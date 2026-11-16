@@ -1,0 +1,33 @@
+{
+  "incident_id": "d6b980a9d6",
+  "records": [
+    {
+      "id": "fb-1cf38d452f",
+      "ts": 1794820911.8154404,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for order-pipeline was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "Recent deploy introduced a null-pointer in checkout flow",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794820911.815481,
+  "alert": {
+    "service": "cdn-router",
+    "severity": "SEV-4",
+    "description": "5xx rate 14% sustained for 392s after deploy of #12516",
+    "started_at": "2026-11-14T12:33:29.374819+00:00"
+  }
+}

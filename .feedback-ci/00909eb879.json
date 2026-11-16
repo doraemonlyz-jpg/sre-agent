@@ -1,0 +1,33 @@
+{
+  "incident_id": "00909eb879",
+  "records": [
+    {
+      "id": "fb-64a108ec09",
+      "ts": 1794820911.9486935,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for order-pipeline was filling our partition",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.59,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794820911.9487376,
+  "alert": {
+    "service": "comment-svc",
+    "severity": "SEV-3",
+    "description": "downstream service recommend-feed returning 502 -- error budget burning at 8x",
+    "started_at": "2026-11-15T18:17:41.182131+00:00"
+  }
+}

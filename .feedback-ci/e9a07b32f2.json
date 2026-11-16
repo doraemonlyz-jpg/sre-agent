@@ -1,0 +1,33 @@
+{
+  "incident_id": "e9a07b32f2",
+  "records": [
+    {
+      "id": "fb-1882266f58",
+      "ts": 1794820911.863139,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in session-store, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.71,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794820911.8631814,
+  "alert": {
+    "service": "session-store",
+    "severity": "SEV-4",
+    "description": "5xx rate 20% sustained for 303s after deploy of #80900",
+    "started_at": "2026-11-15T06:36:52.987811+00:00"
+  }
+}
