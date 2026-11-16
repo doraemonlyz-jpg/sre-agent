@@ -1,0 +1,33 @@
+{
+  "incident_id": "7dbc2b8005",
+  "records": [
+    {
+      "id": "fb-54b2f697dd",
+      "ts": 1794838175.271569,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": null,
+      "correct_root_cause": "DNS resolution lag in the payments-gateway sidecar",
+      "correct_remediation": "increase payments-gateway concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794838175.2716248,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-4",
+    "description": "downstream service image-thumbnail returning 502 -- error budget burning at 12x",
+    "started_at": "2026-11-09T23:47:57.494458+00:00"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "incident_id": "5808c0309d",
+  "records": [
+    {
+      "id": "fb-4e7e43a2d6",
+      "ts": 1794838175.2570152,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "feature flag flipped to 100% an hour earlier; not a deploy regression",
+      "correct_remediation": "disable feature flag svc.user-profile.new_path",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1794838175.2570717,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-2",
+    "description": "p99 latency 2981ms spiking on /checkout, error rate 5%",
+    "started_at": "2026-11-11T14:14:48.155972+00:00"
+  }
+}
