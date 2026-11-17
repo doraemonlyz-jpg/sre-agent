@@ -1,0 +1,33 @@
+{
+  "incident_id": "fb31f0055f",
+  "records": [
+    {
+      "id": "fb-e5ee5ea4ac",
+      "ts": 1794911325.4292045,
+      "verdict": "thumbs_up",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": null,
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.74,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1794911325.4292622,
+  "alert": {
+    "service": "price-cache",
+    "severity": "SEV-3",
+    "description": "memory usage 86% on session-store -- OOM kill predicted in 7m",
+    "started_at": "2026-11-10T19:19:39.536448+00:00"
+  }
+}
