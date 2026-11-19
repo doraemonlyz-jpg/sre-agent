@@ -1,0 +1,33 @@
+{
+  "incident_id": "a3914abd97",
+  "records": [
+    {
+      "id": "fb-54a93f5abf",
+      "ts": 1795082783.2612352,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "DNS resolution lag in the order-pipeline sidecar",
+      "correct_remediation": "increase order-pipeline concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.7,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1795082783.2613106,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-3",
+    "description": "memory usage 93% on auth-service -- OOM kill predicted in 11m",
+    "started_at": "2026-11-17T13:52:09.483704+00:00"
+  }
+}
