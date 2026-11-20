@@ -1,0 +1,33 @@
+{
+  "incident_id": "ec94089f4b",
+  "records": [
+    {
+      "id": "fb-0504b259bc",
+      "ts": 1795168458.028705,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 5,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not cart-service",
+      "correct_remediation": "page the video-encoder oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.88,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1795168458.0287478,
+  "alert": {
+    "service": "cart-service",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 797ms briefly, recovered in 8s",
+    "started_at": "2026-11-19T09:57:08.519527+00:00"
+  }
+}

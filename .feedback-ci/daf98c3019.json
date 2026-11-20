@@ -1,0 +1,35 @@
+{
+  "incident_id": "daf98c3019",
+  "records": [
+    {
+      "id": "fb-e8b59ab589",
+      "ts": 1795168458.337339,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the payments-gateway sidecar",
+      "correct_remediation": "increase payments-gateway concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1795168458.33738,
+  "alert": {
+    "service": "payments-gateway",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 459ms briefly, recovered in 24s",
+    "started_at": "2026-11-19T08:36:59.532433+00:00"
+  }
+}

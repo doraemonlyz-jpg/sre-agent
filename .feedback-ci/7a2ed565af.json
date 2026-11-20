@@ -1,0 +1,35 @@
+{
+  "incident_id": "7a2ed565af",
+  "records": [
+    {
+      "id": "fb-0405a9f531",
+      "ts": 1795168457.952046,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream session-store timeout, not recommend-feed",
+      "correct_remediation": "increase recommend-feed concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": "no actionable signal found",
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": [
+        "false-positive"
+      ]
+    }
+  ],
+  "updated_at": 1795168457.9521,
+  "alert": {
+    "service": "recommend-feed",
+    "severity": "SEV-4",
+    "description": "noisy probe alert: p99 796ms briefly, recovered in 29s",
+    "started_at": "2026-11-17T08:59:28.641743+00:00"
+  }
+}
