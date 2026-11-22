@@ -1,0 +1,33 @@
+{
+  "incident_id": "97b403ebb2",
+  "records": [
+    {
+      "id": "fb-9cac46bd6e",
+      "ts": 1795340200.3119688,
+      "verdict": "incorrect",
+      "submitter": "oncall-dave",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for session-store was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Redis connection pool exhaustion under load",
+      "agent_confidence": 0.66,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1795340200.3120565,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-2",
+    "description": "p99 latency 3631ms spiking on /checkout, error rate 6%",
+    "started_at": "2026-11-21T15:58:42.355649+00:00"
+  }
+}

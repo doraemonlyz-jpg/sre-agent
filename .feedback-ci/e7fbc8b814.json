@@ -1,0 +1,33 @@
+{
+  "incident_id": "e7fbc8b814",
+  "records": [
+    {
+      "id": "fb-809d9d1d71",
+      "ts": 1795340199.579124,
+      "verdict": "incorrect",
+      "submitter": "oncall-alice",
+      "rating": null,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for recommend-feed was filling our partition",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.72,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1795340199.5792077,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-3",
+    "description": "memory usage 87% on video-encoder -- OOM kill predicted in 17m",
+    "started_at": "2026-11-15T14:28:13.812821+00:00"
+  }
+}

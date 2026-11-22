@@ -1,0 +1,33 @@
+{
+  "incident_id": "40539a4dc8",
+  "records": [
+    {
+      "id": "fb-8928943d7e",
+      "ts": 1795340199.5849934,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cdn-router was filling our partition",
+      "correct_remediation": "disable feature flag svc.video-encoder.new_path",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.67,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1795340199.5850756,
+  "alert": {
+    "service": "video-encoder",
+    "severity": "SEV-3",
+    "description": "downstream service rate-limiter-edge returning 502 -- error budget burning at 12x",
+    "started_at": "2026-11-18T14:25:11.846435+00:00"
+  }
+}

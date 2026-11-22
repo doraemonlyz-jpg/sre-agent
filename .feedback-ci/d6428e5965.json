@@ -1,0 +1,33 @@
+{
+  "incident_id": "d6428e5965",
+  "records": [
+    {
+      "id": "fb-dc89b2ed5a",
+      "ts": 1795340200.045241,
+      "verdict": "incorrect",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "queue head-of-line blocking in checkout-api, not what the agent said",
+      "correct_remediation": null,
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.65,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1795340200.0453253,
+  "alert": {
+    "service": "checkout-api",
+    "severity": "SEV-3",
+    "description": "noisy probe alert: p99 726ms briefly, recovered in 10s",
+    "started_at": "2026-11-20T10:43:46.951733+00:00"
+  }
+}
