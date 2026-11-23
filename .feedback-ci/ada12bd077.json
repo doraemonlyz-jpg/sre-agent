@@ -1,0 +1,33 @@
+{
+  "incident_id": "ada12bd077",
+  "records": [
+    {
+      "id": "fb-a557e51b69",
+      "ts": 1795452160.3450007,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream auth-service timeout, not auth-service",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "Leak in v{ver} of the request-context middleware",
+      "agent_confidence": 0.61,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1795452160.3450832,
+  "alert": {
+    "service": "auth-service",
+    "severity": "SEV-3",
+    "description": "memory usage 89% on ad-bidder -- OOM kill predicted in 26m",
+    "started_at": "2026-11-21T17:57:23.984456+00:00"
+  }
+}

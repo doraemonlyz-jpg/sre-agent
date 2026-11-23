@@ -1,0 +1,33 @@
+{
+  "incident_id": "5a2adc68a0",
+  "records": [
+    {
+      "id": "fb-c843f894e5",
+      "ts": 1795452160.2984982,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-alice",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream image-thumbnail timeout, not order-pipeline",
+      "correct_remediation": "page the order-pipeline oncall; the real ownership is downstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1795452160.2985852,
+  "alert": {
+    "service": "order-pipeline",
+    "severity": "SEV-1",
+    "description": "memory usage 98% on video-encoder -- OOM kill predicted in 24m",
+    "started_at": "2026-11-19T08:25:42.712917+00:00"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "incident_id": "4e8419caf5",
+  "records": [
+    {
+      "id": "fb-4e50bde0a8",
+      "ts": 1795452161.0238154,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-dave",
+      "rating": 5,
+      "correct_root_cause": "DNS resolution lag in the user-profile sidecar",
+      "correct_remediation": "no-op; this is a known flaky synthetic monitor",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.62,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "9a4e2b73",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1795452161.0239003,
+  "alert": {
+    "service": "user-profile",
+    "severity": "SEV-2",
+    "description": "downstream service search-suggest returning 502 -- error budget burning at 8x",
+    "started_at": "2026-11-19T22:26:14.963410+00:00"
+  }
+}
