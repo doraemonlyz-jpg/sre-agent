@@ -1,0 +1,33 @@
+{
+  "incident_id": "3440a580c5",
+  "records": [
+    {
+      "id": "fb-f72ca54f84",
+      "ts": 1795604635.583664,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-carol",
+      "rating": 4,
+      "correct_root_cause": "shared-tenant noisy-neighbor: kafka topic for cdn-router was filling our partition",
+      "correct_remediation": "increase search-suggest concurrency limit to 2x and re-rate-limit upstream",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "31d7af44",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "ad2b6e09"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1795604635.583717,
+  "alert": {
+    "service": "search-suggest",
+    "severity": "SEV-3",
+    "description": "p99 latency 2568ms spiking on /checkout, error rate 6%",
+    "started_at": "2026-11-24T09:01:41.146482+00:00"
+  }
+}
