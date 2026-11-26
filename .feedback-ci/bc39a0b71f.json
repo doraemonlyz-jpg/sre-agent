@@ -1,0 +1,33 @@
+{
+  "incident_id": "bc39a0b71f",
+  "records": [
+    {
+      "id": "fb-6ca011573d",
+      "ts": 1795689705.273955,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-eve",
+      "rating": 4,
+      "correct_root_cause": "actually a downstream session-store timeout, not notification-fanout",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": null,
+      "agent_confidence": null,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "7f2d4e10",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1795689705.2740636,
+  "alert": {
+    "service": "notification-fanout",
+    "severity": "SEV-4",
+    "description": "memory usage 99% on inventory-sync -- OOM kill predicted in 4m",
+    "started_at": "2026-11-26T08:08:31.924350+00:00"
+  }
+}
