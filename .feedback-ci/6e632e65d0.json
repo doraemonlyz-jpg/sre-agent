@@ -1,0 +1,33 @@
+{
+  "incident_id": "6e632e65d0",
+  "records": [
+    {
+      "id": "fb-e564fdd36e",
+      "ts": 1795776221.1798038,
+      "verdict": "thumbs_down",
+      "submitter": "oncall-bob",
+      "rating": 3,
+      "correct_root_cause": "actually a downstream session-store timeout, not ad-bidder",
+      "correct_remediation": "restart the sidecar, not the main container",
+      "free_text": null,
+      "agent_root_cause": "{svc} health-check failure cascade",
+      "agent_confidence": 0.83,
+      "prompt_shas_seen": {
+        "log-detective": "09c3b1aa",
+        "metrics-analyst": "6ec88011",
+        "trace-reader": "bb14c2c9",
+        "deploy-historian": "c4d3c986",
+        "hypothesis-gen": "0c8f14d5",
+        "remediation-sug": "812a99ee"
+      },
+      "tags": []
+    }
+  ],
+  "updated_at": 1795776221.1798885,
+  "alert": {
+    "service": "ad-bidder",
+    "severity": "SEV-2",
+    "description": "downstream service checkout-api returning 502 -- error budget burning at 4x",
+    "started_at": "2026-11-22T03:59:00.168780+00:00"
+  }
+}
